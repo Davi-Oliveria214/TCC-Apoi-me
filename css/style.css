@@ -146,6 +146,7 @@ img {
   right: 0;
   background-color: rgba(var(--preto-rgba), 0.2);
   z-index: 5;
+  transition: 0.5s ease;
 }
 
 #menu-navegacao img {
@@ -162,6 +163,40 @@ img {
   flex-direction: column;
   gap: 10px;
   align-items: center;
+}
+
+/* Animação de abrir e fechar o menu de navegação */
+.abrir-menu .fundo-menu {
+  animation: abrir-menu 0.5s ease-out forwards;
+}
+
+.fechar-menu .fundo-menu {
+  animation: fechar-menu 0.5s ease-in forwards;
+}
+
+@keyframes abrir-menu {
+  0% {
+    transform: translateX(-180%);
+    opacity: 0;
+  }
+
+  /* Início */
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fechar-menu {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-180%);
+    opacity: 0;
+  }
 }
 
 .fundo-menu nav {
