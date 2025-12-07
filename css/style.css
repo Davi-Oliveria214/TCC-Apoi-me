@@ -23,12 +23,12 @@ img {
 /* FONTES */
 @font-face {
   font-family: "RobotoMedio";
-  src: url("/font/Roboto/static/Roboto-Medium.ttf");
+  src: url("/font/Roboto/static/Roboto_SemiCondensed-Medium.ttf");
 }
 
 @font-face {
   font-family: "FonteBotao";
-  src: url("/font/Roboto/static/Roboto-ExtraBold.ttf");
+  src: url("/font/Roboto/static/Roboto_Condensed-ExtraBold.ttf");
   font-weight: 900;
 }
 
@@ -464,28 +464,42 @@ img {
   gap: 30px;
 }
 
-.sobre-servico {
+.informacoes-servico {
   width: 400px;
   max-height: 300px;
   border-radius: 10px;
   padding: 15px;
   background-color: rgba(var(--verde-musgo-palido-rgba), 0.5);
   font-size: 1.1rem;
-  border: 1px solid var(--verde-musgo-medio);
+  border: 2px solid var(--verde-musgo-medio);
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 10px;
 }
 
-.sobre-servico>p {
+.sobre-servico {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.necessidade-servico {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.informacoes-servico p {
   width: 100%;
   height: 95%;
   overflow-y: scroll;
   word-wrap: break-word;
   line-height: 1.5;
   padding: 5px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(var(--preto-rgba), 0.2);
   border-radius: 10px;
 }
 
