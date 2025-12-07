@@ -157,50 +157,6 @@ img {
   align-items: center;
 }
 
-
-.entrar-cadastrar {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.botao {
-  font-family: "FonteBotao";
-  flex-grow: 1;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 1em;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.5s ease, transform 0.2s ease;
-}
-
-.botao:hover {
-  background-color: var(--dourado-palido);
-  color: var(--verde-musgo);
-}
-
-.btn-entrar,
-.btn-cadastrar {
-  text-align: center;
-  background-color: var(--verde-musgo);
-  color: var(--dourado-fraco);
-}
-
-@media (max-width: 600px) {
-  .card-login {
-    padding: 25px 30px;
-  }
-
-  .principal-logar h1 {
-    font-size: 2em;
-  }
-
-  .card-login h2 {
-    font-size: 1.3em;
-  }
-}
-
 /* RODAPÉ — Versão corrigida (unificada) */
 .rodape {
   width: 100%;
@@ -511,6 +467,7 @@ img {
   gap: 20px;
 }
 
+/* Estilização dos botões do Cadastro e Login */
 .botao-ver-mais {
   cursor: pointer;
   padding: 5px 20px;
@@ -518,4 +475,33 @@ img {
   font-family: "FonteBotao";
   text-decoration: underline;
   background-color: transparent;
+}
+
+.entrar-cadastrar {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.botao {
+  font-family: "FonteBotao";
+  flex-grow: 1;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.5s ease, transform 0.2s ease;
+}
+
+.botao:hover {
+  background-color: var(--dourado-palido);
+  color: var(--verde-musgo);
+}
+
+.btn-entrar,
+.btn-cadastrar {
+  text-align: center;
+  background-color: var(--verde-musgo);
+  color: var(--dourado-fraco);
 }
