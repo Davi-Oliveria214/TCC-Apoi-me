@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apoie-mi</title>
+    <link rel="icon" href="./img/condomino.png">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/app.js" defer></script>
+</head>
+
+<body style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <header id="topo-cabecalho">
+        <a id="img-titulo" href="index.html "><img src="./img/condomino.png" alt=""></a>
+        <input class="pesquisa" type="text" placeholder="Pesquise">
+
+        <div id="burguer" onclick="menu('abrir')">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div id="menu-navegacao" onclick="menu('fechar')">
+            <div class="fundo-menu">
+                <img src="./img/condomino.png" alt="">
+                <nav>
+                    <ul>
+                        <li><a href="./index.html">Início</a></li>
+                        <li><a href="./servicos.html">Serviços</a></li>
+                        <li><a href="./contato.html">Contato</a></li>
+                        <li><a href="./sobre.html">Institucional</a></li>
+                        <li><a href="./cadastro.html">Cadastro</a></li>
+                        <li><a href="./login.html">Logar</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section id="modelo" class="modal">
+        <aside class="modelo-card">
+            <span id="fecharModelo" class="fechar">&times;</span>
+            <h2>Nome do Serviço</h2>
+            <div class="info-modelo">
+                <img src="./img/cuidador-de-cachorro.jpg" alt="" class="img-servico">
+                <div class="sobre-servico">
+                    <b>Sobre o serviço</b>
+                    <p>Este card foi criado para fornecer aos usuários uma experiência clara e organizada, permitindo
+                        que mensagens importantes sejam destacadas de forma elegante. Aqui você pode colocar instruções
+                        detalhadas, avisos, dicas de uso ou qualquer conteúdo que mereça atenção imediata.
+
+                        O objetivo é que, ao abrir este card, você consiga transmitir informações de forma objetiva, sem
+                        que o usuário precise procurar no restante da página. Ele pode conter textos explicativos, links
+                        úteis, sugestões de próximos passos ou até mesmo pequenas mensagens motivacionais para melhorar
+                        a experiência do usuário.
+
+                        Por exemplo, você pode usá-lo para:
+
+                        Apresentar um resumo de novos recursos do seu site ou aplicativo.
+
+                        Dar instruções passo a passo sobre como utilizar uma funcionalidade específica.
+
+                        Mostrar avisos importantes que exigem atenção imediata, como prazos ou mudanças de configuração.
+
+                        Fornecer dicas rápidas que ajudam o usuário a navegar ou aproveitar melhor seu serviço.
+
+                        Este card centralizado no meio da tela garante que o usuário foque no conteúdo, com o fundo
+                        levemente escurecido para reduzir distrações. Ele foi projetado para ser visualmente agradável,
+                        com bordas arredondadas, sombra sutil e espaço suficiente para leitura confortável.
+
+                        Para fechar, o usuário pode clicar no “×” no canto superior ou em qualquer área fora do card,
+                        garantindo uma interação intuitiva e natural. Esse tipo de card é ideal para combinar
+                        funcionalidade com estética, mantendo o usuário informado de maneira clara e elegante.</p>
+                </div>
+            </div>
+            <div class="botoes">
+                <input type="button" value="Aceitar">
+                <input type="button" value="Ver sobre">
+            </div>
+        </aside>
+    </section>
+
+    <style>
+        /* PRINCIPAL */
+        #principal {
+            width: 100%;
+            padding: 20px 30px;
+            display: flex;
+            text-align: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+
+        /* POST IMG */
+        #post-img {
+            padding: 10px;
+        }
+
+        #post-img>figure {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #post-img>figure>img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+        }
+
+        #post-img>figure>h2 {
+            margin-top: 5px;
+        }
+
+        /* POSTAGENS */
+        #postagens {
+            gap: 10px;
+            height: 80vh;
+            width: 470px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+            padding: 10px 15px;
+            border-radius: 20px;
+        }
+
+        .card-noticias {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 3px solid var(--verde-musgo-medio);
+            gap: 10px;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        .card-noticias>figcaption {
+            overflow-wrap: break-word;
+        }
+
+        .card-noticias>img {
+            width: 270px;
+        }
+
+        #sessao {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* SERVIÇOS */
+        #sessao-servicos {
+            padding: 10px 20px;
+            height: 700px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            overflow-y: scroll;
+        }
+
+        .servicos {
+            border: 2px solid var(--dourado);
+            background-color: var(--dourado-fraco);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-wrap: break-word;
+            width: 235px;
+            min-height: 250px;
+            gap: 15px;
+            padding: 10px;
+            box-shadow: var(--verde-musgo-palido) 5px 5px 15px 2px;
+        }
+
+        .servicos>img {
+            width: 100%;
+            height: 135px;
+            object-fit: cover;
+        }
+    </style>
+
+    <main id="principal">
+        <section id="sessao">
+            <article id="post-img">
+                <figure>
+                    <img src="./img/mostrar.jpg" alt="">
+                    <h2>A solução mora ao lado</h2>
+                </figure>
+            </article>
+
+            <section id="sessao-servicos">
+                <article class="servicos">
+                    <img src="./img/eletricista.jpg" alt="">
+                    <h3>Eletricista</h3>
+                    <p>Sobre o serviço disponível</p>
+                    <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                    <button class="botao-ver-mais" id="abrirModelo">Ver mais</button>
+                </article>
+
+                <article class="servicos">
+                    <img src="./img/cuidador-de-cachorro.jpg" alt="">
+                    <h3>Cuidadora de Animais</h3>
+                    <p>Sobre o serviço disponível</p>
+                    <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                    <button class="botao-ver-mais">Ver mais</button>
+                </article>
+
+                <article class="servicos">
+                    <img src="./img/faxineira.jpg" alt="">
+                    <h3>Faxinheira</h3>
+                    <p>Sobre o serviço disponível</p>
+                    <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                    <button class="botao-ver-mais">Ver mais</button>
+                </article>
+
+                <article class="servicos">
+                    <img src="./img/baba.jpg" alt="">
+                    <h3>Baba</h3>
+                    <p>Sobre o serviço disponível</p>
+                    <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                    <button class="botao-ver-mais">Ver mais</button>
+                </article>
+            </section>
+        </section>
+
+        <aside id="postagens">
+            <h2>Noticias do condominio</h2>
+            <figure class="card-noticias">
+                <h3>Titulo do assunto</h3>
+                <img src="./img/condomino.png" alt="">
+                <figcaption>Sobre o assunto do condominio</figcaption>
+                <button class="botao-ver-mais">Ver mais</button>
+            </figure>
+
+            <figure class="card-noticias">
+                <h3>Titulo do assunto</h3>
+                <img src="./img/condomino.png" alt="">
+                <figcaption>Sobre o assunto do condominio</figcaption>
+                <button class="botao-ver-mais">Ver mais</button>
+            </figure>
+
+            <figure class="card-noticias">
+                <h3>Titulo do assunto</h3>
+                <img src="./img/condomino.png" alt="">
+                <figcaption>Sobre o assunto do condominio</figcaption>
+                <button class="botao-ver-mais">Ver mais</button>
+            </figure>
+        </aside>
+    </main>
+
+    <footer class="rodape">
+        <ul>
+            <li><b>Institucional</b>
+                <p>Sobre a empresa <br> Parceiros <br> Politica de privacidade </p>
+            </li>
+            <li><b>Atendimento</b>
+                <p>Fale Conosco <br> apoie_mi@gmail.com <br> (11) 1111-1111 </p>
+            </li>
+            <li><b>Área do cliente:</b>
+                <p>Minha Conta <br> Chat Online <br> Cadastre-se</p>
+            </li>
+        </ul>
+
+        <aside class="redes-socias">
+            <img src="img/instagram-icon.png" alt="">
+            <img src="img/tiktok-icon.png" alt="">
+            <img src="img/youtube-icon.png" alt="">
+        </aside>
+    </footer>
+    <script src="./js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="./images/Condomino.png">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="./js/app.js" defer></script>
+</head>
+
+
+<body>
+    <header id="topo-cabecalho">
+        <a id="img-titulo" href="index.html "><img src="./img/condomino.png" alt=""></a>
+        <input class="pesquisa" type="text" placeholder="Pesquise">
+
+        <div id="burguer" onclick="menu('abrir')">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div id="menu-navegacao" onclick="menu('fechar')">
+            <div class="fundo-menu">
+                <img src="./img/condomino.png" alt="">
+                <nav>
+                    <ul>
+                        <li><a href="./index.html">Início</a></li>
+                        <li><a href="./servicos.html">Serviços</a></li>
+                        <li><a href="./contato.html">Contato</a></li>
+                        <li><a href="./sobre.html">Institucional</a></li>
+                        <li><a href="./cadastro.html">Cadastro</a></li>
+                        <li><a href="./login.html">Logar</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="principal-logar-cadastro">
+        <div class="centro-cadastro-login">
+            <h1>Cadastro</h1>
+            <form action="" class="card-login-cadastro">
+                <div class="info-cadastro-login">
+                    <label for="idNome" style="text-transform: uppercase;">Nome Completo</label>
+                    <input type="text" id="idNome" placeholder="Nome">
+                </div>
+
+                <div class="info-cadastro-login">
+                    <label for="idEmail" style="text-transform: uppercase;">Email</label>
+                    <input type="text" id="idEmail" placeholder="Email">
+                </div>
+
+                <div class="info-cadastro-login">
+                    <label for="idSenha" style="text-transform: uppercase;">Senha</label>
+                    <input type="text" id="idSenha" placeholder="Senha">
+                </div>
+
+                <div class="info-cadastro-login">
+                    <label for="idSenha" style="text-transform: uppercase;">Confirmação de Senha</label>
+                    <input type="text" id="idSenha" placeholder="Confirmar Senha">
+                </div>
+
+                <div class="entrar-cadastrar">
+                    <a href="./login.html" class="botao btn-cadastrar">Logar</a>
+                    <a href="./login.html" class="botao btn-cadastrar">Cadastrar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="rodape">
+        <ul>
+            <li>Capital São Paulo:<p>(11) 1111-1111</p>
+            </li>
+            <li>Demais locais:<p>0000 000 0000</p>
+            </li>
+            <li>Atendimento de ligações:<p>XXh as XXh</p>
+            </li>
+            <li>WhatsApp:<p>(11) 2222-2222</p>
+            </li>
+            <li>Email:<p>conato@gmail.com</p>
+            </li>
+        </ul>
+
+        <div class="redes-socias">
+            <img src="img/instagram-icon.png" alt="">
+            <img src="img/tiktok-icon.png" alt="">
+            <img src="img/youtube-icon.png" alt="">
+        </div>
+    </footer>
+</body>
+
+</html>

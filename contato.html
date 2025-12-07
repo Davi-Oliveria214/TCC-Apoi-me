@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="./js/app.js" defer></script>
+</head>
+
+<body>
+    <header id="topo-cabecalho">
+        <a id="img-titulo" href="index.html "><img src="./img/condomino.png" alt=""></a>
+        <input class="pesquisa" type="text" placeholder="Pesquise">
+
+        <div id="burguer" onclick="menu('abrir')">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div id="menu-navegacao" onclick="menu('fechar')">
+            <div class="fundo-menu">
+                <img src="./img/condomino.png" alt="">
+                <nav>
+                    <ul>
+                        <li><a href="./index.html">Início</a></li>
+                        <li><a href="./servicos.html">Serviços</a></li>
+                        <li><a href="./contato.html">Contato</a></li>
+                        <li><a href="./sobre.html">Institucional</a></li>
+                        <li><a href="./cadastro.html">Cadastro</a></li>
+                        <li><a href="./login.html">Logar</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <style>
+        /* CONTATO */
+        #contato {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--dourado-fraco);
+            padding: 20px;
+        }
+
+        .fale-conosco {
+            width: 80%;
+            max-width: 500px;
+            min-height: 550px;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 12px;
+            background-color: var(--dourado-fraco);
+            border: 2px solid var(--dourado);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .fale-conosco h1 {
+            text-align: center;
+            text-transform: uppercase;
+            color: var(--dourado);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+        }
+
+        .fale-conosco div {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .fale-conosco p {
+            font-size: 16px;
+            color: var(--dourado);
+        }
+
+        .fale-conosco input[type="text"],
+        .fale-conosco input[type="email"],
+        .fale-conosco input[type="tel"],
+        .fale-conosco textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            color: var(--preto-acinzentado);
+            border: 1px solid var(--dourado);
+            border-radius: 6px;
+            background-color: var(--dourado-palido);
+            font-size: 16px;
+        }
+
+        .fale-conosco textarea {
+            resize: none;
+            min-height: 100px;
+        }
+
+        .fale-conosco input[type="submit"] {
+            background-color: var(--verde-musgo);
+            color: var(--dourado-fraco);
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .fale-conosco input[type="submit"]:hover {
+            background-color: var(--verde-musgo-medio);
+        }
+    </style>
+
+    <main id="contato">
+        <form class="fale-conosco">
+            <h1>Fale Conosco</h1>
+            <div class="info-contato">
+                <input type="text" name="nomeCompleto" id="textNome" placeholder="Nome:">
+
+                <input type="text" name="sobrenome" id="textNome" placeholder="Sobrenome:">
+
+                <input type="email" name="e-mail" id="textEmail" placeholder="E-mail">
+
+                <input type="tel" name="telefone" id="textTel" placeholder="Telefone:">
+
+                <textarea name="comentarios" id="" placeholder="Comentários:"></textarea>
+
+                <input type="submit" value="Enviar">
+            </div>
+        </form>
+    </main>
+
+    <footer class="rodape">
+        <ul>
+            <li>Capital São Paulo:<p>(11) 1111-1111</p>
+            </li>
+            <li>Demais locais:<p>0000 000 0000</p>
+            </li>
+            <li>Atendimento de ligações:<p>XXh as XXh</p>
+            </li>
+            <li>WhatsApp:<p>(11) 2222-2222</p>
+            </li>
+            <li>Email:<p>conato@gmail.com</p>
+            </li>
+        </ul>
+
+        <div class="redes-socias">
+            <img src="img/instagram-icon.png" alt="">
+            <img src="img/tiktok-icon.png" alt="">
+            <img src="img/youtube-icon.png" alt="">
+        </div>
+    </footer>
+
+</body>
+
+</html>
