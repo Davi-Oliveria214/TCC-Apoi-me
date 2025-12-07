@@ -34,7 +34,6 @@ body {
   font-weight: 900;
 }
 
-
 /* ===========================
    PALETA DE CORES (UNIFICADA)
 =========================== */
@@ -419,11 +418,12 @@ body {
    LOGIN / CADASTRO
 =========================== */
 #principal-logar-cadastro {
-  width: 100%;
+  width: 100vw;
   min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;
 }
 
 .centro-cadastro-login {
@@ -487,7 +487,7 @@ body {
 }
 
 /* ===========================
-    CARDS DE SERVIÇO (MELHORADO)
+      CARDS DE SERVIÇO
 =========================== */
 .servicos {
   width: 250px;
