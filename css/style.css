@@ -1,4 +1,6 @@
-/* RESET GLOBAL */
+/* ===========================
+   RESET GLOBAL
+=========================== */
 * {
   border: 0;
   box-sizing: border-box;
@@ -20,7 +22,9 @@ img {
   border-radius: 10px;
 }
 
-/* FONTES */
+/* ===========================
+   FONTES
+=========================== */
 @font-face {
   font-family: "RobotoMedio";
   src: url("/font/Roboto/static/Roboto_SemiCondensed-Medium.ttf");
@@ -32,7 +36,10 @@ img {
   font-weight: 900;
 }
 
-/* PALETA DE CORES (UNIFICADA) */
+
+/* ===========================
+   PALETA DE CORES (UNIFICADA)
+=========================== */
 :root {
   --preto-acinzentado: #1f1f1f;
   --verde-musgo: #0c3a3f;
@@ -54,14 +61,19 @@ img {
   --dourado-fraco-rgba: 255, 230, 167;
 }
 
-/* CONFIGURAÇÕES GERAIS */
+
+/* ===========================
+   ELEMENTOS PADRÃO
+=========================== */
 #sessao-servicos,
 .servicos,
 #post-img {
   border-radius: 20px;
 }
 
-/* CABEÇALHO */
+/* ===========================
+   CABEÇALHO
+=========================== */
 #topo-cabecalho {
   width: 100%;
   min-height: 60px;
@@ -73,13 +85,15 @@ img {
 }
 
 #img-titulo>img {
-  display: block;
   width: 50px;
   border-radius: 5px;
   border: 2px solid var(--branco);
 }
 
-/* BARRA DE PESQUISA */
+
+/* ===========================
+   BARRA DE PESQUISA
+=========================== */
 .pesquisa {
   border-radius: 15px;
   width: 100vh;
@@ -96,7 +110,10 @@ img {
   border: 2px solid var(--branco);
 }
 
-/* Burguer do menu */
+
+/* ===========================
+   MENU BURGUER
+=========================== */
 #burguer {
   display: flex;
   flex-direction: column;
@@ -105,19 +122,21 @@ img {
 }
 
 #burguer>div {
-  display: block;
   width: 35px;
   height: 5px;
   border-radius: 20px;
   background-color: var(--verde-musgo-palido);
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 #burguer:hover div {
   background-color: var(--dourado);
 }
 
-/* Menu de navegação */
+
+/* ===========================
+   MENU DE NAVEGAÇÃO
+=========================== */
 #menu-navegacao {
   display: none;
   position: fixed;
@@ -150,86 +169,38 @@ img {
 }
 
 .fundo-menu ul {
-  display: flex;
   height: 100%;
+  display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 }
 
-/* RODAPÉ — Versão corrigida (unificada) */
+
+/* ===========================
+   RODAPÉ
+=========================== */
 .rodape {
   width: 100%;
   background-color: var(--verde-musgo);
-  color: var(--branco);
-  padding: 30px 5%;
+  padding: 5px 15px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 20px;
 }
 
-.rodape b {
-  text-decoration: underline;
-  text-decoration-color: var(--verde-musgo-palido);
-  color: var(--verde-musgo-palido);
-}
-
 .rodape h3 {
   color: var(--dourado-palido);
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  font-size: 1.2em;
-}
-
-.rodape div {
-  min-width: 20px;
-}
-
-.info-rodape li {
-  margin-bottom: 8px;
-  color: var(--dourado-fraco);
-}
-
-.info-rodape li strong {
-  color: var(--dourado-fraco);
-  font-weight: normal;
-}
-
-.rodape p {
-  color: var(--dourado-fraco);
-}
-
-@media (max-width: 850px) {
-  .img-quem-somos h1 {
-    font-size: 2em;
-  }
-
-  .quem-somos {
-    justify-content: center;
-  }
-
-  .info-nos {
-    max-width: 100%;
-  }
-}
-
-.rodape {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 5px 15px;
 }
 
 .rodape ul {
   list-style: none;
   padding: 10px;
   display: flex;
-  justify-content: flex-start;
-  align-content: flex-start;
-  color: var(--dourado-fraco);
   gap: 50px;
+  color: var(--dourado-fraco);
 }
 
 .rodape ul li {
@@ -244,23 +215,26 @@ img {
 .redes-socias {
   display: flex;
   justify-content: flex-end;
-  padding: 10px 10px;
   gap: 10px;
+  padding: 10px;
 }
 
-.redes-socias>img {
+.redes-socias img {
   width: 50px;
   padding: 10px;
   background-color: var(--verde-musgo-medio);
   border-radius: 50%;
-  transition: transform 0.3s ease;
   cursor: pointer;
+  transition: transform 0.3s;
 }
 
-.redes-socias>img:hover {
+.redes-socias img:hover {
   transform: scale(1.1);
 }
 
+/* ===========================
+   MODAL
+=========================== */
 .modal {
   display: none;
   position: fixed;
@@ -272,16 +246,15 @@ img {
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s;
 }
 
-/* Modelo do card */
+/* CARD DO MODELO */
 .modelo-card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
-  position: relative;
   background-color: var(--dourado-palido);
   padding: 30px 40px;
   gap: 25px;
@@ -289,65 +262,77 @@ img {
   color: var(--verde-musgo);
   max-width: 80%;
   box-shadow: var(--sombra-padrao);
-  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .modelo-card:hover {
-  box-shadow: var(--sombra-hover);
   transform: translateY(-5px);
+  box-shadow: var(--sombra-hover);
 }
 
 .modelo-card>h2 {
   color: var(--preto-acinzentado);
-  text-decoration: none;
   border-bottom: 3px solid var(--verde-musgo-medio);
   padding-bottom: 5px;
-  margin-top: 0;
 }
 
-/* Informações do modelo*/
+.fechar {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  font-size: 38px;
+  color: var(--verde-musgo);
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.fechar:hover {
+  color: var(--preto-acinzentado);
+}
+
+
+/* INFORMAÇÕES DO MODELO */
 .info-modelo {
   display: flex;
   gap: 30px;
 }
 
 .informacoes-servico {
-  width: 400px;
+  max-width: 400px;
   max-height: 300px;
-  border-radius: 10px;
   padding: 15px;
-  background-color: rgba(var(--verde-musgo-palido-rgba), 0.5);
+  border-radius: 10px;
   font-size: 1.1rem;
+  background-color: rgba(var(--verde-musgo-palido-rgba), 0.5);
   border: 2px solid var(--verde-musgo-medio);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 .sobre-servico {
   width: 100%;
   height: 70%;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  line-height: 1.5;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.sobre-servico p {
+  width: 100%;
+  height: 90%;
+  padding: 10px;
+  text-align: justify;
+  background-color: rgba(var(--preto-rgba), 0.1);
+  border-radius: 10px;
+  overflow-y: scroll;
 }
 
 .necessidade-servico {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 5px;
-}
-
-.informacoes-servico p {
-  width: 100%;
-  height: 95%;
-  overflow-y: scroll;
-  word-wrap: break-word;
-  line-height: 1.5;
-  padding: 5px;
-  background-color: rgba(var(--preto-rgba), 0.1);
-  border-radius: 10px;
 }
 
 .img-servico {
@@ -355,56 +340,162 @@ img {
   max-height: 300px;
   object-fit: cover;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* botão de aceitar e ver sobre do modelo */
+/* ===========================
+   BOTÕES DO MODELO
+=========================== */
 .botoes {
   width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 30px;
-  margin-top: 10px;
 }
 
-.botoes>input {
+.botoes input {
   padding: 10px 25px;
   border-radius: 8px;
   font-size: 1.1rem;
   font-weight: bold;
-  border: none;
-  color: var(--preto-acinzentado);
   background-color: var(--dourado-fraco);
+  color: var(--preto-acinzentado);
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   transition: 0.3s;
 }
 
-.botoes>input:hover {
+.botoes input:hover {
   background-color: var(--dourado-palido);
   transform: translateY(-2px);
-  box-shadow: 0 5px 10px rgba(var(--verde-musgo-rgba), 0.25);
 }
 
-.botoes>input:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(var(--verde-musgo-medio-rgba), 0.20);
-}
-
-/* Botão fechar do modelo */
-.fechar {
-  position: absolute;
-  right: 15px;
-  top: 5px;
+.botao-ver-mais {
+  padding: 5px 20px;
+  font-size: large;
+  font-family: "FonteBotao";
+  background: transparent;
   cursor: pointer;
-  font-size: 38px;
-  color: var(--verde-musgo);
-  transition: color 0.2s, transform 0.2s;
+  text-decoration: underline;
 }
 
-.fechar:hover {
+/* ===========================
+   LOGIN / CADASTRO
+=========================== */
+#principal-logar-cadastro {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centro-cadastro-login {
+  width: 450px;
+  padding: 10px 20px;
+  border: 4px solid var(--verde-musgo-medio);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin: 20px 0px;
+}
+
+.centro-cadastro-login h1 {
+  text-align: center;
+}
+
+.card-login-cadastro {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-cadastro-login {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 1.25rem;
+}
+
+.info-cadastro-login input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: var(--dourado-palido);
+  border: 3px solid var(--dourado);
   color: var(--preto-acinzentado);
+}
+
+.entrar-cadastrar {
+  display: flex;
+  gap: 20px;
+}
+
+.botao {
+  flex-grow: 1;
+  padding: 12px 20px;
+  font-family: "FonteBotao";
+  font-size: 1em;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: var(--verde-musgo);
+  color: var(--dourado-fraco);
+  transition: background-color 0.5s, transform 0.2s;
+}
+
+.botao:hover {
+  background-color: var(--dourado-palido);
+  color: var(--verde-musgo);
+}
+
+/* ===========================
+   CARDS DE SERVIÇO
+=========================== */
+#sessao-servicos {
+  padding: 10px 20px;
+  height: 700px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+.servicos {
+  width: 235px;
+  min-height: 250px;
+  padding: 10px;
+  background-color: var(--dourado-fraco);
+  border: 2px solid var(--dourado);
+  box-shadow: var(--verde-musgo-palido) 5px 5px 15px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+}
+
+.servicos img {
+  width: 100%;
+  height: 135px;
+  object-fit: cover;
+}
+
+/* ===========================
+   RESPONSIVIDADE
+=========================== */
+@media (max-width: 850px) {
+  .img-quem-somos h1 {
+    font-size: 2em;
+  }
+
+  .quem-somos {
+    justify-content: center;
+  }
+
+  .info-nos {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -420,120 +511,5 @@ img {
   .modelo-card {
     max-width: 95%;
     padding: 20px;
-    gap: 15px;
   }
-}
-
-/* Estilização do Cadastro e Login */
-#principal-logar-cadastro {
-  width: 100%;
-  height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.info-cadastro-login {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.info-cadastro-login input {
-  width: 100%;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background-color: var(--dourado-palido);
-  border: 3px solid var(--dourado);
-  font-size: 1em;
-  color: var(--preto-acinzentado);
-}
-
-.card-login-cadastro {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.centro-cadastro-login {
-  width: 450px;
-  padding: 10px 20px;
-  border: solid 4px var(--verde-musgo-medio);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-/* Estilização dos botões do Cadastro e Login */
-.botao-ver-mais {
-  cursor: pointer;
-  padding: 5px 20px;
-  font-size: large;
-  font-family: "FonteBotao";
-  text-decoration: underline;
-  background-color: transparent;
-}
-
-.entrar-cadastrar {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.botao {
-  font-family: "FonteBotao";
-  flex-grow: 1;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 1em;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.5s ease, transform 0.2s ease;
-}
-
-.botao:hover {
-  background-color: var(--dourado-palido);
-  color: var(--verde-musgo);
-}
-
-.btn-entrar,
-.btn-cadastrar {
-  text-align: center;
-  background-color: var(--verde-musgo);
-  color: var(--dourado-fraco);
-}
-
-/* Card dos serviços */
-#sessao-servicos {
-  padding: 10px 20px;
-  height: 700px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  align-items: center;
-  overflow-y: scroll;
-}
-
-.servicos {
-  border: 2px solid var(--dourado);
-  background-color: var(--dourado-fraco);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow-wrap: break-word;
-  width: 235px;
-  min-height: 250px;
-  gap: 15px;
-  padding: 10px;
-  box-shadow: var(--verde-musgo-palido) 5px 5px 15px 2px;
-}
-
-.servicos>img {
-  width: 100%;
-  height: 135px;
-  object-fit: cover;
 }
