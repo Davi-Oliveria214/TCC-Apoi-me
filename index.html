@@ -27,16 +27,15 @@
             object-fit: cover;
             position: absolute;
             z-index: -1;
-            filter: brightness(0.7);
         }
 
         .texto-img>h1 {
             font-size: clamp(1.5rem, 2rem + 3vw, 6rem);
             color: var(--branco);
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(var(--preto-rgba), 0.4);
             padding: 15px 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(var(--preto-rgba), 0.4);
             border: 1px solid var(--dourado-palido);
         }
 
@@ -104,7 +103,7 @@
             overflow-y: auto;
             border-radius: 15px;
             background-color: rgba(var(--dourado-palido-rgba), 0.3);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(var(--preto-rgba), 0.2);
             border: none;
         }
 
