@@ -43,7 +43,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             background-color: var(--dourado-fraco);
             padding: 20px;
         }
@@ -53,7 +52,6 @@
             max-width: 500px;
             min-height: 550px;
             padding: 30px;
-            margin: 20px 0;
             border-radius: 12px;
             background-color: var(--dourado-fraco);
             border: 2px solid var(--dourado);
@@ -109,6 +107,16 @@
 
         .fale-conosco input[type="submit"]:hover {
             background-color: var(--verde-musgo-medio);
+        }
+
+        @media (max-width: 700px) {
+            #contato {
+                margin: 0px 20px;
+            }
+
+            .fale-conosco {
+                width: 100%;
+            }
         }
     </style>
 
