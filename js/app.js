@@ -17,14 +17,3 @@ menu_navegacao.addEventListener("click", () => {
     menu_navegacao.style.display = "none";
   }, 300);
 });
-
-// const modelo = document.getElementById("modelo");
-// const abrirBtn = document.getElementById("abrirModelo");
-// const fecharBtn = document.getElementById("fecharModelo");
-
-// abrirBtn.onclick = () => (modelo.style.display = "flex");
-// fecharBtn.onclick = () => (modelo.style.display = "none");
-
-// window.onclick = (e) => {
-//   if (e.target === modelo) modelo.style.display = "none";
-// };
