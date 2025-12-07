@@ -130,6 +130,19 @@ body {
   background-color: var(--dourado);
 }
 
+#burguer.active .bar:nth-child(1){
+  transform: translateY(10px) rotate(45deg);
+}
+
+#burguer.active .bar:nth-child(2){
+  opacity: 0;
+}
+
+#burguer.active .bar:nth-child(3){
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+
 /* ===========================
    MENU DE NAVEGAÇÃO
 =========================== */
