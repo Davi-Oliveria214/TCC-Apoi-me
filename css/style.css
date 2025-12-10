@@ -20,6 +20,10 @@ body {
   background-color: var(--dourado-fraco);
 }
 
+input[type="text"] {
+  color: var(--preto-acinzentado);
+}
+
 /* ===========================
    FONTES
 =========================== */
@@ -88,7 +92,6 @@ body {
   border: 2px solid var(--branco);
 }
 
-
 /* ===========================
    BARRA DE PESQUISA
 =========================== */
@@ -130,18 +133,17 @@ body {
   background-color: var(--dourado);
 }
 
-#burguer.active .bar:nth-child(1){
+#burguer.active .bar:nth-child(1) {
   transform: translateY(10px) rotate(45deg);
 }
 
-#burguer.active .bar:nth-child(2){
+#burguer.active .bar:nth-child(2) {
   opacity: 0;
 }
 
-#burguer.active .bar:nth-child(3){
+#burguer.active .bar:nth-child(3) {
   transform: translateY(-8px) rotate(-45deg);
 }
-
 
 /* ===========================
    MENU DE NAVEGAÇÃO
@@ -473,7 +475,6 @@ body {
   border-radius: 8px;
   background-color: var(--dourado-palido);
   border: 3px solid var(--dourado);
-  color: var(--preto-acinzentado);
 }
 
 .entrar-cadastrar {
