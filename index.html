@@ -97,7 +97,7 @@
         .informacoes-inicial {
             width: 90%;
             max-width: 1200px;
-            min-height: 550px;
+            min-height: 300px;
             display: flex;
             justify-content: center;
             padding: 30px 15px;
@@ -169,6 +169,66 @@
             </div>
         </div>
     </header>
+
+    <section id="modelo" class="modal">
+        <aside class="modelo-card">
+            <span id="fecharModelo" class="fechar" onclick="modelo('fechar')">&times;</span>
+            <h2>Nome do Serviço</h2>
+            <section class="info-modelo">
+                <img src="./img/cuidador-de-cachorro.jpg" alt="" class="img-servico">
+                <div class="informacoes-servico">
+                    <div class="sobre-servico">
+                        <h3>Sobre o serviço</h3>
+                        <p>Este card foi criado para fornecer aos usuários uma experiência clara e organizada,
+                            permitindo
+                            que mensagens importantes sejam destacadas de forma elegante. Aqui você pode colocar
+                            instruções
+                            detalhadas, avisos, dicas de uso ou qualquer conteúdo que mereça atenção imediata.
+
+                            O objetivo é que, ao abrir este card, você consiga transmitir informações de forma objetiva,
+                            sem
+                            que o usuário precise procurar no restante da página. Ele pode conter textos explicativos,
+                            links
+                            úteis, sugestões de próximos passos ou até mesmo pequenas mensagens motivacionais para
+                            melhorar
+                            a experiência do usuário.
+
+                            Por exemplo, você pode usá-lo para:
+
+                            Apresentar um resumo de novos recursos do seu site ou aplicativo.
+
+                            Dar instruções passo a passo sobre como utilizar uma funcionalidade específica.
+
+                            Mostrar avisos importantes que exigem atenção imediata, como prazos ou mudanças de
+                            configuração.
+
+                            Fornecer dicas rápidas que ajudam o usuário a navegar ou aproveitar melhor seu serviço.
+
+                            Este card centralizado no meio da tela garante que o usuário foque no conteúdo, com o fundo
+                            levemente escurecido para reduzir distrações. Ele foi projetado para ser visualmente
+                            agradável,
+                            com bordas arredondadas, sombra sutil e espaço suficiente para leitura confortável.
+
+                            Para fechar, o usuário pode clicar no “×” no canto superior ou em qualquer área fora do
+                            card,
+                            garantindo uma interação intuitiva e natural. Esse tipo de card é ideal para combinar
+                            funcionalidade com estética, mantendo o usuário informado de maneira clara e elegante.</p>
+                    </div>
+
+                    <div class="necessidade-servico">
+                        <h4>Requisitos: </h4>
+                        <h4>Experiência: </h4>
+                        <h4>Pagamento: </h4>
+                    </div>
+                </div>
+            </section>
+
+            <div class="botoes">
+                <button>Aceitar</button>
+                <button>Ver sobre</button>
+            </div>
+        </aside>
+    </section>
 
     <figure class="img-mostrar">
         <img src="./img/imagemcentrodecond.jpg" alt="">
@@ -247,6 +307,8 @@
             <img src="img/youtube-icon.png" alt="">
         </aside>
     </footer>
+
+    <script src="./js/app.js"></script>
 </body>
 
 </html>
