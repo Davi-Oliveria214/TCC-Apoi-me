@@ -17,3 +17,20 @@ menu_navegacao.addEventListener("click", () => {
     menu_navegacao.style.display = "none";
   }, 300);
 });
+
+function modelo(resp) {
+  const modelo = document.getElementById("modelo");
+
+  if (resp === "abrir") {
+    modelo.style.display = "flex";
+  } else {
+    modelo.style.display = "none";
+  }
+
+  const modeloNoticia = document.getElementById("modeloNoticia");
+  if (resp === "abrirNoticia") {
+    modeloNoticia.style.display = "flex";
+  } else {
+    modeloNoticia.style.display = "none";
+  }
+}

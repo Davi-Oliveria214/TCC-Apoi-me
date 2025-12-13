@@ -10,94 +10,7 @@
     <script src="./js/app.js" defer></script>
 </head>
 
-<body style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-    <header id="topo-cabecalho">
-        <a id="img-titulo" href="index.html "><img src="./img/condomino.png" alt=""></a>
-        <input class="pesquisa" type="text" placeholder="Pesquise">
-
-        <div id="burguer">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-
-        <div id="menu-navegacao">
-            <div class="fundo-menu">
-                <img src="./img/condomino.png" alt="">
-                <nav>
-                    <ul>
-                        <li><a href="./index.html">Início</a></li>
-                        <li><a href="./servicos.html">Serviços</a></li>
-                        <li><a href="./contato.html">Contato</a></li>
-                        <li><a href="./sobre.html">Institucional</a></li>
-                        <li><a href="./cadastro.html">Cadastro</a></li>
-                        <li><a href="./login.html">Logar</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <section id="modelo" class="modal">
-        <aside class="modelo-card">
-            <span id="fecharModelo" class="fechar">&times;</span>
-            <h2>Nome do Serviço</h2>
-            <div class="info-modelo">
-                <img src="./img/cuidador-de-cachorro.jpg" alt="" class="img-servico">
-                <div class="informacoes-servico">
-                    <div class="sobre-servico">
-                        <h3>Sobre o serviço</h3>
-                        <p>Este card foi criado para fornecer aos usuários uma experiência clara e organizada,
-                            permitindo
-                            que mensagens importantes sejam destacadas de forma elegante. Aqui você pode colocar
-                            instruções
-                            detalhadas, avisos, dicas de uso ou qualquer conteúdo que mereça atenção imediata.
-
-                            O objetivo é que, ao abrir este card, você consiga transmitir informações de forma objetiva,
-                            sem
-                            que o usuário precise procurar no restante da página. Ele pode conter textos explicativos,
-                            links
-                            úteis, sugestões de próximos passos ou até mesmo pequenas mensagens motivacionais para
-                            melhorar
-                            a experiência do usuário.
-
-                            Por exemplo, você pode usá-lo para:
-
-                            Apresentar um resumo de novos recursos do seu site ou aplicativo.
-
-                            Dar instruções passo a passo sobre como utilizar uma funcionalidade específica.
-
-                            Mostrar avisos importantes que exigem atenção imediata, como prazos ou mudanças de
-                            configuração.
-
-                            Fornecer dicas rápidas que ajudam o usuário a navegar ou aproveitar melhor seu serviço.
-
-                            Este card centralizado no meio da tela garante que o usuário foque no conteúdo, com o fundo
-                            levemente escurecido para reduzir distrações. Ele foi projetado para ser visualmente
-                            agradável,
-                            com bordas arredondadas, sombra sutil e espaço suficiente para leitura confortável.
-
-                            Para fechar, o usuário pode clicar no “×” no canto superior ou em qualquer área fora do
-                            card,
-                            garantindo uma interação intuitiva e natural. Esse tipo de card é ideal para combinar
-                            funcionalidade com estética, mantendo o usuário informado de maneira clara e elegante.</p>
-                    </div>
-
-                    <div class="necessidade-servico">
-                        <h4>Requisitos: </h4>
-                        <h4>Experiência: </h4>
-                        <h4>Pagamento: </h4>
-                    </div>
-                </div>
-            </div>
-
-            <div class="botoes">
-                <input type="button" value="Aceitar">
-                <input type="button" value="Ver sobre">
-            </div>
-        </aside>
-    </section>
-
+<body>
     <style>
         /* PRINCIPAL */
         #principal {
@@ -199,6 +112,121 @@
         }
     </style>
 
+    <header id="topo-cabecalho">
+        <a id="img-titulo" href="index.html "><img src="./img/condomino.png" alt=""></a>
+        <input class="pesquisa" type="text" placeholder="Pesquise">
+
+        <div id="burguer">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <div id="menu-navegacao">
+            <div class="fundo-menu">
+                <img src="./img/condomino.png" alt="">
+                <nav>
+                    <ul>
+                        <li><a href="./index.html">Início</a></li>
+                        <li><a href="./servicos.html">Serviços</a></li>
+                        <li><a href="./contato.html">Contato</a></li>
+                        <li><a href="./sobre.html">Institucional</a></li>
+                        <li><a href="./cadastro.html">Cadastro</a></li>
+                        <li><a href="./login.html">Logar</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section id="modeloNoticia" class="modal">
+        <aside class="modelo-card">
+            <span id="fecharModelo" class="fechar" onclick="modelo('fecharNoticia')">&times;</span>
+            <h2>Nome do Serviço</h2>
+            <section class="info-modelo">
+                <img src="./img/cuidador-de-cachorro.jpg" alt="" class="img-servico">
+                <div class="informacoes-servico">
+                    <div class="sobre-servico">
+                        <h3>Concerto da caixa da água</h3>
+                        <p>Este card foi criado para fornecer aos usuários uma experiência clara e organizada,
+                            permitindo
+                            que mensagens importantes sejam destacadas de forma elegante. Aqui você pode colocar
+                            instruções
+                            detalhadas, avisos, dicas de uso ou qualquer conteúdo que mereça atenção imediata.
+
+                            O objetivo é que, ao abrir este card, você consiga transmitir informações de forma objetiva,
+                            sem
+                            que o usuário precise procurar no restante da página. Ele pode conter textos explicativos,
+                            links
+                            úteis, sugestões de próximos passos ou até mesmo pequenas mensagens motivacionais para
+                            melhorar
+                            a experiência do usuário.</p>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </section>
+
+    <section id="modelo" class="modal">
+        <aside class="modelo-card">
+            <span id="fecharModelo" class="fechar" onclick="modelo('fechar')">&times;</span>
+            <h2>Nome do Serviço</h2>
+            <section class="info-modelo">
+                <img src="./img/cuidador-de-cachorro.jpg" alt="" class="img-servico">
+                <div class="informacoes-servico">
+                    <div class="sobre-servico">
+                        <h3>Sobre o serviço</h3>
+                        <p>Este card foi criado para fornecer aos usuários uma experiência clara e organizada,
+                            permitindo
+                            que mensagens importantes sejam destacadas de forma elegante. Aqui você pode colocar
+                            instruções
+                            detalhadas, avisos, dicas de uso ou qualquer conteúdo que mereça atenção imediata.
+
+                            O objetivo é que, ao abrir este card, você consiga transmitir informações de forma objetiva,
+                            sem
+                            que o usuário precise procurar no restante da página. Ele pode conter textos explicativos,
+                            links
+                            úteis, sugestões de próximos passos ou até mesmo pequenas mensagens motivacionais para
+                            melhorar
+                            a experiência do usuário.
+
+                            Por exemplo, você pode usá-lo para:
+
+                            Apresentar um resumo de novos recursos do seu site ou aplicativo.
+
+                            Dar instruções passo a passo sobre como utilizar uma funcionalidade específica.
+
+                            Mostrar avisos importantes que exigem atenção imediata, como prazos ou mudanças de
+                            configuração.
+
+                            Fornecer dicas rápidas que ajudam o usuário a navegar ou aproveitar melhor seu serviço.
+
+                            Este card centralizado no meio da tela garante que o usuário foque no conteúdo, com o fundo
+                            levemente escurecido para reduzir distrações. Ele foi projetado para ser visualmente
+                            agradável,
+                            com bordas arredondadas, sombra sutil e espaço suficiente para leitura confortável.
+
+                            Para fechar, o usuário pode clicar no “×” no canto superior ou em qualquer área fora do
+                            card,
+                            garantindo uma interação intuitiva e natural. Esse tipo de card é ideal para combinar
+                            funcionalidade com estética, mantendo o usuário informado de maneira clara e elegante.</p>
+                    </div>
+
+                    <div class="necessidade-servico">
+                        <h4>Requisitos: </h4>
+                        <h4>Experiência: </h4>
+                        <h4>Pagamento: </h4>
+                    </div>
+                </div>
+            </section>
+
+            <div class="botoes">
+                <button>Aceitar</button>
+                <button>Ver sobre</button>
+            </div>
+        </aside>
+    </section>
+
     <main id="principal">
         <section id="sessao">
             <article id="post-img">
@@ -214,7 +242,7 @@
                     <h3>Eletricista</h3>
                     <p>Sobre o serviço disponível</p>
                     <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                    <button class="botao-ver-mais" id="abrirModelo">Ver mais</button>
+                    <button class="botao-ver-mais" onclick="modelo('abrir')">Ver mais</button>
                 </article>
 
                 <article class="servicos">
@@ -222,7 +250,7 @@
                     <h3>Cuidadora de Animais</h3>
                     <p>Sobre o serviço disponível</p>
                     <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                    <button class="botao-ver-mais">Ver mais</button>
+                    <button class="botao-ver-mais" onclick="modelo('abrir')">Ver mais</button>
                 </article>
 
                 <article class="servicos">
@@ -230,7 +258,7 @@
                     <h3>Faxinheira</h3>
                     <p>Sobre o serviço disponível</p>
                     <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                    <button class="botao-ver-mais">Ver mais</button>
+                    <button class="botao-ver-mais" onclick="modelo('abrir')">Ver mais</button>
                 </article>
 
                 <article class="servicos">
@@ -238,7 +266,7 @@
                     <h3>Baba</h3>
                     <p>Sobre o serviço disponível</p>
                     <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                    <button class="botao-ver-mais">Ver mais</button>
+                    <button class="botao-ver-mais" onclick="modelo('abrir')">Ver mais</button>
                 </article>
             </section>
         </section>
@@ -250,21 +278,21 @@
                     <h3>Título do assunto</h3>
                     <img src="./img/condomino.png" alt="">
                     <figcaption>Sobre o assunto do condomínio</figcaption>
-                    <button class="botao-ver-mais">Ver mais</button>
+                    <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
                 </figure>
 
                 <figure class="card-noticias">
                     <h3>Título do assunto</h3>
                     <img src="./img/condomino.png" alt="">
                     <figcaption>Sobre o assunto do condomínio</figcaption>
-                    <button class="botao-ver-mais">Ver mais</button>
+                    <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
                 </figure>
 
                 <figure class="card-noticias">
                     <h3>Título do assunto</h3>
                     <img src="./img/condomino.png" alt="">
                     <figcaption>Sobre o assunto do condomínio</figcaption>
-                    <button class="botao-ver-mais">Ver mais</button>
+                    <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
                 </figure>
             </div>
         </aside>

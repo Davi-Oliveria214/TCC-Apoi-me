@@ -295,138 +295,164 @@ input[type="text"] {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(var(--preto-rgba), 0.8);
   align-items: center;
   justify-content: center;
   z-index: 1000;
   transition: opacity 0.3s;
 }
 
-/* CARD DO MODELO */
+/* --- Card do Modal --- */
 .modelo-card {
   position: relative;
+  max-width: 700px;
+  width: 90%;
+  padding: 25px 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 20px;
   background-color: var(--dourado-palido);
-  padding: 30px 40px;
-  gap: 25px;
   border-radius: 15px;
-  color: var(--verde-musgo);
-  max-width: 80%;
-  box-shadow: var(--sombra-padrao);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.modelo-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--sombra-hover);
+  box-shadow: 0 10px 20px rgba(var(--preto-rgba), 0.4);
 }
 
 .modelo-card>h2 {
-  color: var(--preto-acinzentado);
-  border-bottom: 3px solid var(--verde-musgo-medio);
+  color: var(--verde-musgo);
+  font-size: 2rem;
+  margin: 0;
+  border-bottom: 3px solid var(--dourado);
   padding-bottom: 5px;
 }
 
+/* --- Informações Internas --- */
+.info-modelo {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.img-servico {
+  width: 40%;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 4px solid var(--verde-musgo-medio);
+}
+
+.informacoes-servico {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 60%;
+}
+
+/* Área de Descrição/Conteúdo */
+.sobre-servico {
+  padding: 15px;
+  background-color: var(--dourado-fraco);
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(var(--verde-musgo-rgba), 0.1);
+}
+
+.sobre-servico>h3 {
+  color: var(--verde-musgo);
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.sobre-servico>p {
+  display: block;
+  height: 200px;
+  overflow-y: auto;
+  font-size: 1rem;
+  color: var(--preto-acinzentado);
+  padding-right: 10px;
+}
+
+.necessidade-servico {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 0;
+  color: var(--verde-musgo);
+}
+
+.necessidade-servico>h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* --- Botão Fechar (X) --- */
 .fechar {
   position: absolute;
-  right: 15px;
-  top: 5px;
-  font-size: 38px;
-  color: var(--verde-musgo);
   cursor: pointer;
-  transition: color 0.2s, transform 0.2s;
+  top: 10px;
+  right: 15px;
+  font-size: 2.5rem;
+  transition: 0.3s ease;
+  color: var(--verde-musgo-medio);
+  line-height: 1;
 }
 
 .fechar:hover {
   color: var(--preto-acinzentado);
+  transform: scale(1.1);
 }
 
-/* INFORMAÇÕES DO MODELO */
-.info-modelo {
-  display: flex;
-  gap: 30px;
-}
-
-.informacoes-servico {
-  max-width: 400px;
-  max-height: 300px;
-  padding: 15px;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  background-color: rgba(var(--verde-musgo-palido-rgba), 0.5);
-  border: 2px solid var(--verde-musgo-medio);
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.sobre-servico {
-  width: 100%;
-  height: 70%;
-  line-height: 1.5;
-  padding: 5px;
-  border-radius: 10px;
-}
-
-.sobre-servico p {
-  width: 100%;
-  height: 90%;
-  padding: 10px;
-  text-align: justify;
-  background-color: rgba(var(--preto-rgba), 0.1);
-  border-radius: 10px;
-  overflow-y: scroll;
-}
-
-.necessidade-servico {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.img-servico {
-  width: 400px;
-  max-height: 300px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-/* ===========================
-   BOTÕES DO MODELO
-=========================== */
+/* --- Botões de Ação --- */
 .botoes {
-  width: 100%;
   display: flex;
-  justify-content: center;
-  gap: 30px;
+  gap: 20px;
+  margin-top: 10px;
 }
 
-.botoes input {
+.botoes>button {
+  cursor: pointer;
   padding: 10px 25px;
-  border-radius: 8px;
   font-size: 1.1rem;
   font-weight: bold;
-  background-color: var(--dourado-fraco);
-  color: var(--preto-acinzentado);
-  cursor: pointer;
-  transition: 0.3s;
+  color: var(--branco);
+  background-color: var(--dourado);
+  border-radius: 8px;
+  transition: 0.3s ease;
+  border: 2px solid var(--verde-musgo-medio);
+  box-shadow: 0 3px 5px rgba(var(--preto-rgba), 0.2);
 }
 
-.botoes input:hover {
-  background-color: var(--dourado-palido);
-  transform: translateY(-2px);
+.botoes>button:hover {
+  transform: translateY(-3px);
+  background-color: var(--verde-musgo);
+  border-color: var(--dourado);
 }
 
-.botao-ver-mais {
-  padding: 5px 20px;
-  font-size: large;
-  font-family: "FonteBotao";
-  background: transparent;
-  cursor: pointer;
-  text-decoration: underline;
+/* --- Responsividade (Opcional, mas recomendado) --- */
+@media (max-width: 768px) {
+  .modelo-card {
+    max-width: 95%;
+    padding: 20px;
+  }
+
+  .info-modelo {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .img-servico, .informacoes-servico {
+    width: 100%;
+    max-height: none;
+  }
+
+  .sobre-servico>p {
+    height: 150px;
+  }
+
+  .botoes {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 /* ===========================
