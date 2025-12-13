@@ -501,6 +501,7 @@ input[type="text"] {
   border-radius: 8px;
   background-color: var(--dourado-palido);
   border: 3px solid var(--dourado);
+  color: var(--preto-acinzentado);
 }
 
 .entrar-cadastrar {
