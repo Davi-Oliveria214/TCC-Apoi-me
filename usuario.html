@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/app.js" defer></script>
+</head>
+
+<body>
+    <header id="topo-cabecalho">
+        <a id="img-titulo" href="index.html "><img src="./img/condomino.png" alt=""></a>
+        <input class="pesquisa" type="text" placeholder="Pesquise">
+
+        <div id="burguer">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <div id="menu-navegacao">
+            <div class="fundo-menu">
+                <a href="./usuario.html"><img src="./img/condomino.png" alt=""></a>
+                <nav>
+                    <ul>
+                        <li><a href="./index.html">Início</a></li>
+                        <li><a href="./servicos.html">Serviços</a></li>
+                        <li><a href="./contato.html">Contato</a></li>
+                        <li><a href="./sobre.html">Institucional</a></li>
+                        <li><a href="./cadastro.html">Cadastro</a></li>
+                        <li><a href="./login.html">Login</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <style>
+        .principal-user {
+            width: 100dvw;
+            height: 90vh;
+            display: flex;
+        }
+
+        .info-user {
+            width: 20%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px 10px;
+            font-size: 1.4rem;
+            background-color: var(--verde-musgo-palido);
+        }
+
+        .info-user>figure {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-user img {
+            width: 100px;
+            border-radius: 50%;
+        }
+
+        .btn-user>button {
+            font-size: 1.1rem;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: var(--verde-musgo-medio);
+            color: var(--dourado-fraco);
+            transition: 0.2s ease;
+        }
+
+        .btn-user>button:hover {
+            background-color: var(--dourado-palido);
+            color: var(--verde-musgo);
+            transform: scale(1.02);
+        }
+
+        /* Estilo dos serviços */
+        .servicos-mostrar {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            padding: 10px 25px;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .servicos-user {
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 45%;
+            height: 525px;
+            background-color: var(--verde-musgo-palido);
+        }
+
+        .servicos-user h2 {
+            border-radius: 20px 20px 0px 0px;
+            font-size: 1.5rem;
+            background-color: var(--verde-musgo);
+            padding: 5px;
+        }
+
+        .lista-servicos {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            overflow-y: scroll;
+        }
+
+        .botoes-servicos {
+            display: flex;
+            gap: 10px;
+            padding: 10px 5px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-servico {
+            padding: 10px 15px;
+            font-family: "FonteBotao";
+            font-size: 1rem;
+            background-color: var(--verde-musgo-medio);
+            color: var(--dourado-fraco);
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-servico:hover {
+            background-color: var(--dourado);
+            color: var(--verde-musgo);
+            transform: scale(1.1);
+        }
+
+        /* Responsividade */
+        @media (max-width: 800px) {
+            .servicos-mostrar{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .servicos-user{
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .principal-user {
+                width: 100dvw;
+                min-height: 90vh;
+                flex-direction: column;
+            }
+
+            .info-user{
+                width: 100%;
+            }
+
+            .servicos-mostrar{
+                display: flex;
+                flex-direction: column;
+            }
+
+            .servicos-user{
+                width: 100%;
+            }
+        }
+    </style>
+
+    <main class="principal-user">
+        <section class="info-user">
+            <figure>
+                <img src="./img/condomino.png" alt="">
+                <figcaption>Nome: usuario</figcaption>
+            </figure>
+            <div class="btn-user">
+                <button>Editar Perfil</button>
+            </div>
+        </section>
+        <section class="servicos-mostrar">
+            <section class="servicos-user">
+                <h2>Serviços Oferecidos</h2>
+                <div class="lista-servicos oferecidos">
+                    <article class="card-servicos">
+                        <img src="./img/eletricista.jpg" alt="">
+                        <h3>Eletricista</h3>
+                        <p>Sobre o serviço disponível</p>
+                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                        <div class="botoes-servicos">
+                            <button class="btn-servico editar">Editar</button>
+                            <button class="btn-servico remover">Remover</button>
+                        </div>
+                    </article>
+
+                    <article class="card-servicos">
+                        <img src="./img/cuidador-de-cachorro.jpg" alt="">
+                        <h3>Cuidadora de Animais</h3>
+                        <p>Sobre o serviço disponível</p>
+                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                        <div class="botoes-servicos">
+                            <button class="btn-servico editar">Editar</button>
+                            <button class="btn-servico remover">Remover</button>
+                        </div>
+                    </article>
+
+                    <article class="card-servicos">
+                        <img src="./img/faxineira.jpg" alt="">
+                        <h3>Faxinheira</h3>
+                        <p>Sobre o serviço disponível</p>
+                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                        <div class="botoes-servicos">
+                            <button class="btn-servico editar">Editar</button>
+                            <button class="btn-servico remover">Remover</button>
+                        </div>
+                    </article>
+
+                    <article class="card-servicos">
+                        <img src="./img/baba.jpg" alt="">
+                        <h3>Baba</h3>
+                        <p>Sobre o serviço disponível</p>
+                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                        <div class="botoes-servicos">
+                            <button class="btn-servico editar">Editar</button>
+                            <button class="btn-servico remover">Remover</button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section class="servicos-user contratados">
+                <h2>Serviços Contratados</h2>
+                <div class="lista-servicos contratados">
+                    <article class="card-servicos">
+                        <img src="./img/eletricista.jpg" alt="">
+                        <h3>Eletricista</h3>
+                        <p>Sobre o serviço disponível</p>
+                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                        <div class="botoes-servicos">
+                            <button class="btn-servico ver-mais">Ver mais</button>
+                            <button class="btn-servico cancelar">Cancelar</button>
+                        </div>
+                    </article>
+
+                    <article class="card-servicos">
+                        <img src="./img/cuidador-de-cachorro.jpg" alt="">
+                        <h3>Cuidadora de Animais</h3>
+                        <p>Sobre o serviço disponível</p>
+                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                        <div class="botoes-servicos">
+                            <button class="btn-servico ver-mais">Ver mais</button>
+                            <button class="btn-servico cancelar">Cancelar</button>
+                        </div>
+                    </article>
+
+                    <article class="card-servicos">
+                        <img src="./img/faxineira.jpg" alt="">
+                        <h3>Faxinheira</h3>
+                        <p>Sobre o serviço disponível</p>
+                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                        <div class="botoes-servicos">
+                            <button class="btn-servico ver-mais">Ver mais</button>
+                            <button class="btn-servico cancelar">Cancelar</button>
+                        </div>
+                    </article>
+
+                    <article class="card-servicos">
+                        <img src="./img/baba.jpg" alt="">
+                        <h3>Baba</h3>
+                        <p>Sobre o serviço disponível</p>
+                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
+                        <div class="botoes-servicos">
+                            <button class="btn-servico ver-mais">Ver mais</button>
+                            <button class="btn-servico cancelar">Cancelar</button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="./js/app.js"></script>
+</body>
+
+</html>

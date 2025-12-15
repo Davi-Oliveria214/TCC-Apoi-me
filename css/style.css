@@ -67,7 +67,7 @@ input[type="text"] {
    ELEMENTOS PADRÃO
 =========================== */
 #sessao-servicos,
-.servicos,
+.card-servicos,
 #post-img {
   border-radius: 20px;
 }
@@ -402,7 +402,7 @@ input[type="text"] {
   transform: scale(1.1);
 }
 
-/* --- Botões de Ação --- */
+/* Botões */
 .botoes {
   display: flex;
   gap: 10px;
@@ -411,8 +411,9 @@ input[type="text"] {
 
 .botoes>button {
   cursor: pointer;
-  padding: 10px 25px;
+  padding: 5px 20px;
   font-size: 1.1rem;
+  letter-spacing: 1px;
   font-weight: bold;
   color: var(--branco);
   background-color: var(--dourado);
@@ -525,9 +526,9 @@ input[type="text"] {
 /* ===========================
       CARDS DE SERVIÇO
 =========================== */
-.servicos {
+.card-servicos {
   width: 250px;
-  min-height: 300px;
+  min-height: 350px;
   padding: 15px;
   background-color: var(--dourado-fraco);
   border: 1px solid var(--dourado-palido);
@@ -541,12 +542,12 @@ input[type="text"] {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.servicos:hover {
+.card-servicos:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(12, 58, 63, 0.3);
 }
 
-.servicos img {
+.card-servicos img {
   width: 100%;
   height: 150px;
   object-fit: cover;
@@ -554,19 +555,19 @@ input[type="text"] {
   border: 1px solid var(--verde-musgo-palido);
 }
 
-.servicos h3 {
+.card-servicos h3 {
   color: var(--verde-musgo);
   font-size: 1.3rem;
   margin-top: 5px;
 }
 
-.servicos p, .servicos data {
+.card-servicos p, .card-servicos data {
   color: var(--preto-acinzentado);
   font-size: 0.9rem;
   margin: 5px 0;
 }
 
-.servicos data {
+.card-servicos data {
   font-style: italic;
   opacity: 0.8;
 }
