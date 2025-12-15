@@ -10,33 +10,6 @@
 </head>
 
 <body>
-    <header id="topo-cabecalho">
-        <a id="img-titulo" href="index.html "><img src="./img/condomino.png" alt=""></a>
-        <input class="pesquisa" type="text" placeholder="Pesquise">
-
-        <div id="burguer">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-
-        <div id="menu-navegacao">
-            <div class="fundo-menu">
-                <img src="./img/condomino.png" alt="">
-                <nav>
-                    <ul>
-                        <li><a href="./index.html">Início</a></li>
-                        <li><a href="./servicos.html">Serviços</a></li>
-                        <li><a href="./contato.html">Contato</a></li>
-                        <li><a href="./sobre.html">Institucional</a></li>
-                        <li><a href="./cadastro.html">Cadastro</a></li>
-                        <li><a href="./login.html">Login</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-
     <style>
         /* CONTATO */
         #contato {
@@ -96,7 +69,7 @@
             min-height: 100px;
         }
 
-        .fale-conosco input[type="submit"] {
+        #btn-enviar {
             background-color: var(--verde-musgo);
             color: var(--dourado-fraco);
             padding: 12px 20px;
@@ -105,7 +78,7 @@
             font-size: 18px;
         }
 
-        .fale-conosco input[type="submit"]:hover {
+        #btn-enviar:hover {
             background-color: var(--verde-musgo-medio);
         }
 
@@ -120,21 +93,48 @@
         }
     </style>
 
+    <header id="topo-cabecalho">
+        <a id="img-titulo" href="index.html "><img src="./img/condomino.png" alt=""></a>
+        <input class="pesquisa" type="text" placeholder="Pesquise">
+
+        <div id="burguer">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <div id="menu-navegacao">
+            <div class="fundo-menu">
+                <img src="./img/condomino.png" alt="">
+                <nav>
+                    <ul>
+                        <li><a href="./index.html">Início</a></li>
+                        <li><a href="./servicos.html">Serviços</a></li>
+                        <li><a href="./contato.html">Contato</a></li>
+                        <li><a href="./sobre.html">Institucional</a></li>
+                        <li><a href="./cadastro.html">Cadastro</a></li>
+                        <li><a href="./login.html">Login</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
     <main id="contato">
         <form class="fale-conosco">
             <h1>Fale Conosco</h1>
             <div class="info-contato">
-                <input type="text" name="nomeCompleto" id="textNome" placeholder="Nome:">
+                <input type="text" name="nomeCompleto" id="textNome" placeholder="Nome:" required>
 
-                <input type="text" name="sobrenome" id="textNome" placeholder="Sobrenome:">
+                <input type="text" name="sobrenome" id="textNome" placeholder="Sobrenome:" required>
 
-                <input type="email" name="e-mail" id="textEmail" placeholder="E-mail">
+                <input type="email" name="e-mail" id="textEmail" placeholder="E-mail" required>
 
-                <input type="tel" name="telefone" id="textTel" placeholder="Telefone:">
+                <input type="tel" name="telefone" id="textTel" placeholder="Telefone:" required>
 
-                <textarea name="comentarios" id="" placeholder="Comentários:"></textarea>
+                <textarea name="comentarios" placeholder="Comentários:" id="comentarios" required></textarea>
 
-                <input type="submit" value="Enviar">
+                <button type="submit" id="btn-enviar">Enviar</button>
             </div>
         </form>
     </main>
