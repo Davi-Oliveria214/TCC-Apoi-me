@@ -294,7 +294,7 @@ input[type="text"] {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   background-color: rgba(var(--preto-rgba), 0.8);
   align-items: center;
   justify-content: center;
