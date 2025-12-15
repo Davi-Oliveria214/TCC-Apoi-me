@@ -432,6 +432,7 @@ input[type="text"] {
 @media (max-width: 768px) {
   .modelo-card {
     max-width: 95%;
+    max-height: 70dvh;
     padding: 20px;
   }
 
