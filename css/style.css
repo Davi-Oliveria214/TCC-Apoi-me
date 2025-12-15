@@ -29,12 +29,12 @@ input[type="text"] {
 =========================== */
 @font-face {
   font-family: "RobotoMedio";
-  src: url("/font/Roboto/static/Roboto_SemiCondensed-Medium.ttf");
+  src: url("./font/Roboto/static/Roboto_SemiCondensed-Medium.ttf");
 }
 
 @font-face {
   font-family: "FonteBotao";
-  src: url("/font/Roboto/static/Roboto_Condensed-ExtraBold.ttf");
+  src: url("./font/Roboto/static/Roboto_Condensed-ExtraBold.ttf");
   font-weight: 900;
 }
 
