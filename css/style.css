@@ -163,6 +163,7 @@ input[type="text"] {
 #menu-navegacao img {
   width: 70px;
   border-radius: 50%;
+  display: block;
 }
 
 .fundo-menu {
