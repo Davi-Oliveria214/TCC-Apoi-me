@@ -44,19 +44,22 @@
             display: flex;
         }
 
+        /* Informações do usuário */
         .info-user {
             width: 20%;
             height: 100%;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-evenly;
-            padding: 25px 10px;
+            justify-content: space-between;
             font-size: 1.4rem;
             background-color: var(--verde-musgo-palido);
+            gap: 10px;
         }
 
         .info-user>figure {
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -66,6 +69,13 @@
         .info-user img {
             width: 100px;
             border-radius: 50%;
+        }
+
+        .btn-user {
+            min-width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .btn-user>button {
@@ -82,6 +92,34 @@
             background-color: var(--dourado-palido);
             color: var(--verde-musgo);
             transform: scale(1.02);
+        }
+
+        .info-perfil {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .info-perfil>h3 {
+            color: var(--verde-musgo-medio);
+        }
+
+        .info-perfil>div {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .organizar-perfil {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        #btn-info-perfil{
+            display: none;
+            justify-content: center;
         }
 
         /* Estilo dos serviços */
@@ -148,6 +186,10 @@
 
         /* Responsividade */
         @media (max-width: 800px) {
+            .info-user {
+                min-width: 30%;
+            }
+
             .servicos-mostrar {
                 display: flex;
                 flex-direction: column;
@@ -178,6 +220,14 @@
             .servicos-user {
                 width: 100%;
             }
+
+            #btn-info-perfil{
+                display: flex;
+            }
+
+            #info-perfil{
+                display: none;
+            }
         }
     </style>
 
@@ -187,8 +237,28 @@
                 <img src="./img/condomino.png" alt="">
                 <figcaption>Nome: usuario</figcaption>
             </figure>
+            <section class="info-perfil" id="info-perfil">
+                <h3>Informações</h3>
+                <div>
+                    <div class="organizar-perfil">
+                        <h4>Condomino</h4>
+                        <p>Rua...</p>
+                    </div>
+                    <div class="organizar-perfil">
+                        <h4>Apartamento</h4>
+                        <p>N° 295</p>
+                    </div>
+                    <div class="organizar-perfil">
+                        <h4>Serviços</h4>
+                        <p>Feitos: 10</p>
+                        <p>Contratados: 25</p>
+                    </div>
+                </div>
+            </section>
             <div class="btn-user">
+                <button id="btn-info-perfil">Informações do perfil</button>
                 <button>Editar Perfil</button>
+                <button>Sair</button>
             </div>
         </section>
         <section class="servicos-mostrar">
