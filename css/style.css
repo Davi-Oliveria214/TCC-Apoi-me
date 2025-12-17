@@ -62,7 +62,6 @@ input[type="text"] {
   --dourado-fraco-rgba: 255, 230, 167;
 }
 
-
 /* ===========================
    ELEMENTOS PADRÃO
 =========================== */
@@ -529,68 +528,80 @@ input[type="text"] {
       CARDS DE SERVIÇO
 =========================== */
 .card-servicos {
-  width: 250px;
-  min-height: 350px;
-  padding: 15px;
-  background-color: var(--dourado-fraco);
-  border: 1px solid var(--dourado-palido);
-  box-shadow: 0 4px 10px rgba(45, 96, 87, 0.1);
+  width: 280px;
+  min-height: 380px;
+  background: var(--verde-musgo);
+  padding: 0;
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  text-align: center;
-  border-radius: 15px;
-  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(var(--preto-rgba), 0.3);
+  border: 1px solid rgba(var(--dourado-rgba), 0.5);
+  transition: transform 0.3s ease;
 }
 
 .card-servicos:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(12, 58, 63, 0.3);
+  border-color: var(--dourado-palido);
 }
 
-.card-servicos img {
+.card-servicos>img {
   width: 100%;
-  height: 150px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 10px;
-  border: 1px solid var(--verde-musgo-palido);
+  filter: brightness(0.9);
 }
 
-.card-servicos h3 {
-  color: var(--verde-musgo);
-  font-size: 1.3rem;
-  margin-top: 5px;
+.card-conteudo {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.card-servicos p, .card-servicos data {
-  color: var(--preto-acinzentado);
+.card-sobre {
+  height: 80px;
+}
+
+.card-sobre h3 {
+  color: var(--dourado-palido);
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+.card-sobre p {
+  color: var(--verde-musgo-palido);
   font-size: 0.9rem;
-  margin: 5px 0;
+  margin: 5px 0 0 0;
+  line-height: 1.4;
 }
 
-.card-servicos data {
-  font-style: italic;
+.data-servico {
+  color: var(--dourado-fraco);
+  font-size: 1rem;
+  font-weight: bold;
+  display: block;
   opacity: 0.8;
 }
 
 .botao-ver-mais {
-  padding: 8px 25px;
-  font-family: "FonteBotao";
-  font-size: 1.1rem;
-  background-color: var(--verde-musgo-medio);
-  color: var(--dourado-fraco);
-  border-radius: 5px;
+  background: var(--dourado);
+  color: var(--preto-acinzentado);
   border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
   cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.3s, transform 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
 }
 
 .botao-ver-mais:hover {
-  background-color: var(--dourado);
-  color: var(--verde-musgo);
-  transform: scale(1.05);
+  background: var(--dourado-palido);
 }
 
 /* ===========================

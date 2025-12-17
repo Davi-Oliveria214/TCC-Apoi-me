@@ -63,14 +63,16 @@
             margin: 15px;
         }
 
+        /* Estilo dos cards de notícias */
         .card-noticias {
+            width: 250px;
             display: flex;
             flex-direction: column;
             align-items: center;
             border: 2px solid var(--verde-musgo-medio);
-            background-color: var(--dourado-fraco);
+            background-color: var(--verde-musgo);
             gap: 10px;
-            padding: 5px 10px;
+            padding: 15px 10px;
             border-radius: 20px;
         }
 
@@ -94,7 +96,7 @@
         #sessao-servicos {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 15px;
             padding: 10px 15px;
             max-height: 700px;
             justify-content: center;
@@ -238,35 +240,63 @@
 
             <section id="sessao-servicos">
                 <article class="card-servicos">
-                    <img src="./img/eletricista.jpg" alt="">
-                    <h3>Eletricista</h3>
-                    <p>Sobre o serviço disponível</p>
-                    <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                    <button class="botao-ver-mais" onclick="modelo('abrir')">Ver mais</button>
+                    <img src="./img/eletricista.jpg" alt="Eletricista">
+
+                    <div class="card-conteudo">
+                        <div class="card-sobre">
+                            <h3>Eletricista</h3>
+                            <p>Instalações residenciais, manutenção de quadros e reparos emergenciais.</p>
+                        </div>
+
+                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
+                    </div>
                 </article>
 
                 <article class="card-servicos">
-                    <img src="./img/cuidador-de-cachorro.jpg" alt="">
-                    <h3>Cuidadora de Animais</h3>
-                    <p>Sobre o serviço disponível</p>
-                    <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                    <button class="botao-ver-mais" onclick="modelo('abrir')">Ver mais</button>
+                    <img src="./img/baba.jpg" alt="Eletricista">
+
+                    <div class="card-conteudo">
+                        <div class="card-sobre">
+                            <h3>Baba</h3>
+                            <p>Cuido de crianças</p>
+                        </div>
+
+                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
+                    </div>
                 </article>
 
                 <article class="card-servicos">
-                    <img src="./img/faxineira.jpg" alt="">
-                    <h3>Faxinheira</h3>
-                    <p>Sobre o serviço disponível</p>
-                    <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                    <button class="botao-ver-mais" onclick="modelo('abrir')">Ver mais</button>
+                    <img src="./img/cuidador-de-cachorro.jpg" alt="Eletricista">
+
+                    <div class="card-conteudo">
+                        <div class="card-sobre">
+                            <h3>Cuidadora de animais</h3>
+                            <p>Cuido de animais e passeio com eles</p>
+                        </div>
+
+                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
+                    </div>
                 </article>
 
                 <article class="card-servicos">
-                    <img src="./img/baba.jpg" alt="">
-                    <h3>Baba</h3>
-                    <p>Sobre o serviço disponível</p>
-                    <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                    <button class="botao-ver-mais" onclick="modelo('abrir')">Ver mais</button>
+                    <img src="./img/faxineira.jpg" alt="Eletricista">
+
+                    <div class="card-conteudo">
+                        <div class="card-sobre">
+                            <h3>Faxineira</h3>
+                            <p>Limpeza de casas e apartamentos</p>
+                        </div>
+
+                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
+                    </div>
                 </article>
             </section>
         </section>

@@ -99,6 +99,9 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            background-color: rgba(var(--verde-musgo-medio-rgba), 0.2);
+            padding: 10px 5px;
+            border-radius: 20px;
         }
 
         .info-perfil>h3 {
@@ -117,7 +120,17 @@
             gap: 3px;
         }
 
-        #btn-info-perfil{
+        .organizar-perfil>h4 {
+            font-size: 1.1rem;
+            color: var(--dourado-palido);
+        }
+
+        .organizar-perfil>p {
+            font-size: 1rem;
+            color: var(--dourado-fraco);
+        }
+
+        #btn-info-perfil {
             display: none;
             justify-content: center;
         }
@@ -157,6 +170,7 @@
             overflow-y: scroll;
         }
 
+        /* Estilo dos botões */
         .botoes-servicos {
             display: flex;
             gap: 10px;
@@ -221,11 +235,11 @@
                 width: 100%;
             }
 
-            #btn-info-perfil{
+            #btn-info-perfil {
                 display: flex;
             }
 
-            #info-perfil{
+            #info-perfil {
                 display: none;
             }
         }
@@ -266,46 +280,74 @@
                 <h2>Serviços Oferecidos</h2>
                 <div class="lista-servicos oferecidos">
                     <article class="card-servicos">
-                        <img src="./img/eletricista.jpg" alt="">
-                        <h3>Eletricista</h3>
-                        <p>Sobre o serviço disponível</p>
-                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                        <div class="botoes-servicos">
-                            <button class="btn-servico editar">Editar</button>
-                            <button class="btn-servico remover">Remover</button>
+                        <img src="./img/eletricista.jpg" alt="Eletricista">
+
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Eletricista</h3>
+                                <p>Instalações residenciais, manutenção de quadros e reparos emergenciais.</p>
+                            </div>
+
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                            <div class="botoes-servicos">
+                                <button class="btn-servico editar">Editar</button>
+                                <button class="btn-servico remover">Remover</button>
+                            </div>
                         </div>
                     </article>
 
                     <article class="card-servicos">
-                        <img src="./img/cuidador-de-cachorro.jpg" alt="">
-                        <h3>Cuidadora de Animais</h3>
-                        <p>Sobre o serviço disponível</p>
-                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                        <div class="botoes-servicos">
-                            <button class="btn-servico editar">Editar</button>
-                            <button class="btn-servico remover">Remover</button>
+                        <img src="./img/baba.jpg" alt="Eletricista">
+
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Baba</h3>
+                                <p>Cuido de crianças</p>
+                            </div>
+
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                            <div class="botoes-servicos">
+                                <button class="btn-servico editar">Editar</button>
+                                <button class="btn-servico remover">Remover</button>
+                            </div>
                         </div>
                     </article>
 
                     <article class="card-servicos">
-                        <img src="./img/faxineira.jpg" alt="">
-                        <h3>Faxinheira</h3>
-                        <p>Sobre o serviço disponível</p>
-                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                        <div class="botoes-servicos">
-                            <button class="btn-servico editar">Editar</button>
-                            <button class="btn-servico remover">Remover</button>
+                        <img src="./img/cuidador-de-cachorro.jpg" alt="Eletricista">
+
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Cuidadora de animais</h3>
+                                <p>Cuido de animais e passeio com eles</p>
+                            </div>
+
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                            <div class="botoes-servicos">
+                                <button class="btn-servico editar">Editar</button>
+                                <button class="btn-servico remover">Remover</button>
+                            </div>
                         </div>
                     </article>
 
                     <article class="card-servicos">
-                        <img src="./img/baba.jpg" alt="">
-                        <h3>Baba</h3>
-                        <p>Sobre o serviço disponível</p>
-                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                        <div class="botoes-servicos">
-                            <button class="btn-servico editar">Editar</button>
-                            <button class="btn-servico remover">Remover</button>
+                        <img src="./img/faxineira.jpg" alt="Eletricista">
+
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Faxineira</h3>
+                                <p>Limpeza de casas e apartamentos</p>
+                            </div>
+
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                            <div class="botoes-servicos">
+                                <button class="btn-servico editar">Editar</button>
+                                <button class="btn-servico remover">Remover</button>
+                            </div>
                         </div>
                     </article>
                 </div>
@@ -314,46 +356,74 @@
                 <h2>Serviços Contratados</h2>
                 <div class="lista-servicos contratados">
                     <article class="card-servicos">
-                        <img src="./img/eletricista.jpg" alt="">
-                        <h3>Eletricista</h3>
-                        <p>Sobre o serviço disponível</p>
-                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                        <div class="botoes-servicos">
-                            <button class="btn-servico ver-mais">Ver mais</button>
-                            <button class="btn-servico cancelar">Cancelar</button>
+                        <img src="./img/eletricista.jpg" alt="Eletricista">
+
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Eletricista</h3>
+                                <p>Instalações residenciais, manutenção de quadros e reparos emergenciais.</p>
+                            </div>
+
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                            <div class="botoes-servicos">
+                                <button class="btn-servico ver-mais">Ver mais</button>
+                                <button class="btn-servico cancelar">Cancelar</button>
+                            </div>
                         </div>
                     </article>
 
                     <article class="card-servicos">
-                        <img src="./img/cuidador-de-cachorro.jpg" alt="">
-                        <h3>Cuidadora de Animais</h3>
-                        <p>Sobre o serviço disponível</p>
-                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                        <div class="botoes-servicos">
-                            <button class="btn-servico ver-mais">Ver mais</button>
-                            <button class="btn-servico cancelar">Cancelar</button>
+                        <img src="./img/baba.jpg" alt="Eletricista">
+
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Baba</h3>
+                                <p>Cuido de crianças</p>
+                            </div>
+
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                            <div class="botoes-servicos">
+                                <button class="btn-servico ver-mais">Ver mais</button>
+                                <button class="btn-servico cancelar">Cancelar</button>
+                            </div>
                         </div>
                     </article>
 
                     <article class="card-servicos">
-                        <img src="./img/faxineira.jpg" alt="">
-                        <h3>Faxinheira</h3>
-                        <p>Sobre o serviço disponível</p>
-                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                        <div class="botoes-servicos">
-                            <button class="btn-servico ver-mais">Ver mais</button>
-                            <button class="btn-servico cancelar">Cancelar</button>
+                        <img src="./img/cuidador-de-cachorro.jpg" alt="Eletricista">
+
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Cuidadora de animais</h3>
+                                <p>Cuido de animais e passeio com eles</p>
+                            </div>
+
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                            <div class="botoes-servicos">
+                                <button class="btn-servico ver-mais">Ver mais</button>
+                                <button class="btn-servico cancelar">Cancelar</button>
+                            </div>
                         </div>
                     </article>
 
                     <article class="card-servicos">
-                        <img src="./img/baba.jpg" alt="">
-                        <h3>Baba</h3>
-                        <p>Sobre o serviço disponível</p>
-                        <data value="">Data: xx/xx/xx a xx/xx/xx</data>
-                        <div class="botoes-servicos">
-                            <button class="btn-servico ver-mais">Ver mais</button>
-                            <button class="btn-servico cancelar">Cancelar</button>
+                        <img src="./img/faxineira.jpg" alt="Eletricista">
+
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Faxineira</h3>
+                                <p>Limpeza de casas e apartamentos</p>
+                            </div>
+
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+
+                            <div class="botoes-servicos">
+                                <button class="btn-servico ver-mais">Ver mais</button>
+                                <button class="btn-servico cancelar">Cancelar</button>
+                            </div>
                         </div>
                     </article>
                 </div>
