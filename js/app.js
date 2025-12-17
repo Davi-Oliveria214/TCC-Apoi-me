@@ -53,7 +53,7 @@ function filtrar(resp) {
     const categoria = itens[i].dataset.categoria;
 
     if (resp === "todos" || categoria === resp) {
-      itens[i].style.display = "";
+      itens[i].style.display = "flex";
       disponivel = true;
     } else {
       itens[i].style.display = "none";
