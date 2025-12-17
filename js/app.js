@@ -1,6 +1,8 @@
+// Pega os elementos do menu
 const burguer = document.getElementById("burguer");
 const menu = document.getElementById("menu-navegacao");
 
+// Abre o menu ao clicar no burguer
 burguer.addEventListener("click", () => {
   burguer.classList.toggle("active");
   menu.style.display = "flex";
@@ -8,6 +10,7 @@ burguer.addEventListener("click", () => {
   menu.classList.add("abrir-menu");
 });
 
+// Fecha o menu ao clicar em algum link
 menu.addEventListener("click", () => {
   burguer.classList.remove("active");
   menu.classList.remove("abrir-menu");
@@ -18,6 +21,7 @@ menu.addEventListener("click", () => {
   }, 300);
 });
 
+// Abre e fecha o modelo
 function modelo(resp) {
   const modelo = document.getElementById("modelo");
   if (resp === "abrir") {
@@ -34,6 +38,7 @@ function modelo(resp) {
   }
 }
 
+// Filtra os serviços por categoria
 function filtrar(resp) {
   const lista = document.getElementById("todos-servicos");
   const itens = lista.querySelectorAll("#card-servicos");
@@ -43,26 +48,44 @@ function filtrar(resp) {
     lista.removeChild(aviso);
   }
 
-  var teste = false;
+  var disponivel = false;
   for (var i = 0; i < itens.length; i++) {
     const categoria = itens[i].dataset.categoria;
 
     if (resp === "todos" || categoria === resp) {
       itens[i].style.display = "";
-      teste = true;
+      disponivel = true;
     } else {
       itens[i].style.display = "none";
     }
   }
 
-  if (teste == false) {
+  if (disponivel == false) {
     const aviso = document.createElement("h2");
 
     aviso.textContent = "Nenhum serviço encontrado";
     aviso.classList.add("aviso");
     aviso.id = "aviso";
 
-   
     lista.appendChild(aviso);
   }
 }
+
+// Pega as informações do perfil
+const infoPerfil = document.getElementById("btn-info-perfil");
+const info = document.getElementById("info-perfil");
+
+// Abre e fecha as informações do perfil
+var infoAberta = false
+infoPerfil.addEventListener("click", () => {
+  if (infoAberta == false) {
+    info.style.display = "flex";
+    info.classList.add("abrir-info-perfil");
+    infoPerfil.textContent = "Fechar informações do perfil";
+  } else {
+    info.style.display = "none";
+    info.classList.remove("abrir-info-perfil");
+    infoPerfil.textContent = "Ver informações do perfil";
+  }
+  infoAberta = !infoAberta;
+});
