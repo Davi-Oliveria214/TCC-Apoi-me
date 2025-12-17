@@ -33,3 +33,36 @@ function modelo(resp) {
     modeloNoticia.style.display = "none";
   }
 }
+
+function filtrar(resp) {
+  const lista = document.getElementById("todos-servicos");
+  const itens = lista.querySelectorAll("#card-servicos");
+  const aviso = document.getElementById("aviso");
+
+  if (aviso != null) {
+    lista.removeChild(aviso);
+  }
+
+  var teste = false;
+  for (var i = 0; i < itens.length; i++) {
+    const categoria = itens[i].dataset.categoria;
+
+    if (resp === "todos" || categoria === resp) {
+      itens[i].style.display = "";
+      teste = true;
+    } else {
+      itens[i].style.display = "none";
+    }
+  }
+
+  if (teste == false) {
+    const aviso = document.createElement("h2");
+
+    aviso.textContent = "Nenhum serviço encontrado";
+    aviso.classList.add("aviso");
+    aviso.id = "aviso";
+
+   
+    lista.appendChild(aviso);
+  }
+}

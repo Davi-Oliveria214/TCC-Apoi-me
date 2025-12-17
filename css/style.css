@@ -636,3 +636,12 @@ input[type="text"] {
     padding: 20px;
   }
 }
+
+#aviso{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.7rem;
+  color: var(--verde-musgo-medio);
+}
