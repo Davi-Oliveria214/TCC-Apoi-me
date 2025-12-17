@@ -75,16 +75,18 @@ function filtrar(resp) {
 const infoPerfil = document.getElementById("btn-info-perfil");
 const info = document.getElementById("info-perfil");
 
+const teste = document.body;
+
 // Abre e fecha as informações do perfil
-var infoAberta = false
+var infoAberta = false;
 infoPerfil.addEventListener("click", () => {
   if (infoAberta == false) {
-    info.style.display = "flex";
+    info.classList.remove("fechar-info-perfil");
     info.classList.add("abrir-info-perfil");
     infoPerfil.textContent = "Fechar informações do perfil";
   } else {
-    info.style.display = "none";
     info.classList.remove("abrir-info-perfil");
+    info.classList.add("fechar-info-perfil");
     infoPerfil.textContent = "Ver informações do perfil";
   }
   infoAberta = !infoAberta;
