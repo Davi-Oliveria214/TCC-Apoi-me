@@ -1,5 +1,8 @@
 <?php
 include("./includes/cabecalho.php");
+include("./includes/conexao.php");
+
+$categorias = mysqli_query($con, "SELECT * FROM categorias;");
 ?>
 
 <style>
@@ -177,101 +180,42 @@ include("./includes/cabecalho.php");
 <main class="principal-inicial">
     <section class="inicial-escolha" id="filtro">
         <ul>
-            <li onclick="filtrar('todos')">Todos os serviços</li>
-            <li onclick="filtrar('domestico')">Domesticos</li>
-            <li onclick="filtrar('manutencao')">Manutenção</li>
-            <li onclick="filtrar('cuidados')">Cuidados</li>
-            <li onclick="filtrar('aulas')">Aulas particulares</li>
-            <li onclick="filtrar('vendas')">Vendas</li>
+            <?php
+            echo "<li onclick=filtrar(0)>Todos</li>";
+            while ($categoria = mysqli_fetch_assoc($categorias)) {
+                echo "<li onclick=filtrar($categoria[id])>$categoria[nome]</li>";
+            }
+            ?>
         </ul>
     </section>
 
     <section class="informacoes-inicial" id="todos-servicos">
-        <article id="card-servicos" class="card-servicos" data-categoria="manutencao">
-            <img src="./img/eletricista.jpg" alt="Eletricista">
+        <?php
 
-            <div class="card-conteudo">
-                <div class="card-sobre">
-                    <h3>Eletricista</h3>
-                    <p>Instalações residenciais, manutenção de quadros e reparos emergenciais.</p>
-                </div>
+        $servicos = mysqli_query($con, "SELECT s.nome AS nome, s.imagem AS imagem, s.descricao AS descricao, s.data_inicio AS inicio, s.data_fim AS fim, c.id AS categoria FROM oferecidos o JOIN servicos s ON o.id_servico=s.id JOIN categorias c ON o.id_categoria = c.id");
 
-                <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-
-                <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-            </div>
-        </article>
-
-        <article id="card-servicos" class="card-servicos" data-categoria="domestico">
-            <img src="./img/baba.jpg" alt="Eletricista">
-
-            <div class="card-conteudo">
-                <div class="card-sobre">
-                    <h3>Baba</h3>
-                    <p>Cuido de crianças</p>
-                </div>
-
-                <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-
-                <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-            </div>
-        </article>
-
-        <article id="card-servicos" class="card-servicos" data-categoria="cuidados">
-            <img src="./img/cuidador-de-cachorro.jpg" alt="Eletricista">
-
-            <div class="card-conteudo">
-                <div class="card-sobre">
-                    <h3>Cuidadora de animais</h3>
-                    <p>Cuido de animais e passeio com eles</p>
-                </div>
-
-                <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-
-                <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-            </div>
-        </article>
-
-        <article id="card-servicos" class="card-servicos" data-categoria="domestico">
-            <img src="./img/faxineira.jpg" alt="Eletricista">
-
-            <div class="card-conteudo">
-                <div class="card-sobre">
-                    <h3>Faxineira</h3>
-                    <p>Limpeza de casas e apartamentos</p>
-                </div>
-
-                <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-
-                <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-            </div>
-        </article>
+        while ($servico = mysqli_fetch_assoc($servicos)) {
+            echo "<article id=card-servicos class=card-servicos data-categoria=$servico[categoria]>";
+            echo "<img src=$servico[imagem] alt=Eletricista>";
+            echo "<div class=card-conteudo>";
+            echo "<div class=card-sobre>";
+            echo "<h3>$servico[nome]</h3>";
+            echo "<p>$servico[descricao]</p>";
+            echo "</div>";
+            echo "<data value=class=data-servico>Disponível: $servico[inicio]</data>";
+            echo "<data value=class=data-servico>Disponível: $servico[fim]</data>";
+            echo "<button class=botao-ver-mais onclick=modelo(abrir)>Ver detalhes</button>";
+            echo "</div>";
+            echo "</article>";
+        }
+        ?>
     </section>
 
     <section class="parceros-principal">
         <img class="menu-img" src="./img/condomino.png" alt="">
     </section>
 </main>
-
-<footer class="rodape">
-    <ul>
-        <li><b>Institucional</b>
-            <p>Sobre a empresa <br> Parceiros <br> Politica de privacidade </p>
-        </li>
-        <li><b>Atendimento</b>
-            <p>Fale Conosco <br> apoie_mi@gmail.com <br> (11) 1111-1111 </p>
-        </li>
-        <li><b>Área do cliente:</b>
-            <p>Minha Conta <br> Chat Online <br> Cadastre-se</p>
-        </li>
-    </ul>
-
-    <aside class="redes-socias">
-        <img src="img/instagram-icon.png" alt="">
-        <img src="img/tiktok-icon.png" alt="">
-        <img src="img/youtube-icon.png" alt="">
-    </aside>
-</footer>
+<?php include("./includes/rodape.php"); ?>
 </body>
 
 </html>

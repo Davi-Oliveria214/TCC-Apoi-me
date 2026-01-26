@@ -39,36 +39,13 @@ function modelo(resp) {
 }
 
 // Filtra os serviços por categoria
-function filtrar(resp) {
-  const lista = document.getElementById("todos-servicos");
-  const itens = lista.querySelectorAll("#card-servicos");
-  const aviso = document.getElementById("aviso");
-
-  if (aviso != null) {
-    lista.removeChild(aviso);
-  }
-
-  var disponivel = false;
-  for (var i = 0; i < itens.length; i++) {
-    const categoria = itens[i].dataset.categoria;
-
-    if (resp === "todos" || categoria === resp) {
-      itens[i].style.display = "flex";
-      disponivel = true;
-    } else {
-      itens[i].style.display = "none";
-    }
-  }
-
-  if (disponivel == false) {
-    const aviso = document.createElement("h2");
-
-    aviso.textContent = "Nenhum serviço encontrado";
-    aviso.classList.add("aviso");
-    aviso.id = "aviso";
-
-    lista.appendChild(aviso);
-  }
+function filtrar(categoria) {
+  categoria =0;
+  $.ajax({
+    type: "post",
+    url: "index.php",
+    data: { resp: categoria }
+  });
 }
 
 // Pega as informações do perfil
