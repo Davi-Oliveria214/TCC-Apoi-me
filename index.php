@@ -1,8 +1,6 @@
 <?php
 include("./includes/cabecalho.php");
-include("./includes/conexao.php");
-
-$categorias = mysqli_query($con, "SELECT * FROM categorias;");
+require("./includes/conexao.php");
 ?>
 
 <style>
@@ -181,8 +179,10 @@ $categorias = mysqli_query($con, "SELECT * FROM categorias;");
     <section class="inicial-escolha" id="filtro">
         <ul>
             <?php
+            $sql = mysqli_query($con, "SELECT * FROM categorias;");
+
             echo "<li onclick=filtrar(0)>Todos</li>";
-            while ($categoria = mysqli_fetch_assoc($categorias)) {
+            while ($categoria = mysqli_fetch_assoc($sql)) {
                 echo "<li onclick=filtrar($categoria[id])>$categoria[nome]</li>";
             }
             ?>
@@ -191,11 +191,10 @@ $categorias = mysqli_query($con, "SELECT * FROM categorias;");
 
     <section class="informacoes-inicial" id="todos-servicos">
         <?php
-
-        $servicos = mysqli_query($con, "SELECT s.nome AS nome, s.imagem AS imagem, s.descricao AS descricao, s.data_inicio AS inicio, s.data_fim AS fim, c.id AS categoria FROM oferecidos o JOIN servicos s ON o.id_servico=s.id JOIN categorias c ON o.id_categoria = c.id");
+        $servicos = mysqli_query($con, "SELECT s.nome AS nome, s.imagem AS imagem, s.descricao AS descricao, s.data_inicio AS inicio, s.data_fim AS fim, c.id AS id_categoria, c.nome AS nome_categoria FROM oferecidos o JOIN servicos s ON o.id_servico=s.id JOIN categorias c ON o.id_categoria = c.id");
 
         while ($servico = mysqli_fetch_assoc($servicos)) {
-            echo "<article id=card-servicos class=card-servicos data-categoria=$servico[categoria]>";
+            echo "<article class=card-servicos data-categoria=$servico[id_categoria]>";
             echo "<img src=$servico[imagem] alt=Eletricista>";
             echo "<div class=card-conteudo>";
             echo "<div class=card-sobre>";
@@ -207,8 +206,7 @@ $categorias = mysqli_query($con, "SELECT * FROM categorias;");
             echo "<button class=botao-ver-mais onclick=modelo(abrir)>Ver detalhes</button>";
             echo "</div>";
             echo "</article>";
-        }
-        ?>
+        } ?>
     </section>
 
     <section class="parceros-principal">
