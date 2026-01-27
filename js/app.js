@@ -1,17 +1,3 @@
-
-// Filtra os serviços por categoria
-function filtrar(categoria) {
-  console.log(categoria);
-  $.ajax({
-    type: "POST",
-    url: "./util/filtro.php",
-    data: { resp: categoria },
-    success: function (resposta) {
-      document.getElementById("todos-servicos").innerHTML = resposta;
-    }
-  });
-}
-
 // Pega os elementos do menu
 const burguer = document.getElementById("burguer");
 const menu = document.getElementById("menu-navegacao");
@@ -50,6 +36,19 @@ function modelo(resp) {
   } else {
     modeloNoticia.style.display = "none";
   }
+}
+
+// Filtra os serviços por categoria
+function filtrar(categoria) {
+  console.log(categoria);
+  $.ajax({
+    type: "POST",
+    url: "./util/filtro.php",
+    data: { resp: categoria },
+    success: function (resposta) {
+      document.getElementById("todos-servicos").innerHTML = resposta;
+    }
+  });
 }
 
 // Pega as informações do perfil
