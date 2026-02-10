@@ -1,7 +1,7 @@
 <?php
-$senha = file_get_contents(__DIR__ . '/../senhas.txt');
+// $senha = file_get_contents(__DIR__ . '/../senhas.txt');
 
-$con = mysqli_connect('127.0.0.1:3307', 'root', $senha, 'bd_apoi_me');
+$con = mysqli_connect('127.0.0.1:3307', 'root', 'etec', 'bd_apoi_me');
 if (!$con) {
     die("Erro: " . mysqli_connect_error());
 }

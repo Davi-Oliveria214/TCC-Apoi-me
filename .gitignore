@@ -1,4 +1,5 @@
 desktop.ini
 textos.txt
 senhas.txt
-database
+database/bd_apoi_me.sql
+.vscode

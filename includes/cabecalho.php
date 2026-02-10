@@ -13,7 +13,7 @@
 <body>
 
     <header id="topo-cabecalho">
-        <a class="img-titulo" href="index.html "><img src="./img/condomino.png" alt=""></a>
+        <a id="img-titulo" href="index.php "><img src="./img/condomino.png" alt=""></a>
         <input class="pesquisa" type="text" placeholder="Pesquise">
 
         <div id="burguer">
@@ -27,7 +27,7 @@
                 <a href="./usuario.html"><img src="./img/condomino.png" alt=""></a>
                 <nav>
                     <ul>
-                        <li><a href="./index.html">Início</a></li>
+                        <li><a href="./index.php">Início</a></li>
                         <li><a href="./servicos.html">Serviços</a></li>
                         <li><a href="./contato.html">Contato</a></li>
                         <li><a href="./sobre.html">Institucional</a></li>

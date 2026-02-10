@@ -22,25 +22,19 @@
             gap: 50px;
         }
 
-        /* POST IMG */
-        #post-img {
+        /* Avisos e postagens */
+        .avisos-postagens {
+            display: flex;
+            gap: 20px;
             padding: 10px;
         }
 
-        #post-img>figure {
-            display: flex;
-            flex-direction: column;
-        }
-
-        #post-img img {
+        .quadro-aviso {
             width: 100%;
-            max-height: 300px;
+            height: 80vh;
             object-fit: cover;
             border-radius: 10px;
-        }
-
-        #post-img>figure>h2 {
-            margin-top: 5px;
+            background-color: rgba(var(--preto-rgba), 0.2);
         }
 
         /* POSTAGENS */
@@ -62,6 +56,7 @@
             gap: 20px;
             margin: 15px;
         }
+
 
         /* Estilo dos cards de notícias */
         .card-noticias {
@@ -93,16 +88,21 @@
             gap: 15px;
         }
 
-        #sessao-servicos {
+        #sessao-servicos>div {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             padding: 10px 15px;
+            width: 100%;
             max-height: 700px;
             justify-content: center;
             background-color: rgba(var(--dourado-palido-rgba), 0.3);
             box-shadow: 0px 10px 20px rgba(var(--preto-rgba), 0.2);
             overflow-y: scroll;
+        }
+
+        #sessao-servicos>h3 {
+            text-align: left;
         }
 
         @media (max-width: 700px) {
@@ -115,7 +115,7 @@
     </style>
 
     <header id="topo-cabecalho">
-        <a id="img-titulo" href="index.html "><img src="./img/condomino.png" alt=""></a>
+        <a id="img-titulo" href="index.php "><img src="./img/condomino.png" alt=""></a>
         <input class="pesquisa" type="text" placeholder="Pesquise">
 
         <div id="burguer">
@@ -129,7 +129,7 @@
                 <img src="./img/condomino.png" alt="">
                 <nav>
                     <ul>
-                        <li><a href="./index.html">Início</a></li>
+                        <li><a href="./index.php">Início</a></li>
                         <li><a href="./servicos.html">Serviços</a></li>
                         <li><a href="./contato.html">Contato</a></li>
                         <li><a href="./sobre.html">Institucional</a></li>
@@ -231,101 +231,85 @@
 
     <main id="principal">
         <section id="sessao">
-            <article id="post-img">
-                <figure>
-                    <img src="./img/mostrar.jpg" alt="">
-                    <h2>A solução mora ao lado</h2>
-                </figure>
-            </article>
+            <div class="avisos-postagens">
+                <div class="quadro-aviso">
+                </div>
+                <aside id="postagens">
+                    <h2>Notícias do condomínio</h2>
+                    <div>
+                        <figure class="card-noticias">
+                            <h3>Título do assunto</h3>
+                            <img src="./img/condomino.png" alt="">
+                            <figcaption>Sobre o assunto do condomínio</figcaption>
+                            <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
+                        </figure>
+                        <figure class="card-noticias">
+                            <h3>Título do assunto</h3>
+                            <img src="./img/condomino.png" alt="">
+                            <figcaption>Sobre o assunto do condomínio</figcaption>
+                            <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
+                        </figure>
+                        <figure class="card-noticias">
+                            <h3>Título do assunto</h3>
+                            <img src="./img/condomino.png" alt="">
+                            <figcaption>Sobre o assunto do condomínio</figcaption>
+                            <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
+                        </figure>
+                    </div>
+                </aside>
+            </div>
 
             <section id="sessao-servicos">
-                <article class="card-servicos">
-                    <img src="./img/eletricista.jpg" alt="Eletricista">
-
-                    <div class="card-conteudo">
-                        <div class="card-sobre">
-                            <h3>Eletricista</h3>
-                            <p>Instalações residenciais, manutenção de quadros e reparos emergenciais.</p>
+                <h3>Publicações <div></div>
+                </h3>
+                <div>
+                    <article class="card-servicos">
+                        <img src="./img/eletricista.jpg" alt="Eletricista">
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Eletricista</h3>
+                                <p>Instalações residenciais, manutenção de quadros e reparos emergenciais.</p>
+                            </div>
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+                            <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
                         </div>
-
-                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-
-                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-                    </div>
-                </article>
-
-                <article class="card-servicos">
-                    <img src="./img/baba.jpg" alt="Eletricista">
-
-                    <div class="card-conteudo">
-                        <div class="card-sobre">
-                            <h3>Baba</h3>
-                            <p>Cuido de crianças</p>
+                    </article>
+                    <article class="card-servicos">
+                        <img src="./img/baba.jpg" alt="Eletricista">
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Baba</h3>
+                                <p>Cuido de crianças</p>
+                            </div>
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+                            <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
                         </div>
-
-                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-
-                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-                    </div>
-                </article>
-
-                <article class="card-servicos">
-                    <img src="./img/cuidador-de-cachorro.jpg" alt="Eletricista">
-
-                    <div class="card-conteudo">
-                        <div class="card-sobre">
-                            <h3>Cuidadora de animais</h3>
-                            <p>Cuido de animais e passeio com eles</p>
+                    </article>
+                    <article class="card-servicos">
+                        <img src="./img/cuidador-de-cachorro.jpg" alt="Eletricista">
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Cuidadora de animais</h3>
+                                <p>Cuido de animais e passeio com eles</p>
+                            </div>
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+                            <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
                         </div>
-
-                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-
-                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-                    </div>
-                </article>
-
-                <article class="card-servicos">
-                    <img src="./img/faxineira.jpg" alt="Eletricista">
-
-                    <div class="card-conteudo">
-                        <div class="card-sobre">
-                            <h3>Faxineira</h3>
-                            <p>Limpeza de casas e apartamentos</p>
+                    </article>
+                    <article class="card-servicos">
+                        <img src="./img/faxineira.jpg" alt="Eletricista">
+                        <div class="card-conteudo">
+                            <div class="card-sobre">
+                                <h3>Faxineira</h3>
+                                <p>Limpeza de casas e apartamentos</p>
+                            </div>
+                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+                            <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
                         </div>
-
-                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-
-                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-                    </div>
-                </article>
+                    </article>
+                </div>
             </section>
         </section>
-
-        <aside id="postagens">
-            <h2>Notícias do condomínio</h2>
-            <div>
-                <figure class="card-noticias">
-                    <h3>Título do assunto</h3>
-                    <img src="./img/condomino.png" alt="">
-                    <figcaption>Sobre o assunto do condomínio</figcaption>
-                    <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
-                </figure>
-
-                <figure class="card-noticias">
-                    <h3>Título do assunto</h3>
-                    <img src="./img/condomino.png" alt="">
-                    <figcaption>Sobre o assunto do condomínio</figcaption>
-                    <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
-                </figure>
-
-                <figure class="card-noticias">
-                    <h3>Título do assunto</h3>
-                    <img src="./img/condomino.png" alt="">
-                    <figcaption>Sobre o assunto do condomínio</figcaption>
-                    <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
-                </figure>
-            </div>
-        </aside>
     </main>
 
     <footer class="rodape">

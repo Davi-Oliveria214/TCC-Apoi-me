@@ -85,7 +85,7 @@ input[type="text"] {
   background-color: var(--verde-musgo-medio);
 }
 
-#img-titulo>img {
+#img-titulo img {
   width: 50px;
   border-radius: 5px;
   border: 2px solid var(--branco);
@@ -442,7 +442,8 @@ input[type="text"] {
     gap: 15px;
   }
 
-  .img-servico, .informacoes-servico {
+  .img-servico,
+  .informacoes-servico {
     width: 100%;
     max-height: none;
   }
@@ -637,7 +638,7 @@ input[type="text"] {
   }
 }
 
-#aviso{
+#aviso {
   display: flex;
   align-items: center;
   justify-content: center;
