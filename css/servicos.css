@@ -1,104 +1,146 @@
-/* PRINCIPAL */
+/* =======================
+   PRINCIPAL
+======================= */
 .principal {
-    width: 100vw;
-    padding: 10px 20px;
     display: flex;
     flex-direction: column;
-    text-align: center;
-    justify-content: space-between;
-}
-
-.principal>h1 {
-    text-align: left;
-}
-
-/* Avisos e postagens */
-.principal>div {
-    display: flex;
-    gap: 15px;
-    padding: 15px;
-    align-items: center;
-    justify-content: center;
-}
-
-.quadro-aviso {
-    height: 80vh;
-    aspect-ratio: 2/1;
-    border-radius: 10px;
-    background-color: rgba(var(--preto-rgba), 0.2);
-}
-
-/* POSTAGENS */
-.postagens {
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 10px 15px;
-    border-radius: 20px;
-    background-color: rgba(var(--dourado-palido-rgba), 0.3);
-    box-shadow: 0px 10px 20px rgba(var(--preto-rgba), 0.2);
-}
-
-.postagens>div {
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    gap: 20px;
-    margin: 15px;
-}
-
-/* Estilo dos cards de notícias */
-.card-noticias {
-    width: 220px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    aspect-ratio: 2/2;
-    border: 2px solid var(--verde-musgo-medio);
-    background-color: var(--verde-musgo);
-    gap: 10px;
-    padding: 15px 10px;
-    border-radius: 20px;
-}
-
-.card-noticias>figcaption {
-    overflow-wrap: break-word;
-}
-
-.card-noticias>img {
-    width: 200px;
-    border-radius: 20px;
-}
-
-.sessao-servicos {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: rgba(var(--dourado-palido-rgba), 0.3);
-    box-shadow: 0px 10px 20px rgba(var(--preto-rgba), 0.2);
     gap: 10px;
 }
 
-.sessao-servicos>h2 {
-    text-align: left;
-}
 
-.sessao-servicos>div {
+/* =======================
+   AVISOS E EVENTOS
+======================= */
+.avisos-eventos {
     display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    padding: 10px 15px;
     width: 100%;
-    max-height: 700px;
-    justify-content: center;
-    overflow-y: scroll;
+    height: 45vh;
+    padding: 10px;
+    gap: 10px;
+
+    background-color: rgba(var(--preto-rgba), 0.2);
+    border-radius: 10px;
+
+    & .quadro {
+        border-radius: 10px;
+    }
+
+    & .reservados {
+        width: 80%;
+        height: 100%;
+        background-color: var(--verde-musgo-palido);
+    }
+
+    & .avisos {
+        width: 20%;
+        height: 100%;
+        padding: 10px;
+        background-color: var(--verde-musgo-palido);
+
+        & h2 {
+            text-align: center;
+        }
+
+        & div {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+            height: 90%;
+            gap: 15px;
+
+            overflow-y: auto;
+        }
+    }
 }
 
-@media (max-width: 700px) {
-    .principal {
+
+/* =======================
+   CARD AVISOS
+======================= */
+.card-avisos {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    padding: 5px;
+    gap: 5px;
+
+    border-radius: 10px;
+
+    background-color: aquamarine;
+
+    & .titulo-avisos {
         display: flex;
+
+        & img {
+            width: 50px;
+        }
+
+        & div {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            width: 70%;
+            gap: 0;
+
+            & h2 {
+                font-size: 0.9rem;
+                text-align: 0;
+            }
+        }
+    }
+
+    & .img-aviso {
+        width: 100%;
+        height: 100px;
+        border-radius: 5px;
+    }
+
+    & p {
+        text-align: justify;
+    }
+}
+
+/* =======================
+   RESPONSIVO
+======================= */
+@media (max-width: 750px) {
+    .avisos-eventos {
         flex-direction: column;
-        align-items: center;
+
+        & .quadro {
+            width: 100%;
+            height: 50%;
+        }
+    }
+}
+
+/* =======================
+   SERVIÇOS
+======================= */
+.servicos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 15px;
+
+    background-color: rgba(var(--verde-musgo-palido-rgba), 0.2);
+
+    & .sessao-servicos {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        width: 100%;
+        max-height: 50vh;
+        gap: 15px;
+        padding: 15px 20px;
+
+        background-color: rgba(var(--preto-rgba), 0.2);
+        overflow-y: auto;
     }
 }

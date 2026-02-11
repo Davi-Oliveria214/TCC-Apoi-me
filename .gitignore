@@ -1,5 +1,5 @@
 desktop.ini
 textos.txt
-senhas.txt
+.env
 database/bd_apoi_me.sql
 .vscode
