@@ -11,109 +11,6 @@
 </head>
 
 <body>
-    <style>
-        /* PRINCIPAL */
-        #principal {
-            width: 100vw;
-            padding: 20px 30px;
-            display: flex;
-            text-align: center;
-            justify-content: space-between;
-            gap: 50px;
-        }
-
-        /* Avisos e postagens */
-        .avisos-postagens {
-            display: flex;
-            gap: 20px;
-            padding: 10px;
-        }
-
-        .quadro-aviso {
-            width: 100%;
-            height: 80vh;
-            object-fit: cover;
-            border-radius: 10px;
-            background-color: rgba(var(--preto-rgba), 0.2);
-        }
-
-        /* POSTAGENS */
-        #postagens {
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px 25px;
-            border-radius: 20px;
-            background-color: rgba(var(--dourado-palido-rgba), 0.3);
-            box-shadow: 0px 10px 20px rgba(var(--preto-rgba), 0.2);
-        }
-
-        #postagens>div {
-            display: flex;
-            flex-direction: column;
-            overflow-y: scroll;
-            gap: 20px;
-            margin: 15px;
-        }
-
-
-        /* Estilo dos cards de notícias */
-        .card-noticias {
-            width: 250px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 2px solid var(--verde-musgo-medio);
-            background-color: var(--verde-musgo);
-            gap: 10px;
-            padding: 15px 10px;
-            border-radius: 20px;
-        }
-
-        .card-noticias>figcaption {
-            overflow-wrap: break-word;
-        }
-
-        .card-noticias>img {
-            width: 200px;
-            border-radius: 20px;
-        }
-
-        /* Serviços */
-        #sessao {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        #sessao-servicos>div {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 10px 15px;
-            width: 100%;
-            max-height: 700px;
-            justify-content: center;
-            background-color: rgba(var(--dourado-palido-rgba), 0.3);
-            box-shadow: 0px 10px 20px rgba(var(--preto-rgba), 0.2);
-            overflow-y: scroll;
-        }
-
-        #sessao-servicos>h3 {
-            text-align: left;
-        }
-
-        @media (max-width: 700px) {
-            #principal {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
-
     <header id="topo-cabecalho">
         <a id="img-titulo" href="index.php "><img src="./img/condomino.png" alt=""></a>
         <input class="pesquisa" type="text" placeholder="Pesquise">
@@ -141,174 +38,84 @@
         </div>
     </header>
 
-    <section id="modeloNoticia" class="modal">
-        <aside class="modelo-card">
-            <span id="fecharModelo" class="fechar" onclick="modelo('fecharNoticia')">&times;</span>
-            <h2>Nome do Serviço</h2>
-            <section class="info-modelo">
-                <img src="./img/cuidador-de-cachorro.jpg" alt="" class="img-servico">
-                <div class="informacoes-servico">
-                    <div class="sobre-servico">
-                        <h3>Concerto da caixa da água</h3>
-                        <p>Este card foi criado para fornecer aos usuários uma experiência clara e organizada,
-                            permitindo
-                            que mensagens importantes sejam destacadas de forma elegante. Aqui você pode colocar
-                            instruções
-                            detalhadas, avisos, dicas de uso ou qualquer conteúdo que mereça atenção imediata.
-
-                            O objetivo é que, ao abrir este card, você consiga transmitir informações de forma objetiva,
-                            sem
-                            que o usuário precise procurar no restante da página. Ele pode conter textos explicativos,
-                            links
-                            úteis, sugestões de próximos passos ou até mesmo pequenas mensagens motivacionais para
-                            melhorar
-                            a experiência do usuário.</p>
-                    </div>
-                </div>
-            </section>
-        </aside>
-    </section>
-
-    <section id="modelo" class="modal">
-        <aside class="modelo-card">
-            <span id="fecharModelo" class="fechar" onclick="modelo('fechar')">&times;</span>
-            <h2>Nome do Serviço</h2>
-            <section class="info-modelo">
-                <img src="./img/cuidador-de-cachorro.jpg" alt="" class="img-servico">
-                <div class="informacoes-servico">
-                    <div class="sobre-servico">
-                        <h3>Sobre o serviço</h3>
-                        <p>Este card foi criado para fornecer aos usuários uma experiência clara e organizada,
-                            permitindo
-                            que mensagens importantes sejam destacadas de forma elegante. Aqui você pode colocar
-                            instruções
-                            detalhadas, avisos, dicas de uso ou qualquer conteúdo que mereça atenção imediata.
-
-                            O objetivo é que, ao abrir este card, você consiga transmitir informações de forma objetiva,
-                            sem
-                            que o usuário precise procurar no restante da página. Ele pode conter textos explicativos,
-                            links
-                            úteis, sugestões de próximos passos ou até mesmo pequenas mensagens motivacionais para
-                            melhorar
-                            a experiência do usuário.
-
-                            Por exemplo, você pode usá-lo para:
-
-                            Apresentar um resumo de novos recursos do seu site ou aplicativo.
-
-                            Dar instruções passo a passo sobre como utilizar uma funcionalidade específica.
-
-                            Mostrar avisos importantes que exigem atenção imediata, como prazos ou mudanças de
-                            configuração.
-
-                            Fornecer dicas rápidas que ajudam o usuário a navegar ou aproveitar melhor seu serviço.
-
-                            Este card centralizado no meio da tela garante que o usuário foque no conteúdo, com o fundo
-                            levemente escurecido para reduzir distrações. Ele foi projetado para ser visualmente
-                            agradável,
-                            com bordas arredondadas, sombra sutil e espaço suficiente para leitura confortável.
-
-                            Para fechar, o usuário pode clicar no “×” no canto superior ou em qualquer área fora do
-                            card,
-                            garantindo uma interação intuitiva e natural. Esse tipo de card é ideal para combinar
-                            funcionalidade com estética, mantendo o usuário informado de maneira clara e elegante.</p>
-                    </div>
-
-                    <div class="necessidade-servico">
-                        <h4>Requisitos: </h4>
-                        <h4>Experiência: </h4>
-                        <h4>Pagamento: </h4>
-                    </div>
-                </div>
-            </section>
-
-            <div class="botoes">
-                <button>Aceitar</button>
-                <button>Ver sobre</button>
+    <main class="principal">
+        <h1>Bem vindo</h1>
+        <div>
+            <div class="quadro-aviso">
             </div>
-        </aside>
-    </section>
-
-    <main id="principal">
-        <section id="sessao">
-            <div class="avisos-postagens">
-                <div class="quadro-aviso">
-                </div>
-                <aside id="postagens">
-                    <h2>Notícias do condomínio</h2>
-                    <div>
-                        <figure class="card-noticias">
-                            <h3>Título do assunto</h3>
-                            <img src="./img/condomino.png" alt="">
-                            <figcaption>Sobre o assunto do condomínio</figcaption>
-                            <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
-                        </figure>
-                        <figure class="card-noticias">
-                            <h3>Título do assunto</h3>
-                            <img src="./img/condomino.png" alt="">
-                            <figcaption>Sobre o assunto do condomínio</figcaption>
-                            <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
-                        </figure>
-                        <figure class="card-noticias">
-                            <h3>Título do assunto</h3>
-                            <img src="./img/condomino.png" alt="">
-                            <figcaption>Sobre o assunto do condomínio</figcaption>
-                            <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
-                        </figure>
-                    </div>
-                </aside>
-            </div>
-
-            <section id="sessao-servicos">
-                <h3>Publicações <div></div>
-                </h3>
+            <aside class="postagens">
+                <h2>Notícias do condomínio</h2>
                 <div>
-                    <article class="card-servicos">
-                        <img src="./img/eletricista.jpg" alt="Eletricista">
-                        <div class="card-conteudo">
-                            <div class="card-sobre">
-                                <h3>Eletricista</h3>
-                                <p>Instalações residenciais, manutenção de quadros e reparos emergenciais.</p>
-                            </div>
-                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-                            <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-                        </div>
-                    </article>
-                    <article class="card-servicos">
-                        <img src="./img/baba.jpg" alt="Eletricista">
-                        <div class="card-conteudo">
-                            <div class="card-sobre">
-                                <h3>Baba</h3>
-                                <p>Cuido de crianças</p>
-                            </div>
-                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-                            <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-                        </div>
-                    </article>
-                    <article class="card-servicos">
-                        <img src="./img/cuidador-de-cachorro.jpg" alt="Eletricista">
-                        <div class="card-conteudo">
-                            <div class="card-sobre">
-                                <h3>Cuidadora de animais</h3>
-                                <p>Cuido de animais e passeio com eles</p>
-                            </div>
-                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-                            <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-                        </div>
-                    </article>
-                    <article class="card-servicos">
-                        <img src="./img/faxineira.jpg" alt="Eletricista">
-                        <div class="card-conteudo">
-                            <div class="card-sobre">
-                                <h3>Faxineira</h3>
-                                <p>Limpeza de casas e apartamentos</p>
-                            </div>
-                            <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
-                            <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
-                        </div>
-                    </article>
+                    <figure class="card-noticias">
+                        <h3>Título do assunto</h3>
+                        <img src="./img/condomino.png" alt="">
+                        <figcaption>Sobre o assunto do condomínio</figcaption>
+                        <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
+                    </figure>
+                    <figure class="card-noticias">
+                        <h3>Título do assunto</h3>
+                        <img src="./img/condomino.png" alt="">
+                        <figcaption>Sobre o assunto do condomínio</figcaption>
+                        <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
+                    </figure>
+                    <figure class="card-noticias">
+                        <h3>Título do assunto</h3>
+                        <img src="./img/condomino.png" alt="">
+                        <figcaption>Sobre o assunto do condomínio</figcaption>
+                        <button class="botao-ver-mais" onclick="modelo('abrirNoticia')">Ver mais</button>
+                    </figure>
                 </div>
-            </section>
+            </aside>
+        </div>
+
+        <section class="sessao-servicos">
+            <h2>Publicações</h2>
+            <div>
+                <article class="card-servicos">
+                    <img src="./img/eletricista.jpg" alt="Eletricista">
+                    <div class="card-conteudo">
+                        <div class="card-sobre">
+                            <h3>Eletricista</h3>
+                            <p>Instalações residenciais, manutenção de quadros e reparos emergenciais.</p>
+                        </div>
+                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
+                    </div>
+                </article>
+                <article class="card-servicos">
+                    <img src="./img/baba.jpg" alt="Eletricista">
+                    <div class="card-conteudo">
+                        <div class="card-sobre">
+                            <h3>Baba</h3>
+                            <p>Cuido de crianças</p>
+                        </div>
+                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
+                    </div>
+                </article>
+                <article class="card-servicos">
+                    <img src="./img/cuidador-de-cachorro.jpg" alt="Eletricista">
+                    <div class="card-conteudo">
+                        <div class="card-sobre">
+                            <h3>Cuidadora de animais</h3>
+                            <p>Cuido de animais e passeio com eles</p>
+                        </div>
+                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
+                    </div>
+                </article>
+                <article class="card-servicos">
+                    <img src="./img/faxineira.jpg" alt="Eletricista">
+                    <div class="card-conteudo">
+                        <div class="card-sobre">
+                            <h3>Faxineira</h3>
+                            <p>Limpeza de casas e apartamentos</p>
+                        </div>
+                        <data value="" class="data-servico">Disponível: 15/12 a 20/12</data>
+                        <button class="botao-ver-mais" onclick="modelo('abrir')">Ver detalhes</button>
+                    </div>
+                </article>
+            </div>
         </section>
     </main>
 
