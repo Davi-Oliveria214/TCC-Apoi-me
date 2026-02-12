@@ -28,7 +28,7 @@
                 <nav>
                     <ul>
                         <li><a href="./index.php">Início</a></li>
-                        <li><a href="./servicos.html">Serviços</a></li>
+                        <li><a href="./servicos.php">Serviços</a></li>
                         <li><a href="./contato.html">Contato</a></li>
                         <li><a href="./sobre.html">Institucional</a></li>
                         <li><a href="./cadastro.html">Cadastro</a></li>

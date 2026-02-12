@@ -1,6 +1,6 @@
 <?php
-include("./includes/cabecalho.php");
 require("./includes/conexao.php");
+include("./includes/cabecalho.php");
 ?>
 
 <style>
@@ -191,9 +191,12 @@ require("./includes/conexao.php");
 
     <section class="informacoes-inicial" id="todos-servicos">
         <?php
-        $servicos = mysqli_query($con, "SELECT s.nome AS nome, s.imagem AS imagem, s.descricao AS descricao, s.data_inicio AS inicio, s.data_fim AS fim, c.id AS id_categoria, c.nome AS nome_categoria FROM oferecidos o JOIN servicos s ON o.id_servico=s.id JOIN categorias c ON o.id_categoria = c.id");
+        $servicos = mysqli_query($con, "SELECT * FROM servicos");
 
         while ($servico = mysqli_fetch_assoc($servicos)) {
+            $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
+            $horaFim = date('H:i', strtotime($servico['horario_fim']));
+
             echo "<article class=card-servicos data-categoria=$servico[id_categoria]>";
             echo "<img src=$servico[imagem] alt=Eletricista>";
             echo "<div class=card-conteudo>";
@@ -201,9 +204,9 @@ require("./includes/conexao.php");
             echo "<h3>$servico[nome]</h3>";
             echo "<p>$servico[descricao]</p>";
             echo "</div>";
-            echo "<data value=class=data-servico>Disponível: $servico[inicio]</data>";
-            echo "<data value=class=data-servico>Disponível: $servico[fim]</data>";
-            echo "<button class=botao-ver-mais onclick=modelo(abrir)>Ver detalhes</button>";
+            echo "<data value=class=data-servico>Disponível: $horaInicio</data>";
+            echo "<data value=class=data-servico>Disponível: $horaFim</data>";
+            echo "<button class='btn botao-ver-mais' onclick=modelo(abrir)>Ver detalhes</button>";
             echo "</div>";
             echo "</article>";
         } ?>
