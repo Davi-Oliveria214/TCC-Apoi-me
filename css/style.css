@@ -539,6 +539,7 @@ input[type="text"] {
   border-radius: 24px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(var(--preto-rgba), 0.3);
   border: 1px solid rgba(var(--dourado-rgba), 0.5);
@@ -558,14 +559,16 @@ input[type="text"] {
 }
 
 .card-conteudo {
-  padding: 20px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 .card-sobre {
-  height: 80px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-sobre h3 {
@@ -575,11 +578,12 @@ input[type="text"] {
   letter-spacing: 1px;
 }
 
-.card-sobre p {
+.card-sobre>p {
+  height: 50px;
   color: var(--verde-musgo-palido);
   font-size: 0.9rem;
-  margin: 5px 0 0 0;
   line-height: 1.4;
+  overflow-y: auto;
 }
 
 .data-servico {
@@ -591,21 +595,31 @@ input[type="text"] {
 }
 
 .botao-ver-mais {
+  margin-top: 10px;
+}
+
+.botao-ver-mais:hover {
+  background: var(--dourado-palido);
+}
+
+.box-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 5px;
+}
+
+.btn {
   background: var(--dourado);
   color: var(--preto-acinzentado);
   border: none;
-  padding: 12px;
+  padding: 5px 10px;
   border-radius: 12px;
   font-weight: 700;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: all 0.3s ease;
-  margin-top: 10px;
-}
-
-.botao-ver-mais:hover {
-  background: var(--dourado-palido);
 }
 
 /* ===========================

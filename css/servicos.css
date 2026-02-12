@@ -8,7 +8,6 @@
     gap: 10px;
 }
 
-
 /* =======================
    AVISOS E EVENTOS
 ======================= */
@@ -23,40 +22,46 @@
     border-radius: 10px;
 
     & .quadro {
-        border-radius: 10px;
-    }
-
-    & .reservados {
-        width: 80%;
-        height: 100%;
-        background-color: var(--verde-musgo-palido);
-    }
-
-    & .avisos {
-        width: 20%;
-        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
         padding: 10px;
-        background-color: var(--verde-musgo-palido);
+        border-radius: 10px;
 
         & h2 {
             text-align: center;
         }
 
-        & div {
-            display: flex;
+        & .box {
+            flex-direction: row;
             flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
+        }
+    }
 
-            width: 100%;
-            height: 90%;
-            gap: 15px;
+    & .reservados {
+        width: 75%;
+        height: 100%;
+        background-color: var(--verde-musgo-palido);
+    }
 
-            overflow-y: auto;
+    & .avisos {
+        width: 25%;
+        height: 100%;
+        background-color: var(--verde-musgo-palido);
+
+        & .box {
+            flex-direction: column;
         }
     }
 }
 
+.box {
+    display: flex;
+    overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
 
 /* =======================
    CARD AVISOS
@@ -64,9 +69,10 @@
 .card-avisos {
     display: flex;
     flex-direction: column;
-    width: 350px;
-    padding: 5px;
+    width: 100%;
+    padding: 10px 15px;
     gap: 5px;
+    justify-content: space-evenly;
 
     border-radius: 10px;
 
@@ -74,17 +80,18 @@
 
     & .titulo-avisos {
         display: flex;
+        gap: 5px;
 
         & img {
             width: 50px;
+            border-radius: 50%;
         }
 
-        & div {
+        &>div {
             display: flex;
             flex-direction: column;
             align-items: start;
-            width: 70%;
-            gap: 0;
+            justify-content: center;
 
             & h2 {
                 font-size: 0.9rem;
@@ -107,13 +114,26 @@
 /* =======================
    RESPONSIVO
 ======================= */
-@media (max-width: 750px) {
+@media (max-width: 1000px) {
     .avisos-eventos {
+        height: 70vh;
         flex-direction: column;
 
         & .quadro {
             width: 100%;
             height: 50%;
+        }
+    }
+
+    .avisos {
+        &>div {
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+
+            & .card-avisos {
+                width: 350px;
+            }
         }
     }
 }
