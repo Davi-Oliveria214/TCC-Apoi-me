@@ -1,5 +1,7 @@
+@import "./inicial.css";
 @import "./servicos.css";
 @import "./card.css";
+@import "./sobre.css";
 
 /* ===========================
    RESET GLOBAL
@@ -18,6 +20,8 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   width: 100vw;
   min-height: 100vh;
   background-color: var(--dourado-fraco);
@@ -25,6 +29,10 @@ body {
 
 input[type="text"] {
   color: var(--preto-acinzentado);
+}
+
+main {
+  flex: 1;
 }
 
 /* ===========================
@@ -85,31 +93,12 @@ input[type="text"] {
   gap: 20px;
   align-items: center;
   padding: 5px 15px;
-  background-color: var(--verde-musgo-medio);
+  /* background-color: var(--verde-musgo-medio); */
 }
 
 #img-titulo img {
   width: 50px;
   border-radius: 5px;
-  border: 2px solid var(--branco);
-}
-
-/* ===========================
-   BARRA DE PESQUISA
-=========================== */
-.pesquisa {
-  border-radius: 15px;
-  width: 80vh;
-  padding: 10px;
-  background-color: var(--verde-musgo-palido);
-  border: 2px solid var(--verde-musgo);
-}
-
-.pesquisa::placeholder {
-  color: var(--verde-musgo);
-}
-
-.pesquisa:focus {
   border: 2px solid var(--branco);
 }
 
@@ -286,173 +275,6 @@ input[type="text"] {
   .rodape>ul {
     display: flex;
     flex-direction: column;
-  }
-}
-
-/* ===========================
-   MODAL
-=========================== */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100dvh;
-  background-color: rgba(var(--preto-rgba), 0.8);
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  transition: opacity 0.3s;
-}
-
-/* --- Card do Modal --- */
-.modelo-card {
-  position: relative;
-  max-width: 700px;
-  width: 90%;
-  padding: 25px 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  background-color: var(--dourado-palido);
-  border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(var(--preto-rgba), 0.4);
-}
-
-.modelo-card>h2 {
-  color: var(--verde-musgo);
-  font-size: 2rem;
-  margin: 0;
-  border-bottom: 3px solid var(--dourado);
-  padding-bottom: 5px;
-}
-
-/* --- Informações Internas --- */
-.info-modelo {
-  display: flex;
-  gap: 20px;
-  width: 100%;
-}
-
-.img-servico {
-  width: 40%;
-  max-height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 4px solid var(--verde-musgo-medio);
-}
-
-.informacoes-servico {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 60%;
-}
-
-/* Área de Descrição/Conteúdo */
-.sobre-servico {
-  padding: 15px;
-  background-color: var(--dourado-fraco);
-  border-radius: 10px;
-  box-shadow: inset 0 0 5px rgba(var(--verde-musgo-rgba), 0.1);
-}
-
-.sobre-servico>h3 {
-  color: var(--verde-musgo);
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-.sobre-servico>p {
-  display: block;
-  height: 200px;
-  overflow-y: auto;
-  font-size: 1rem;
-  color: var(--preto-acinzentado);
-  padding-right: 10px;
-}
-
-.necessidade-servico {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 10px 0;
-  color: var(--verde-musgo);
-}
-
-.necessidade-servico>h4 {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-/* --- Botão Fechar --- */
-.fechar {
-  position: absolute;
-  cursor: pointer;
-  top: 10px;
-  right: 15px;
-  font-size: 2.5rem;
-  transition: 0.3s ease;
-  color: var(--verde-musgo-medio);
-  line-height: 1;
-}
-
-.fechar:hover {
-  color: var(--preto-acinzentado);
-  transform: scale(1.1);
-}
-
-/* Botões */
-.botoes {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.botoes>button {
-  cursor: pointer;
-  padding: 5px 20px;
-  font-size: 1.1rem;
-  letter-spacing: 1px;
-  font-weight: bold;
-  color: var(--branco);
-  background-color: var(--dourado);
-  border-radius: 8px;
-  transition: 0.3s ease;
-  border: 2px solid var(--verde-musgo-medio);
-  box-shadow: 0 3px 5px rgba(var(--preto-rgba), 0.2);
-}
-
-.botoes>button:hover {
-  transform: translateY(-3px);
-  background-color: var(--verde-musgo);
-  border-color: var(--dourado);
-}
-
-/* --- Responsividade (Opcional, mas recomendado) --- */
-@media (max-width: 768px) {
-  .modelo-card {
-    max-width: 95%;
-    padding: 20px;
-  }
-
-  .info-modelo {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .img-servico,
-  .informacoes-servico {
-    width: 100%;
-    max-height: none;
-  }
-
-  .sobre-servico>p {
-    height: 150px;
   }
 }
 

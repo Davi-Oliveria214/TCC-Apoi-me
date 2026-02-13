@@ -11,10 +11,8 @@
 </head>
 
 <body>
-
     <header id="topo-cabecalho">
         <a id="img-titulo" href="index.php "><img src="./img/condomino.png" alt=""></a>
-        <input class="pesquisa" type="text" placeholder="Pesquise">
 
         <div id="burguer">
             <div class="bar"></div>

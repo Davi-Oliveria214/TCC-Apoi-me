@@ -6,7 +6,7 @@ include "./includes/cabecalho.php";
 <main class="principal">
     <section class="avisos-eventos">
         <div class="reservados quadro">
-            <h1>Contratados</h1>
+            <h1>Reservados</h1>
             <div class="box">
                 <?php
                 $servicos = mysqli_query($con, "SELECT * FROM contratados WHERE id_cliente = 1");
@@ -34,7 +34,7 @@ include "./includes/cabecalho.php";
                         echo "</div>";
                     }
                 } else {
-                    echo "<h2 class=aviso>Nenhum serviço contratado</h2>";
+                    echo "<h2 class=aviso>Nenhum serviço Reservado</h2>";
                 }
                 ?>
             </div>
@@ -42,7 +42,45 @@ include "./includes/cabecalho.php";
         <div class="avisos quadro">
             <h1>Quadro de Avisos</h1>
             <div class="box">
-
+                <div class="card-avisos">
+                    <div class="titulo-avisos">
+                        <img src="./img/icone.png" alt="">
+                        <div>
+                            <h2>Titulo de teste</h2>
+                            <p>Data </p>
+                        </div>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea nam facere repudiandae dolor
+                        dolore, laudantium quo error molestiae totam pariatur recusandae quidem illum natus soluta
+                        perspiciatis repellat? Quod, at impedit.</p>
+                    <img src="./img/a-mostra.jpg" alt="" class="img-aviso">
+                </div>
+                <div class="card-avisos">
+                    <div class="titulo-avisos">
+                        <img src="./img/icone.png" alt="">
+                        <div>
+                            <h2>Titulo de teste</h2>
+                            <p>Data </p>
+                        </div>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea nam facere repudiandae dolor
+                        dolore, laudantium quo error molestiae totam pariatur recusandae quidem illum natus soluta
+                        perspiciatis repellat? Quod, at impedit.</p>
+                    <img src="./img/a-mostra.jpg" alt="" class="img-aviso">
+                </div>
+                <div class="card-avisos">
+                    <div class="titulo-avisos">
+                        <img src="./img/icone.png" alt="">
+                        <div>
+                            <h2>Titulo de teste</h2>
+                            <p>Data </p>
+                        </div>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea nam facere repudiandae dolor
+                        dolore, laudantium quo error molestiae totam pariatur recusandae quidem illum natus soluta
+                        perspiciatis repellat? Quod, at impedit.</p>
+                    <img src="./img/a-mostra.jpg" alt="" class="img-aviso">
+                </div>
             </div>
         </div>
     </section>
