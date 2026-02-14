@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `bd_apoi_me` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `bd_apoi_me`;
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: bd_apoi_me
@@ -153,6 +155,14 @@ CREATE TABLE `usuario` (
   CONSTRAINT `fk_usuario_condominio` FOREIGN KEY (`id_condominio`) REFERENCES `condominio` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping events for database 'bd_apoi_me'
+--
+
+--
+-- Dumping routines for database 'bd_apoi_me'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -163,4 +173,4 @@ CREATE TABLE `usuario` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-02-12 15:26:01
+-- Dump completed on 2026-02-14  7:34:48
