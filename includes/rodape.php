@@ -12,9 +12,9 @@
     </ul>
 
     <aside class="redes-socias">
-        <img src="img/instagram-icon.png" alt="">
-        <img src="img/tiktok-icon.png" alt="">
-        <img src="img/youtube-icon.png" alt="">
+        <img src="./icon/instagram-icon.png" alt="">
+        <img src="./icon/tiktok-icon.png" alt="">
+        <img src="./icon/youtube-icon.png" alt="">
     </aside>
 </footer>
 

@@ -1,0 +1,30 @@
+.topo-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    min-height: 70px;
+    padding: 10px 15px;
+    background-color: rgba(var(--preto-rgba), 0.2);
+
+    & .img-logo>img {
+        width: 50px;
+        display: block;
+    }
+
+    & .navegacao {
+        display: flex;
+        & ul {
+            display: flex;
+            padding: 5px 10px;
+            gap: 20px;
+            font-size: 1.2rem;
+        }
+
+        & .links-sociais{
+            & img{
+                width: 25px;
+            }
+        }
+    }
+}

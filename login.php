@@ -31,26 +31,6 @@ include("./includes/cabecalho.php");
     </form>
 </main>
 
-<footer class="rodape">
-    <ul>
-        <li>Capital São Paulo:<p>(11) 1111-1111</p>
-        </li>
-        <li>Demais locais:<p>0000 000 0000</p>
-        </li>
-        <li>Atendimento de ligações:<p>XXh as XXh</p>
-        </li>
-        <li>WhatsApp:<p>(11) 2222-2222</p>
-        </li>
-        <li>Email:<p>conato@gmail.com</p>
-        </li>
-    </ul>
-
-    <div class="redes-socias">
-        <img src="img/instagram-icon.png" alt="">
-        <img src="img/tiktok-icon.png" alt="">
-        <img src="img/youtube-icon.png" alt="">
-    </div>
-</footer>
 <?php
 include "./includes/rodape.php";
 ?>

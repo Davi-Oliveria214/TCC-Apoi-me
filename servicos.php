@@ -44,7 +44,7 @@ include "./includes/cabecalho.php";
             <div class="box">
                 <div class="card-avisos">
                     <div class="titulo-avisos">
-                        <img src="./img/icone.png" alt="">
+                        <img src="./icon/icone.png" alt="">
                         <div>
                             <h2>Titulo de teste</h2>
                             <p>Data </p>
@@ -57,7 +57,7 @@ include "./includes/cabecalho.php";
                 </div>
                 <div class="card-avisos">
                     <div class="titulo-avisos">
-                        <img src="./img/icone.png" alt="">
+                        <img src="./icon/icone.png" alt="">
                         <div>
                             <h2>Titulo de teste</h2>
                             <p>Data </p>
@@ -70,7 +70,7 @@ include "./includes/cabecalho.php";
                 </div>
                 <div class="card-avisos">
                     <div class="titulo-avisos">
-                        <img src="./img/icone.png" alt="">
+                        <img src="./icon/icone.png" alt="">
                         <div>
                             <h2>Titulo de teste</h2>
                             <p>Data </p>
