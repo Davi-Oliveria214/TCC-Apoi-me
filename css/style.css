@@ -1,7 +1,7 @@
+@import "./topo.css";
 @import "./inicial.css";
 @import "./servicos.css";
 @import "./card.css";
-@import "./sobre.css";
 
 /* ===========================
    RESET GLOBAL
@@ -81,7 +81,6 @@ main {
 #post-img {
   border-radius: 20px;
 }
-
 
 /* ===========================
    RODAPÉ
