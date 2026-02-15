@@ -31,10 +31,15 @@
             </ul>
         </nav>
 
-        <nav class="navegacao">
-            <ul class="links-sociais">
-                <li><a href=""><img src="./icon/instagram-icon.png" alt=""></a></li>
-                <li><a href=""><img src="./icon/youtube-icon.png" alt=""></a></li>
-            </ul>
-        </nav>
+        <?php
+        $pag = $_SERVER['PHP_SELF'];
+        if ($pag === '/index.php') {
+            echo "<nav class= 'navegacao'>";
+            echo "<ul class='links-sociais'>";
+            echo "<li><a href=''><img src='./icon/instagram-icon.png' alt=''></a></li>";
+            echo "<li><a href=''><img src='./icon/youtube-icon.png' alt=''></a></li>";
+            echo "</ul>";
+            echo "</nav>";
+        }
+        ?>
     </header>
