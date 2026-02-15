@@ -37,7 +37,7 @@
     text-align: justify;
     width: 100%;
     font-size: clamp(10px, 5vw, 25px);
-    color: var(--dourado-palido);
+    color: var(--branco);
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
 

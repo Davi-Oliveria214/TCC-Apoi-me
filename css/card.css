@@ -69,30 +69,30 @@
 }
 
 /* Área de Ações */
-.botoes-card {
+.box-btn {
     display: flex;
     width: 100%;
     padding: 5px;
     justify-content: center;
     align-items: center;
     gap: 10px;
+}
 
-    .btn {
-        padding: 5px 10px;
-        background-color: var(--dourado);
-        color: var(--preto-acinzentado);
-        border-radius: 12px;
-        font-family: "FonteBotao", sans-serif;
-        font-weight: 700;
-        cursor: pointer;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        transition: all 0.3s ease;
+.btn {
+    padding: 5px 10px;
+    background-color: var(--dourado);
+    color: var(--preto-acinzentado);
+    border-radius: 12px;
+    font-family: "FonteBotao", sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
 
-        &:hover {
-            background-color: var(--verde-musgo-medio);
-            color: var(--branco);
-        }
+    &:hover {
+        background-color: var(--verde-musgo-medio);
+        color: var(--branco);
     }
 }
 

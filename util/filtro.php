@@ -26,13 +26,13 @@ if ($sql->num_rows) {
                     Até <time datetime='$horaFim'>$horaFim</time></p>";
         echo "<p>Data limite: <time datetime='$servico[data_limite]'>$servico[data_limite]</time></p>";
         echo "</div>";
-        echo "<div class='botoes-card'>";
+        echo "<div class='box-btn'>";
         echo "<a href='' class='btn' >Agendar serviço</a>";
         echo "</div>";
         echo "</div>";
         echo "</div>";
     }
 } else {
-    echo "<h2 class=aviso>Nenhum serviço encontrado</h2>";
+    echo "<h2 id=avisos>Nenhum serviço encontrado</h2>";
 }
 ?>
