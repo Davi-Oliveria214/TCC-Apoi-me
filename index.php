@@ -1,6 +1,7 @@
 <?php
 require('./includes/conexao.php');
-include('./includes/cabecalho.php');
+include('./includes/head.php');
+include('./includes/topo.php');
 ?>
 
 <img src="./img/banner.png" alt="" class="img-sobre" id="banner">

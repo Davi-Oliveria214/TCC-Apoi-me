@@ -1,7 +1,8 @@
 <?php
-require("./includes/conexao.php");
-include "./includes/cabecalho.php";
-?>
+require('./includes/conexao.php');
+include('./includes/head.php');
+include('./includes/topo.php')
+    ?>
 
 <main class="principal">
     <section class="avisos-eventos">

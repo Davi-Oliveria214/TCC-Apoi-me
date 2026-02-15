@@ -2,7 +2,7 @@
 @import "./inicial.css";
 @import "./servicos.css";
 @import "./card.css";
-@import "./login_cadastro.css";
+@import "./auth.css";
 
 /* ===========================
    RESET GLOBAL
@@ -93,11 +93,12 @@ main {
   width: 100vw;
   min-height: 70px;
   padding: 10px 15px;
-  background-color: rgba(var(--preto-rgba), 0.2);
+  background-color: var(--verde-musgo-medio);
 
   & .img-logo>img {
     width: 50px;
     display: block;
+    border-radius: 10px;
   }
 
   & .navegacao {
