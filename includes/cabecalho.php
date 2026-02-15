@@ -12,6 +12,20 @@
 </head>
 
 <body>
+    <?php
+    $pag = $_SERVER['PHP_SELF'];
+    if ($pag === "/login.php") {
+        echo "<div class='div'>";
+        echo "<main class='login-cadastro login'>";
+
+    }
+    if ($pag === "/cadastro.php") {
+        echo "<div class='div'>";
+        echo "<main class='login-cadastro cadastro'>";
+
+    }
+    ?>
+
     <header class="topo-cabecalho" id="topo">
         <a class="img-logo" href="index.php"><img src="./img/condomino.png" alt=""></a>
 
@@ -25,7 +39,7 @@
                     echo "<li><a href='login.php'>Logar</a></li>";
                 }
                 if ($pag !== "/cadastro.php") {
-                    echo "<li><a href=''>Cadastrar</a></li>";
+                    echo "<li><a href='cadastro.php'>Cadastrar</a></li>";
                 }
                 ?>
             </ul>
