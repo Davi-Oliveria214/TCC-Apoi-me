@@ -3,34 +3,25 @@ require("./includes/conexao.php");
 include("./includes/cabecalho.php");
 ?>
 
-<main id="principal-logar-cadastro">
-    <form action="" class="centro-cadastro-login">
-        <h1>Faça seu Login</h1>
+<main class="login">
+    <div>
 
-        <div class="card-login-cadastro">
-            <div class="info-cadastro-login">
-                <label for="idChave">Chave de acesso</label>
-                <input type="text" id="idChave" placeholder="Chave de acesso" required>
-            </div>
-
-            <div class="info-cadastro-login">
+        <form action="./controls/login.act.php" method="post" class="form">
+            <h1>Login</h1>
+            <div class="box-login">
                 <label for="idEmail">Email</label>
-                <input type="email" id="idEmail" placeholder="Email" required>
+                <input type="email" name="email" id="idEmail" placeholder="Email" required>
             </div>
-
-            <div class="info-cadastro-login">
+            <div class="box-login">
                 <label for="idSenha">Senha</label>
-                <input type="password" id="idSenha" placeholder="Senha" required>
+                <input type="password" name="senha" id="idSenha" placeholder="Senha" required>
             </div>
-        </div>
+            <div class="box-btn">
+                <button type="submit" class="btn btn-login">Logar</button>
+                <a href="" class="btn btn-login">Criar conta</a>
+            </div>
+        </form>
+    </div>
 
-        <div class="entrar-cadastrar">
-            <button type="submit" class="botao btn-cadastrar">Logar</button>
-            <button type="submit" class="botao btn-cadastrar">Cadastrar</button>
-        </div>
-    </form>
+    <img src="./img/banner.png" alt="" class="img-login">
 </main>
-
-<?php
-include "./includes/rodape.php";
-?>
