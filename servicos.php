@@ -35,7 +35,7 @@ include('./includes/topo.php')
                         echo "</div>";
                     }
                 } else {
-                    echo "<h2 class=aviso>Nenhum serviço Reservado</h2>";
+                    echo "<h2 id=aviso>Nenhum serviço Reservado</h2>";
                 }
                 ?>
             </div>

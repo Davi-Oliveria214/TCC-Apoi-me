@@ -16,7 +16,7 @@
     min-width: 50vw;
 }
 
-.criar-chave{
+.criar-chave {
     width: 100vw;
     height: 100vh;
     padding: 10px;
@@ -25,7 +25,7 @@
     align-items: center;
     justify-content: space-evenly;
 
-    & > .form{
+    &>.form {
         width: 50%;
     }
 }
@@ -95,4 +95,11 @@
     .banner {
         display: none;
     }
+
+    .criar-chave {
+        &>.form {
+            width: 100%;
+        }
+    }
+
 }

@@ -3,8 +3,10 @@ const topo = document.getElementById('topo')
 const inicial = document.getElementById('inicial')
 
 function ajustarTamanho() {
-  let calc = img.offsetHeight - topo.offsetHeight
-  inicial.style.minHeight = `${calc}px`
+  if (img !== null) {
+    let calc = img.offsetHeight - topo.offsetHeight
+    inicial.style.minHeight = `${calc}px`
+  }
 }
 
 window.addEventListener('resize', ajustarTamanho)
