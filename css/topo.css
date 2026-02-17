@@ -1,0 +1,131 @@
+:root {
+    --preto-acinzentado: #1f1f1f;
+    --verde-musgo: #0c3a3f;
+    --verde-musgo-medio: #2d6057;
+    --verde-musgo-palido: #96a37f;
+    --branco: #ffffff;
+    --dourado: #b0822b;
+    --dourado-palido: #d8b469;
+    --dourado-fraco: #ffe6a7;
+
+    /* RGB */
+    --preto-rgba: 31, 31, 31;
+    --verde-musgo-rgba: 12, 58, 63;
+    --verde-musgo-medio-rgba: 45, 96, 87;
+    --verde-musgo-palido-rgba: 150, 163, 127;
+    --branco-rgba: 255, 255, 255;
+    --dourado-rgba: 176, 130, 43;
+    --dourado-palido-rgba: 216, 180, 105;
+    --dourado-fraco-rgba: 255, 230, 167;
+}
+
+/* ===========================
+   Cabeçalho
+=========================== */
+.topo-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    min-height: 70px;
+    padding: 10px 15px;
+    background-color: var(--verde-musgo-medio);
+    flex-wrap: wrap;
+    gap: 15px;
+
+    & .img-logo>img {
+        width: 50px;
+        display: block;
+        border-radius: 10px;
+    }
+
+    & .navegacao {
+        display: flex;
+
+        & ul {
+            display: flex;
+            padding: 5px 10px;
+            gap: 20px;
+            font-size: 1.2rem;
+        }
+
+        & .links-sociais {
+            & img {
+                width: 25px;
+            }
+        }
+    }
+}
+
+.menu {
+    display: none;
+}
+
+.pesquisa {
+    width: clamp(200px, 50%, 250px);
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: var(--branco);
+    border: solid 2px var(--dourado);
+    color: var(--preto-acinzentado);
+}
+
+.user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    & img {
+        display: block;
+        width: 30px;
+    }
+}
+
+.user-cabecalho {
+    align-items: flex-start;
+    height: 120px;
+}
+
+.user {
+    & .user-icon {
+        position: absolute;
+        width: 65px;
+        left: 0;
+        margin-left: 30px;
+    }
+}
+
+
+#burguer {
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    gap: 3px;
+    cursor: pointer;
+
+    &>div {
+        background-color: var(--dourado);
+        height: 5px;
+        width: 32px;
+        border-radius: 20px;
+    }
+
+    &:hover div {
+        background-color: var(--dourado-palido);
+    }
+}
+
+@media (max-width: 513px) {
+    .user {
+        order: 2;
+    }
+
+    .pesquisa {
+        order: 3;
+    }
+
+    #burguer {
+        order: 4;
+    }
+}

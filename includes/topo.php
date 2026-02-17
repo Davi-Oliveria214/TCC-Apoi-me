@@ -53,7 +53,15 @@ if ($pag === "/login.php" || $pag === "/cadastro.php" || $pag === "/index.php" |
 
         <div class="user">
             <p>Olá, Usuário</p>
-            <a href=""><img src="./icon/user.png" alt=""></a>
+
+            <?php
+            if ($pag === "/usuario.php") {
+                $userClass = "user-icon";
+            } else{
+                $userClass = "user-img";
+            }
+            ?>
+            <a href="./usuario.php"><img src="./icon/user.png" alt="" class="<?php echo $userClass ?>"></a>
             <a href=""><img src="./icon/msg.png" alt=""></a>
         </div>
         <nav id="burguer">

@@ -1,11 +1,25 @@
 const img = document.getElementById('banner')
 const topo = document.getElementById('topo')
 const inicial = document.getElementById('inicial')
+const user_icon = document.querySelector('.user-icon');
 
 function ajustarTamanho() {
   if (img !== null) {
     let calc = img.offsetHeight - topo.offsetHeight
     inicial.style.minHeight = `${calc}px`
+  }
+
+  if (user_icon !== null) {
+    topo.classList.add('user-cabecalho');
+
+    if (topo.offsetWidth > 570) {
+      let cal = topo.offsetHeight / 2;
+      user_icon.classList.add('user-icon')
+      user_icon.style.marginTop = `${cal}px`;
+    } else {
+      user_icon.classList.remove('user-icon')
+      user_icon.style.marginTop = 0;
+    }
   }
 }
 
@@ -24,3 +38,4 @@ function filtrar(categoria) {
     }
   });
 }
+
