@@ -10,6 +10,10 @@ include("./includes/head.php");
             <form action="./controls/login.act.php" method="post" class="form">
                 <h1>Login</h1>
                 <div class="box-auth">
+                    <label for="idChave">Chave de acesso</label>
+                    <input type="text" name="chave" id="idChave" placeholder="Chave" required>
+                </div>
+                <div class="box-auth">
                     <label for="idEmail">Email</label>
                     <input type="email" name="email" id="idEmail" placeholder="Email" required>
                 </div>

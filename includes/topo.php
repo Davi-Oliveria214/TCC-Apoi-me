@@ -15,39 +15,35 @@ if ($pag === "/login.php" || $pag === "/cadastro.php" || $pag === "/index.php" |
 
     <nav class="<?php echo $classe; ?>">
         <ul>
+            <li><a href="./index.php">Inicio</a></li>
             <li><a href="./servicos.php">Serviços</a></li>
             <?php
             if ($pag !== "/login.php") {
-                echo "<li><a href='login.php'>Logar</a></li>";
+                echo "<li><a href='login.php'>Login</a></li>";
             }
             if ($pag !== "/cadastro.php") {
-                echo "<li><a href='cadastro.php'>Cadastrar</a></li>";
+                echo "<li><a href='cadastro.php'>Cadastro</a></li>";
             }
             ?>
+            <li><a href="#">Contato</a></li>
         </ul>
     </nav>
 
     <?php
     if ($pag === '/index.php') {
-        echo "<nav class='navegacao'>";
-        echo "<ul class='links-sociais'>";
-        echo "<li><a href=''><img src='./icon/instagram-icon.png' alt=''></a></li>";
-        echo "<li><a href=''><img src='./icon/youtube-icon.png' alt=''></a></li>";
-        echo "</ul>";
-        echo "</nav>";
-        ?>
+    ?>
         <style>
             #topo {
                 background-color: transparent;
             }
         </style>
-        <?php
+    <?php
     }
     ?>
 
     <?php
     if ($classe === "menu") {
-        ?>
+    ?>
         <input type="text" name="" id="" class="pesquisa" placeholder="Pesquisar">
 
 
@@ -57,7 +53,7 @@ if ($pag === "/login.php" || $pag === "/cadastro.php" || $pag === "/index.php" |
             <?php
             if ($pag === "/usuario.php") {
                 $userClass = "user-icon";
-            } else{
+            } else {
                 $userClass = "user-img";
             }
             ?>
@@ -70,7 +66,7 @@ if ($pag === "/login.php" || $pag === "/cadastro.php" || $pag === "/index.php" |
             <div></div>
         </nav>
 
-        <?php
+    <?php
     }
     ?>
 
