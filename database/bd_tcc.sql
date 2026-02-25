@@ -46,8 +46,6 @@ CREATE TABLE `usuario` (
   KEY `fk_usuario_condominio` (`id_condominio`),
   CONSTRAINT `fk_usuario_condominio` FOREIGN KEY (`id_condominio`) REFERENCES `condominio` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-SELECT * FROM usuario;
     
 -- 6. Tabela: servicos
 CREATE TABLE `servicos` (
@@ -101,3 +99,7 @@ CREATE TABLE `contratados` (
 
 -- Inserção de Teste
 INSERT INTO `condominio` (`codigo`, `nome`, `foto`) VALUES ('1234spd', 'Edifício Teste', 'url_da_foto.jpg');
+
+SELECT * FROM usuario;
+
+SELECT * FROM condominio WHERE codigo = '1234spd';

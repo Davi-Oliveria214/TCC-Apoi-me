@@ -1,7 +1,10 @@
 <?php
 require('./includes/conexao.php');
 include('./includes/head.php');
+session_start();
+echo "<h2>$_SESSION[mensagem]</h2>";
 ?>
+
 <div class="div-auth">
     <main class="autenticar">
         <?php include("./includes/topo.php"); ?>
