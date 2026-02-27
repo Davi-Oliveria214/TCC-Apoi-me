@@ -24,6 +24,10 @@ echo "<h2>$_SESSION[mensagem]</h2>";
                     <input type="password" name="senha" id="idSenha" placeholder="Senha" required>
                 </div>
                 <div class="box-auth">
+                    <label for="idRptSenha">Repita senha</label>
+                    <input type="password" name="rptSenha" id="idRptSenha" placeholder="Repita senha" required>
+                </div>
+                <div class="box-auth">
                     <label for="idChave">Chave de acesso</label>
                     <input type="text" name="chave" id="idChave" placeholder="Chave" required>
                 </div>

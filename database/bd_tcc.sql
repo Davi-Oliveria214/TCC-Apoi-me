@@ -10,7 +10,7 @@ USE `bd_apoi_me`;
 -- 2. Tabela: condominio
 CREATE TABLE `condominio` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(7) NOT NULL,
+  `codigo` varchar(10) NOT NULL,
   `nome` varchar(70) NOT NULL,
   `foto` varchar(300) NOT NULL,
   PRIMARY KEY (`id`),
@@ -40,11 +40,11 @@ CREATE TABLE `usuario` (
   `email` varchar(100) DEFAULT NULL,
   `senha` varchar(255) NOT NULL,
   `foto` varchar(300) NOT NULL,
-  `id_condominio` int NOT NULL,
+  `codigo` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
-  KEY `fk_usuario_condominio` (`id_condominio`),
-  CONSTRAINT `fk_usuario_condominio` FOREIGN KEY (`id_condominio`) REFERENCES `condominio` (`id`)
+  KEY `fk_usuario_condominio` (`codigo`),
+  CONSTRAINT `fk_usuario_condominio` FOREIGN KEY (`codigo`) REFERENCES `condominio` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     
 -- 6. Tabela: servicos
@@ -100,6 +100,6 @@ CREATE TABLE `contratados` (
 -- Inserção de Teste
 INSERT INTO `condominio` (`codigo`, `nome`, `foto`) VALUES ('1234spd', 'Edifício Teste', 'url_da_foto.jpg');
 
-SELECT * FROM usuario;
+SELECT * FROM usuario WHERE codigo = '1234spd';
 
 SELECT * FROM condominio WHERE codigo = '1234spd';
