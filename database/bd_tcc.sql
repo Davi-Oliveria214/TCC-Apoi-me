@@ -39,7 +39,7 @@ CREATE TABLE `usuario` (
   `nome` varchar(50) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
   `senha` varchar(255) NOT NULL,
-  `foto` varchar(300) NOT NULL,
+  `imagem` varchar(300) NOT NULL,
   `codigo` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),

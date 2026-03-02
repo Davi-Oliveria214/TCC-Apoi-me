@@ -22,7 +22,7 @@ $usuario = mysqli_fetch_assoc($sql);
 
 if (!$usuario) {
     $_SESSION["mensagem"] = "Email não cadastrado.";
-    header("Location: ../login.php");
+    header("Location: ../cadastro.php");
     exit;
 }
 
@@ -42,10 +42,6 @@ if ($usuario['codigo'] != $chave) {
 
 // Login OK
 $_SESSION["id"] = $usuario['id'];
-$_SESSION["nome"] = $usuario['nome'];
-$_SESSION["email"] = $usuario['email'];
-$_SESSION["foto"] = $usuario['foto'];
-$_SESSION["chave"] = $usuario['codigo'];
 $_SESSION["login"] = true;
 
 header("Location: ../servicos.php");

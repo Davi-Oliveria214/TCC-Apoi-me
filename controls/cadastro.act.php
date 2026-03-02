@@ -25,7 +25,7 @@ $nome  = trim($_POST['nome']);
 $email = trim($_POST['email']);
 $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 $chave = trim($_POST['chave']);
-$foto  = "url_img.png";
+$foto  = "../icon/user.png";
 
 // Verifica se email já existe
 $stmt = $con->prepare("SELECT id FROM usuario WHERE email = ?");
@@ -52,7 +52,7 @@ if ($resultado->num_rows === 0) {
 }
 
 // Insere usuário
-$stmt = $con->prepare("INSERT INTO usuario (nome, email, senha, foto, codigo) VALUES (?, ?, ?, ?, ?)");
+$stmt = $con->prepare("INSERT INTO usuario (nome, email, senha, imagem, codigo) VALUES (?, ?, ?, ?, ?)");
 $stmt->bind_param("sssss", $nome, $email, $senha, $foto, $chave);
 
 if ($stmt->execute()) {
@@ -61,5 +61,5 @@ if ($stmt->execute()) {
     $_SESSION["mensagem"] = "Erro ao realizar cadastro.";
 }
 
-header("Location: ../cadastro.php");
+header("Location: ../login.php");
 exit;

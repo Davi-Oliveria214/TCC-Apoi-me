@@ -2,6 +2,7 @@
 require('./includes/conexao.php');
 include('./includes/head.php');
 include('./includes/topo.php');
+include('./util/avisos.php');
 ?>
 
 <main class="autenticar criar-chave">
