@@ -5,7 +5,7 @@ CREATE DATABASE IF NOT EXISTS `bd_apoi_me`
 DEFAULT CHARACTER SET utf8mb4 
 COLLATE utf8mb4_0900_ai_ci;
 
-USE `bd_apoi_me`;
+USE `bd_apoi_me`; 
 
 -- 2. Tabela: condominio
 CREATE TABLE `condominio` (
@@ -98,8 +98,67 @@ CREATE TABLE `contratados` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Inserção de Teste
-INSERT INTO `condominio` (`codigo`, `nome`, `foto`) VALUES ('1234spd', 'Edifício Teste', 'url_da_foto.jpg');
+INSERT INTO `condominio` (`codigo`, `nome`, `foto`) VALUES
+('1234spd', 'Edifício Teste', 'url_da_foto.jpg'),
+('5678abc', 'Residencial Primavera', 'img/condominio.png'),
+('9101xyz', 'Condomínio Bela Vista', 'img/condominio.png');
 
-SELECT * FROM usuario WHERE codigo = '1234spd';
+-- Categorias --
+INSERT INTO categorias(nome) VALUES (1);
+INSERT INTO categorias(nome) VALUES (2);
+INSERT INTO categorias(nome) VALUES (3);
+INSERT INTO categorias(nome) VALUES (4);
 
-SELECT * FROM condominio WHERE codigo = '1234spd';
+-- Dias da Semana --
+INSERT INTO dias_semanas (id, nome) VALUES
+(1, 'domingo'),
+(2, 'segunda-feira'),
+(3, 'terça-feira'),
+(4, 'quarta-feira'),
+(5, 'quinta-feira'),
+(6, 'sexta-feira'),
+(7, 'sábado');
+
+-- Usuários --
+INSERT INTO usuario (nome, email, senha, imagem, codigo) VALUES
+('João Silva', 'joao@gmail.com', '123456', '../icon/user.png', '1234spd'),
+('Maria Souza', 'maria@gmail.com', '123456', '../icon/user.png', '5678abc'),
+('Carlos Lima', 'carlos@gmail.com', '123456', '../icon/user.png', '9101xyz');
+
+-- Serviços --
+INSERT INTO servicos (nome, imagem, descricao, horario_inicio, horario_fim, data_limite, id_categoria, id_prestador, id_condominio) VALUES 
+('Serviço de Limpeza', 
+ 'img/faxineira.jpg', 
+ 'Limpeza completa de apartamentos.', 
+ '08:00:00', 
+ '16:00:00', 
+ '2026-04-10', 
+ 2, 
+ 2, 
+ 2), ('Cuidador de Idosos', 
+ 'img/cuidador-de-cachorro.jpg', 
+ 'Cuidados diários para idosos.', 
+ '09:00:00', 
+ '18:00:00', 
+ '2026-04-15', 
+ 3, 
+ 3, 
+ 3), ('Aula Particular de Matemática', 
+ 'img/a-mostra.jpg', 
+ 'Reforço escolar para ensino fundamental.', 
+ '14:00:00', 
+ '17:00:00', 
+ '2026-05-01', 
+ 4, 
+ 1, 
+ 1);
+ 
+ -- Contratos --
+ INSERT INTO contratados (dia, horario, id_condominio, id_cliente, id_servico, confirmado) VALUES
+('2026-03-10', '09:00:00', 1, 1, 1, 'confirmado'),
+('2026-03-12', '10:00:00', 2, 2, 2, 'pendente'),
+('2026-03-15', '15:00:00', 3, 3, 3, 'concluido');
+ 
+SELECT * FROM usuario;
+
+SELECT * FROM condominio;

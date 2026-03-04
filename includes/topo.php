@@ -1,52 +1,48 @@
 <?php
 require('./includes/conexao.php');
 @session_start();
-$pag = $_SERVER['PHP_SELF'];
 
-$classe = "";
+$pag = basename($_SERVER['PHP_SELF']); // pega só o nome do arquivo
 
-if ($pag === "/login.php" || $pag === "/cadastro.php" || $pag === "/index.php" || $pag === "/criarChave.php") {
-    $classe = "navegacao";
-} else {
-    $classe = "menu";
-}
+$classe = in_array($pag, ['login.php', 'cadastro.php', 'index.php', 'criarChave.php', 'sobre.php'])
+    ? "navegacao"
+    : "menu";
 ?>
 
 <header class="topo-cabecalho" id="topo">
-    <a class="img-logo" href="index.php"><img src="./img/condomino.png" alt=""></a>
+    
+    <a class="img-logo" href="index.php">
+        <img src="./img/condomino.png" alt="Logo">
+    </a>
 
-    <nav class="<?php echo $classe; ?>">
+    <nav class="<?= $classe ?>">
         <ul>
-            <li><a href="./index.php">Inicio</a></li>
-            <?php
-            if (isset($_SESSION["login"]) && $_SESSION["login"]) {
-                echo "<li><a href='./servicos.php'>Serviços</a></li>";
-            } else {
-                echo $pag !== "/login.php" ? "<li><a href='login.php'>Login</a></li>" : "<li><a href='cadastro.php'>Cadastro</a></li>";
-            }
-            ?>
+            <li><a href="index.php">Início</a></li>
+
+            <?php if (!empty($_SESSION["login"])): ?>
+                <li><a href="servicos.php">Serviços</a></li>
+            <?php else: ?>
+                <?php if ($pag === "login.php"): ?>
+                    <li><a href="cadastro.php">Cadastro</a></li>
+                <?php elseif ($pag === "cadastro.php"): ?>
+                    <li><a href="login.php">Login</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">Login</a></li>
+                    <li><a href="cadastro.php">Cadastro</a></li>
+                <?php endif; ?>
+            <?php endif; ?>
+
             <li><a href="#">Contato</a></li>
+            <li><a href="sobre.php">Sobre</a></li>
         </ul>
     </nav>
 
     <?php
-    if ($pag === '/index.php') {
-    ?>
-        <style>
-            #topo {
-                background-color: transparent;
-            }
-        </style>
-    <?php
-    }
-    ?>
+    if ($classe === "menu" && !empty($_SESSION["id"])):
 
-    <?php
-    if ($classe === "menu" && isset($_SESSION["id"])) {
         $id = $_SESSION["id"];
 
         $sql = "SELECT nome, email, imagem FROM usuario WHERE id = ?";
-
         $stm = $con->prepare($sql);
         $stm->bind_param("i", $id);
         $stm->execute();
@@ -54,32 +50,36 @@ if ($pag === "/login.php" || $pag === "/cadastro.php" || $pag === "/index.php" |
 
         if ($resultado->num_rows > 0) {
             $usuario = $resultado->fetch_assoc();
-
             $nome = $usuario["nome"];
-            $email = $usuario["email"];
             $img = $usuario["imagem"];
         } else {
-            $_SESSION["mensagem"] = "Usuário desconectado ou não existe";
             $_SESSION["login"] = false;
-            $_SESSION["tipo"] = "desconectado";
+            session_destroy();
         }
     ?>
-        <input type="text" name="" id=" " class="pesquisa" placeholder="Pesquisar">
 
+        <input type="text" class="pesquisa" placeholder="Pesquisar">
 
         <div class="user">
-            <p>Olá, <?php echo $nome ?></p>
-            <a href="./usuario.php"><img src="<?php echo $img ?>" alt="" class="<?php echo $userClass = ($pag === "/usuario") ? "user-icon" : "user-img"; ?>"></a>
-            <a href=""><img src="./icon/msg.png" alt=""></a>
+            <p>Olá, <?= htmlspecialchars($nome) ?></p>
+
+            <a href="usuario.php">
+                <img src="<?= htmlspecialchars($img) ?>" 
+                     alt="Usuário" 
+                     class="<?= ($pag === "usuario.php") ? "user-icon" : "user-img"; ?>">
+            </a>
+
+            <a href="#">
+                <img src="./icon/msg.png" alt="Mensagens">
+            </a>
         </div>
+
         <nav id="burguer">
             <div></div>
             <div></div>
             <div></div>
         </nav>
 
-    <?php
-    }
-    ?>
+    <?php endif; ?>
 
 </header>

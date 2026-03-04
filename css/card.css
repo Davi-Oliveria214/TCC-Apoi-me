@@ -1,6 +1,6 @@
 .card {
-    width: 250px;
-    min-height: 270px;
+    width: 260px;
+    min-height: 280px;
     display: flex;
     flex-direction: column;
     background-color: var(--verde-musgo);
@@ -33,26 +33,30 @@
         gap: 10px;
 
         .info-card {
-            height: 80px;
+            min-height: 80px;
             display: flex;
             flex-direction: column;
             gap: 5px;
 
-            .titulo-card {
+            &>.titulo-card {
                 color: var(--dourado-palido);
                 margin: 0;
                 font-size: 1.4rem;
                 letter-spacing: 1.2px;
+
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             &>p {
+                height: 55px;
                 text-align: justify;
                 overflow-y: auto;
                 padding: 5px;
                 background-color: rgba(var(--preto-rgba), 0.2);
                 border-radius: 5px;
                 line-height: 1.4;
-                height: 100%;
             }
         }
 

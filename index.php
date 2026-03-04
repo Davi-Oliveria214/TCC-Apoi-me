@@ -3,52 +3,66 @@ include('./includes/head.php');
 include('./includes/topo.php');
 ?>
 
-<img src="./img/banner.png" alt="" class="img-sobre" id="banner">
 
-<div class="titulo-texto-sobre" id="inicial">
-    <h1>A solução mora ao lado</h1>
-    <p>Um espaço que conecta pessoas e promove a colaboração dentro do condomínio, unindo moradores e gestão em harmonia</p>
-</div>
+<figure class="img-mostrar">
+    <img src="./img/imagemcentrodecond.jpg" alt="">
+    <figcaption class="texto-img">
+        <h1>Conectanto suas necessidades ao seu Bem-estar</h1>
+    </figcaption>
+</figure>
 
+<main class="principal-inicial">
+    <section class="inicial-escolha" id="filtro">
+        <ul>
+            <?php
+            echo "<li onclick=filtrar(0)>Todos</li>";
+            $categorias = mysqli_query($con, "SELECT * FROM categorias");
 
-<main id="sobre-nos">
-    <div class="texto-principal-quem-somos">
-        <h1 class="paragrafo-destaque">
-            Quem somos
-        </h1>
+            if ($categorias->num_rows) {
+                while ($categoria = mysqli_fetch_assoc($categorias)) {
+                    echo "<li onclick=filtrar($categoria[id])>$categoria[nome]</li>";
+                }
+            }
+            ?>
+        </ul>
+    </section>
 
-        <p>
-            Somos um grupo de desenvolvedores de sistemas apaixonados por tecnologia e pelo seu potencial de transformar o cotidiano. O que começou como um projeto acadêmico evoluiu para uma missão real: facilitar a vida em condomínios e comunidades por meio da colaboração.
-            <br>Acreditamos que a solução para muitos problemas do dia a dia está mais próxima do que imaginamos e muitas vezes, na porta ao lado. Nossa plataforma nasceu para ser a ponte entre quem precisa de um serviço e quem tem o talento para realizá-lo, promovendo uma economia local circular, segura e eficiente.
-            <br>Por que fazemos isso? <br>
-            Porque acreditamos que a tecnologia deve servir para aproximar as pessoas, não apenas para conectá-las a telas. Queremos que você encontre o que precisa a poucos metros de distância, valorizando o talento local e otimizando o seu tempo.
-        </p>
-    </div>
+    <section class="informacoes-inicial" id="todos-servicos">
+        <?php
+        $servicos = mysqli_query($con, "SELECT * FROM servicos LIMIT 10");
 
-    <article class="info-nos" id="info-objetivo">
-        <div>
-            <h2>Missão</h2>
-            <p>Oferecer soluções digitais que fortaleçam a confiança, a comunicação e a organização em condomínios e comunidades residenciais, promovendo a eficiência na contratação de serviços e a melhoria da qualidade de vida dos moradores.</p>
-        </div>
-    </article>
+        if ($servicos->num_rows) {
+            while ($servico = mysqli_fetch_assoc($servicos)) {
+                $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
+                $horaFim = date('H:i', strtotime($servico['horario_fim']));
 
-    <article class="info-nos" id="info-visao">
-        <div>
-            <h2>Visão</h2>
-            <p>Ser reconhecida como a principal referência nacional em plataformas digitais de gestão comunitária e compartilhamento de serviços, expandindo sua atuação para diferentes contextos residenciais.</p>
-        </div>
-    </article>
+                echo "<div class='card card-servico'>";
+                echo "<img src='$servico[imagem]' alt=''>";
+                echo "<div>";
+                echo "<div class='info-card'>";
+                echo "<h2 class='titulo-card'>$servico[nome]</h2>";
+                echo "<p>$servico[descricao]</p>";
+                echo "</div>";
+                echo "<div class='cronograma'>";
+                echo "<p>Das <time datetime='$horaInicio'>$horaInicio</time>
+                    Até <time datetime='$horaFim'>$horaFim</time></p>";
+                echo "<p>Data limite: <time datetime='$servico[data_limite]'>$servico[data_limite]</time></p>";
+                echo "</div>";
+                echo "<div class='box-btn'>";
+                echo "<a href='' class='btn' >Agendar serviço</a>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+            }
+        } else {
+            echo "<h2 id=avisos>Nenhum serviço encontrado</h2>";
+        }
+        ?>
+    </section>
 
-    <article class="info-nos" id="info-valores">
-        <div>
-            <h2>Valores</h2>
-            <p>•Inovação: buscar constantemente soluções criativas e tecnológicas.
-                •Transparência: garantir relações claras e de confiança entre moradores, ad-ministradores e prestadores.
-                •Segurança: priorizar a proteção de dados e a credibilidade dos serviços ofere-cidos.
-                •Colaboração: estimular a cooperação entre usuários para o fortalecimento da comunidade.
-                •Sustentabilidade: adotar práticas que otimizem recursos e promovam eficiência coletiva.</p>
-        </div>
-    </article>
+    <section class="parceros-principal">
+        <img class="menu-img" src="./img/condomino.png" alt="">
+    </section>
 </main>
 
 <?php
