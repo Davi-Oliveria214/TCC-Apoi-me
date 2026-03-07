@@ -7,7 +7,7 @@ include('./util/avisos.php');
 <div class="div-auth">
     <main class="autenticar">
         <div class="div-form">
-            <form action="./controls/novasenha.php" method="post" class="form">
+            <form action="./controls/nova_senha.php" method="post" class="form">
                 <h1>Esqueci senha</h1>
                 <div class="box-auth">
                     <label for="idEmail">Email</label>
