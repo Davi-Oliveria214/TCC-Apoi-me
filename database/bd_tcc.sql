@@ -5,7 +5,7 @@ CREATE DATABASE IF NOT EXISTS `bd_apoi_me`
 DEFAULT CHARACTER SET utf8mb4 
 COLLATE utf8mb4_0900_ai_ci;
 
-USE `bd_apoi_me`; 
+USE `bd_apoi_me`;
 
 -- 2. Tabela: condominio
 CREATE TABLE `condominio` (

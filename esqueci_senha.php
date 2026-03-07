@@ -7,27 +7,27 @@ include('./util/avisos.php');
 <div class="div-auth">
     <main class="autenticar">
         <div class="div-form">
-            <form action="./controls/login.act.php" method="post" class="form">
-                <h1>Login</h1>
-                <div class="box-auth">
-                    <label for="idChave">Chave de acesso</label>
-                    <input type="text" name="chave" id="idChave" placeholder="Chave" required>
-                </div>
+            <form action="./controls/novasenha.php" method="post" class="form">
+                <h1>Esqueci senha</h1>
                 <div class="box-auth">
                     <label for="idEmail">Email</label>
                     <input type="email" name="email" id="idEmail" placeholder="Email" required>
                 </div>
                 <div class="box-auth">
-                    <label for="idSenha">Senha</label>
-                    <input type="password" name="senha" id="idSenha" placeholder="Senha" required>
+                    <label for="idNovaSenha">Nova senha</label>
+                    <input type="password" name="senha" id="idNovaSenha" placeholder="Senha" required>
+                </div>
+                <div class="box-auth">
+                    <label for="idRptSenha">Repita a nova senha</label>
+                    <input type="password" name="rptSenha" id="idRptSenha" placeholder="Senha" required>
                 </div>
                 <div class="box-btn" style="flex-direction: row;">
-                    <button type="submit" class="btn btn-auth">Entrar</button>
-                    <a href="./esqueci_senha.php" class="btn btn-auth">Esqueci a senha</a>
+                    <button type="submit" class="btn btn-auth">Trocar senha</button>
                 </div>
             </form>
 
             <div class="box-btn">
+                <a href="./login.php" class="btn-link">Logar</a>
                 <a href="./cadastro.php" class="btn-link">Cadastrar</a>
                 <a href="./criarChave.php" class="btn-link">Criar chave para o condomínio </a>
             </div>
