@@ -39,3 +39,10 @@ function filtrar(categoria) {
   });
 }
 
+const burguer = document.getElementById('burguer');
+const nav = document.getElementById('nav-id');
+
+burguer.addEventListener('click', () => {
+  nav.classList.toggle('ativo');
+  burguer.classList.toggle('abrir');
+});

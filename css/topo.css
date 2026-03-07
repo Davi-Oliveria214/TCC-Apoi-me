@@ -1,4 +1,5 @@
 :root {
+    /* Cores Hex */
     --preto-acinzentado: #1f1f1f;
     --verde-musgo: #0c3a3f;
     --verde-musgo-medio: #2d6057;
@@ -8,7 +9,7 @@
     --dourado-palido: #d8b469;
     --dourado-fraco: #ffe6a7;
 
-    /* RGB */
+    /* RGB para transparências */
     --preto-rgba: 31, 31, 31;
     --verde-musgo-rgba: 12, 58, 63;
     --verde-musgo-medio-rgba: 45, 96, 87;
@@ -20,7 +21,7 @@
 }
 
 /* ===========================
-   Cabeçalho
+   Cabeçalho e Navegação
 =========================== */
 .topo-cabecalho {
     display: flex;
@@ -32,35 +33,53 @@
     background-color: var(--verde-musgo-medio);
     flex-wrap: wrap;
     gap: 15px;
+}
 
-    & .img-logo>img {
-        width: 50px;
-        display: block;
-        border-radius: 10px;
+.img-logo img {
+    width: 50px;
+    display: block;
+    border-radius: 10px;
+}
+
+.navegacao {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(var(--preto-rgba), 0.5);
+    z-index: 1;
+
+    &.ativo {
+        display: flex;
     }
 
-    & .navegacao {
+    & div {
         display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--verde-musgo-medio);
+        padding: 10px 5px;
+
+        & img {
+            width: 50px;
+        }
 
         & ul {
+            flex: 1;
             display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
             padding: 5px 10px;
+            text-align: center;
             gap: 20px;
             font-size: 1.2rem;
-        }
-
-        & .links-sociais {
-            & img {
-                width: 25px;
-            }
+            list-style: none;
         }
     }
 }
 
-.menu {
-    display: none;
-}
-
+/* Elementos de Interface */
 .pesquisa {
     width: clamp(200px, 50%, 250px);
     padding: 5px 10px;
@@ -68,6 +87,7 @@
     background-color: var(--branco);
     border: solid 2px var(--dourado);
     color: var(--preto-acinzentado);
+    outline: none;
 }
 
 .user {
@@ -80,14 +100,7 @@
         display: block;
         width: 30px;
     }
-}
 
-.user-cabecalho {
-    align-items: flex-start;
-    height: 120px;
-}
-
-.user {
     & .user-icon {
         position: absolute;
         width: 65px;
@@ -96,7 +109,6 @@
     }
 }
 
-
 #burguer {
     display: flex;
     flex-direction: column;
@@ -104,11 +116,16 @@
     gap: 3px;
     cursor: pointer;
 
-    &>div {
+    &.abrir {
+        z-index: 2;
+    }
+
+    & div {
         background-color: var(--dourado);
         height: 5px;
         width: 32px;
         border-radius: 20px;
+        transition: background 0.3s;
     }
 
     &:hover div {
@@ -116,6 +133,12 @@
     }
 }
 
+/* Utilitários */
+.sair-logout {
+    order: 5;
+}
+
+/* Responsividade */
 @media (max-width: 513px) {
     .user {
         order: 2;

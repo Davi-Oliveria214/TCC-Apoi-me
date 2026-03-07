@@ -1,11 +1,11 @@
 <?php
 include("./includes/head.php");
+include("./includes/topo.php"); 
 include('./util/avisos.php');
 ?>
 
 <div class="div-auth">
     <main class="autenticar">
-        <?php include("./includes/topo.php"); ?>
         <div class="div-form">
             <form action="./controls/login.act.php" method="post" class="form">
                 <h1>Login</h1>

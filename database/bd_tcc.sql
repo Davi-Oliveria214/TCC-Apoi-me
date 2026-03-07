@@ -58,13 +58,13 @@ CREATE TABLE `servicos` (
   `data_limite` date NOT NULL,
   `id_categoria` int NOT NULL,
   `id_prestador` int NOT NULL,
-  `id_condominio` int NOT NULL,
+  `codigo` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_servicos_categoria` (`id_categoria`),
   KEY `fk_servicos_prestador` (`id_prestador`),
-  KEY `fk_servicos_condominio` (`id_condominio`),
+  KEY `fk_servicos_condominio` (`codigo`),
   CONSTRAINT `fk_servicos_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id`),
-  CONSTRAINT `fk_servicos_condominio` FOREIGN KEY (`id_condominio`) REFERENCES `condominio` (`id`),
+  CONSTRAINT `fk_servicos_condominio` FOREIGN KEY (`codigo`) REFERENCES `condominio` (`codigo`),
   CONSTRAINT `fk_servicos_prestador` FOREIGN KEY (`id_prestador`) REFERENCES `usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -121,44 +121,48 @@ INSERT INTO dias_semanas (id, nome) VALUES
 
 -- Usuários --
 INSERT INTO usuario (nome, email, senha, imagem, codigo) VALUES
-('João Silva', 'joao@gmail.com', '123456', '../icon/user.png', '1234spd'),
-('Maria Souza', 'maria@gmail.com', '123456', '../icon/user.png', '5678abc'),
-('Carlos Lima', 'carlos@gmail.com', '123456', '../icon/user.png', '9101xyz');
+('João Silva', 'joao@gmail.com', '$2y$10$wl7XMWQUP4nO7kMMcc1WxOjCuBiMI1.pP2r9M1pAELLUWa5a0B/fW', '../icon/user.png', '1234spd'),
+('Maria Souza', 'maria@gmail.com', '$2y$10$hcjesuxWlNg9gxAg0zedOOrYqIoieDPlzZPxQuAg161VGJcJ753YO', '../icon/user.png', '5678abc'),
+('Carlos Lima', 'carlos@gmail.com', '$2y$10$tSQzO6m5zqUIpTEPpsItNOICPx4hVelPVzxOB5zwTKYb.XsHjOmc6', '../icon/user.png', '9101xyz');
 
 -- Serviços --
-INSERT INTO servicos (nome, imagem, descricao, horario_inicio, horario_fim, data_limite, id_categoria, id_prestador, id_condominio) VALUES 
+INSERT INTO servicos (nome, imagem, codigo, descricao, horario_inicio, horario_fim, data_limite, id_categoria, id_prestador) VALUES 
 ('Serviço de Limpeza', 
  'img/faxineira.jpg', 
+ '1234spd',
  'Limpeza completa de apartamentos.', 
  '08:00:00', 
  '16:00:00', 
  '2026-04-10', 
  2, 
- 2, 
  2), ('Cuidador de Idosos', 
  'img/cuidador-de-cachorro.jpg', 
+ '5678abc',
  'Cuidados diários para idosos.', 
  '09:00:00', 
  '18:00:00', 
  '2026-04-15', 
  3, 
- 3, 
  3), ('Aula Particular de Matemática', 
  'img/a-mostra.jpg', 
+ '9101xyz',
  'Reforço escolar para ensino fundamental.', 
  '14:00:00', 
  '17:00:00', 
  '2026-05-01', 
  4, 
- 1, 
  1);
  
  -- Contratos --
  INSERT INTO contratados (dia, horario, id_condominio, id_cliente, id_servico, confirmado) VALUES
-('2026-03-10', '09:00:00', 1, 1, 1, 'confirmado'),
-('2026-03-12', '10:00:00', 2, 2, 2, 'pendente'),
+('2026-03-10', '09:00:00',  1, 1, 1, 'confirmado'),
+('2026-03-12', '10:00:00',  2, 2, 2, 'pendente'),
 ('2026-03-15', '15:00:00', 3, 3, 3, 'concluido');
  
 SELECT * FROM usuario;
 
 SELECT * FROM condominio;
+
+SELECT * FROM servicos WHERE codigo;
+
+SELECT c.id, c.dia, c.horario, c.id_condominio, c.id_cliente, c.id_servico, c.confirmado, s.nome  AS servico, s.descricao, s.id_categoria, s.id_prestador, s.codigo FROM contratados c JOIN servicos s ON c.id_servico = s.id WHERE c.id_cliente = 1;

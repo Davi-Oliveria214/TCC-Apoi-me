@@ -2,25 +2,75 @@
 require('./includes/conexao.php');
 @session_start();
 
-$pag = basename($_SERVER['PHP_SELF']); // pega só o nome do arquivo
+$pag = basename($_SERVER['PHP_SELF']);
 
-$classe = in_array($pag, ['login.php', 'cadastro.php', 'index.php', 'criarChave.php', 'sobre.php'])
-    ? "navegacao"
-    : "menu";
+$classe = "navegacao";
 ?>
 
 <header class="topo-cabecalho" id="topo">
-    
+
     <a class="img-logo" href="index.php">
         <img src="./img/condomino.png" alt="Logo">
     </a>
 
-    <nav class="<?= $classe ?>">
+    <?php
+    if (!empty($_SESSION["id"])):
+
+        $id = $_SESSION["id"];
+
+        $sql = "SELECT nome, email, imagem, codigo FROM usuario WHERE id = ?";
+        $stm = $con->prepare($sql);
+        $stm->bind_param("i", $id);
+        $stm->execute();
+        $resultado = $stm->get_result();
+
+        if ($resultado->num_rows > 0) {
+            $usuario = $resultado->fetch_assoc();
+            $nome = $usuario["nome"];
+            $img = $usuario["imagem"];
+            $codigo = $usuario["codigo"];
+        } else {
+            $_SESSION["login"] = false;
+            session_destroy();
+        }
+    ?>
+
+        <input type="text" class="pesquisa" placeholder="Pesquisar">
+
+        <div class="user">
+            <p>Olá, <?= htmlspecialchars($nome) ?></p>
+
+            <a href="usuario.php">
+                <img src="<?= htmlspecialchars($img) ?>"
+                    alt="Usuário"
+                    class="<?= ($pag === "usuario.php") ? "user-icon" : "user-img"; ?>">
+            </a>
+
+            <a href="#">
+                <img src="./icon/msg.png" alt="Mensagens">
+            </a>
+        </div>
+    <?php endif; ?>
+
+    <nav id="burguer">
+        <div></div>
+        <div></div>
+        <div></div>
+    </nav>
+</header>
+
+<nav class="<?= $classe ?>" id="nav-id">
+    <div>
+        <a class="img-logo" href="index.php">
+            <img src="./img/condomino.png" alt="Logo">
+        </a>
+
         <ul>
             <li><a href="index.php">Início</a></li>
 
             <?php if (!empty($_SESSION["login"])): ?>
                 <li><a href="servicos.php">Serviços</a></li>
+                <a href="./includes/logout.php" class="sair-logout">Sair</a>
             <?php else: ?>
                 <?php if ($pag === "login.php"): ?>
                     <li><a href="cadastro.php">Cadastro</a></li>
@@ -35,51 +85,5 @@ $classe = in_array($pag, ['login.php', 'cadastro.php', 'index.php', 'criarChave.
             <li><a href="#">Contato</a></li>
             <li><a href="sobre.php">Sobre</a></li>
         </ul>
-    </nav>
-
-    <?php
-    if ($classe === "menu" && !empty($_SESSION["id"])):
-
-        $id = $_SESSION["id"];
-
-        $sql = "SELECT nome, email, imagem FROM usuario WHERE id = ?";
-        $stm = $con->prepare($sql);
-        $stm->bind_param("i", $id);
-        $stm->execute();
-        $resultado = $stm->get_result();
-
-        if ($resultado->num_rows > 0) {
-            $usuario = $resultado->fetch_assoc();
-            $nome = $usuario["nome"];
-            $img = $usuario["imagem"];
-        } else {
-            $_SESSION["login"] = false;
-            session_destroy();
-        }
-    ?>
-
-        <input type="text" class="pesquisa" placeholder="Pesquisar">
-
-        <div class="user">
-            <p>Olá, <?= htmlspecialchars($nome) ?></p>
-
-            <a href="usuario.php">
-                <img src="<?= htmlspecialchars($img) ?>" 
-                     alt="Usuário" 
-                     class="<?= ($pag === "usuario.php") ? "user-icon" : "user-img"; ?>">
-            </a>
-
-            <a href="#">
-                <img src="./icon/msg.png" alt="Mensagens">
-            </a>
-        </div>
-
-        <nav id="burguer">
-            <div></div>
-            <div></div>
-            <div></div>
-        </nav>
-
-    <?php endif; ?>
-
-</header>
+    </div>
+</nav>

@@ -88,7 +88,7 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 30px;
-  padding: 20px 0;
+  padding: 20px 15px;
 }
 
 /* ESCOLHAS (Filtros) */
@@ -101,7 +101,6 @@ main {
 
 .inicial-escolha>ul {
   width: 100%;
-  max-width: 1200px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -141,8 +140,7 @@ main {
 
 /* INFORMAÇÕES INICIAL (Container dos Cards) */
 .informacoes-inicial {
-  width: 90%;
-  max-width: 1200px;
+  width: 100%;
   max-height: 430px;
   display: flex;
   justify-content: center;
@@ -154,7 +152,6 @@ main {
   background-color: rgba(var(--dourado-palido-rgba), 0.3);
   box-shadow: 0 10px 20px rgba(var(--preto-rgba), 0.2);
   border: none;
-  overflow-y: scroll;
 }
 
 /* PARCEIROS */
@@ -222,7 +219,6 @@ main {
   border-radius: 20px;
 }
 
-
 /* ===========================
    RODAPÉ
 =========================== */
@@ -238,16 +234,16 @@ main {
   bottom: 0;
 }
 
-.rodape h3 {
-  color: var(--dourado-palido);
-}
-
 .rodape ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   list-style: none;
   padding: 10px;
   display: flex;
   gap: 50px;
   color: var(--dourado-fraco);
+  width: 100%;
 }
 
 .rodape ul li {
@@ -257,33 +253,6 @@ main {
 
 .rodape ul li p {
   font-weight: bold;
-}
-
-.redes-socias {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  padding: 10px;
-}
-
-.redes-socias img {
-  width: 50px;
-  padding: 10px;
-  background-color: var(--verde-musgo-medio);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.redes-socias img:hover {
-  transform: scale(1.1);
-}
-
-@media screen and (max-width: 700px) {
-  .rodape>ul {
-    display: flex;
-    flex-direction: column;
-  }
 }
 
 /* ===========================

@@ -10,10 +10,10 @@ include('./util/avisos.php');
             <h1>Reservados</h1>
             <div class="box">
                 <?php
-                $servicos = mysqli_query($con, "SELECT * FROM contratados WHERE id_cliente = 1");
+                $servicos = mysqli_query($con, "SELECT c.id, c.dia, c.horario, c.id_condominio, c.id_cliente, c.id_servico, c.confirmado  AS servico,  s.nome, s.descricao, s.imagem, s.id_categoria, s.id_prestador, s.codigo FROM contratados c JOIN servicos s ON c.id_servico = s.id WHERE c.id_cliente = $id;");
 
                 if ($servicos->num_rows) {
-                    while ($servico - mysqli_fetch_assoc($servicos)) {
+                    while ($servico = mysqli_fetch_assoc($servicos)) {
                         $horario = date('H:i', strtotime($servico['horario']));
 
                         echo "<div class='card card-servico'>";
@@ -25,7 +25,7 @@ include('./util/avisos.php');
                         echo "</div>";
                         echo "<div class='cronograma'>";
                         echo "<p>Das <time datetime='$horario'>$horario</time>";
-                        echo "<p>Data limite: <time datetime='2026-07-01'>$servico[data]</time></p>";
+                        echo "<p>Data limite: <time datetime='2026-07-01'>$servico[dia]</time></p>";
                         echo "</div>";
                         echo "<div class='box-btn'>";
                         echo "<a href='' class='btn'>Remarcar</a>";
@@ -90,30 +90,33 @@ include('./util/avisos.php');
         <h1>Serviços</h1>
         <section class="sessao-servicos">
             <?php
-            $servicos = mysqli_query($con, "SELECT * FROM servicos");
+            $servicos = mysqli_query($con, "SELECT * FROM servicos WHERE codigo = '$codigo'");
 
-            while ($servico = mysqli_fetch_assoc($servicos)) {
-                $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
-                $horaFim = date('H:i', strtotime($servico['horario_fim']));
+            if ($servicos->num_rows) {
+                while ($servico = mysqli_fetch_assoc($servicos)) {
+                    $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
+                    $horaFim = date('H:i', strtotime($servico['horario_fim']));
 
-                echo "<div class='card card-servico'>";
-                echo "<img src='$servico[imagem]' alt=''>";
-                echo "<div>";
-                echo "<div class='info-card'>";
-                echo "<h2 class='titulo-card'>$servico[nome]</h2>";
-                echo "<p>$servico[descricao]</p>";
-                echo "</div>";
-                echo "<div class='cronograma'>";
-                echo "<p>Das <time datetime='$horaInicio'>$horaInicio</time>
-                    Até <time datetime='$horaFim'>$horaFim</time></p>";
-                echo "<p>Data limite: <time datetime='$servico[data_limite]'>$servico[data_limite]</time></p>";
-                echo "</div>";
-                echo "<div class='box-btn'>";
-                echo "<a href='' class='btn' >Agendar serviço</a>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
-            } ?>
+                    echo "<div class='card card-servico'>";
+                    echo "<img src='$servico[imagem]' alt=''>";
+                    echo "<div>";
+                    echo "<div class='info-card'>";
+                    echo "<h2 class='titulo-card'>$servico[nome]</h2>";
+                    echo "<p>$servico[descricao]</p>";
+                    echo "</div>";
+                    echo "<div class='cronograma'>";
+                    echo "<p>Das <time datetime='$horaInicio'>$horaInicio</time>
+                        Até <time datetime='$horaFim'>$horaFim</time></p>";
+                    echo "<p>Data limite: <time datetime='$servico[data_limite]'>$servico[data_limite]</time></p>";
+                    echo "</div>";
+                    echo "<div class='box-btn'>";
+                    echo "<a href='' class='btn' >Agendar serviço</a>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                }
+            }
+            ?>
         </section>
     </section>
 </main>
