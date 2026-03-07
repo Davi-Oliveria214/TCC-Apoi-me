@@ -39,10 +39,20 @@ function filtrar(categoria) {
   });
 }
 
+// Menu topo
 const burguer = document.getElementById('burguer');
 const nav = document.getElementById('nav-id');
 
 burguer.addEventListener('click', () => {
-  nav.classList.toggle('ativo');
-  burguer.classList.toggle('abrir');
+    const isAtivo = nav.classList.contains('ativo');
+
+    if (isAtivo) {
+        nav.classList.remove('ativo');
+        nav.classList.add('desativado');
+    } else {
+        nav.classList.remove('desativado');
+        nav.classList.add('ativo');
+    }
+
+    burguer.classList.toggle('abrir');
 });

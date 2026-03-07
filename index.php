@@ -3,7 +3,6 @@ include('./includes/head.php');
 include('./includes/topo.php');
 ?>
 
-
 <figure class="img-mostrar">
     <img src="./img/imagemcentrodecond.jpg" alt="">
     <figcaption class="texto-img">
