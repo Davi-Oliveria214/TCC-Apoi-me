@@ -187,7 +187,7 @@
         order: 4;
     }
 
-    #burguer.abrir {
+    #burguer.abrir.topoLogado {
         margin-top: -75px;
     }
 }

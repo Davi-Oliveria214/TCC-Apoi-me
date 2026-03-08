@@ -54,7 +54,7 @@ include('./util/avisos.php');
         </div>
     <?php endif; ?>
 
-    <nav id="burguer">
+    <nav id="burguer" class="<?php echo isset($_SESSION['login']) ? 'topoLogado' : '' ?>">
         <div></div>
         <div></div>
         <div></div>

@@ -11,7 +11,7 @@ include('./util/avisos.php');
             <div class="info-contato">
                 <input type="text" name="nome" id="textNome" placeholder="Nome:" <?php echo $_SESSION['login'] ? 'readonly' : ''; ?> required value="<?php echo $nome ?? '' ?>">
 
-                <input type="email" name="e-mail" id="textEmail" placeholder="E-mail" <?php echo $_SESSION['login'] ? 'readonly' : ''; ?> required value="<?php echo $email ?? '' ?>">
+                <input type="email" name="email" id="textEmail" placeholder="E-mail" <?php echo $_SESSION['login'] ? 'readonly' : ''; ?> required value="<?php echo $email ?? '' ?>">
 
                 <input type="tel" name="telefone" id="textTel" placeholder="Telefone:" required>
 

@@ -1,6 +1,6 @@
 <?php
-@session_start();
-require_once './conexao.php';
+session_start();
+require_once(__DIR__ . '/../conexao.php');
 
 if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['telefone']) || empty($_POST['comentario'])) {
     $_SESSION['mensagem'] = "Preencha todos os campos necessários";
@@ -35,13 +35,14 @@ $stm = $con->prepare('SELECT id FROM comentarios WHERE email = ?');
 $stm->bind_param('s', $email);
 $stm->execute();
 $res = $stm->get_result();
+$user = $res->fetch_assoc();
 
 if ($res->num_rows == 0) {
     $stm = $con->prepare('INSERT INTO comentarios(nome, email, telefone, mensagem) VALUES (?, ?, ?, ?)');
     $stm->bind_param('ssss', $nome, $email, $telefone, $comentario);
 } else {
-    $stm = $con->prepare('UPDATE comentarios SET mensagem = ? WHERE email = ?');
-    $stm->bind_param('ss', $comentario, $email);
+    $stm = $con->prepare('UPDATE comentarios SET mensagem = ? WHERE id = ?');
+    $stm->bind_param('si', $comentario, $user['id']);
 }
 
 if ($stm->execute()) {
