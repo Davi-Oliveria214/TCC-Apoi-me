@@ -1,104 +1,141 @@
+/* ===========================
+    Páginas de Autenticação e Contato
+   =========================== */
+
+/* Container Principal (Lado a Lado: Formulário | Banner) */
 .div-auth {
     display: flex;
     width: 100vw;
-    height: 100vh;
-
-    & #topo {
-        width: 100%;
-    }
-
-    &>img {
-        width: 50vw;
-    }
+    min-height: 100vh;
+    background-color: var(--dourado-fraco);
 }
 
 .autenticar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
     min-width: 50vw;
 }
 
-.criar-chave {
-    width: 100vw;
-    height: 100vh;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-
-    &>.form {
-        width: 50%;
-    }
+/* Banner lateral */
+.banner {
+    width: 50vw;
+    object-fit: cover;
+    display: block;
 }
 
-.div-form {
+/* Estrutura do Formulário (Unificada) */
+.div-form, .fale-conosco {
     width: 100%;
-    height: 88%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 10px;
-}
-
-.form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+    max-width: 500px;
     background-color: var(--dourado-palido);
-    gap: 20px;
-    padding: 10px 15px;
-    border-radius: 20px;
-
-    & h1 {
-        text-align: center;
-        color: var(--verde-musgo-medio);
-    }
-
-    &>.box-auth {
-        display: flex;
-        flex-direction: column;
-
-        & label {
-            font-size: 1.4rem;
-            padding: 0px 5px;
-        }
-
-        & input {
-            width: 100%;
-            font-size: 1rem;
-            padding: 5px 8px;
-            border-radius: 10px;
-            background-color: var(--dourado-fraco);
-            border: 2px solid var(--dourado);
-            color: var(--verde-musgo-medio);
-        }
-    }
-
-    & .btn-auth {
-        font-size: 1.1rem;
-    }
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid var(--dourado);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
+.form, .info-contato {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Títulos */
+.form h1, .fale-conosco h1 {
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--verde-musgo-medio);
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+/* Labels e Inputs */
+.box-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.box-auth label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--verde-musgo-medio);
+}
+
+.box-auth input, 
+.fale-conosco input, 
+.fale-conosco textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--dourado);
+    border-radius: 8px;
+    background-color: var(--dourado-fraco);
+    color: var(--preto-acinzentado);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.box-auth input:focus, .fale-conosco input:focus {
+    border-color: var(--verde-musgo);
+    outline: none;
+}
+
+/* Botões */
 .box-btn {
     display: flex;
     flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+    align-items: center;
+}
 
-    & .btn-link {
-        text-transform: uppercase;
-        font-size: 1.2rem;
-        color: var(--preto-acinzentado);
-        text-decoration: underline;
-    }
+.btn-auth, #btn-enviar {
+    width: 100%;
+    background-color: var(--verde-musgo);
+    color: var(--branco);
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+.btn-auth:hover, #btn-enviar:hover {
+    background-color: var(--verde-musgo-medio);
+}
+
+.btn-link {
+    font-size: 1rem;
+    color: var(--preto-acinzentado);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.btn-link:hover {
+    color: var(--verde-musgo);
+    text-decoration: underline;
+}
+
+#contato {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 40px 20px;
+    background-color: var(--dourado-fraco);
 }
 
 @media (max-width: 900px) {
     .banner {
         display: none;
     }
-
-    .criar-chave {
-        &>.form {
-            width: 100%;
-        }
+    .autenticar {
+        width: 100vw;
     }
 }

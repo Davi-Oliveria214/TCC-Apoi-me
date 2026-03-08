@@ -21,7 +21,7 @@ include('./util/avisos.php');
                     <label for="idSenha">Senha</label>
                     <input type="password" name="senha" id="idSenha" placeholder="Senha" required>
                 </div>
-                <div class="box-btn" style="flex-direction: row;">
+                <div class="box-btn">
                     <button type="submit" class="btn btn-auth">Entrar</button>
                     <a href="./esqueci_senha.php" class="btn btn-auth">Esqueci a senha</a>
                 </div>

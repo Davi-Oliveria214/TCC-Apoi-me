@@ -27,6 +27,7 @@ $classe = "navegacao";
         if ($resultado->num_rows > 0) {
             $usuario = $resultado->fetch_assoc();
             $nome = $usuario["nome"];
+            $email = $usuario["email"];
             $img = $usuario["imagem"];
             $codigo = $usuario["codigo"];
         } else {
@@ -62,7 +63,7 @@ $classe = "navegacao";
 <nav class="<?php echo $classe ?> desativado" id="nav-id">
     <div>
         <a class="img-logo" href="index.php">
-            
+
         </a>
 
         <ul>
@@ -82,8 +83,8 @@ $classe = "navegacao";
                 <?php endif; ?>
             <?php endif; ?>
 
-            <li><a href="#">Contato</a></li>
-            <li><a href="sobre.php">Sobre</a></li>
+            <li><a href="../contato.php">Contato</a></li>
+            <li><a href="../sobre.php">Sobre</a></li>
         </ul>
     </div>
 </nav>
