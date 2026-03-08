@@ -30,28 +30,52 @@ include('./includes/topo.php');
 
     <section class="informacoes-inicial" id="todos-servicos">
         <?php
-        $servicos = mysqli_query($con, "SELECT * FROM servicos LIMIT 10");
+        $stm = $con->prepare('SELECT COUNT(*) as total FROM servicos');
+        $stm->execute();
+        $res = $stm->get_result();
+        $dados = $res->fetch_assoc();
+        $total_no_banco = $dados['total'];
 
-        if ($servicos->num_rows) {
-            while ($servico = mysqli_fetch_assoc($servicos)) {
-                $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
-                $horaFim = date('H:i', strtotime($servico['horario_fim']));
+        if ($total_no_banco > 0) {
+            $quantidade_para_sortear = min(10, $total_no_banco);
+            $sorte = [];
 
-                echo "<div class='card card-servico'>";
-                echo "<img src='$servico[imagem]' alt=''>";
-                echo "<div>";
-                echo "<div class='info-card'>";
-                echo "<h2 class='titulo-card'>$servico[nome]</h2>";
-                echo "<p>$servico[descricao]</p>";
-                echo "</div>";
-                echo "<div class='box-btn'>";
-                echo "<a href='' class='btn'>Agendar serviço</a>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
+            while (count($sorte) < $quantidade_para_sortear) {
+                $n = rand(1, $total_no_banco);
+                if (!in_array($n, $sorte)) {
+                    $sorte[] = $n;
+                }
+            }
+
+            $ids = implode(',', $sorte);
+
+            $sql = "SELECT * FROM servicos WHERE id IN ($ids) ORDER BY FIELD(id, $ids)";
+            $resultado_servicos = $con->query($sql);
+
+            if ($resultado_servicos->num_rows > 0) {
+                while ($servico = $resultado_servicos->fetch_assoc()) {
+                    $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
+                    $horaFim = date('H:i', strtotime($servico['horario_fim']));
+
+                    echo "<div class='card card-servico'>";
+                    echo "<img src='" . htmlspecialchars($servico['imagem']) . "' alt=''>";
+                    echo "<div>";
+                    echo "<div class='info-card'>";
+                    echo "<h2 class='titulo-card'>" . htmlspecialchars($servico['nome']) . "</h2>";
+                    echo "<p>" . htmlspecialchars($servico['descricao']) . "</p>";
+                    echo "<span>Horário: $horaInicio às $horaFim</span>";
+                    echo "</div>";
+                    echo "<div class='box-btn'>";
+                    echo "<a href='./controls/agendar.php?id=" . $servico['id'] . "' class='btn'>Agendar serviço</a>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                }
+            } else {
+                echo "<h2 id='avisos'>Nenhum serviço encontrado</h2>";
             }
         } else {
-            echo "<h2 id=avisos>Nenhum serviço encontrado</h2>";
+            echo "<h2 id='avisos'>Nenhum serviço cadastrado</h2>";
         }
         ?>
     </section>

@@ -5,6 +5,7 @@ require('./conexao.php');
 $pag = basename($_SERVER['PHP_SELF']);
 
 $classe = "navegacao";
+include('./util/avisos.php');
 ?>
 
 <header class="topo-cabecalho" id="topo">
@@ -62,10 +63,6 @@ $classe = "navegacao";
 
 <nav class="<?php echo $classe ?> desativado" id="nav-id">
     <div>
-        <a class="img-logo" href="index.php">
-
-        </a>
-
         <ul>
             <li><a href="index.php">Início</a></li>
 

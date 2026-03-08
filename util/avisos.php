@@ -26,9 +26,8 @@ if (isset($_SESSION["mensagem"])) {
                 });
             <?php endif; ?>
 
-        }, 2000);
+        }, 4500);
     </script>
-
 <?php
 }
 ?>

@@ -1,7 +1,6 @@
 <?php
 include("./includes/head.php");
 include("./includes/topo.php"); 
-include('./util/avisos.php');
 ?>
 
 <div class="div-auth">
