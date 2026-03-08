@@ -1,5 +1,5 @@
 <?php
-require("../includes/conexao.php");
+require(__DIR__ . '/../conexao.php');
 $resp = $_POST['resp'];
 
 $sql;

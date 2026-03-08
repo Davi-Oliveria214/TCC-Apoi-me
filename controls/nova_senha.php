@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('../includes/conexao.php');
+require_once(__DIR__ . '/../conexao.php');
 
 if (empty($_POST['email']) || empty($_POST['senha']) || empty($_POST['rptSenha'])) {
     $_SESSION["mensagem"] = "Preencha todos os campos";
