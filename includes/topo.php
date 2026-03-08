@@ -62,7 +62,7 @@ $classe = "navegacao";
 <nav class="<?php echo $classe ?> desativado" id="nav-id">
     <div>
         <a class="img-logo" href="index.php">
-            <img src="./img/condomino.png" alt="Logo">
+            
         </a>
 
         <ul>
