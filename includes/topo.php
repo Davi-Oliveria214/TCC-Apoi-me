@@ -1,5 +1,5 @@
 <?php
-require('./conexao.php');
+require_once(__DIR__ . '/../conexao.php');
 @session_start();
 
 $pag = basename($_SERVER['PHP_SELF']);

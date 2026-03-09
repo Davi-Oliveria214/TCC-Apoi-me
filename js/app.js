@@ -44,15 +44,39 @@ const burguer = document.getElementById('burguer');
 const nav = document.getElementById('nav-id');
 
 burguer.addEventListener('click', () => {
-    const isAtivo = nav.classList.contains('ativo');
+  const isAtivo = nav.classList.contains('ativo');
 
-    if (isAtivo) {
-        nav.classList.remove('ativo');
-        nav.classList.add('desativado');
-    } else {
-        nav.classList.remove('desativado');
-        nav.classList.add('ativo');
-    }
+  if (isAtivo) {
+    nav.classList.remove('ativo');
+    nav.classList.add('desativado');
+  } else {
+    nav.classList.remove('desativado');
+    nav.classList.add('ativo');
+  }
 
-    burguer.classList.toggle('abrir');
+  burguer.classList.toggle('abrir');
 });
+
+const institucional = document.getElementById('institucional');
+const atendimento = document.getElementById('atendimento');
+const cliente = document.getElementById('cliente');
+
+function abrir_info(opcao) {
+  if (opcao == 1) {
+    institucional.classList.toggle('expandir')
+  } else if (opcao == 2) {
+    atendimento.classList.toggle('expandir')
+  } else {
+    cliente.classList.toggle('expandir')
+  }
+}
+
+function fechar(opcao) {
+  if (opcao == 1) {
+    institucional.classList.toggle('expandir')
+  } else if (opcao == 2) {
+    atendimento.classList.toggle('expandir')
+  } else {
+    cliente.classList.toggle('expandir')
+  }
+}

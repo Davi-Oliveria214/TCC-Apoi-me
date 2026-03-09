@@ -153,10 +153,15 @@
 
 #burguer.abrir {
     z-index: 2;
-    margin-right: 15px;
+    right: 0;
+
+    & div {
+        right: 32px;
+        position: fixed;
+    }
 
     & div:first-child {
-        transform: translateY(11px) rotate(405deg);
+        transform: translateY(0px) rotate(405deg);
     }
 
     & div:nth-child(2) {
@@ -164,7 +169,7 @@
     }
 
     & div:nth-child(3) {
-        transform: translateY(-5px) rotate(-405deg);
+        transform: translateY(0px) rotate(-405deg);
     }
 }
 
