@@ -7,13 +7,15 @@ $dotenv->load();
 $host = $_ENV['DB_HOST'];
 $user = $_ENV['DB_USER'];
 $pass = $_ENV['DB_PASS'];
-$name = $_ENV['DB_NAME'];
+$banco = $_ENV['DB_BANCO'];
+$port = $_ENV['DB_PORT'];
 
-// Exemplo de uso na conexão:
-$con = mysqli_connect($host, $user, $pass, $name);
+try {
+    $dns  = "pgsql:host=$host;port=$port;dbname=$banco";
 
-if (!$con) {
-    die("Falha na conexão: " . mysqli_connect_error());
+    $con = new PDO($dns, $user, $pass);
+
+    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Falha na conexão" . $e->getMessage());
 }
-
-mysqli_set_charset($con, "utf8");
