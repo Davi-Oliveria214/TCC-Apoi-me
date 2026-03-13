@@ -16,33 +16,39 @@ $email = trim($_POST['email']);
 $senha = $_POST['senha'];
 $chave = trim($_POST['chave']);
 
-// Busca usuário pelo email
-$sql = mysqli_query($con, "SELECT * FROM usuario WHERE email = '$email'");
-$usuario = mysqli_fetch_assoc($sql);
+try {
+    $sql = "SELECT * FROM usuario WHERE email = :email";
+    $stmt = $con->prepare($sql);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
 
-if (!$usuario) {
-    $_SESSION["mensagem"] = "Email não cadastrado.";
+    $dados = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$dados) {
+        $_SESSION["mensagem"] = "Email não cadastrado.";
+        header("Location: ../cadastro.php");
+        exit;
+    }
+
+    if (!password_verify($senha, $dados['senha'])) {
+        $_SESSION["mensagem"] = "Senha incorreta.";
+        header("Location: ../login.php");
+        exit;
+    }
+
+    if ($dados['codigo'] != $chave) {
+        $_SESSION["mensagem"] = "Chave de acesso incorreta.";
+        header("Location: ../login.php");
+        exit;
+    }
+
+    $_SESSION["id"] = $dados['id'];
+    $_SESSION["login"] = true;
+
+    header("Location: ../servicos.php");
+    exit;
+} catch (PDOException $e) {
+    $_SESSION["mensagem"] = "Erro no banco de dados: " . $e->getMessage();
     header("Location: ../cadastro.php");
     exit;
 }
-
-// Verifica senha (CORRIGIDO)
-if (!password_verify($senha, $usuario['senha'])) {
-    $_SESSION["mensagem"] = "Senha incorreta.";
-    header("Location: ../login.php");
-    exit;
-}
-
-// Verifica chave do condomínio
-if ($usuario['codigo'] != $chave) {
-    $_SESSION["mensagem"] = "Chave de acesso incorreta.";
-    header("Location: ../login.php");
-    exit;
-}
-
-// Login OK
-$_SESSION["id"] = $usuario['id'];
-$_SESSION["login"] = true;
-
-header("Location: ../servicos.php");
-exit;

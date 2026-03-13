@@ -23,43 +23,50 @@ if ($_POST['senha'] !== $_POST['rptSenha']) {
 
 $nome  = trim($_POST['nome']);
 $email = trim($_POST['email']);
-$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+$senha = password_hash($_POST['senha'], PASSWORD_BCRYPT);
 $chave = trim($_POST['chave']);
 $foto  = "../icon/user.png";
 
-// Verifica se email já existe
-$stmt = $con->prepare("SELECT id FROM usuario WHERE email = ?");
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$resultado = $stmt->get_result();
+try {
+    $stmt = $con->prepare("SELECT id FROM usuario WHERE email = :email");
+    $stmt->bindParam(":email", $email);
+    $stmt->execute();
 
-if ($resultado->num_rows > 0) {
-    $_SESSION["mensagem"] = "Email já cadastrado.";
+    if ($stmt->fetch()) {
+        $_SESSION["mensagem"] = "Email já cadastrado.";
+        header("Location: ../cadastro.php");
+        exit;
+    }
+
+    $stmt = $con->prepare("SELECT codigo FROM condominio WHERE codigo = :chave");
+    $stmt->bindParam(":chave", $chave);
+    $stmt->execute();
+
+    if (!$stmt->fetch()) {
+        $_SESSION["mensagem"] = "Chave de acesso incorreta.";
+        header("Location: ../cadastro.php");
+        exit;
+    }
+
+    $stmt = $con->prepare("INSERT INTO usuario (nome, email, senha, imagem, codigo) VALUES (:nome, :email, :senha, :imagem, :chave)");
+
+    $stmt->bindParam(":nome", $nome);
+    $stmt->bindParam(":email", $email);
+    $stmt->bindParam(":senha", $senha);
+    $stmt->bindParam(":imagem", $foto);
+    $stmt->bindParam(":chave", $chave);
+
+    if ($stmt->execute()) {
+        $_SESSION["mensagem"] = "Cadastro realizado com sucesso!";
+        header("Location: ../login.php");
+    } else {
+        $_SESSION["mensagem"] = "Erro ao realizar cadastro.";
+        header("Location: ../cadastro.php");
+    }
+
+    exit;
+} catch (PDOException $e) {
+    $_SESSION["mensagem"] = "Erro no banco de dados: " . $e->getMessage();
     header("Location: ../cadastro.php");
     exit;
 }
-
-// Verifica se o condomínio existe
-$stmt = $con->prepare("SELECT codigo FROM condominio WHERE codigo = ?");
-$stmt->bind_param("s", $chave);
-$stmt->execute();
-$resultado = $stmt->get_result();
-
-if ($resultado->num_rows === 0) {
-    $_SESSION["mensagem"] = "Chave de acesso incorreta.";
-    header("Location: ../cadastro.php");
-    exit;
-}
-
-// Insere usuário
-$stmt = $con->prepare("INSERT INTO usuario (nome, email, senha, imagem, codigo) VALUES (?, ?, ?, ?, ?)");
-$stmt->bind_param("sssss", $nome, $email, $senha, $foto, $chave);
-
-if ($stmt->execute()) {
-    $_SESSION["mensagem"] = "Cadastro realizado com sucesso!";
-} else {
-    $_SESSION["mensagem"] = "Erro ao realizar cadastro.";
-}
-
-header("Location: ../login.php");
-exit;

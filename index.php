@@ -1,8 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Certifique-se de que o head.php ou topo.php incluam a sua conexão PDO $con
 include('./includes/head.php');
 include('./includes/topo.php');
 ?>
@@ -40,29 +36,21 @@ include('./includes/topo.php');
     <section class="informacoes-inicial" id="todos-servicos">
         <?php
         try {
-            /* SORTEIO NO POSTGRESQL:
-               No PostgreSQL, usamos 'ORDER BY RANDOM()' para embaralhar os resultados.
-               Isso substitui toda a lógica de gerar IDs aleatórios no PHP.
-            */
             $sqlServ = "SELECT * FROM servicos ORDER BY RANDOM() LIMIT 10";
             $stmtServ = $con->query($sqlServ);
-            $servicos = $stmtServ->fetchAll(PDO::FETCH_ASSOC);
+            $stmtServ->execute();
 
-            if (count($servicos) > 0) {
-                foreach ($servicos as $servico) {
-                    // Formatação de horas
+            if ($stmtServ) {
+                while ($servico = $stmtServ->fetch(PDO::FETCH_ASSOC)) {
                     $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
                     $horaFim = date('H:i', strtotime($servico['horario_fim']));
-                    
-                    // Imagem padrão caso o banco esteja vazio
-                    $imagem = !empty($servico['imagem']) ? htmlspecialchars($servico['imagem']) : './img/default-servico.jpg';
 
                     echo "<div class='card card-servico'>";
-                    echo "<img src='$imagem' alt='" . htmlspecialchars($servico['nome']) . "'>";
+                    echo "<img src='$servico[imagem]' alt=''>";
                     echo "<div>";
                     echo "<div class='info-card'>";
-                    echo "<h2 class='titulo-card'>" . htmlspecialchars($servico['nome']) . "</h2>";
-                    echo "<p>" . htmlspecialchars($servico['descricao']) . "</p>";
+                    echo "<h2 class='titulo-card'>$servico[nome]</h2>";
+                    echo "<p>$servico[descricao]</p>";
                     echo "<span>Horário: $horaInicio às $horaFim</span>";
                     echo "</div>";
                     echo "<div class='box-btn'>";
