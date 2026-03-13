@@ -4,18 +4,36 @@ require_once __DIR__ . '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$host = $_ENV['DB_HOST'];
-$user = $_ENV['DB_USER'];
-$pass = $_ENV['DB_PASS'];
-$banco = $_ENV['DB_BANCO'];
-$port = $_ENV['DB_PORT'];
+$supaurl = $_ENV['SUPABASE_URL'];
+$supakey = $_ENV['SUPABASE_KEY'];
 
-try {
-    $dns  = "pgsql:host=$host;port=$port;dbname=$banco";
+function request($endPoint, $method = 'GET', $data = null)
+{
+    global $supaurl, $supakey;
 
-    $con = new PDO($dns, $user, $pass);
+    $url = $supaurl . '/rest/v1/' . $endPoint;
+    $ch = curl_init($url);
 
-    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Falha na conexão " . $e->getMessage());
+    $headers = [
+        'apikey: ' . $supakey,
+        'Authorization: Bearer ' . $supakey,
+        'Content-Type: application/json',
+        'Prefer: return=representation'
+    ];
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_TCP_NODELAY, 1); 
+
+    if ($data) {
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    }
+
+    $response = curl_exec($ch);
+
+    return json_decode($response, true);
 }

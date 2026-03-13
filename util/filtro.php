@@ -2,15 +2,14 @@
 require(__DIR__ . '/../conexao.php');
 $resp = $_POST['resp'];
 
-$sql;
 if ($resp == 0) {
-    $sql = mysqli_query($con, "SELECT * FROM servicos");
+    $sql = request("servicos?select=id,nome,imagem,descricao,horario_inicio,horario_fim,data_limite", "GET");
 } else {
-    $sql = mysqli_query($con, "SELECT * FROM servicos WHERE id = $resp");
+    $sql = request("servicos?id_categoria=eq.$resp&select=id,nome,imagem,descricao,horario_inicio,horario_fim,data_limite", "GET");
 }
 
-if ($sql->num_rows) {
-    while ($servico = mysqli_fetch_assoc($sql)) {
+if (!empty($sql) && !isset($sql['error'])) {
+    foreach ($sql AS $servico) {
         $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
         $horaFim = date('H:i', strtotime($servico['horario_fim']));
 
@@ -35,4 +34,3 @@ if ($sql->num_rows) {
 } else {
     echo "<h2 id=avisos>Nenhum serviço encontrado</h2>";
 }
-?>

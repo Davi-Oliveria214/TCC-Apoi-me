@@ -16,28 +16,17 @@ include('./util/avisos.php');
 
     <?php
     if (!empty($_SESSION["id"])):
-
         $id = $_SESSION["id"];
 
-        $sql = "SELECT nome, email, imagem, codigo FROM usuario WHERE id = :id LIMIT 1";
-        try {
-            $stm = $con->prepare($sql);
-            $stm->bindParam(":id", $id);
-            $stm->execute();
+        $res = request("usuario?id=eq.$id&select=nome,email,imagem,codigo", "GET");
 
-            $usuario = $stm->fetch(PDO::FETCH_ASSOC);
+        if (!empty($res) && !isset($res['error'])) {
+            $usuario = $res[0];
 
-            if ($usuario) {
-
-                $nome = $usuario["nome"];
-                $email = $usuario["email"];
-                $img = $usuario["imagem"];
-                $codigo = $usuario["codigo"];
-            } else {
-                $_SESSION["login"] = false;
-                session_destroy();
-            }
-        } catch (PDOException $e) {
+            $nome = $usuario['nome'];
+            $email = $usuario['email'];
+            $img = $usuario['imagem'];
+            $codigo =  $usuario['codigo'];
         }
     ?>
 

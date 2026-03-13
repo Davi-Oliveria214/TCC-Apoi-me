@@ -14,20 +14,16 @@ include('./includes/topo.php');
     <section class="inicial-escolha" id="filtro">
         <ul>
             <?php
-            // Opção padrão
             echo "<li onclick='filtrar(0)'>Todos</li>";
 
-            // BUSCA DE CATEGORIAS (Corrigido para PDO)
-            $sqlCat = "SELECT id, nome FROM categorias ORDER BY nome ASC";
-            try {
-                $stmtCat = $con->query($sqlCat);
-                while ($categoria = $stmtCat->fetch(PDO::FETCH_ASSOC)) {
-                    $idCat = $categoria['id'];
-                    $nomeCat = htmlspecialchars($categoria['nome']);
-                    echo "<li onclick='filtrar($idCat)'>$nomeCat</li>";
+            $categorias = request("categorias?select=id,nome&order=nome.asc", "GET");
+
+            if (!empty($categorias) && !isset($categorias['error'])) {
+                foreach ($categorias as $cate) {
+                    $idCate = $cate['id'];
+                    $nomeCate = htmlspecialchars($cate['nome']);
+                    echo "<li onclick='filtrar($idCate)'>$nomeCate</li>";
                 }
-            } catch (PDOException $e) {
-                // Erro silencioso ou log
             }
             ?>
         </ul>
@@ -35,40 +31,34 @@ include('./includes/topo.php');
 
     <section class="informacoes-inicial" id="todos-servicos">
         <?php
-        try {
-            $sqlServ = "SELECT * FROM servicos ORDER BY RANDOM() LIMIT 10";
-            $stmtServ = $con->query($sqlServ);
-            $stmtServ->execute();
+        $servicos = request("servicos?select=*&limit=10", "GET");
 
-            if ($stmtServ) {
-                while ($servico = $stmtServ->fetch(PDO::FETCH_ASSOC)) {
-                    $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
-                    $horaFim = date('H:i', strtotime($servico['horario_fim']));
+        if (!empty($servicos) && !isset($servicos['error'])) {
+            foreach ($servicos as $servico) {
+                $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
+                $horaFim = date('H:i', strtotime($servico['horario_fim']));
 
-                    echo "<div class='card card-servico'>";
-                    echo "<img src='$servico[imagem]' alt=''>";
-                    echo "<div>";
-                    echo "<div class='info-card'>";
-                    echo "<h2 class='titulo-card'>$servico[nome]</h2>";
-                    echo "<p>$servico[descricao]</p>";
-                    echo "<span>Horário: $horaInicio às $horaFim</span>";
-                    echo "</div>";
-                    echo "<div class='box-btn'>";
-                    echo "<a href='./controls/agendar.php?id=" . $servico['id'] . "' class='btn'>Agendar serviço</a>";
-                    echo "</div>";
-                    echo "</div>";
-                    echo "</div>";
-                }
-            } else {
-                echo "<h2 id='avisos'>Nenhum serviço disponível no momento.</h2>";
+                $imagem = !empty($servico['imagem']) ? $servico['imagem'] : './img/default.jpg';
+                echo "<div class='card card-servico'>";
+                echo "<img src='$imagem' alt=''>";
+                echo "<div>";
+                echo "<div class='info-card'>";
+                echo "<h2 class='titulo-card'>" . htmlspecialchars($servico['nome']) . "</h2>";
+                echo "<p>" . htmlspecialchars($servico['descricao']) . "</p>";
+                echo "<span>Horário: $horaInicio às $horaFim</span>";
+                echo "</div>";
+                echo "<div class='box-btn'>";
+                echo "<a href='./controls/agendar.php?id=" . $servico['id'] . "' class='btn'>Agendar serviço</a>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
             }
-        } catch (PDOException $e) {
-            echo "<h2 id='avisos'>Erro ao carregar os serviços.</h2>";
+        } else {
+            echo "<h2 id='avisos'>Nenhum serviço disponível no momento.</h2>";
         }
         ?>
     </section>
 </main>
-
 <?php
 include('./includes/rodape.php');
 ?>
