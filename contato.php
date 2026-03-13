@@ -9,9 +9,9 @@ include('./util/avisos.php');
         <form action="./controls/contato.php" method="post" class="fale-conosco">
             <h1>Fale Conosco</h1>
             <div class="info-contato">
-                <input type="text" name="nome" id="textNome" placeholder="Nome:" <?php echo $_SESSION['login'] ? 'readonly' : ''; ?> required value="<?php echo $nome ?? '' ?>">
+                <input type="text" name="nome" id="textNome" placeholder="Nome:" <?php echo empty($_SESSION['login']) ? 'readonly' : ''; ?> required value="<?php echo $nome ?? '' ?>">
 
-                <input type="email" name="email" id="textEmail" placeholder="E-mail" <?php echo $_SESSION['login'] ? 'readonly' : ''; ?> required value="<?php echo $email ?? '' ?>">
+                <input type="email" name="email" id="textEmail" placeholder="E-mail" <?php echo empty($_SESSION['login']) ? 'readonly' : ''; ?> required value="<?php echo $email ?? '' ?>">
 
                 <input type="tel" name="telefone" id="textTel" placeholder="Telefone:" required>
 

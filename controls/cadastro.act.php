@@ -14,7 +14,6 @@ if (
     exit;
 }
 
-// Verifica se as senhas são iguais
 if ($_POST['senha'] !== $_POST['rptSenha']) {
     $_SESSION["mensagem"] = "As senhas não coincidem.";
     header("Location: ../cadastro.php");

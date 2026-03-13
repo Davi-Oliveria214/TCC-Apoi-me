@@ -15,31 +15,38 @@ if ($_POST["senha"] !== $_POST["rptSenha"]) {
 }
 
 $email = trim($_POST['email']);
-$senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
-$rptSenha = trim($_POST['rptSenha']);
+$novaSenhaHash = password_hash($_POST['senha'], PASSWORD_BCRYPT);
 
-$stm = $con->prepare("SELECT id FROM usuario WHERE email = ?");
-$stm->bind_param("s", $email);
-$stm->execute();
-$resultado = $stm->get_result();
+try {
+    $stm = $con->prepare("SELECT id FROM usuario WHERE email = :email");
+    $stm->bindParam(":email", $email);
+    $stm->execute();
 
-if ($resultado->num_rows == 0) {
-    $_SESSION["mensagem"] = "Email não cadastrado";
+    $usuario = $stm->fetch(PDO::FETCH_ASSOC);
+
+    if (!$usuario) {
+        $_SESSION["mensagem"] = "Este e-mail não está cadastrado.";
+        header("Location: ../esqueci_senha.php");
+        exit;
+    }
+
+    $idUsuario = $usuario['id'];
+
+    $stmUpdate = $con->prepare("UPDATE usuario SET senha = :senha WHERE id = :id");
+    $stmUpdate->bindParam(":senha", $novaSenhaHash);
+    $stmUpdate->bindParam(":id", $idUsuario);
+
+    if ($stmUpdate->execute()) {
+        $_SESSION["mensagem"] = "Senha alterada com sucesso!";
+        header("Location: ../login.php");
+    } else {
+        $_SESSION["mensagem"] = "Erro ao alterar senha.";
+        header("Location: ../esqueci_senha.php");
+    }
+
+    exit;
+} catch (PDOException $e) {
+    $_SESSION["mensagem"] = "Erro no banco de dados: " . $e->getMessage();
     header("Location: ../esqueci_senha.php");
     exit;
 }
-
-$usuario = $resultado->fetch_assoc();
-$idUsuario = $usuario['id'];
-
-$stm = $con->prepare("UPDATE usuario SET senha = ? WHERE id = ?");
-$stm->bind_param("si", $senha, $idUsuario);
-
-if ($stm->execute()) {
-    $_SESSION["mensagem"] = "Senha alterada com sucesso";
-} else {
-    $_SESSION["mensagem"] = "Erro ao alterar senha";
-}
-
-header("Location: ../esqueci_senha.php");
-exit;

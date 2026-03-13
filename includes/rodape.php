@@ -7,7 +7,7 @@
             <p>Fale Conosco <br> apoie_mi@gmail.com <br> (11) 1111-1111 </p>
         </li>
         <li onclick="abrir_info(3)"><b>Área do cliente</b>
-            <p>Minha Conta <br> Chat Online <br> Cadastre-se</p>
+            <p>Minha Conta <br> Chat Online <br> <?php echo isset($_SESSION['login']) ? '' : '<a href="../cadastro.php">Cadastre-se</a>' ?></p>
         </li>
     </ul>
 </footer>
@@ -27,7 +27,7 @@
 <ul id="cliente" class="invisivel" onclick="fechar(3)">
     <li onclick="event.stopPropagation()">
         <b>Área do cliente</b>
-        <p>Minha Conta<br> Chat Online <br> <?php echo isset($_SESSION['login']) ? '' : '<a href="../cadastro.php">Cadastre-se</a>' ?></p>
+        <p>Minha Conta<br> <a href="<?php echo isset($_SESSION['login']) ? '../login.php' : '../cadastrp.php' ?>">Chat Online</a> <br> <?php echo isset($_SESSION['login']) ? '' : '<a href="../cadastro.php">Cadastre-se</a>' ?></p>
     </li>
 </ul>
 

@@ -13,43 +13,36 @@ $email = $_POST['email'];
 $telefone = $_POST['telefone'];
 $comentario = $_POST['comentario'];
 
-if (empty($_SESSION['login'])) {
-    $stm = $con->prepare("SELECT id FROM usuario WHERE email = ?");
-    $stm->bind_param("s", $email);
+try {
+    $stm = $con->prepare('SELECT id FROM comentarios WHERE email = :email');
+    $stm->bindParam(':email', $email);
     $stm->execute();
-    $res = $stm->get_result();
 
-    if ($res->num_rows == 0) {
-        $_SESSION['mensagem'] = "Email não cadastrado no sistema";
-        header('Location: ../contato.php');
-        exit();
+    $dados = $stm->fetch(PDO::FETCH_ASSOC);
+
+    if (!$dados) {
+        $stmtExec = $con->prepare('INSERT INTO comentarios(nome, email, telefone, mensagem) VALUES (:nome, :email, :telefone, :mensagem)');
+        $stmtExec->bindParam(':nome', $nome);
+        $stmtExec->bindParam(':email', $email);
+        $stmtExec->bindParam(':telefone', $telefone);
+        $stmtExec->bindParam(':mensagem', $comentario);
+    } else {
+        $stmtExec = $con->prepare('UPDATE comentarios SET mensagem = :msg WHERE id = :id');
+        $stmtExec->bindParam(':msg', $comentario);
+        $stmtExec->bindParam(':id', $dados['id']);
     }
 
-    $user = $res->fetch_assoc();
-    $id_user = $user['id'];
-} else {
-    $id_user = $_SESSION['id'];
+    // Agora executamos o comando final
+    if ($stmtExec->execute()) {
+        $_SESSION['mensagem'] = "Mensagem enviada com sucesso!!!";
+    } else {
+        $_SESSION['mensagem'] = "Erro ao mandar comentário";
+    }
+
+    header('Location: ../contato.php');
+    exit();
+} catch (PDOException $e) {
+    $_SESSION["mensagem"] = "Erro no banco de dados: " . $e->getMessage();
+    header('Location: ../contato.php');
+    exit;
 }
-
-$stm = $con->prepare('SELECT id FROM comentarios WHERE email = ?');
-$stm->bind_param('s', $email);
-$stm->execute();
-$res = $stm->get_result();
-$user = $res->fetch_assoc();
-
-if ($res->num_rows == 0) {
-    $stm = $con->prepare('INSERT INTO comentarios(nome, email, telefone, mensagem) VALUES (?, ?, ?, ?)');
-    $stm->bind_param('ssss', $nome, $email, $telefone, $comentario);
-} else {
-    $stm = $con->prepare('UPDATE comentarios SET mensagem = ? WHERE id = ?');
-    $stm->bind_param('si', $comentario, $user['id']);
-}
-
-if ($stm->execute()) {
-    $_SESSION['mensagem'] = "Mensagem enviada com sucesso!!!";
-} else {
-    $_SESSION['mensagem'] = "Erro ao mandar comentário";
-}
-
-header('Location: ../contato.php');
-exit();
