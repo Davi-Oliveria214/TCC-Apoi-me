@@ -10,47 +10,41 @@ include('./util/avisos.php');
             <h1>Reservados</h1>
             <div class="box">
                 <?php
-                $sqlReservados = "SELECT c.id AS id_contrato, c.dia, c.horario, c.confirmado, 
-                                         s.nome, s.descricao, s.imagem 
-                                  FROM contratados c 
-                                  JOIN servicos s ON c.id_servico = s.id 
-                                  WHERE c.id_cliente = :id 
-                                  ORDER BY c.dia DESC";
-                try {
-                    $stmtRes = $con->prepare($sqlReservados);
-                    $stmtRes->bindParam(':id', $id_usuario_logado);
-                    $stmtRes->execute();
+                $endpoint = "contratados?id_cliente=eq.$id&select=id,dia,horario,confirmado,servicos(nome,descricao,imagem)&order=dia.desc";
+                $sql = request($endpoint, "GET");
 
-                    if ($stmtRes->rowCount() > 0) {
-                        while ($res = $stmtRes->fetch(PDO::FETCH_ASSOC)) {
-                            $horario = date('H:i', strtotime($res['horario']));
-                            $dataRes = date('d/m/Y', strtotime($res['dia']));
-                            $imgRes = !empty($res['imagem']) ? $res['imagem'] : './img/default-servico.jpg';
+                if (!empty($sql) && !isset($sql['error'])) {
+                    foreach ($sql as $res) {
+                        $horario = date('H:i', strtotime($res['horario']));
+                        $dataRes = date('d/m/Y', strtotime($res['dia']));
+                        $status  = $res['confirmado'];
+                        $idContrato = $res['id'];
 
-                            echo "<div class='card card-servico'>";
-                            echo "<img src='" . htmlspecialchars($imgRes) . "' alt=''>";
-                            echo "<div>";
-                            echo "<div class='info-card'>";
-                            echo "<h2 class='titulo-card'>" . htmlspecialchars($res['nome']) . "</h2>";
-                            echo "<p>" . htmlspecialchars($res['descricao']) . "</p>";
-                            echo "<small>Status: " . ucfirst($res['confirmado']) . "</small>";
-                            echo "</div>";
-                            echo "<div class='cronograma'>";
-                            echo "<p>Agendado para as <time>$horario</time></p>";
-                            echo "<p>Data: <time>$dataRes</time></p>";
-                            echo "</div>";
-                            echo "<div class='box-btn'>";
-                            echo "<a href='remarcar.php?id={$res['id_contrato']}' class='btn'>Remarcar</a>";
-                            echo "<a href='cancelar.php?id={$res['id_contrato']}' class='btn'>Cancelar</a>";
-                            echo "</div>";
-                            echo "</div>";
-                            echo "</div>";
-                        }
-                    } else {
-                        echo "<h2 class='aviso-vazio'>Você ainda não reservou nenhum serviço.</h2>";
+                        $nomeServ = $res['servicos']['nome'];
+                        $descricaoServ = $res['servicos']['descricao'];
+                        $imgRes = !empty($res['servicos']['imagem']) ? $res['servicos']['imagem'] : './img/default-servico.jpg';
+
+                        echo "<div class='card card-servico'>";
+                        echo "<img src='" . htmlspecialchars($imgRes) . "' alt=''>";
+                        echo "<div>";
+                        echo "<div class='info-card'>";
+                        echo "<h2 class='titulo-card'>" . htmlspecialchars($nomeServ) . "</h2>";
+                        echo "<p>" . htmlspecialchars($descricaoServ) . "</p>";
+                        echo "<small>Status: " . ucfirst($status) . "</small>";
+                        echo "</div>";
+                        echo "<div class='cronograma'>";
+                        echo "<p>Agendado para as <time>$horario</time></p>";
+                        echo "<p>Data: <time>$dataRes</time></p>";
+                        echo "</div>";
+                        echo "<div class='box-btn'>";
+                        echo "<a href='remarcar.php?id=$idContrato' class='btn'>Remarcar</a>";
+                        echo "<a href='cancelar.php?id=$idContrato' class='btn'>Cancelar</a>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "</div>";
                     }
-                } catch (PDOException $e) {
-                    echo "Erro ao carregar reservas.";
+                } else {
+                    echo "<h2 class='aviso-vazio'>Você ainda não reservou nenhum serviço.</h2>";
                 }
                 ?>
             </div>
@@ -77,39 +71,32 @@ include('./util/avisos.php');
         <h1>Serviços Disponíveis no Condomínio</h1>
         <section class="sessao-servicos">
             <?php
-            $sqlTodos = "SELECT * FROM servicos WHERE codigo = :chave ORDER BY nome ASC";
-            try {
-                $stmtTodos = $con->prepare($sqlTodos);
-                $stmtTodos->bindParam(':chave', $codigo_condominio);
-                $stmtTodos->execute();
+            $sql = request("servicos?codigo=eq.$codigo&select=*&order=nome.asc");
 
-                if ($stmtTodos->rowCount() > 0) {
-                    while ($servico = $stmtTodos->fetch(PDO::FETCH_ASSOC)) {
-                        $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
-                        $horaFim = date('H:i', strtotime($servico['horario_fim']));
-                        $imgServ = !empty($servico['imagem']) ? $servico['imagem'] : './img/default-servico.jpg';
+            if (!empty($sql) && !isset($sql['error'])) {
+                foreach ($sql as $servico) {
+                    $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
+                    $horaFim = date('H:i', strtotime($servico['horario_fim']));
+                    $imgServ = !empty($servico['imagem']) ? $servico['imagem'] : './img/default-servico.jpg';
 
-                        echo "<div class='card card-servico'>";
-                        echo "<img src='" . htmlspecialchars($imgServ) . "' alt=''>";
-                        echo "<div>";
-                        echo "<div class='info-card'>";
-                        echo "<h2 class='titulo-card'>" . htmlspecialchars($servico['nome']) . "</h2>";
-                        echo "<p>" . htmlspecialchars($servico['descricao']) . "</p>";
-                        echo "</div>";
-                        echo "<div class='cronograma'>";
-                        echo "<p>Das <time>$horaInicio</time> Até <time>$horaFim</time></p>";
-                        echo "</div>";
-                        echo "<div class='box-btn'>";
-                        echo "<a href='agendar.php?id={$servico['id']}' class='btn'>Agendar serviço</a>";
-                        echo "</div>";
-                        echo "</div>";
-                        echo "</div>";
-                    }
-                } else {
-                    echo "<h2 class='aviso-vazio'>Nenhum serviço disponível para o seu condomínio.</h2>";
+                    echo "<div class='card card-servico'>";
+                    echo "<img src='" . htmlspecialchars($imgServ) . "' alt=''>";
+                    echo "<div>";
+                    echo "<div class='info-card'>";
+                    echo "<h2 class='titulo-card'>" . htmlspecialchars($servico['nome']) . "</h2>";
+                    echo "<p>" . htmlspecialchars($servico['descricao']) . "</p>";
+                    echo "</div>";
+                    echo "<div class='cronograma'>";
+                    echo "<p>Das <time>$horaInicio</time> Até <time>$horaFim</time></p>";
+                    echo "</div>";
+                    echo "<div class='box-btn'>";
+                    echo "<a href='agendar.php?id={$servico['id']}' class='btn'>Agendar serviço</a>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
                 }
-            } catch (PDOException $e) {
-                echo "Erro ao carregar serviços.";
+            } else {
+                echo "<h2 class='aviso-vazio'>Nenhum serviço disponível para o seu condomínio.</h2>";
             }
             ?>
         </section>
