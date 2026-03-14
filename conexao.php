@@ -28,6 +28,7 @@ function request($endPoint, $method = 'GET', $data = null)
     curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
     curl_setopt($ch, CURLOPT_TCP_NODELAY, 1); 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
     if ($data) {
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));

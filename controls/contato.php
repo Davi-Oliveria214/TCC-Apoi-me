@@ -13,36 +13,24 @@ $email = $_POST['email'];
 $telefone = $_POST['telefone'];
 $comentario = $_POST['comentario'];
 
-try {
-    $stm = $con->prepare('SELECT id FROM comentarios WHERE email = :email');
-    $stm->bindParam(':email', $email);
-    $stm->execute();
+$sql = request("comentario?email=eq.$email&select=id", "GET");
 
-    $dados = $stm->fetch(PDO::FETCH_ASSOC);
+if (empty($sql) && !isset($sql['error'])) {
+    $dados = ["nome" => $nome, "email" => $email, "telefone" => $telefone, "mensagem" => $comentario];
 
-    if (!$dados) {
-        $stmtExec = $con->prepare('INSERT INTO comentarios(nome, email, telefone, mensagem) VALUES (:nome, :email, :telefone, :mensagem)');
-        $stmtExec->bindParam(':nome', $nome);
-        $stmtExec->bindParam(':email', $email);
-        $stmtExec->bindParam(':telefone', $telefone);
-        $stmtExec->bindParam(':mensagem', $comentario);
-    } else {
-        $stmtExec = $con->prepare('UPDATE comentarios SET mensagem = :msg WHERE id = :id');
-        $stmtExec->bindParam(':msg', $comentario);
-        $stmtExec->bindParam(':id', $dados['id']);
-    }
+    $enviar = request("comentario", "POST", $dados);
+} else {
+    $id = $sql[0]['id'];
+    $dados = ["mensagem" => $comentario];
 
-    // Agora executamos o comando final
-    if ($stmtExec->execute()) {
-        $_SESSION['mensagem'] = "Mensagem enviada com sucesso!!!";
-    } else {
-        $_SESSION['mensagem'] = "Erro ao mandar comentário";
-    }
-
-    header('Location: ../contato.php');
-    exit();
-} catch (PDOException $e) {
-    $_SESSION["mensagem"] = "Erro no banco de dados: " . $e->getMessage();
-    header('Location: ../contato.php');
-    exit;
+    $enviar = request("comentario?id=eq.$id", "PATCH", $dados);
 }
+
+if (!isset($enviar['error'])) {
+    $_SESSION['mensagem'] = "Mensagem enviada com sucesso!!!";
+} else {
+    $_SESSION['mensagem'] = "Erro ao mandar comentário";
+}
+
+header('Location: ../contato.php');
+exit();

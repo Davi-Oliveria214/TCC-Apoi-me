@@ -19,5 +19,6 @@ session_destroy();
 
 unset($nome, $email, $img, $codigo, $usuario);
 
+$_SESSION['mensagem'] = "Você saiu com segurança.";
 header("Location: ../index.php");
 exit();
