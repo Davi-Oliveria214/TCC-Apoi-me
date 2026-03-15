@@ -39,13 +39,15 @@ function filtrar(categoria) {
       cancelAnimationFrame(animação);
       container.innerHTML = resposta;
       const totalCards = container.querySelectorAll('.card-servico').length;
-      
-      if (totalCards > 0 && totalCards < 4) {
-        velocidade = 0;
-      } else {
-        velocidade = 0.5;
+
+      if (container.offsetWidth > 600) {
+        if (totalCards > 0 && totalCards < 4) {
+          velocidade = 0;
+        } else {
+          velocidade = 0.5;
+        }
       }
-      
+
       container.scrollLeft = 0;
       mover();
     }
