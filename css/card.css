@@ -153,11 +153,13 @@ Card Avisos
 
 #todos-servicos {
     display: flex;
+    flex-wrap: nowrap;
     overflow-x: hidden;
     gap: 20px;
-    padding: 20px 5px;
-    white-space: nowrap;
+    padding: 25px 15px;
     width: 100%;
+    justify-content: flex-start;
+    align-items: stretch;
 }
 
 /* Esconde a barra de rolagem */

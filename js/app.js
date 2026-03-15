@@ -28,13 +28,26 @@ window.addEventListener('load', ajustarTamanho)
 
 // Filtra os serviços por categoria
 function filtrar(categoria) {
-  console.log(categoria);
+  console.log("Filtrando categoria:", categoria);
+
   $.ajax({
     type: "POST",
     url: "./util/filtro.php",
     data: { resp: categoria },
     success: function (resposta) {
-      document.getElementById("todos-servicos").innerHTML = resposta;
+      const container = document.getElementById("todos-servicos");
+      cancelAnimationFrame(animação);
+      container.innerHTML = resposta;
+      const totalCards = container.querySelectorAll('.card-servico').length;
+      
+      if (totalCards > 0 && totalCards < 4) {
+        velocidade = 0;
+      } else {
+        velocidade = 0.5;
+      }
+      
+      container.scrollLeft = 0;
+      mover();
     }
   });
 }
@@ -86,14 +99,29 @@ const container = document.getElementById('todos-servicos');
 let velocidade = 0.5;
 let animação;
 
+async function abastecerCarrossel() {
+  const cardsAtuais = Array.from(container.querySelectorAll('.card-servico'));
+  const ids = cardsAtuais.map(c => c.dataset.id).join(',');
+
+  try {
+    const resposta = await fetch(`get_proximo_servico.php?ignore=${ids}`);
+    const novoCardHtml = await resposta.text();
+
+    if (novoCardHtml.trim() !== "") {
+      container.insertAdjacentHTML('beforeend', novoCardHtml);
+    }
+  } catch (e) {
+    console.error("Erro ao atualizar carrossel:", e);
+  }
+}
+
 function mover() {
   container.scrollLeft += velocidade;
 
   const primeiroCard = container.firstElementChild;
 
   if (primeiroCard) {
-    if (container.scrollLeft >= primeiroCard.offsetWidth + 20) {
-
+    if (container.scrollLeft >= (primeiroCard.offsetWidth + 20)) {
       container.appendChild(primeiroCard);
 
       container.scrollLeft -= (primeiroCard.offsetWidth + 20);

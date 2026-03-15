@@ -10,7 +10,7 @@ include('./includes/topo.php');
     </figcaption>
 </figure>
 
-<main class="principal-inicial">
+<main class="principal-inicial index-inicial">
     <section class="inicial-escolha" id="filtro">
         <ul>
             <?php
@@ -34,20 +34,14 @@ include('./includes/topo.php');
         $servicos = request("servicos?select=*&limit=10", "GET");
 
         if (!empty($servicos) && !isset($servicos['error'])) {
-
-            // 1. Randomiza a ordem dos serviços vindos do banco
             shuffle($servicos);
 
-            // 2. Garante que o carrossel esteja cheio se houver poucos dados
-            // (Isso evita buracos brancos no loop infinito)
-            $exibir = (count($servicos) < 6) ? array_merge($servicos, $servicos) : $servicos;
-
-            foreach ($exibir as $servico) {
+            foreach ($servicos as $servico) {
                 $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
                 $horaFim = date('H:i', strtotime($servico['horario_fim']));
                 $imagem = !empty($servico['imagem']) ? $servico['imagem'] : './img/default.jpg';
 
-                echo "<div class='card card-servico'>";
+                echo "<div class='card card-servico' data-id='" . $servico['id'] . "'>";
                 echo "<img src='$imagem' alt=''>";
                 echo "<div>";
                 echo "<div class='info-card'>";
@@ -62,7 +56,7 @@ include('./includes/topo.php');
                 echo "</div>";
             }
         } else {
-            echo "<h2 id='avisos'>Nenhum serviço disponível no momento.</h2>";
+            echo "<h2 id='aviso' style='text-align: center;'>Nenhum serviço disponível no momento.</h2>";
         }
         ?>
     </section>

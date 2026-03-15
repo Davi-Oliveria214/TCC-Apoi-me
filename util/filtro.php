@@ -9,11 +9,11 @@ if ($resp == 0) {
 }
 
 if (!empty($sql) && !isset($sql['error'])) {
-    foreach ($sql AS $servico) {
+    foreach ($sql as $servico) {
         $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
         $horaFim = date('H:i', strtotime($servico['horario_fim']));
 
-        echo "<div class='card card-servico'>";
+        echo "<div class='card card-servico' data-id='{$servico['id']}'>";
         echo "<img src='$servico[imagem]' alt=''>";
         echo "<div>";
         echo "<div class='info-card'>";
@@ -32,5 +32,5 @@ if (!empty($sql) && !isset($sql['error'])) {
         echo "</div>";
     }
 } else {
-    echo "<h2 id=avisos>Nenhum serviço encontrado</h2>";
+    echo "<h2 id=aviso>Nenhum serviço encontrado</h2>";
 }
