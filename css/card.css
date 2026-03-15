@@ -1,4 +1,6 @@
 .card {
+    flex-shrink: 0;
+    scroll-snap-align: none;
     width: 260px;
     min-height: 280px;
     display: flex;
@@ -24,7 +26,6 @@
         border-radius: 24px 24px 0px 0px;
     }
 
-    /* Container de Texto e Info */
     &>div {
         display: flex;
         flex-direction: column;
@@ -148,4 +149,22 @@ Card Avisos
         text-align: justify;
         overflow-y: auto;
     }
+}
+
+#todos-servicos {
+    display: flex;
+    overflow-x: hidden;
+    gap: 20px;
+    padding: 20px 5px;
+    white-space: nowrap;
+    width: 100%;
+}
+
+/* Esconde a barra de rolagem */
+#todos-servicos::-webkit-scrollbar {
+    display: none;
+}
+
+#todos-servicos::-webkit-scrollbar {
+    display: none;
 }

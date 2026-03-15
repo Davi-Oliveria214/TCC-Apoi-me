@@ -80,3 +80,33 @@ function fechar(opcao) {
     cliente.classList.toggle('expandir')
   }
 }
+
+// Carrossel infinito
+const container = document.getElementById('todos-servicos');
+let velocidade = 0.5;
+let animação;
+
+function mover() {
+  container.scrollLeft += velocidade;
+
+  const primeiroCard = container.firstElementChild;
+
+  if (primeiroCard) {
+    if (container.scrollLeft >= primeiroCard.offsetWidth + 20) {
+
+      container.appendChild(primeiroCard);
+
+      container.scrollLeft -= (primeiroCard.offsetWidth + 20);
+    }
+  }
+
+  animação = requestAnimationFrame(mover);
+}
+
+mover();
+
+container.addEventListener('mouseenter', () => cancelAnimationFrame(animação));
+container.addEventListener('mouseleave', () => {
+  cancelAnimationFrame(animação);
+  mover();
+});
