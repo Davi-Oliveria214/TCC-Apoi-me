@@ -1,139 +1,115 @@
-DROP DATABASE IF EXISTS bd_apoi_me;
+CREATE TYPE tipo_categorias AS ENUM ('Domésticos', 'Cuidados', 'Educação', 'Manutenção');
+CREATE TYPE tipo_dias AS ENUM ('domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado');
+CREATE TYPE tipo_status AS ENUM ('pendente', 'confirmado', 'concluido');
 
-CREATE DATABASE IF NOT EXISTS bd_apoi_me 
-DEFAULT CHARACTER SET utf8mb4 
-COLLATE utf8mb4_0900_ai_ci;
-
-USE bd_apoi_me;
-
--- Tabela: condominio
-CREATE TABLE condominio (
-  id INT NOT NULL AUTO_INCREMENT,
-  codigo VARCHAR(10) NOT NULL,
-  nome VARCHAR(70) NOT NULL,
-  foto VARCHAR(300) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY codigo (codigo)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Tabela: categorias
-CREATE TABLE categorias (
-  id INT NOT NULL AUTO_INCREMENT,
-  nome ENUM('manutenção','domésticos','cuidados','educação') NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY nome (nome)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Tabela: dias_semanas
-CREATE TABLE dias_semanas (
-  id INT NOT NULL,
-  nome ENUM('domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado') NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY nome (nome)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Tabela: usuario
-CREATE TABLE usuario (
-  id INT NOT NULL AUTO_INCREMENT,
-  nome VARCHAR(50) NOT NULL,
-  email VARCHAR(100) DEFAULT NULL,
-  senha VARCHAR(255) NOT NULL,
-  imagem VARCHAR(300) NOT NULL,
-  codigo VARCHAR(10) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY email (email),
-  KEY fk_usuario_condominio (codigo),
-  CONSTRAINT fk_usuario_condominio FOREIGN KEY (codigo) REFERENCES condominio (codigo)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Tabela: servicos
-CREATE TABLE servicos (
-  id INT NOT NULL AUTO_INCREMENT,
-  nome VARCHAR(70) NOT NULL,
-  imagem VARCHAR(300) NOT NULL,
-  descricao VARCHAR(500) NOT NULL,
-  horario_inicio TIME DEFAULT NULL,
-  horario_fim TIME DEFAULT NULL,
-  data_limite DATE NOT NULL,
-  id_categoria INT NOT NULL,
-  id_prestador INT NOT NULL,
-  codigo VARCHAR(10) NOT NULL,
-  PRIMARY KEY (id),
-  KEY fk_servicos_categoria (id_categoria),
-  KEY fk_servicos_prestador (id_prestador),
-  KEY fk_servicos_condominio (codigo),
-  CONSTRAINT fk_servicos_categoria FOREIGN KEY (id_categoria) REFERENCES categorias (id),
-  CONSTRAINT fk_servicos_condominio FOREIGN KEY (codigo) REFERENCES condominio (codigo),
-  CONSTRAINT fk_servicos_prestador FOREIGN KEY (id_prestador) REFERENCES usuario (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Tabela: disponibilidade
-CREATE TABLE disponibilidade (
-  id_dia INT NOT NULL,
-  id_servicos INT NOT NULL,
-  PRIMARY KEY (id_dia, id_servicos),
-  KEY fk_disponibilidade_servicos (id_servicos),
-  CONSTRAINT fk_dia FOREIGN KEY (id_dia) REFERENCES dias_semanas (id),
-  CONSTRAINT fk_disponibilidade_servicos FOREIGN KEY (id_servicos) REFERENCES servicos (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Tabela: contratados
-CREATE TABLE contratados (
-  id INT NOT NULL AUTO_INCREMENT,
-  dia DATE NOT NULL,
-  horario TIME NOT NULL,
-  id_condominio INT NOT NULL,
-  id_cliente INT NOT NULL,
-  id_servico INT NOT NULL,
-  confirmado ENUM('pendente','confirmado','concluido') DEFAULT 'pendente',
-  PRIMARY KEY (id),
-  UNIQUE KEY unique_agenda (dia, horario, id_servico),
-  KEY fk_contratados_condominio (id_condominio),
-  KEY fk_contratados_usuario (id_cliente),
-  KEY fk_contratados_servico (id_servico),
-  CONSTRAINT fk_contratados_condominio FOREIGN KEY (id_condominio) REFERENCES condominio (id),
-  CONSTRAINT fk_contratados_servico FOREIGN KEY (id_servico) REFERENCES servicos (id),
-  CONSTRAINT fk_contratados_usuario FOREIGN KEY (id_cliente) REFERENCES usuario (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Tabela: comentarios
-CREATE TABLE comentarios (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(50) NOT NULL,
-  email VARCHAR(100) NOT NULL UNIQUE,
-  telefone VARCHAR(15) NOT NULL UNIQUE,
-  mensagem VARCHAR(500) NOT NULL,
-  CONSTRAINT fk_email_comentario FOREIGN KEY (email) REFERENCES usuario (email)
+create table condominios(
+id serial primary key,
+nome text not null,
+codigo int not null unique
 );
 
--- Condomínios
-INSERT INTO condominio (codigo, nome, foto) VALUES
-('1234spd', 'Edifício Teste', 'url_da_foto.jpg'),
-('5678abc', 'Residencial Primavera', 'img/condominio.png'),
-('9101xyz', 'Condomínio Bela Vista', 'img/condominio.png');
+create table usuarios(
+id serial primary key,
+nome text not null,
+email text not null unique,
+senha varchar(300) not null,
+telefone varchar(15) not null unique,
+imagem text not null,
+codigo int not null,
+constraint fk_usuario_codigo
+foreign key(codigo) references condominios(codigo)
+);
 
--- Categorias (Usando os nomes definidos no ENUM)
-INSERT INTO categorias (nome) VALUES ('manutenção'), ('domésticos'), ('cuidados'), ('educação');
+create table categorias(
+id serial primary key,
+nome tipo_categorias not null unique
+);
 
--- Dias da Semana
-INSERT INTO dias_semanas (id, nome) VALUES
-(1, 'domingo'), (2, 'segunda-feira'), (3, 'terça-feira'), (4, 'quarta-feira'), 
-(5, 'quinta-feira'), (6, 'sexta-feira'), (7, 'sábado');
+create table dias_semana(
+id serial primary key,
+nome tipo_dias not null
+);
 
--- Usuários
-INSERT INTO usuario (nome, email, senha, imagem, codigo) VALUES
-('João Silva', 'joao@gmail.com', '$2y$10$wl7XMWQUP4nO7kMMcc1WxOjCuBiMI1.pP2r9M1pAELLUWa5a0B/fW', '../icon/user.png', '1234spd'),
-('Maria Souza', 'maria@gmail.com', '$2y$10$hcjesuxWlNg9gxAg0zedOOrYqIoieDPlzZPxQuAg161VGJcJ753YO', '../icon/user.png', '5678abc'),
-('Carlos Lima', 'carlos@gmail.com', '$2y$10$tSQzO6m5zqUIpTEPpsItNOICPx4hVelPVzxOB5zwTKYb.XsHjOmc6', '../icon/user.png', '9101xyz');
+create table servicos(
+id serial primary key,
+nome text not null,
+descricao text not null,
+hora_inicio time,
+hora_fim time,
+dia date,
+imagem text not null,
+id_prestador int not null,
+categoria int not null,
+codigo int not null,
+constraint fk_servico_prestador
+foreign key(id_prestador) references usuarios(id),
+constraint fk_servico_categoria
+foreign key(categoria) references categorias(id),
+constraint fk_servico_codigo
+foreign key(codigo) references condominios(codigo)
+);
 
--- Serviços
-INSERT INTO servicos (nome, imagem, codigo, descricao, horario_inicio, horario_fim, data_limite, id_categoria, id_prestador) VALUES 
-('Serviço de Limpeza', 'img/faxineira.jpg', '1234spd', 'Limpeza completa de apartamentos.', '08:00:00', '16:00:00', '2026-04-10', 2, 2),
-('Cuidador de Idosos', 'img/cuidador-de-cachorro.jpg', '5678abc', 'Cuidados diários para idosos.', '09:00:00', '18:00:00', '2026-04-15', 3, 3),
-('Aula Particular de Matemática', 'img/a-mostra.jpg', '9101xyz', 'Reforço escolar para ensino fundamental.', '14:00:00', '17:00:00', '2026-05-01', 4, 1);
+create table contratados(
+id serial primary key,
+hora time not null,
+dia date not null,
+id_servico int not null,
+id_prestador int not null,
+id_cliente int not null,
+confirmado tipo_status default 'pendente',
+constraint fk_contrato_servico
+foreign key(id_servico) references servicos(id),
+constraint fk_contrato_prestador
+foreign key(id_prestador) references usuarios(id),
+constraint fk_contrato_cliente
+foreign key(id_cliente) references usuarios(id),
+check (id_cliente <> id_prestador)
+);
 
--- Contratos
-INSERT INTO contratados (dia, horario, id_condominio, id_cliente, id_servico, confirmado) VALUES
-('2026-03-10', '09:00:00', 1, 1, 1, 'confirmado'),
-('2026-03-12', '10:00:00', 2, 2, 2, 'pendente'),
-('2026-03-15', '15:00:00', 3, 3, 3, 'concluido');
+create table disponibilidade(
+id_dia int not null,
+id_servico int not null,
+primary key(id_dia, id_servico),
+constraint fk_disponivel_dia
+foreign key(id_dia) references dias_semana(id),
+constraint fk_disponivel_servico
+foreign key(id_servico) references servicos(id)
+);
+
+create table feedback(
+id serial primary key,
+nome text not null,
+email text not null unique,
+telefone varchar(12) not null unique,
+mensagem varchar(500) not null,
+nota int check (nota between 1 and 5),
+respondido boolean default false,
+data_envio timestamp default current_timestamp
+);
+
+INSERT INTO condominios (nome, codigo) VALUES 
+('Edifício Bela Vista', 1010);
+
+INSERT INTO categorias (nome) VALUES 
+('Domésticos'), ('Cuidados'), ('Educação'), ('Manutenção');
+
+INSERT INTO dias_semana (nome) VALUES 
+('domingo'), ('segunda-feira'), ('terça-feira'), ('quarta-feira'), 
+('quinta-feira'), ('sexta-feira'), ('sábado');
+
+INSERT INTO usuarios (nome, email, senha, telefone, imagem, codigo) VALUES 
+('Carlos', 'carlos@email.com', 'senha123', '11999998888', 'img/mostrar.jpg', 1010),
+('Ana', 'ana@email.com', 'senha123', '11977776666', 'img/mostrar.jpg', 1010),
+('Davi', 'davi@email.com', 'senha123', '11955554444', 'img/condomino.png', 1010);
+
+INSERT INTO servicos (nome, descricao, hora_inicio, hora_fim, imagem, id_prestador, categoria, codigo) VALUES 
+('Instalação Elétrica', 'Reparos em chuveiros e fiação geral.', '08:00', '18:00', 'img/eletricista.jpg', 1, 4, 1010),
+('Limpeza Residencial', 'Faxina completa ou pesada para apartamentos.', '07:30', '16:00', 'img/faxineira.jpg', 2, 1, 1010),
+('Cuidador de Pets', 'Passeios e cuidados durante o dia.', '09:00', '17:00', 'img/cuidador-de-cachorro.jpg', 1, 2, 1010);
+
+INSERT INTO disponibilidade (id_dia, id_servico) VALUES (2, 1), (4, 1);
+
+INSERT INTO disponibilidade (id_dia, id_servico) VALUES (6, 2);
+
+INSERT INTO contratados (hora, dia, id_servico, id_prestador, id_cliente, confirmado) VALUES 
+('10:00', '2026-03-23', 1, 1, 3, 'pendente');

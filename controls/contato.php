@@ -2,7 +2,7 @@
 session_start();
 require_once(__DIR__ . '/../conexao.php');
 
-if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['telefone']) || empty($_POST['comentario'])) {
+if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['telefone']) || empty($_POST['comentario']) || empty($_POST['nota'])) {
     $_SESSION['mensagem'] = "Preencha todos os campos necessários";
     header('Location: ../contato.php');
     exit();
@@ -12,18 +12,19 @@ $nome = $_POST['nome'];
 $email = $_POST['email'];
 $telefone = $_POST['telefone'];
 $comentario = $_POST['comentario'];
+$nota = $_POST['nota'];
 
-$sql = request("comentario?email=eq.$email&select=id", "GET");
+$sql = request("feedback?email=eq.$email&select=id", "GET");
 
 if (empty($sql) && !isset($sql['error'])) {
-    $dados = ["nome" => $nome, "email" => $email, "telefone" => $telefone, "mensagem" => $comentario];
+    $dados = ["nome" => $nome, "email" => $email, "telefone" => $telefone, "mensagem" => $comentario, "nota" => $nota];
 
-    $enviar = request("comentario", "POST", $dados);
+    $enviar = request("feedback", "POST", $dados);
 } else {
     $id = $sql[0]['id'];
     $dados = ["mensagem" => $comentario];
 
-    $enviar = request("comentario?id=eq.$id", "PATCH", $dados);
+    $enviar = request("feedback?id=eq.$id", "PATCH", $dados);
 }
 
 if (!isset($enviar['error'])) {

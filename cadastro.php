@@ -18,6 +18,10 @@ include('./util/avisos.php');
                     <input type="email" name="email" id="idEmail" placeholder="Email" required>
                 </div>
                 <div class="box-auth">
+                    <label for="idTelefone">Telefone</label>
+                    <input type="tel" name="telefone" id="idTelefone" placeholder="Telefone" required>
+                </div>
+                <div class="box-auth">
                     <label for="idSenha">Senha</label>
                     <input type="password" name="senha" id="idSenha" placeholder="Senha" required>
                 </div>

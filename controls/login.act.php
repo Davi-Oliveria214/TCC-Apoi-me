@@ -16,7 +16,7 @@ $email = trim($_POST['email']);
 $senha = $_POST['senha'];
 $chave = trim($_POST['chave']);
 
-$sql = request("usuario?email=eq.$email&select=*", "GET");
+$sql = request("usuarios?email=eq.$email&select=*", "GET");
 
 if (empty($sql) || isset($sql['error'])) {
     $_SESSION["mensagem"] = "Email não cadastrado.";

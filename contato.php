@@ -17,6 +17,15 @@ include('./util/avisos.php');
 
                 <textarea name="comentario" placeholder="Comentários:" id="comentarios" required style="resize: none;" maxlength="500"></textarea>
 
+                <label for="idNota">Avaliação</label>
+                <select name="nota" id="idNota" class="feedback-opcao" require>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+
                 <button type="submit" id="btn-enviar">Enviar</button>
             </div>
         </form>

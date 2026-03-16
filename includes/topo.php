@@ -18,13 +18,14 @@ include('./util/avisos.php');
     if (!empty($_SESSION["id"])):
         $id = $_SESSION["id"];
 
-        $res = request("usuario?id=eq.$id&select=nome,email,imagem,codigo", "GET");
+        $res = request("usuarios?id=eq.$id&select=nome,email,imagem,codigo", "GET");
 
         if (!empty($res) && !isset($res['error'])) {
             $usuario = $res[0];
 
             $nome = $usuario['nome'];
             $email = $usuario['email'];
+            $telefone = $usuario['telefone'];
             $img = $usuario['imagem'];
             $codigo =  $usuario['codigo'];
         }

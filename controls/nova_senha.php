@@ -17,7 +17,7 @@ if ($_POST["senha"] !== $_POST["rptSenha"]) {
 $email = trim($_POST['email']);
 $novaSenhaHash = password_hash($_POST['senha'], PASSWORD_BCRYPT);
 
-$usuario = request("usuario?email=eq.$email&select=id", "GET");
+$usuario = request("usuarios?email=eq.$email&select=id", "GET");
 
 if (empty($usuario) || isset($usuario['error'])) {
     $_SESSION["mensagem"] = "Este e-mail não está cadastrado.";
@@ -28,7 +28,7 @@ if (empty($usuario) || isset($usuario['error'])) {
 $idUsuario = $usuario[0]['id'];
 
 $dados = ["senha" => $novaSenhaHash];
-$res = request("usuario?id=eq.$idUsuario", "PATCH", $dados);
+$res = request("usuarios?id=eq.$idUsuario", "PATCH", $dados);
 
 if (!isset($res['error'])) {
     $_SESSION = array();
