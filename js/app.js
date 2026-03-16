@@ -44,7 +44,7 @@ function filtrar(categoria) {
         if (totalCards > 0 && totalCards < 4) {
           velocidade = 0;
         } else {
-          velocidade = 0.5;
+          velocidade = 0.4;
         }
       }
 
