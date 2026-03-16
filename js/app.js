@@ -32,7 +32,7 @@ function filtrar(categoria) {
 
   $.ajax({
     type: "POST",
-    url: "./util/filtro.php",
+    url: "../util/filtro.php",
     data: { resp: categoria },
     success: function (resposta) {
       const container = document.getElementById("todos-servicos");

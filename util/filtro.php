@@ -3,15 +3,15 @@ require(__DIR__ . '/../conexao.php');
 $resp = $_POST['resp'];
 
 if ($resp == 0) {
-    $sql = request("servicos?select=id,nome,imagem,descricao,horario_inicio,horario_fim,data_limite", "GET");
+    $sql = request("servicos?select=id,nome,imagem,descricao,hora_inicio,hora_fim,dia", "GET");
 } else {
-    $sql = request("servicos?id_categoria=eq.$resp&select=id,nome,imagem,descricao,horario_inicio,horario_fim,data_limite", "GET");
+    $sql = request("servicos?categoria=eq.$resp&select=id,nome,imagem,descricao,hora_inicio,hora_fim,dia", "GET");
 }
 
 if (!empty($sql) && !isset($sql['error'])) {
     foreach ($sql as $servico) {
-        $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
-        $horaFim = date('H:i', strtotime($servico['horario_fim']));
+        $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
+        $horaFim = date('H:i', strtotime($servico['hora_fim']));
 
         echo "<div class='card card-servico' data-id='{$servico['id']}'>";
         echo "<img src='$servico[imagem]' alt=''>";
