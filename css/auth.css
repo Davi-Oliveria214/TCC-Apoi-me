@@ -137,6 +137,43 @@
     background-color: var(--dourado-fraco);
 }
 
+.info-contato label[for="idNota"] {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--verde-musgo-medio);
+    margin-top: 5px;
+}
+
+.feedback-opcao {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--dourado);
+    border-radius: 8px;
+    background-color: var(--dourado-fraco);
+    color: var(--preto-acinzentado);
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feedback-opcao:focus {
+    border-color: var(--verde-musgo);
+    outline: none;
+    box-shadow: 0 0 5px rgba(75, 83, 32, 0.2);
+}
+
+.feedback-opcao option {
+    background-color: var(--dourado-palido);
+    color: var(--preto-acinzentado);
+    padding: 10px;
+}
+
 @media (max-width: 900px) {
     .banner {
         width: 100%;
