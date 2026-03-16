@@ -32,9 +32,11 @@ if (!password_verify($senha, $usuario['senha'])) {
     exit;
 }
 
-if ($usuario['codigo'] != $chave) {
-    $_SESSION["mensagem"] = "Chave de acesso incorreta.";
-    header("Location: ../login.php");
+$sqlChave = request("condominios?codigo=eq.$chave&select=*", "GET");
+
+if (empty($sqlChave) || isset($sqlChave['error'])) {
+    $_SESSION["mensagem"] = "Chave de acesso não encontrada.";
+    header("Location: ../cadastro.php");
     exit;
 }
 

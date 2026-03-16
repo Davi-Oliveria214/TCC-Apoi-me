@@ -7,8 +7,7 @@ if (
     empty($_POST['email']) ||
     empty($_POST['telefone']) ||
     empty($_POST['senha']) ||
-    empty($_POST['rptSenha']) ||
-    empty($_POST['chave'])
+    empty($_POST['rptSenha'])
 ) {
     $_SESSION["mensagem"] = "Preencha todos os campos.";
     header("Location: ../cadastro.php");
@@ -25,7 +24,6 @@ $nome  = trim($_POST['nome']);
 $email = trim($_POST['email']);
 $telefone = $_POST['telefone'];
 $senha = password_hash($_POST['senha'], PASSWORD_BCRYPT);
-$chave = trim($_POST['chave']);
 $img  = "../icon/user.png";
 
 $sql = request("usuarios?email=eq.$email&select=id", "GET");
@@ -36,15 +34,7 @@ if (!empty($sql) && !isset($sql['error'])) {
     exit;
 }
 
-$sqlChave = request("condominios?codigo=eq.$chave&select=id");
-
-if (empty($sqlChave) && isset($sqlChave['error'])) {
-    $_SESSION["mensagem"] = "Chave de acesso incorreta.";
-    header("Location: ../cadastro.php");
-    exit;
-}
-
-$dados = ["nome" => $nome, "email" => $email, "telefone" => $telefone, "senha" => $senha, "imagem" => $img, "codigo" => $chave];
+$dados = ["nome" => $nome, "email" => $email, "telefone" => $telefone, "senha" => $senha, "imagem" => $img];
 
 $res = request("usuarios", "POST", $dados);
 

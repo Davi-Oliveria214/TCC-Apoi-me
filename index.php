@@ -37,8 +37,8 @@ include('./includes/topo.php');
             shuffle($servicos);
 
             foreach ($servicos as $servico) {
-                $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
-                $horaFim = date('H:i', strtotime($servico['horario_fim']));
+                $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
+                $horaFim = date('H:i', strtotime($servico['hora_fim']));
                 $imagem = !empty($servico['imagem']) ? $servico['imagem'] : './img/default.jpg';
 
                 echo "<div class='card card-servico' data-id='" . $servico['id'] . "'>";
