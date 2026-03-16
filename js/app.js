@@ -44,7 +44,7 @@ function filtrar(categoria) {
         if (totalCards > 0 && totalCards < 4) {
           velocidade = 0;
         } else {
-          velocidade = 0.4;
+          velocidade = 0.3;
         }
       }
 
@@ -98,7 +98,7 @@ function fechar(opcao) {
 
 // Carrossel infinito
 const container = document.getElementById('todos-servicos');
-let velocidade = 0.5;
+let velocidade = 0.3;
 let animação;
 
 async function abastecerCarrossel() {
