@@ -42,7 +42,7 @@ include('./util/avisos.php');
                     class="<?= ($pag === "usuario.php") ? "user-icon" : "user-img"; ?>">
             </a>
 
-            <a href="../chat.php">
+            <a href="../mensagens.php">
                 <img src="./icon/msg.png" alt="Mensagens">
             </a>
         </div>
@@ -62,7 +62,7 @@ include('./util/avisos.php');
 
             <?php if (!empty($_SESSION["login"])): ?>
                 <li><a href="servicos.php">Serviços</a></li>
-                
+                <li><a href="../mensagens.php">Chat</a></li>
                 <li class="sair-logout"><a href="./includes/logout.php">Sair</a></li>
             <?php else: ?>
                 <?php if ($pag === "login.php"): ?>
@@ -75,7 +75,6 @@ include('./util/avisos.php');
                 <?php endif; ?>
             <?php endif; ?>
 
-            <li><a href="../chat.php">Chat</a></li>
             <li><a href="../contato.php">Contato</a></li>
             <li><a href="../sobre.php">Sobre</a></li>
         </ul>

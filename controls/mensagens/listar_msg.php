@@ -11,9 +11,9 @@ $mensagens = request($sqlMensagem, "GET");
 
 if ($mensagens && !isset($mensagens['error'])) :
     foreach ($mensagens as $msg) :
-        $classe = ($msg['id_autor'] == $id_logado) ? 'minhas-msg' : 'msg-contato';
+        $classe = ($msg['id_remetente'] == $id_logado) ? 'minhas-msg' : 'msg-contato';
 ?>
-        <div class="item=msg <?php echo $classe ?>">
+        <div class="item-msg <?php echo $classe ?>">
             <div class="balao">
                 <p><?php echo $msg['texto'] ?></p>
                 <small><?php echo date('H:i', strtotime($msg['criado_at'])); ?></small>
