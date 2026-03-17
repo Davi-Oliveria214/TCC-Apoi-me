@@ -10,12 +10,12 @@ include('./util/avisos.php');
             <h1>Reservados</h1>
             <div class="box">
                 <?php
-                $endpoint = "contratados?id_cliente=eq.$id&select=id,dia,horario,confirmado,servicos(nome,descricao,imagem)&order=dia.desc";
+                $endpoint = "contratados?id_cliente=eq.$id&select=id,dia,hora,confirmado,id_servico(nome,descricao,imagem,id_prestador)&order=dia.desc";
                 $sql = request($endpoint, "GET");
 
                 if (!empty($sql) && !isset($sql['error'])) {
                     foreach ($sql as $res) {
-                        $horario = date('H:i', strtotime($res['horario']));
+                        $horario = date('H:i', strtotime($res['hora']));
                         $dataRes = date('d/m/Y', strtotime($res['dia']));
                         $status  = $res['confirmado'];
                         $idContrato = $res['id'];
@@ -75,8 +75,8 @@ include('./util/avisos.php');
 
             if (!empty($sql) && !isset($sql['error'])) {
                 foreach ($sql as $servico) {
-                    $horaInicio = date('H:i', strtotime($servico['horario_inicio']));
-                    $horaFim = date('H:i', strtotime($servico['horario_fim']));
+                    $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
+                    $horaFim = date('H:i', strtotime($servico['hora_fim']));
                     $imgServ = !empty($servico['imagem']) ? $servico['imagem'] : './img/default-servico.jpg';
 
                     echo "<div class='card card-servico'>";

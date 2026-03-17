@@ -40,6 +40,10 @@ if (empty($sqlChave) || isset($sqlChave['error'])) {
     exit;
 }
 
+$dados = ["codigo" => $chave];
+
+request("usuarios?id=eq.{$usuario['id']}", "PUT", $dados);
+
 $_SESSION["id"] = $usuario['id'];
 $_SESSION["login"] = true;
 

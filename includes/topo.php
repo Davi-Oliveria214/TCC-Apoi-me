@@ -18,7 +18,7 @@ include('./util/avisos.php');
     if (!empty($_SESSION["id"])):
         $id = $_SESSION["id"];
 
-        $res = request("usuarios?id=eq.$id&select=nome,email,imagem,codigo", "GET");
+        $res = request("usuarios?id=eq.$id&select=nome,email,imagem,codigo,telefone", "GET");
 
         if (!empty($res) && !isset($res['error'])) {
             $usuario = $res[0];
@@ -42,7 +42,7 @@ include('./util/avisos.php');
                     class="<?= ($pag === "usuario.php") ? "user-icon" : "user-img"; ?>">
             </a>
 
-            <a href="#">
+            <a href="../chat.php">
                 <img src="./icon/msg.png" alt="Mensagens">
             </a>
         </div>
@@ -62,7 +62,8 @@ include('./util/avisos.php');
 
             <?php if (!empty($_SESSION["login"])): ?>
                 <li><a href="servicos.php">Serviços</a></li>
-                <a href="./includes/logout.php" class="sair-logout">Sair</a>
+                
+                <li class="sair-logout"><a href="./includes/logout.php">Sair</a></li>
             <?php else: ?>
                 <?php if ($pag === "login.php"): ?>
                     <li><a href="cadastro.php">Cadastro</a></li>
@@ -74,6 +75,7 @@ include('./util/avisos.php');
                 <?php endif; ?>
             <?php endif; ?>
 
+            <li><a href="../chat.php">Chat</a></li>
             <li><a href="../contato.php">Contato</a></li>
             <li><a href="../sobre.php">Sobre</a></li>
         </ul>
