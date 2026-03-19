@@ -36,13 +36,19 @@ $sqlChave = request("condominios?codigo=eq.$chave&select=*", "GET");
 
 if (empty($sqlChave) || isset($sqlChave['error'])) {
     $_SESSION["mensagem"] = "Chave de acesso não encontrada.";
-    header("Location: ../cadastro.php");
+    header("Location: ../login.php");
     exit;
 }
 
-$dados = ["codigo" => $chave];
+$dados = ["codigo" => (int)$chave];
 
-request("usuarios?id=eq.{$usuario['id']}", "PUT", $dados);
+$update = request("usuarios?id=eq.{$usuario['id']}", "PATCH", $dados);
+
+if (isset($update['error'])) {
+    $_SESSION["mensagem"] = "Erro ao vincular condomínio: " . $update['error'];
+    header("Location: ../login.php");
+    exit;
+}
 
 $_SESSION["id"] = $usuario['id'];
 $_SESSION["login"] = true;

@@ -71,7 +71,7 @@ include('./util/avisos.php');
         <h1>Serviços Disponíveis no Condomínio</h1>
         <section class="sessao-servicos">
             <?php
-            $sql = request("servicos?codigo=eq.$codigo&select=*&order=nome.asc");
+            $sql = request("servicos?codigo=eq.{$_SESSION['codigo']}&select=*&order=nome.asc");
 
             if (!empty($sql) && !isset($sql['error'])) {
                 foreach ($sql as $servico) {

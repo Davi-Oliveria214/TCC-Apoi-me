@@ -27,7 +27,7 @@ include('./util/avisos.php');
             $email = $usuario['email'];
             $telefone = $usuario['telefone'];
             $img = $usuario['imagem'];
-            $codigo =  $usuario['codigo'];
+            $_SESSION['codigo'] =  $usuario['codigo'];
         }
     ?>
 
@@ -63,6 +63,7 @@ include('./util/avisos.php');
             <?php if (!empty($_SESSION["login"])): ?>
                 <li><a href="servicos.php">Serviços</a></li>
                 <li><a href="../mensagens.php">Chat</a></li>
+                <li><a href="../addServico.php">Anunciar</a></li>
                 <li class="sair-logout"><a href="./includes/logout.php">Sair</a></li>
             <?php else: ?>
                 <?php if ($pag === "login.php"): ?>

@@ -17,7 +17,7 @@ if (ini_get("session.use_cookies")) {
 
 session_destroy();
 
-unset($nome, $email, $img, $codigo, $usuario);
+unset($nome, $email, $img, $usuario);
 
 $_SESSION['mensagem'] = "Você saiu com segurança.";
 header("Location: ../index.php");

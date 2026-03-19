@@ -1,8 +1,6 @@
 /* ===========================
     Páginas de Autenticação e Contato
    =========================== */
-
-/* Container Principal (Lado a Lado: Formulário | Banner) */
 .div-auth {
     display: flex;
     width: 100vw;
