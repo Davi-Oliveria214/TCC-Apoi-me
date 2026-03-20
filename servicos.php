@@ -50,7 +50,7 @@ include('./util/avisos.php');
             </div>
         </div>
 
-        <div class="avisos quadro">
+        <div class="avisos-condominio quadro">
             <h1>Quadro de Avisos</h1>
             <div class="box">
                 <div class="card-avisos">
@@ -67,7 +67,7 @@ include('./util/avisos.php');
         </div>
     </section>
 
-    <section class="servicos">
+    <section class="servicos-publicados">
         <h1>Serviços Disponíveis no Condomínio</h1>
         <section class="sessao-servicos">
             <?php

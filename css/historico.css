@@ -1,0 +1,64 @@
+/* ===========================
+   PALETA DE CORES (UNIFICADA)
+=========================== */
+:root {
+    --preto-acinzentado: #1f1f1f;
+    --verde-musgo: #0c3a3f;
+    --verde-musgo-medio: #2d6057;
+    --verde-musgo-palido: #96a37f;
+    --branco: #ffffff;
+    --dourado: #b0822b;
+    --dourado-palido: #d8b469;
+    --dourado-fraco: #ffe6a7;
+
+    /* RGB */
+    --preto-rgba: 31, 31, 31;
+    --verde-musgo-rgba: 12, 58, 63;
+    --verde-musgo-medio-rgba: 45, 96, 87;
+    --verde-musgo-palido-rgba: 150, 163, 127;
+    --branco-rgba: 255, 255, 255;
+    --dourado-rgba: 176, 130, 43;
+    --dourado-palido-rgba: 216, 180, 105;
+    --dourado-fraco-rgba: 255, 230, 167;
+}
+
+.main-historico {
+    flex: 1;
+    display: flex;
+    padding: 5px;
+    gap: 10px;
+}
+
+.historico-box {
+    width: 50%;
+    max-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid var(--dourado);
+    padding: 5px 10px;
+    gap: 10px;
+    border-radius: 20px;
+
+    &>div {
+        width: 100%;
+        max-height: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        overflow: auto;
+    }
+}
+
+@media (max-width: 751px) {
+    .main-historico {
+        flex-direction: column;
+    }
+
+    .historico-box {
+        width: 100%;
+        height: 100vh;
+    }
+}

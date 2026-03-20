@@ -38,8 +38,7 @@ include('./util/avisos.php');
 
             <a href="usuario.php">
                 <img src="<?= htmlspecialchars($img) ?>"
-                    alt="Usuário"
-                    class="<?= ($pag === "usuario.php") ? "user-icon" : "user-img"; ?>">
+                    alt="Usuário">
             </a>
 
             <a href="../mensagens.php">
@@ -56,7 +55,7 @@ include('./util/avisos.php');
 </header>
 
 <nav class="<?php echo $classe ?> desativado" id="nav-id">
-    <div>
+    <div onclick="event.stopPropagation()">
         <ul>
             <li><a href="index.php">Início</a></li>
 
@@ -64,6 +63,7 @@ include('./util/avisos.php');
                 <li><a href="servicos.php">Serviços</a></li>
                 <li><a href="../mensagens.php">Chat</a></li>
                 <li class="sair-logout"><a href="./includes/logout.php">Sair</a></li>
+                <li class="historico"><a href="../historico.php">Histórico</a></li>
             <?php else: ?>
                 <?php if ($pag === "login.php"): ?>
                     <li><a href="cadastro.php">Cadastro</a></li>

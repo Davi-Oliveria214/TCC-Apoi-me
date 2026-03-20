@@ -58,7 +58,15 @@ function filtrar(categoria) {
 const burguer = document.getElementById('burguer');
 const nav = document.getElementById('nav-id');
 
+nav.addEventListener('click', () => {
+  configMenu()
+});
+
 burguer.addEventListener('click', () => {
+  configMenu()
+});
+
+function configMenu() {
   const isAtivo = nav.classList.contains('ativo');
 
   if (isAtivo) {
@@ -70,8 +78,9 @@ burguer.addEventListener('click', () => {
   }
 
   burguer.classList.toggle('abrir');
-});
+}
 
+// Rodapé
 const institucional = document.getElementById('institucional');
 const atendimento = document.getElementById('atendimento');
 const cliente = document.getElementById('cliente');

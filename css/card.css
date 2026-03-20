@@ -112,8 +112,7 @@ Card Avisos
     gap: 5px;
     justify-content: space-evenly;
     border-radius: 10px;
-
-    background-color: aquamarine;
+    background-color: var(--dourado-palido);
 
     & .titulo-avisos {
         display: flex;
@@ -133,6 +132,7 @@ Card Avisos
             & h2 {
                 font-size: 0.9rem;
                 text-align: 0;
+                color: var(--branco);
             }
         }
     }
@@ -148,6 +148,10 @@ Card Avisos
         padding: 5px 10px;
         text-align: justify;
         overflow-y: auto;
+    }
+
+    & p {
+        color: var(--branco);
     }
 }
 

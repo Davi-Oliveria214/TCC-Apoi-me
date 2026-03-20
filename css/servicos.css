@@ -18,7 +18,7 @@
     height: clamp(55vh, 65vh, 80vw);
     padding: 10px;
     gap: 10px;
-    background-color: rgba(var(--preto-rgba), 0.2);
+    background-color: rgba(var(--preto-rgba), 0.1);
     border-radius: 10px;
 
     & .quadro {
@@ -31,14 +31,23 @@
         & h1 {
             text-align: center;
             font-size: 2.5rem;
-            color: var(--dourado-fraco);
+            color: var(--dourado);
+        }
+
+        & .aviso-vazio {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dourado-palido);
         }
     }
 
     & .reservados {
         width: 100%;
         height: 100%;
-        background-color: var(--verde-musgo-palido);
+        border: 2px solid var(--dourado);
 
         & .box {
             width: 100%;
@@ -54,10 +63,10 @@
         }
     }
 
-    & .avisos {
+    & .avisos-condominio {
         flex: 1;
         height: 100%;
-        background-color: var(--verde-musgo-palido);
+        border: 2px solid var(--dourado);
 
         & .box {
             overflow-y: auto;
@@ -104,25 +113,25 @@
 /* =======================
    SERVIÇOS
 ======================= */
-.servicos {
+.servicos-publicados {
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 10px 15px;
-    background-color: rgba(var(--verde-musgo-palido-rgba), 0.2);
+    background-color: rgba(var(--preto-rgba), 0.1);
+    border-radius: 10px;
 
     & .sessao-servicos {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-
         width: 100%;
         max-height: 50vh;
         gap: 15px;
         padding: 15px 20px;
-
-        background-color: rgba(var(--preto-rgba), 0.2);
+        border: 2px solid var(--dourado);
+        border-radius: 10px;
         overflow-y: auto;
     }
 }
