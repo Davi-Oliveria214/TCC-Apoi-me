@@ -36,20 +36,16 @@ function filtrar(categoria) {
     data: { resp: categoria },
     success: function (resposta) {
       const container = document.getElementById("todos-servicos");
-      cancelAnimationFrame(animacao);
+
       container.innerHTML = resposta;
+
+      container.scrollLeft = 0;
+
       const totalCards = container.querySelectorAll('.card-servico').length;
 
       if (container.offsetWidth > 600) {
-        if (totalCards > 0 && totalCards < 4) {
-          velocidade = 0;
-        } else {
-          velocidade = 0.3;
-        }
+        velocidade = totalCards < 4 ? 0 : 0.7;
       }
-
-      container.scrollLeft = 0;
-      mover();
     }
   });
 }
