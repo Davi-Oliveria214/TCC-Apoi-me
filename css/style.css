@@ -156,6 +156,28 @@ main {
   border: none;
 }
 
+#todos-servicos {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+  gap: 20px;
+  padding: 25px 15px;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: stretch;
+  cursor: grab;
+  user-select: none;
+}
+
+/* Esconde a barra de rolagem */
+#todos-servicos::-webkit-scrollbar {
+  display: none;
+}
+
+#todos-servicos::-webkit-scrollbar {
+  display: none;
+}
+
 /* PARCEIROS */
 .parceros-principal {
   width: 100vw;

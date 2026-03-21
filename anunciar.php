@@ -4,7 +4,7 @@ include('./includes/topo.php');
 ?>
 
 <main class="main-add">
-    <form action="./controls/addServico.php" method="post" class="form-add">
+    <form action="./controls/addServico.php" method="post" class="form-add" enctype="multipart/form-data">
         <h1>Criar Anúncio</h1>
         <section class="box-add">
             <div class="box-addServicos">
@@ -29,11 +29,11 @@ include('./includes/topo.php');
             </div>
 
             <div class="box-addServicos">
-                <input type="text" id="idData" name="data" placeholder="Data (Opicional)">
+                <input type="date" id="idData" name="data" placeholder="Data (Opicional)">
             </div>
 
             <div class="box-addServicos">
-                <input type="text" id="idHorario" name="horario" placeholder="Horario (Opicional)">
+                <input type="time" id="idHorario" name="horario" placeholder="Horario (Opicional)">
             </div>
 
             <div class="box-addServicos">

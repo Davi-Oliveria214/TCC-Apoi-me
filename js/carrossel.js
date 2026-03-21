@@ -1,44 +1,92 @@
-// Carrossel infinito
-const container = document.getElementById('todos-servicos');
-let velocidade = 0.3;
-let animação;
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('todos-servicos');
 
-async function abastecerCarrossel() {
-    const cardsAtuais = Array.from(container.querySelectorAll('.card-servico'));
-    const ids = cardsAtuais.map(c => c.dataset.id).join(',');
+    let velocidade = 0.7;
+    let isDown = false;
+    let startX;
+    let scrollLeft;
 
-    try {
-        const resposta = await fetch(`get_proximo_servico.php?ignore=${ids}`);
-        const novoCardHtml = await resposta.text();
+    let rodando = true;
 
-        if (novoCardHtml.trim() !== "") {
-            container.insertAdjacentHTML('beforeend', novoCardHtml);
-        }
-    } catch (e) {
-        console.error("Erro ao atualizar carrossel:", e);
-    }
-}
+    function duplicarCards() {
+        const cards = Array.from(container.children);
 
-function mover() {
-    container.scrollLeft += velocidade;
-
-    const primeiroCard = container.firstElementChild;
-
-    if (primeiroCard) {
-        if (container.scrollLeft >= (primeiroCard.offsetWidth + 20)) {
-            container.appendChild(primeiroCard);
-
-            container.scrollLeft -= (primeiroCard.offsetWidth + 20);
+        for (let i = 0; i < 3; i++) {
+            cards.forEach(card => {
+                const clone = card.cloneNode(true);
+                container.appendChild(clone);
+            });
         }
     }
 
-    animação = requestAnimationFrame(mover);
-}
+    function autoScroll() {
+        if (rodando) {
+            container.scrollLeft += velocidade;
 
-mover();
+            if (container.scrollLeft >= container.scrollWidth / 2) {
+                container.scrollLeft = container.scrollLeft / 2;
+            }
+        }
 
-container.addEventListener('mouseenter', () => cancelAnimationFrame(animação));
-container.addEventListener('mouseleave', () => {
-    cancelAnimationFrame(animação);
-    mover();
+        requestAnimationFrame(autoScroll);
+    }
+
+    function parar() {
+        rodando = false;
+    }
+
+    function continuar() {
+        rodando = true;
+    }
+
+    container.addEventListener('mouseenter', parar);
+
+    container.addEventListener('mouseleave', continuar);
+
+    container.addEventListener('mousedown', (e) => {
+        isDown = true;
+        container.style.cursor = 'grabbing';
+
+        startX = e.pageX;
+        scrollLeft = container.scrollLeft;
+
+        parar();
+    });
+
+    container.addEventListener('mouseup', () => {
+        isDown = false;
+        container.style.cursor = 'grab';
+        continuar();
+    });
+
+    container.addEventListener('mouseleave', () => {
+        isDown = false;
+        container.style.cursor = 'grab';
+        continuar();
+    });
+
+    container.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+
+        const walk = (e.pageX - startX) * 2;
+        container.scrollLeft = scrollLeft - walk;
+    });
+
+    container.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].pageX;
+        scrollLeft = container.scrollLeft;
+        parar();
+    });
+
+    container.addEventListener('touchend', continuar);
+
+    container.addEventListener('touchmove', (e) => {
+        const walk = (e.touches[0].pageX - startX) * 2;
+        container.scrollLeft = scrollLeft - walk;
+    });
+
+    container.style.cursor = 'grab';
+
+    duplicarCards();
+    autoScroll();
 });

@@ -33,31 +33,32 @@ include('./includes/topo.php');
         <?php
         $servicos = request("servicos?select=*&limit=10", "GET");
 
-        if (!empty($servicos) && !isset($servicos['error'])) {
+        if (!empty($servicos) && !isset($servicos['error'])) :
             shuffle($servicos);
 
-            foreach ($servicos as $servico) {
-                $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
+            foreach ($servicos as $servico) :
+                $horaInicio = $servico['hora_inicio'] != null ? date('H:i', strtotime($servico['hora_inicio'])) : "Não informado";
                 $horaFim = date('H:i', strtotime($servico['hora_fim']));
-                $imagem = !empty($servico['imagem']) ? $servico['imagem'] : './img/default.jpg';
-
-                echo "<div class='card card-servico' data-id='" . $servico['id'] . "'>";
-                echo "<img src='$imagem' alt=''>";
-                echo "<div>";
-                echo "<div class='info-card'>";
-                echo "<h2 class='titulo-card'>" . htmlspecialchars($servico['nome']) . "</h2>";
-                echo "<p>" . htmlspecialchars($servico['descricao']) . "</p>";
-                echo "<span>Horário: $horaInicio às $horaFim</span>";
-                echo "</div>";
-                echo "<div class='box-btn'>";
-                echo "<a href='./controls/agendar.php?id=" . $servico['id'] . "' class='btn'>Agendar serviço</a>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
-            }
-        } else {
+                $imagem = $servico['imagem'];
+        ?>
+                <div class='card card-servico' data-id='<?php echo $servico["id"] ?>'>
+                    <img src='<?php echo $imagem ?>' alt=''>
+                    <div>
+                        <div class='info-card'>
+                            <h2 class='titulo-card'><?php echo $servico['nome'] ?></h2>
+                            <p><?php echo $servico['descricao'] ?></p>
+                            <span><?php echo $horaInicio ?></span>
+                        </div>
+                        <div class='box-btn'>
+                            <a href='./controls/agendar.php?id=<?php echo $servico["id"] ?>' class='btn'>Agendar serviço</a>
+                        </div>
+                    </div>
+                </div>
+        <?php
+            endforeach;
+        else :
             echo "<h2 id='aviso' style='text-align: center;'>Nenhum serviço disponível no momento.</h2>";
-        }
+        endif;
         ?>
     </section>
 </main>

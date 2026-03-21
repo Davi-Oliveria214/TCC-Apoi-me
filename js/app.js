@@ -36,7 +36,7 @@ function filtrar(categoria) {
     data: { resp: categoria },
     success: function (resposta) {
       const container = document.getElementById("todos-servicos");
-      cancelAnimationFrame(animação);
+      cancelAnimationFrame(animacao);
       container.innerHTML = resposta;
       const totalCards = container.querySelectorAll('.card-servico').length;
 
