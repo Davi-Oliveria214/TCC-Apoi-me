@@ -1,12 +1,11 @@
 <?php
-@session_start();
+session_start();
+require_once(__DIR__ . '/../conexao.php');
 
-if (empty($_SESSION['login']) || empty($_SESSION['id'])) {
-    $_SESSION['mensagem'] = 'Faça login para poder agendar o serviço!!!';
-    header('Location: ../login.php');
-    exit();
+if (empty('data') || empty('hora')) {
+    $_SESSION["mensagem"] = "Preencha todos os campos.";
+    header("Location: ../agendar.php");
+    exit;
 }
 
-$_SESSION['mensagem'] = 'Página de agendamento em desenvolvimento!!!';
-header('Location: ../index.php');
-exit();
+$idCliente = $_SESSION['id'];

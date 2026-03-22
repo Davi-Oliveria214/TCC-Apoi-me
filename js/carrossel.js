@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let rodando = true;
 
     function duplicarCards() {
-        const cards = Array.from(container.children);
+        const cards = Array.from(container.querySelectorAll('.card-servico'));
+
+        if (cards.length === 0) return;
 
         for (let i = 0; i < 3; i++) {
             cards.forEach(card => {

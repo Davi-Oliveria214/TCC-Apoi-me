@@ -28,7 +28,7 @@ $imagem;
 if (!empty($_POST['imagem'])) {
     $imagem = $_POST['imagem'];
 } else {
-    $imagem = "./img/condominio.png";
+    $imagem = "./img/condomino.png";
 }
 
 $dados = [

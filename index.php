@@ -50,7 +50,7 @@ include('./includes/topo.php');
                             <span><?php echo $horaInicio ?></span>
                         </div>
                         <div class='box-btn'>
-                            <a href='./controls/agendar.php?id=<?php echo $servico["id"] ?>' class='btn'>Agendar serviço</a>
+                            <a href='./agendar.php?id=<?php echo $servico["id"] ?>' class='btn'>Agendar serviço</a>
                         </div>
                     </div>
                 </div>

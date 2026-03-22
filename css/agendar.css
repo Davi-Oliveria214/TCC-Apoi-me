@@ -1,0 +1,104 @@
+.main-agendar {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.main-agendar form {
+    width: 100%;
+    max-width: 500px;
+    background: var(--verde-musgo);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+}
+
+.main-agendar img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.main-agendar form>div {
+    padding: 15px;
+}
+
+.main-agendar p {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--dourado);
+    text-align: center;
+}
+
+.main-agendar input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    outline: none;
+    font-size: 1rem;
+    background: var(--branco);
+    transition: 0.3s;
+}
+
+.main-agendar input:focus {
+    border: 2px solid var(--dourado);
+    box-shadow: 0 0 10px rgba(176, 130, 43, 0.5);
+}
+
+.main-agendar input[readonly] {
+    background: var(--verde-musgo-palido);
+    color: var(--preto-acinzentado);
+    font-weight: bold;
+}
+
+.main-agendar button {
+    width: 90%;
+    margin: 10px auto;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.main-agendar button[type="submit"] {
+    background: var(--dourado);
+    color: var(--preto-acinzentado);
+}
+
+.main-agendar button[type="submit"]:hover {
+    background: var(--dourado-palido);
+    transform: scale(1.03);
+}
+
+.main-agendar button[type="button"] {
+    background: transparent;
+    color: var(--dourado);
+    border: 2px solid var(--dourado);
+}
+
+.main-agendar button[type="button"]:hover {
+    background: var(--dourado);
+    color: var(--preto-acinzentado);
+}
+
+@media (max-width: 500px) {
+    .main-agendar form {
+        border-radius: 15px;
+    }
+
+    .main-agendar img {
+        height: 160px;
+    }
+
+    .main-agendar p {
+        font-size: 1.2rem;
+    }
+}

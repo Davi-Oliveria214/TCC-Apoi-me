@@ -8,33 +8,34 @@ include('./includes/topo.php');
         <h1>Histórico de Contratação</h1>
         <div>
             <?php
-            $servicos = request("servicos?select=*&limit=10", "GET");
+            $servicos = request(
+                "contratados?select=id,hora,dia,servicos(nome,descricao,imagem)&id_cliente=eq.$id",
+                "GET"
+            );
 
-            if (!empty($servicos) && !isset($servicos['error'])) {
+            if (!empty($servicos) && !isset($servicos['error'])) :
                 shuffle($servicos);
 
-                foreach ($servicos as $servico) {
-                    $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
-                    $horaFim = date('H:i', strtotime($servico['hora_fim']));
-                    $imagem = !empty($servico['imagem']) ? $servico['imagem'] : './img/default.jpg';
-
-                    echo "<div class='card card-servico' data-id='" . $servico['id'] . "'>";
-                    echo "<img src='$imagem' alt=''>";
-                    echo "<div>";
-                    echo "<div class='info-card'>";
-                    echo "<h2 class='titulo-card'>" . htmlspecialchars($servico['nome']) . "</h2>";
-                    echo "<p>" . htmlspecialchars($servico['descricao']) . "</p>";
-                    echo "<span>Horário: $horaInicio às $horaFim</span>";
-                    echo "</div>";
-                    echo "<div class='box-btn'>";
-                    echo "<a href='./controls/agendar.php?id=" . $servico['id'] . "' class='btn'>Avaliar serviço</a>";
-                    echo "</div>";
-                    echo "</div>";
-                    echo "</div>";
-                }
-            } else {
-                echo "<h2 id='aviso' style='text-align: center;'>Nenhum serviço disponível no momento.</h2>";
-            }
+                foreach ($servicos as $servico) :
+            ?>
+                    <div class='card card-servico' data-id='<?php echo $servico["id"] ?>'>
+                        <img src='<?php echo $servico['servicos']['imagem'] ?>' alt=''>
+                        <div>
+                            <div class='info-card'>
+                                <h2 class='titulo-card'><?php echo $servico['servicos']['nome'] ?></h2>
+                                <p><?php echo $servico['servicos']['descricao'] ?></p>
+                                <span></span>
+                            </div>
+                            <div class='box-btn'>
+                                <a href='./controls/avaliar.php?id=<?php echo $servico["id"] ?>' class='btn'>Avaliar serviço</a>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                endforeach;
+            else :
+                echo "<h2 id='aviso' style='text-align: center;'>Nenhum serviço contratado no momento.</h2>";
+            endif;
             ?>
         </div>
     </section>
@@ -42,33 +43,73 @@ include('./includes/topo.php');
         <h1>Histórico de vendas</h1>
         <div>
             <?php
-            $servicos = request("servicos?select=*&limit=10", "GET");
+            $servicos = request(
+                "contratados?select=id,hora,dia,servicos(nome,descricao,imagem)&id_prestador=eq.$id",
+                "GET"
+            );
 
-            if (!empty($servicos) && !isset($servicos['error'])) {
+            if (!empty($servicos) && !isset($servicos['error'])) :
                 shuffle($servicos);
 
-                foreach ($servicos as $servico) {
-                    $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
-                    $horaFim = date('H:i', strtotime($servico['hora_fim']));
-                    $imagem = !empty($servico['imagem']) ? $servico['imagem'] : './img/default.jpg';
+                foreach ($servicos as $servico) :
+                    $hora = date('H:i', strtotime($servico['hora']));
+                    $imagem = !empty($servico['servicos']['imagem']) ? $servico['servicos']['imagem'] : './img/default.jpg';
+            ?>
+                    <div class='card card-servico' data-id='<?php echo $servico['servicos']["id"] ?>'>
+                        <img src='<?php echo $servico['servicos']['imagem'] ?>' alt=''>
+                        <div>
+                            <div class='info-card'>
+                                <h2 class='titulo-card'><?php echo $servico['servicos']['nome'] ?></h2>
+                                <p><?php echo $servico['servicos']['descricao'] ?></p>
+                                <span><?php echo $hora ?></span>
+                            </div>
+                            <div class='box-btn'>
+                                <a href='./controls/avaliar.php?id=<?php echo $servico["id"] ?>' class='btn'>Avaliar serviço</a>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                endforeach;
+            else :
+                echo "<h2 id='aviso' style='text-align: center;'>Nenhum serviço agendado no momento.</h2>";
+            endif;
+            ?>
+        </div>
+    </section>
+    <section class="historico-avaliados historico-box">
+        <h1>Histórico de Avaliados</h1>
+        <div>
+            <?php
+            $servicos = request(
+                "contratados?select=id,hora,dia,servicos(nome,descricao,imagem)&id_cliente=eq.$id&avaliar=eq.true",
+                "GET"
+            );
 
-                    echo "<div class='card card-servico' data-id='" . $servico['id'] . "'>";
-                    echo "<img src='$imagem' alt=''>";
-                    echo "<div>";
-                    echo "<div class='info-card'>";
-                    echo "<h2 class='titulo-card'>" . htmlspecialchars($servico['nome']) . "</h2>";
-                    echo "<p>" . htmlspecialchars($servico['descricao']) . "</p>";
-                    echo "<span>Horário: $horaInicio às $horaFim</span>";
-                    echo "</div>";
-                    echo "<div class='box-btn'>";
-                    echo "<a href='./controls/agendar.php?id=" . $servico['id'] . "' class='btn'>Avaliar serviço</a>";
-                    echo "</div>";
-                    echo "</div>";
-                    echo "</div>";
-                }
-            } else {
-                echo "<h2 id='aviso' style='text-align: center;'>Nenhum serviço disponível no momento.</h2>";
-            }
+            if (!empty($servicos) && !isset($servicos['error'])) :
+                shuffle($servicos);
+
+                foreach ($servicos as $servico) :
+                    $hora = date('H:i', strtotime($servico['hora']));
+                    $imagem = !empty($servico['servicos']['imagem']) ? $servico['servicos']['imagem'] : './img/default.jpg';
+            ?>
+                    <div class='card card-servico' data-id='<?php echo $servico["id"] ?>'>
+                        <img src='<?php echo $servico['servicos']['imagem'] ?>' alt=''>
+                        <div>
+                            <div class='info-card'>
+                                <h2 class='titulo-card'><?php echo $servico['servicos']['nome'] ?></h2>
+                                <p><?php echo $servico['servicos']['descricao'] ?></p>
+                                <span><?php echo $hora ?></span>
+                            </div>
+                            <div class='box-btn'>
+                                <a href='./controls/avaliar.php?id=<?php echo $servico["id"] ?>' class='btn'>Avaliar serviço</a>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                endforeach;
+            else :
+                echo "<h2 id='aviso' style='text-align: center;'>Nenhum serviço avaliado no momento.</h2>";
+            endif;
             ?>
         </div>
     </section>
