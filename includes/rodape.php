@@ -27,7 +27,7 @@
 <ul id="cliente" class="invisivel" onclick="fechar(3)">
     <li onclick="event.stopPropagation()">
         <b>Área do cliente</b>
-        <p>Minha Conta<br> <a href="<?php echo isset($_SESSION['login']) ? '../login.php' : '../cadastrp.php' ?>">Chat Online</a> <br> <?php echo isset($_SESSION['login']) ? '' : '<a href="../cadastro.php">Cadastre-se</a>' ?></p>
+        <p>Minha Conta<br> <a href="<?php echo empty($_SESSION['login']) ? '../login.php' : '../mensagens.php' ?>">Chat Online</a> <br> <?php echo isset($_SESSION['login']) ? '' : '<a href="../cadastro.php">Cadastre-se</a>' ?></p>
     </li>
 </ul>
 

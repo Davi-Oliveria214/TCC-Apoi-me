@@ -33,10 +33,6 @@ include('./util/avisos.php');
                     <button type="submit" class="btn btn-auth">Criar conta</button>
                 </div>
             </form>
-            <div class="box-btn">
-                <a href="./login.php" class="btn-link">Logar</a>
-                <a href="./criarChave.php" class="btn-link">Criar chave para o condomínio </a>
-            </div>
         </div>
     </main>
 

@@ -42,10 +42,10 @@ include('./includes/topo.php');
     <article class="info-nos" id="info-valores">
         <div>
             <h2>Valores</h2>
-            <p>•Inovação: buscar constantemente soluções criativas e tecnológicas.
-                •Transparência: garantir relações claras e de confiança entre moradores, ad-ministradores e prestadores.
-                •Segurança: priorizar a proteção de dados e a credibilidade dos serviços ofere-cidos.
-                •Colaboração: estimular a cooperação entre usuários para o fortalecimento da comunidade.
+            <p>•Inovação: buscar constantemente soluções criativas e tecnológicas.<br>
+                •Transparência: garantir relações claras e de confiança entre moradores, ad-ministradores e prestadores.<br>
+                •Segurança: priorizar a proteção de dados e a credibilidade dos serviços ofere-cidos.<br>
+                •Colaboração: estimular a cooperação entre usuários para o fortalecimento da comunidade.<br>
                 •Sustentabilidade: adotar práticas que otimizem recursos e promovam eficiência coletiva.</p>
         </div>
     </article>

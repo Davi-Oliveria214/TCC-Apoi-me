@@ -1,5 +1,5 @@
 @import "./topo.css";
-@import "./inicial.css";
+@import "./sobre.css";
 @import "./servicos.css";
 @import "./card.css";
 @import "./auth.css";
@@ -412,6 +412,27 @@ main {
   font-weight: 500;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   pointer-events: none;
+}
+
+/* PARCEIROS */
+.parceros-principal {
+  width: 100%;
+  font-size: 1.3rem;
+  display: flex;
+  padding: 25px 15px;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 15px;
+  background-color: rgba(var(--dourado-palido-rgba), 0.3);
+  box-shadow: 0 10px 20px rgba(var(--preto-rgba), 0.2);
+  border: none;
+}
+
+.parceros-principal>div {
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  gap: 40px;
 }
 
 @media (max-width: 480px) {

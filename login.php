@@ -1,6 +1,6 @@
 <?php
 include("./includes/head.php");
-include("./includes/topo.php"); 
+include("./includes/topo.php");
 ?>
 
 <div class="div-auth">
@@ -21,15 +21,11 @@ include("./includes/topo.php");
                     <input type="password" name="senha" id="idSenha" placeholder="Senha" required>
                 </div>
                 <div class="box-btn">
+                    <a href="./esqueci_senha.php" class="btn-link">Esqueci a senha</a>
                     <button type="submit" class="btn btn-auth">Entrar</button>
-                    <a href="./esqueci_senha.php" class="btn btn-auth">Esqueci a senha</a>
+                    <a href="./cadastro.php" class="btn-auth">Cadastrar</a>
                 </div>
             </form>
-
-            <div class="box-btn">
-                <a href="./cadastro.php" class="btn-link">Cadastrar</a>
-                <a href="./criarChave.php" class="btn-link">Criar chave para o condomínio </a>
-            </div>
         </div>
     </main>
 

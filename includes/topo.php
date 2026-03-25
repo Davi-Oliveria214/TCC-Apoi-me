@@ -14,6 +14,8 @@ include('./util/avisos.php');
         <img src="./img/condomino.png" alt="Logo">
     </a>
 
+    <input type="text" class="pesquisa" placeholder="Pesquisar">
+
     <?php
     if (!empty($_SESSION["id"])):
         $id = $_SESSION["id"];
@@ -30,9 +32,6 @@ include('./util/avisos.php');
             $_SESSION['codigo'] =  $usuario['codigo'];
         }
     ?>
-
-        <input type="text" class="pesquisa" placeholder="Pesquisar">
-
         <div class="user">
             <p>Olá, <?= htmlspecialchars($nome) ?></p>
 

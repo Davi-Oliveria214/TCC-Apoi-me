@@ -31,11 +31,10 @@ include('./includes/topo.php');
 
     <section class="informacoes-inicial" id="todos-servicos">
         <?php
-        $servicos = request("servicos?select=*&limit=10", "GET");
+        $servicos = request("servicos?select=*&order=criado.desc&limit=10", "GET");
 
         if (!empty($servicos) && !isset($servicos['error'])) :
             shuffle($servicos);
-
             foreach ($servicos as $servico) :
                 $horaInicio = $servico['hora_inicio'] != null ? date('H:i', strtotime($servico['hora_inicio'])) : "Não informado";
                 $horaFim = date('H:i', strtotime($servico['hora_fim']));
@@ -60,6 +59,26 @@ include('./includes/topo.php');
             echo "<h2 id='aviso' style='text-align: center;'>Nenhum serviço disponível no momento.</h2>";
         endif;
         ?>
+    </section>
+
+    <section class="parceros-principal">
+        <h2>Publicidade</h2>
+        <div>
+            <article class="card-publicidade">
+                <img class="menu-img" src="./img/condomino.png" alt="">
+                <div>
+                    <h3>Empresa parceira</h3>
+                    <p>Serviços especializados para sua casa</p>
+                </div>
+            </article>
+            <article class="card-publicidade">
+                <img class="menu-img" src="./img/condomino.png" alt="">
+                <div>
+                    <h3>Empresa parceira</h3>
+                    <p>Serviços especializados para sua casa</p>
+                </div>
+            </article>
+        </div>
     </section>
 </main>
 <?php

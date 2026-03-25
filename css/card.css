@@ -154,3 +154,76 @@ Card Avisos
         color: var(--branco);
     }
 }
+
+/*==============
+Card Publicidade
+================ */
+.card-publicidade {
+    width: 240px;
+    height: 280px;
+    background-color: var(--branco);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 15px rgba(var(--preto-rgba), 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(var(--dourado-rgba), 0.2);
+}
+
+.card-publicidade:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 25px rgba(var(--preto-rgba), 0.25);
+    border-color: var(--dourado);
+}
+
+.card-publicidade>img {
+    width: 100%;
+    height: 60%;
+    object-fit: cover;
+    border-bottom: 3px solid var(--dourado);
+    border-radius: 10px 10px 0px 0px;
+}
+
+.card-publicidade>div {
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+}
+
+.card-publicidade h3 {
+    font-size: 1.3rem;
+    color: var(--preto-acinzentado);
+    margin: 0;
+    font-family: "FonteTitulo", sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.card-publicidade p {
+    font-size: 0.95rem;
+    color: var(--preto-acinzentado);
+    margin: 0;
+    line-height: 1.4;
+    font-style: italic;
+}
+
+.parceros-principal {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 30px 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--dourado) transparent;
+}
+
+.parceros-principal::-webkit-scrollbar {
+    height: 6px;
+}
+
+.parceros-principal::-webkit-scrollbar-thumb {
+    background: var(--dourado);
+    border-radius: 10px;
+}

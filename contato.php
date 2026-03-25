@@ -17,16 +17,6 @@ include('./util/avisos.php');
 
                 <textarea name="comentario" placeholder="Comentários:" id="comentarios" required style="resize: none;" maxlength="500"></textarea>
 
-                <label for="idNota">Avaliação do Sistema</label>
-                <select name="nota" id="idNota" class="feedback-opcao" required>
-                    <option value="" disabled selected>Selecione uma nota</option>
-                    <option value="1">1 - Muito Ruim</option>
-                    <option value="2">2 - Ruim</option>
-                    <option value="3">3 - Regular</option>
-                    <option value="4">4 - Bom</option>
-                    <option value="5">5 - Excelente</option>
-                </select>
-
                 <button type="submit" id="btn-enviar">Enviar</button>
             </div>
         </form>

@@ -114,13 +114,17 @@
 
 /* Elementos de Interface */
 .pesquisa {
-    width: clamp(200px, 50%, 250px);
+    width: clamp(230px, 50%, 350px);
     padding: 5px 10px;
     border-radius: 20px;
-    background-color: var(--branco);
+    background-color: var(--dourado-palido);
     border: solid 2px var(--dourado);
     color: var(--preto-acinzentado);
     outline: none;
+}
+
+.pesquisa::placeholder {
+    color: rgba(var(--dourado-fraco-rgba), 1);
 }
 
 .user {
