@@ -67,7 +67,7 @@
 
             &>p,
             & time {
-                color: var(--verde-musgo-palido);
+                color: var(--dourado);
             }
         }
     }
@@ -91,6 +91,7 @@
     font-family: "FonteBotao", sans-serif;
     font-weight: 700;
     cursor: pointer;
+    text-align: center;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s ease;
@@ -99,6 +100,12 @@
         background-color: var(--verde-musgo-medio);
         color: var(--branco);
     }
+}
+
+.box-btn-servico{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
 }
 
 /*==============
@@ -226,4 +233,87 @@ Card Publicidade
 .parceros-principal::-webkit-scrollbar-thumb {
     background: var(--dourado);
     border-radius: 10px;
+}
+
+.card-reservados {
+    width: 450px;
+    min-height: 220px;
+    display: flex;
+    background-color: var(--verde-musgo-medio);
+    border-radius: 30px;
+    padding: 20px;
+    gap: 20px;
+    box-shadow: 0 10px 20px rgba(var(--preto-rgba), 0.2);
+    align-items: center;
+}
+
+.btn-img {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    height: 100%;
+    gap: 15px;
+}
+
+.btn-img>img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.title-date {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 10px;
+}
+
+.title-date h3 {
+    color: var(--branco);
+    font-size: 1.6rem;
+    margin: 0;
+}
+
+.title-date p {
+    color: var(--dourado-fraco);
+    font-size: 1.1rem;
+    margin: 0 0 10px 0;
+    line-height: 1.2;
+}
+
+.title-date time{
+    color: var(--dourado-fraco);
+}
+
+.card-reservados button,
+.card-reservados .btn-link {
+    border: none;
+    border-radius: 25px;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}
+
+.btn-cancelar {
+    background-color: var(--dourado-fraco);
+    color: var(--preto-acinzentado);
+}
+
+.btn-detalhes,
+.btn-chat {
+    background-color: var(--dourado);
+    color: var(--preto-acinzentado);
+    margin-bottom: 8px;
+}
+
+.card-reservados button:hover,
+.card-reservados .btn-link:hover {
+    filter: brightness(1.2);
 }
