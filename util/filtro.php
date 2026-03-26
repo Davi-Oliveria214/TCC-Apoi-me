@@ -8,29 +8,29 @@ if ($resp == 0) {
     $sql = request("servicos?categoria=eq.$resp&select=id,nome,imagem,descricao,hora_inicio,hora_fim,dia", "GET");
 }
 
-if (!empty($sql) && !isset($sql['error'])) {
-    foreach ($sql as $servico) {
+if (!empty($sql) && !isset($sql['error'])) :
+    foreach ($sql as $servico) :
         $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
         $horaFim = date('H:i', strtotime($servico['hora_fim']));
-
-        echo "<div class='card card-servico' data-id='{$servico['id']}'>";
-        echo "<img src='$servico[imagem]' alt=''>";
-        echo "<div>";
-        echo "<div class='info-card'>";
-        echo "<h2 class='titulo-card'>$servico[nome]</h2>";
-        echo "<p>$servico[descricao]</p>";
-        echo "</div>";
-        echo "<div class='cronograma'>";
-        echo "<p>Das <time datetime='$horaInicio'>$horaInicio</time>
-                    Até <time datetime='$horaFim'>$horaFim</time></p>";
-        echo "<p>Data limite: <time datetime='$servico[data_limite]'>$servico[data_limite]</time></p>";
-        echo "</div>";
-        echo "<div class='box-btn'>";
-        echo "<a href='' class='btn' >Agendar serviço</a>";
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-    }
-} else {
+?>
+        <div class='card card-servico' data-id="<?php echo $servico['id'] ?>">
+            <img src="<?php echo $servico['imagem'] ?>" alt=''>
+            <div>
+                <div class='info-card'>
+                    <h2 class='titulo-card'><?php echo $servico['nome'] ?></h2>
+                    <p><?php echo $servico['descricao'] ?></p>
+                </div>
+                <div class='cronograma'>
+                    <p>Das <time datetime='$horaInicio'><?php echo $horaInicio ?></time>
+                        Até <time datetime='$horaFim'><?php echo $horaFim ?></time></p>
+                </div>
+                <div class='box-btn'>
+                    <a href='' class='btn'>Agendar serviço</a>
+                </div>
+            </div>
+        </div>
+<?php
+    endforeach;
+else :
     echo "<h2 id=aviso>Nenhum serviço encontrado</h2>";
-}
+endif;
