@@ -1,17 +1,38 @@
 <?php
-include('./includes/head.php');
-include('./includes/topo.php');
+session_start();
+
+$email_url = $_GET['email'] ?? '';
+$codigo_url = $_GET['codigo'] ?? '';
+
+if (empty($email_url) || empty($codigo_url)) {
+    $_SESSION["mensagem"] = "Acesso inválido.";
+    header("Location: ./login.php");
+    exit;
+}
+
+if (isset($_SESSION['id_usuario']) && $_SESSION['email_usuario'] !== $email_url) {
+    session_unset();
+    session_destroy();
+
+    session_start();
+    $_SESSION['mensagem'] = "Sessão anterior encerrada para prosseguir com a recuperação.";
+}
+
+include("./includes/head.php");
+include("./includes/topo.php");
 ?>
 
 <main class="autenticar">
     <div class="div-form">
         <form action="./controls/verificar.act.php" method="post" class="form">
-            <h1>Verificar E-mail</h1>
-            <p>Digite o código enviado para: <b><?php echo $_SESSION['email_verificar']; ?></b></p>
-            
+            <h1>Confirmar Código</h1>
+            <p>Digite o código enviado para seu e-mail.</p>
+
+            <input type="hidden" name="email_recuperar" value="<?php echo $email_url; ?>">
+
             <div class="box-auth">
-                <label for="idCodigo">Código de 6 dígitos</label>
-                <input type="text" name="codigo" id="idCodigo" maxlength="6" placeholder="000000" required>
+                <label>Código de 6 dígitos</label>
+                <input type="text" name="codigo" value="<?php echo $codigo_url; ?>" maxlength="6" required>
             </div>
 
             <div class="box-btn">

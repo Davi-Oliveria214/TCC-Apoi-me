@@ -2,37 +2,48 @@
 session_start();
 require_once(__DIR__ . '/../conexao.php');
 
-if (!isset($_SESSION['email_verificar'])) {
-    header("Location: ../login.php");
-    exit;
-}
-
-$email = $_SESSION['email_verificar'];
+$email = $_SESSION['email_verificar'] ?? $_POST['email_recuperar'] ?? null;
 $codigoDigitado = $_POST['codigo'];
 
-$user = request("usuarios?email=eq.$email&select=codigo_verificacao", "GET");
-
-if (empty($user) || isset($user['error'])) {
-    $_SESSION["mensagem"] = "Erro na verificação.";
-    header("Location: ../cadastro.php");
+if (!$email) {
+    $_SESSION["mensagem"] = "Sessão expirada. Solicite um novo link.";
+    header("Location: ../esqueci_senha.php");
     exit;
 }
 
-if ($user[0]['codigo_verificacao'] == $codigoDigitado) {
+$user = request("usuarios?email=eq.$email&select=codigo_verificacao,codigo_criado_em", "GET");
+
+if (!empty($user) && $user[0]['codigo_verificacao'] == $codigoDigitado) {
+
+    $tempoCriacao = strtotime($user[0]['codigo_criado_em']);
+    $tempoAgora = time();
+    $diferencaMinutos = ($tempoAgora - $tempoCriacao) / 60;
+
+    if ($diferencaMinutos > 15) {
+        request("usuarios?email=eq.$email", "PATCH", ["codigo_verificacao" => null]);
+        
+        $_SESSION["mensagem"] = "Este código expirou, limite de 15 min. Solicite um novo.";
+        header("Location: ../esqueci_senha.php");
+        exit;
+    }
+
+    request("usuarios?email=eq.$email", "PATCH", ["codigo_verificacao" => null]);
+
     if (isset($_SESSION['fluxo']) && $_SESSION['fluxo'] === 'recuperacao') {
+        $_SESSION['email_reset_aprovado'] = $email;
+        unset($_SESSION['fluxo']);
         header("Location: ../nova_senha.php");
         exit;
     }
 
-    $update = ["email_verificado" => true, "codigo_verificacao" => null];
-    request("usuarios?email=eq.$email", "PATCH", $update);
-
+    request("usuarios?email=eq.$email", "PATCH", ["email_verificado" => true]);
+    unset($_SESSION['email_verificar'], $_SESSION['fluxo']);
     $_SESSION["mensagem"] = "E-mail verificado! Faça login.";
-    unset($_SESSION['email_verificar']);
     header("Location: ../login.php");
     exit;
+
 } else {
-    $_SESSION["mensagem"] = "Código incorreto.";
-    header("Location: ../codigo_verificar.php");
+    $_SESSION["mensagem"] = "Código incorreto ou inválido.";
+    header("Location: ../codigo_verificar.php?email=$email");
     exit;
 }

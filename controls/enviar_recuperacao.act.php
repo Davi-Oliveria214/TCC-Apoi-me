@@ -15,7 +15,12 @@ if (empty($usuario) || isset($usuario['error'])) {
     exit;
 }
 
-request("usuarios?email=eq.$email", "PATCH", ["codigo_verificacao" => $codigo]);
+$agora = date('Y-m-d H:i:sO');
+
+request("usuarios?email=eq.$email", "PATCH", [
+    "codigo_verificacao" => $codigo,
+    "codigo_criado_em" => $agora
+]);
 
 $mail = new PHPMailer(true);
 try {
@@ -29,17 +34,27 @@ try {
     $mail->CharSet    = 'UTF-8';
     $mail->SMTPOptions = array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true));
 
+    $email_url = $_ENV['EMAIL_URL'];
+    $link = $email_url . '?email=' . urlencode($email) . '&codigo=' . $codigo;
+
     $mail->setFrom($_ENV['EMAIL_APP'], 'Apoie-me Condomínios');
     $mail->addAddress($email, $usuario[0]['nome']);
     $mail->isHTML(true);
     $mail->Subject = 'Recuperação de Senha - Apoie-me';
-    $mail->Body    = "Olá <b>{$usuario[0]['nome']}</b>, seu código de recuperação é: <h2>$codigo</h2>";
+    $mail->Body = "<div style='font-family: Arial, sans-serif;'>
+            <h2>Recuperação de Senha</h2>
+            <p>Olá <b>{$usuario[0]['nome']}</b>,</p>
+            <p>Você solicitou a recuperação de senha. Seu código é: <b>$codigo</b></p>
+            <p>Para prosseguir, clique no botão abaixo:</p>
+            <a href='$link' style='background: #2c3e50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Redefinir minha Senha</a>
+            <p>Ou copie e cole este link no navegador:<br>$link</p>
+        </div>";
 
     $mail->send();
 
     $_SESSION['email_verificar'] = $email;
     $_SESSION['fluxo'] = 'recuperacao';
-    header("Location: ../codigo_verificar.php");
+    header("Location: ../aviso_senha.php");
 } catch (Exception $e) {
     $_SESSION["mensagem"] = "Erro ao enviar e-mail: {$mail->ErrorInfo}";
     header("Location: ../esqueci_senha.php");

@@ -56,8 +56,7 @@ try {
     $mail->Body = "Olá <b>$nomeEscapado</b>, seu código de verificação é: <h2 style='color: #2c3e50;'>$codigo</h2>";
     $mail->AltBody = "Olá $nomeEscapado, seu código de verificação é: $codigo";
 
-    $mail->send();
-
+    $agora = date('Y-m-d H:i:sO');
     $dados = [
         "nome" => $nome,
         "email" => $email,
@@ -65,17 +64,26 @@ try {
         "senha" => $senhaHash,
         "codigo_verificacao" => $codigo,
         "email_verificado" => false,
-        "imagem" => $img
+        "imagem" => $img,
+        "codigo_criado_em" => $agora
     ];
 
-    request("usuarios", "POST", $dados);
+    $res = request("usuarios", "POST", $dados);
+
+    if (isset($res['error'])) {
+        $_SESSION["mensagem"] = "Erro ao salvar os dados";
+        header("Location: ../cadastro.php");
+        exit;
+    }
+
+    $mail->send();
 
     $_SESSION['email_verificar'] = $email;
 
     header("Location: ../codigo_verificar.php");
     exit;
 } catch (Exception $e) {
-    $_SESSION["mensagem"] = "Erro ao enviar e-mail: " . $mail->ErrorInfo;
+    $_SESSION["mensagem"] = "Erro ao cadastrar";
     header("Location: ../cadastro.php");
     exit;
 }
