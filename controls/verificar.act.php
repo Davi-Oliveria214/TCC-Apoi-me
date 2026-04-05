@@ -13,26 +13,26 @@ $codigoDigitado = $_POST['codigo'];
 $user = request("usuarios?email=eq.$email&select=codigo_verificacao", "GET");
 
 if (empty($user) || isset($user['error'])) {
-    $_SESSION["mensagem"] = "Usuário não encontrado ou erro na verificação.";
+    $_SESSION["mensagem"] = "Erro na verificação.";
     header("Location: ../cadastro.php");
     exit;
 }
 
 if ($user[0]['codigo_verificacao'] == $codigoDigitado) {
-    $update = [
-        "email_verificado" => true, 
-        "codigo_verificacao" => null 
-    ];
-    
+    if (isset($_SESSION['fluxo']) && $_SESSION['fluxo'] === 'recuperacao') {
+        header("Location: ../nova_senha.php");
+        exit;
+    }
+
+    $update = ["email_verificado" => true, "codigo_verificacao" => null];
     request("usuarios?email=eq.$email", "PATCH", $update);
 
-    $_SESSION["mensagem"] = "E-mail verificado com sucesso! Pode fazer login.";
+    $_SESSION["mensagem"] = "E-mail verificado! Faça login.";
     unset($_SESSION['email_verificar']);
     header("Location: ../login.php");
     exit;
-
 } else {
-    $_SESSION["mensagem"] = "Código incorreto. Tente novamente.";
+    $_SESSION["mensagem"] = "Código incorreto.";
     header("Location: ../codigo_verificar.php");
     exit;
 }

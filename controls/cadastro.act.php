@@ -1,13 +1,9 @@
 <?php
 session_start();
 require_once(__DIR__ . '/../conexao.php');
-require '../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-$email_app = $_ENV['EMAIL_APP'];
-$senha_app = $_ENV['SENHA_APP'];
 
 $nome  = trim($_POST['nome']);
 $email = trim($_POST['email']);
@@ -36,8 +32,8 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = $email_app;
-    $mail->Password   = $senha_app;
+    $mail->Username   = $_ENV['EMAIL_APP'];
+    $mail->Password   = $_ENV['SENHA_APP'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
     $mail->CharSet    = 'UTF-8';
@@ -50,7 +46,7 @@ try {
         )
     );
 
-    $mail->setFrom($email_app, 'Apoie-me Condomínios');
+    $mail->setFrom($_ENV['EMAIL_APP'], 'Apoie-me Condomínios');
     $mail->addAddress($email, $nome);
 
     $mail->isHTML(true);

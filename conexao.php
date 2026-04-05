@@ -6,6 +6,8 @@ $dotenv->load();
 
 $supaurl = $_ENV['SUPABASE_URL'];
 $supakey = $_ENV['SUPABASE_KEY'];
+$email_app = $_ENV['EMAIL_APP'];
+$senha_app = $_ENV['SENHA_APP'];
 
 function request($endPoint, $method = 'GET', $data = null)
 {

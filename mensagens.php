@@ -80,7 +80,6 @@ include('./includes/topo.php');
                 caixaMensagens.innerHTML = html;
                 caixaMensagens.scrollTop = caixaMensagens.scrollHeight;
 
-                // RESPONSIVO 👇
                 if (window.innerWidth <= 768) {
                     document.querySelector('.chat-contatos').classList.add('escondido');
                     document.querySelector('.chat-msg').classList.add('ativo');
