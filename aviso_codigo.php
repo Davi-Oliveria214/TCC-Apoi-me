@@ -33,8 +33,8 @@ include("./includes/topo.php");
             </div>
 
             <div class="notice-footer">
-                <p>O código expirou ou não recebeu o e-mail? Verifique sua caixa de spam.</p>
-                <a href="esqueci_senha.php" class="btn-link">Tentar novamente / Novo código</a>
+                <p>O tempo expirou ou não recebeu o e-mail? Verifique sua caixa de spam.</p>
+                <a href="esqueci_senha.php" class="btn-link">Solicitar novo envio</a>
                 <hr class="notice-hr">
                 <a href="login.php" class="btn-auth notice-btn">Voltar ao Login</a>
             </div>

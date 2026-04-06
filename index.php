@@ -61,7 +61,7 @@ include('./includes/topo.php');
         ?>
     </section>
 
-    <section class="parceros-principal">
+    <section class="parceiros-principal">
         <h2>Publicidade</h2>
         <div>
             <article class="card-publicidade">

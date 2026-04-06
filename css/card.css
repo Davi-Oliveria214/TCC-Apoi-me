@@ -217,7 +217,7 @@ Card Publicidade
     font-style: italic;
 }
 
-.parceros-principal {
+.parceiros-principal {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -226,11 +226,11 @@ Card Publicidade
     scrollbar-color: var(--dourado) transparent;
 }
 
-.parceros-principal::-webkit-scrollbar {
+.parceiros-principal::-webkit-scrollbar {
     height: 6px;
 }
 
-.parceros-principal::-webkit-scrollbar-thumb {
+.parceiros-principal::-webkit-scrollbar-thumb {
     background: var(--dourado);
     border-radius: 10px;
 }

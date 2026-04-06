@@ -181,7 +181,7 @@ main {
 }
 
 /* PARCEIROS */
-.parceros-principal {
+.parceiros-principal {
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -189,7 +189,7 @@ main {
   padding: 20px 10px;
 }
 
-.parceros-principal>img {
+.parceiros-principal>img {
   width: 85%;
   max-width: 1000px;
   height: 35vh;
@@ -416,7 +416,7 @@ main {
 }
 
 /* PARCEIROS */
-.parceros-principal {
+.parceiros-principal {
   width: 100%;
   font-size: 1.3rem;
   display: flex;
@@ -429,10 +429,12 @@ main {
   border: none;
 }
 
-.parceros-principal>div {
+.parceiros-principal>div {
   width: 100%;
-  overflow: auto;
+  height: 300px;
+  overflow-y: auto;
   display: flex;
+  flex-wrap: wrap;
   gap: 40px;
 }
 
@@ -441,5 +443,9 @@ main {
     width: 90%;
     font-size: 0.9rem;
     padding: 12px 20px;
+  }
+
+  .parceiros-principal>div{
+    justify-content: center;
   }
 }
