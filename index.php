@@ -10,7 +10,7 @@ include('./includes/topo.php');
     </figcaption>
 </figure>
 
-<main class="principal-inicial index-inicial">
+<main class="principal-inicial">
     <section class="inicial-escolha" id="filtro">
         <ul>
             <?php

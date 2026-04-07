@@ -12,7 +12,7 @@ include("./includes/topo.php");
 
             <h1>Verifique seu E-mail</h1>
             <p class="notice-desc">
-                Enviamos um código e um link de recuperação para o endereço cadastrado.
+                Enviamos um código e um link de verificação para o endereço de email cadastrado.
                 <br>
                 <strong style="color: var(--verde-musgo-medio);">Atenção: O link e o código expiram em 15 minutos.</strong>
             </p>
@@ -24,11 +24,11 @@ include("./includes/topo.php");
                 </div>
                 <div class="step">
                     <span class="step-number">2</span>
-                    <p>Clique no botão <strong>Redefinir Senha</strong> antes do tempo acabar.</p>
+                    <p>Clique no botão <strong>Digitar código</strong> antes do tempo acabar.</p>
                 </div>
                 <div class="step">
                     <span class="step-number">3</span>
-                    <p>Insira o código na página e crie sua nova senha agora mesmo.</p>
+                    <p>Insira o código na página.</p>
                 </div>
             </div>
 

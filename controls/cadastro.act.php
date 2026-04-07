@@ -1,9 +1,7 @@
 <?php
 session_start();
 require_once(__DIR__ . '/../conexao.php');
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+require_once(__DIR__ . '/../util/enviar_email.php');
 
 $nome  = trim($_POST['nome']);
 $email = trim($_POST['email']);
@@ -32,7 +30,7 @@ if (!empty($sql_email) && !isset($sql_email['error'])) {
             exit;
         }
 
-        enviarEmail($email, $nome, $codigo);
+        enviarEmail($email, $nome, $codigo, $mensagem);
 
         $_SESSION['email_verificar'] = $email;
         $_SESSION['fluxo'] = 'cadastro';
@@ -78,45 +76,4 @@ function cadastrar($nome, $email, $telefone, $senhaHash, $codigo, $img)
     $_SESSION['fluxo'] = 'cadastro';
     header("Location: ../aviso_codigo.php");
     exit;
-}
-
-function enviarEmail($email, $nome, $codigo)
-{
-    $mail = new PHPMailer(true);
-    try {
-        $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = $_ENV['EMAIL_APP'];
-        $mail->Password   = $_ENV['SENHA_APP'];
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
-        $mail->CharSet    = 'UTF-8';
-
-        $mail->SMTPOptions = array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-            )
-        );
-
-        $mail->setFrom($_ENV['EMAIL_APP'], 'Apoie-me Condomínios');
-        $mail->addAddress($email, $nome);
-
-        $mail->isHTML(true);
-        $mail->Subject = 'Código de Verificação - Cadastro';
-
-        $nomeEscapado = htmlspecialchars($nome);
-        $link = $link = $_ENV['EMAIL_URL'] . "?email=" . urlencode($email);
-        $mail->Body = "Olá <b>$nomeEscapado</b>, seu código de verificação é: <b>$codigo</b><br>
-               Clique no link para validar: <a href='$link'>Validar minha conta</a>";
-        $mail->AltBody = "Olá $nomeEscapado, seu código de verificação é: $codigo";
-
-        $mail->send();
-    } catch (Exception $e) {
-        $_SESSION["mensagem"] = "Erro ao cadastrar";
-        header("Location: ../cadastro.php");
-        exit;
-    }
 }

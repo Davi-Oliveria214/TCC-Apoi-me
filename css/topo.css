@@ -114,7 +114,7 @@
 
 /* Elementos de Interface */
 .pesquisa {
-    width: clamp(230px, 50%, 350px);
+    width: clamp(180px, 50%, 350px);
     padding: 5px 10px;
     border-radius: 20px;
     background-color: var(--dourado-palido);
