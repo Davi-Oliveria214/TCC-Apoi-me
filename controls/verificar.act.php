@@ -5,7 +5,7 @@ require_once(__DIR__ . '/../conexao.php');
 $email = $_SESSION['email_verificar'] ?? $_POST['email'] ?? $_GET['email'] ?? null;
 $codigoDigitado = $_POST['codigo'] ?? null;
 
-if (!$email || !$codigoDigitado) {
+if (empty($email) || empty($codigoDigitado)) {
     $_SESSION["mensagem"] = "Dados insuficientes para a verificação.";
     header("Location: ../login.php");
     exit;

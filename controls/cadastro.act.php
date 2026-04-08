@@ -30,10 +30,8 @@ if (!empty($sql_email) && !isset($sql_email['error'])) {
             exit;
         }
 
-        enviarEmail($email, $nome, $codigo, $mensagem);
-
         $_SESSION['email_verificar'] = $email;
-        $_SESSION['fluxo'] = 'cadastro';
+        enviarEmail($email, $nome, $codigo, 'cadastro');
         $_SESSION["mensagem"] = "Cadastro pendente: Enviamos um novo código para seu e-mail.";
         header("Location: ../aviso_codigo.php");
         exit;
@@ -51,7 +49,8 @@ cadastrar($nome, $email, $telefone, $senhaHash, $codigo, $img);
 
 function cadastrar($nome, $email, $telefone, $senhaHash, $codigo, $img)
 {
-    enviarEmail($email, $nome, $codigo);
+    $_SESSION['email_verificar'] = $email;
+    enviarEmail($email, $nome, $codigo, 'cadastro');
     $agora = date('Y-m-d H:i:sO');
     $dados = [
         "nome" => $nome,
@@ -72,8 +71,6 @@ function cadastrar($nome, $email, $telefone, $senhaHash, $codigo, $img)
         exit;
     }
 
-    $_SESSION['email_verificar'] = $email;
-    $_SESSION['fluxo'] = 'cadastro';
     header("Location: ../aviso_codigo.php");
     exit;
 }

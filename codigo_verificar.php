@@ -18,6 +18,8 @@ if (isset($_SESSION['id_usuario']) && $_SESSION['email_usuario'] !== $email_url)
     $_SESSION['mensagem'] = "Sessão anterior encerrada para prosseguir com a recuperação.";
 }
 
+$_SESSION['email_verificar'] = $email_url;
+
 include("./includes/head.php");
 include("./includes/topo.php");
 ?>

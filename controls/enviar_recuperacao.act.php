@@ -27,8 +27,8 @@ if (isset($res_update['error'])) {
     header("Location: ../esqueci_senha.php");
     exit;
 } else {
-    $_SESSION['fluxo'] = "recuperar";
-    enviarEmail($email, $nome, $codigo);
+    $_SESSION['email_verificar'] = $email;
+    enviarEmail($email, $nome, $codigo, 'recuperar');
 }
 
 exit;
