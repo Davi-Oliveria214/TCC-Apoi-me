@@ -2,7 +2,8 @@
 include("./includes/head.php");
 include("./includes/topo.php");
 session_start();
-if (!isset($_SESSION['email_verificar'])) {
+if (!isset($_SESSION['email_reset_aprovado'])) {
+    $_SESSION["mensagem"] = "Erro para acessar a página de trocar senha.";
     header("Location: login.php");
     exit;
 }
@@ -12,7 +13,7 @@ if (!isset($_SESSION['email_verificar'])) {
     <div class="div-form">
         <form action="./controls/atualizar_senha.php" method="post" class="form">
             <h1>Nova Senha</h1>
-            <p>Defina sua nova senha para o e-mail: <b><?php echo $_SESSION['email_verificar']; ?></b></p>
+            <p>Defina sua nova senha para o e-mail: <b><?php echo $_SESSION['email_reset_aprovado']; ?></b></p>
             <div class="box-auth">
                 <label>Nova Senha</label>
                 <input type="password" name="senha" placeholder="********" required>

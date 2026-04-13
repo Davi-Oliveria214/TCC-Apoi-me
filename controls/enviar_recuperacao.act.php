@@ -7,7 +7,7 @@ $email = trim($_POST['email']);
 $codigo = rand(100000, 999999);
 
 $usuario = request("usuarios?email=eq." . urlencode($email) . "&select=id,nome", "GET");
-$nome = $usuario['nome'];
+$nome = $usuario[0]['nome'];
 
 if (empty($usuario) || isset($usuario['error'])) {
     $_SESSION["mensagem"] = "Este e-mail não está cadastrado.";
@@ -29,6 +29,8 @@ if (isset($res_update['error'])) {
 } else {
     $_SESSION['email_verificar'] = $email;
     enviarEmail($email, $nome, $codigo, 'recuperar');
+    header("Location: ../aviso_codigo.php");
+    exit;
 }
 
 exit;

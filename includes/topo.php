@@ -20,7 +20,7 @@ include('./util/avisos.php');
     if (!empty($_SESSION["id"])):
         $id = $_SESSION["id"];
 
-        $res = request("usuarios?id=eq.$id&select=nome,email,imagem,codigo,telefone", "GET");
+        $res = request("usuarios?id=eq.$id&select=nome,email,imagem,codigo,telefone,tipo_usuario", "GET");
 
         if (!empty($res) && !isset($res['error'])) {
             $usuario = $res[0];
@@ -29,6 +29,7 @@ include('./util/avisos.php');
             $email = $usuario['email'];
             $telefone = $usuario['telefone'];
             $img = $usuario['imagem'];
+            $tipo_usuario = $usuario['tipo_usuario'];
             $_SESSION['codigo'] =  $usuario['codigo'];
         }
     ?>
@@ -64,14 +65,17 @@ include('./util/avisos.php');
                 <li><a href="../anunciar.php">Anunciar</a></li>
                 <li class="sair-logout"><a href="./includes/logout.php">Sair</a></li>
                 <li class="historico"><a href="../historico.php">Histórico</a></li>
+                <?php if ($tipo_usuario == 1): ?>
+                    <li><a href="../adiministrador.php">Login</a></li>
+                <?php endif; ?>
             <?php else: ?>
                 <?php if ($pag === "login.php"): ?>
                     <li><a href="cadastro.php">Cadastro</a></li>
                 <?php elseif ($pag === "cadastro.php"): ?>
-                    <li><a href="login.php">Login</a></li>
+                    <li><a href="../login.php">Login</a></li>
                 <?php else: ?>
-                    <li><a href="login.php">Login</a></li>
-                    <li><a href="cadastro.php">Cadastro</a></li>
+                    <li><a href="../login.php">Login</a></li>
+                    <li><a href="../cadastro.php">Cadastro</a></li>
                 <?php endif; ?>
             <?php endif; ?>
 

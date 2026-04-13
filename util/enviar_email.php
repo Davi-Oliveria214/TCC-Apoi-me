@@ -30,7 +30,7 @@ function enviarEmail($email, $nome, $codigo, $fluxo = 'cadastro')
         $mail->Subject = 'Confirmação - Apoie-me Condomínios';
 
         $nomeEscapado = htmlspecialchars($nome);
-        $link = $_ENV['EMAIL_URL'] . "?email=" . urlencode($email) . "&codigo=" . $codigo;
+        $link = $_ENV['EMAIL_URL'] . "?email=" . urlencode($email) . "&codigo=" . $codigo . "&tipo_codigo=" . trim($fluxo);
 
         $corpoEmail = "";
         if (trim($fluxo) === 'cadastro') {
@@ -43,7 +43,8 @@ function enviarEmail($email, $nome, $codigo, $fluxo = 'cadastro')
                           <p>Use o link para prosseguir: <a href='$link'>Redefinir Senha</a></p>";
         } else {
             $corpoEmail = "<h2>Seu código de verificação Apoie-me</h2>
-                  <p>Olá $nomeEscapado, seu código é: <b>$codigo</b></p>";
+                  <p>Olá $nomeEscapado, seu código é: <b>$codigo</b></p>
+                  <p>Use o link para prosseguir: <a href='$link'>Link código</a></p>";
         }
         $mail->Body = $corpoEmail;
         $mail->AltBody = "Olá $nomeEscapado, seu código de verificação é: $codigo";

@@ -2,7 +2,8 @@
 session_start();
 require_once(__DIR__ . '/../conexao.php');
 
-if (!isset($_SESSION['email_verificar'])) {
+if (!isset($_SESSION['email_reset_aprovado'])) {
+    header("Location: ../login.php");
     exit;
 }
 
@@ -18,7 +19,7 @@ if ($_POST['senha'] != $_POST['rpt_senha']) {
     exit;
 }
 
-$email = $_SESSION['email_verificar'];
+$email = $_SESSION['email_reset_aprovado'];
 $novaSenha = password_hash($_POST['senha'], PASSWORD_BCRYPT);
 
 $dados = [

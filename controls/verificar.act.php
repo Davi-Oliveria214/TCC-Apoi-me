@@ -4,6 +4,7 @@ require_once(__DIR__ . '/../conexao.php');
 
 $email = $_SESSION['email_verificar'] ?? $_POST['email'] ?? $_GET['email'] ?? null;
 $codigoDigitado = $_POST['codigo'] ?? null;
+$tipo_codigo = $_POST['tipo_codigo'] ?? $_SESSION['tipo_codigo'] ?? '';
 
 if (empty($email) || empty($codigoDigitado)) {
     $_SESSION["mensagem"] = "Dados insuficientes para a verificação.";
@@ -23,7 +24,7 @@ if (!empty($user) && isset($user[0]['codigo_verificacao']) && $user[0]['codigo_v
 
         $_SESSION["mensagem"] = "Este código expirou (limite de 15 min). Solicite um novo.";
 
-        if (isset($_SESSION['fluxo']) && $_SESSION['fluxo'] === 'recuperacao') {
+        if (isset($tipo_codigo) && $tipo_codigo == 'recuperar') {
             header("Location: ../esqueci_senha.php");
         } else {
             header("Location: ../cadastro.php");
@@ -33,16 +34,16 @@ if (!empty($user) && isset($user[0]['codigo_verificacao']) && $user[0]['codigo_v
 
     request("usuarios?email=eq." . urlencode($email), "PATCH", ["codigo_verificacao" => null]);
 
-    if (isset($_SESSION['fluxo']) && $_SESSION['fluxo'] === 'recuperacao') {
+    if ($tipo_codigo == 'recuperar') {
         $_SESSION['email_reset_aprovado'] = $email;
-        unset($_SESSION['fluxo'], $_SESSION['email_verificar']);
+        unset($_SESSION['email_verificar']);
         header("Location: ../nova_senha.php");
         exit;
     }
 
     request("usuarios?email=eq." . urlencode($email), "PATCH", ["email_verificado" => true]);
 
-    unset($_SESSION['email_verificar'], $_SESSION['fluxo']);
+    unset($_SESSION['email_verificar']);
     $_SESSION["mensagem"] = "E-mail verificado com sucesso! Você já pode acessar sua conta.";
     header("Location: ../login.php");
     exit;
