@@ -21,7 +21,7 @@ include("./includes/topo.php");
                     <input type="password" name="senha" id="idSenha" placeholder="Senha" required>
                 </div>
                 <div class="box-btn">
-                    <a href="./esqueci_senha.php" class="btn-link">Esqueci a senha</a>
+                    <a href="./enviar_codigo.php?tipo_envio=redefinir" class="btn-link">Esqueci a senha</a>
                     <button type="submit" class="btn btn-auth">Entrar</button>
                     <a href="./cadastro.php" class="btn-auth">Cadastrar</a>
                 </div>

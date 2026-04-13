@@ -34,7 +34,7 @@ include("./includes/topo.php");
 
             <div class="notice-footer">
                 <p>O tempo expirou ou não recebeu o e-mail? Verifique sua caixa de spam.</p>
-                <a href="./esqueci_senha.php" class="btn-link">Solicitar novo envio</a>
+                <a href="./enviar_codigo.php" class="btn-link">Solicitar novo envio</a>
                 <hr class="notice-hr">
                 <a href="./login.php" class="btn-auth notice-btn">Ir para o Login</a>
             </div>

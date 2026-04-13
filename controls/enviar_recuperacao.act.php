@@ -11,7 +11,7 @@ $nome = $usuario[0]['nome'];
 
 if (empty($usuario) || isset($usuario['error'])) {
     $_SESSION["mensagem"] = "Este e-mail não está cadastrado.";
-    header("Location: ../esqueci_senha.php");
+    header("Location: ../enviar_codigo.php");
     exit;
 }
 
@@ -24,7 +24,7 @@ $res_update = request("usuarios?email=eq." . urlencode($email), "PATCH", [
 
 if (isset($res_update['error'])) {
     $_SESSION["mensagem"] = "Erro ao processar solicitação no servidor.";
-    header("Location: ../esqueci_senha.php");
+    header("Location: ../enviar_codigo.php");
     exit;
 } else {
     $_SESSION['email_verificar'] = $email;

@@ -25,7 +25,7 @@ if (!empty($user) && isset($user[0]['codigo_verificacao']) && $user[0]['codigo_v
         $_SESSION["mensagem"] = "Este código expirou (limite de 15 min). Solicite um novo.";
 
         if (isset($tipo_codigo) && $tipo_codigo == 'recuperar') {
-            header("Location: ../esqueci_senha.php");
+            header("Location: ../enviar_codigo.php");
         } else {
             header("Location: ../cadastro.php");
         }
