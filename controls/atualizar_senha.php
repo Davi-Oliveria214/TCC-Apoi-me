@@ -14,7 +14,7 @@ if (empty($_POST['senha']) || empty($_POST['rpt_senha'])) {
 }
 
 if ($_POST['senha'] != $_POST['rpt_senha']) {
-    $_SESSION["mensagem"] = "A senha não se iguais";
+    $_SESSION["mensagem"] = "A senhas não são iguais";
     header("Location: ../nova_senha.php");
     exit;
 }
