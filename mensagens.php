@@ -59,7 +59,6 @@ include('./includes/topo.php');
 <form action="./controls/mensagens/add_msg.php" method="post" id="adicionar" style="display: none;">
     <select name="enviar-pedido" id="">
         <option value="email">Email</option>
-        <option value="telefone">Telefone</option>
     </select>
 
     <input type="text" name="contato" placeholder="Digite ...">

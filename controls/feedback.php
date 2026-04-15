@@ -2,7 +2,7 @@
 session_start();
 require_once(__DIR__ . '/../conexao.php');
 
-if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['telefone']) || empty($_POST['comentario'])) {
+if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['comentario'])) {
     $_SESSION['mensagem'] = "Preencha todos os campos necessários";
     header('Location: ../contato.php');
     exit();
@@ -10,13 +10,12 @@ if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['telefone'])
 
 $nome = $_POST['nome'];
 $email = $_POST['email'];
-$telefone = $_POST['telefone'];
 $comentario = $_POST['comentario'];
 
 $sql = request("feedback?email=eq.$email&select=id", "GET");
 
 if (empty($sql) && !isset($sql['error'])) {
-    $dados = ["nome" => $nome, "email" => $email, "telefone" => $telefone, "mensagem" => $comentario];
+    $dados = ["nome" => $nome, "email" => $email, "mensagem" => $comentario];
 
     $enviar = request("feedback", "POST", $dados);
 } else {

@@ -235,6 +235,45 @@
     background-color: var(--verde-musgo-medio);
 }
 
+/* Tipo do Usuário */
+#selectType {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--dourado);
+    border-radius: 8px;
+    background-color: var(--dourado-fraco);
+    color: var(--preto-acinzentado);
+    font-size: 1rem;
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23b0822b' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
+
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#selectType:focus {
+    border-color: var(--verde-musgo);
+    outline: none;
+    box-shadow: 0 0 5px rgba(var(--verde-musgo-rgba), 0.2);
+}
+
+#selectType option {
+    background-color: var(--dourado-palido);
+    color: var(--preto-acinzentado);
+    padding: 10px;
+}
+
+#selectType option:disabled {
+    color: var(--verde-musgo-medio);
+}
+
 @media (max-width: 900px) {
     .banner {
         width: 100%;

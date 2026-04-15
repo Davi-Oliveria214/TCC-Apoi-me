@@ -13,8 +13,6 @@ include('./util/avisos.php');
 
                 <input type="email" name="email" id="textEmail" placeholder="E-mail" required value="<?php echo $email ?? '' ?>">
 
-                <input type="tel" name="telefone" id="textTel" placeholder="Telefone:" required>
-
                 <textarea name="comentario" placeholder="Comentários:" id="comentarios" required style="resize: none;" maxlength="500"></textarea>
 
                 <button type="submit" id="btn-enviar">Enviar</button>

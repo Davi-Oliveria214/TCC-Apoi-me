@@ -7,7 +7,7 @@ include('./includes/topo.php');
   <button class="filter-chip active" onclick="setFilter('todos', this)">Todos</button>
   <button class="filter-chip" onclick="setFilter('pendente', this)">Pendentes</button>
   <button class="filter-chip" onclick="setFilter('avaliado', this)">Avaliados</button>
-  
+
 </div>
 
 <div class="cardsAvaliar">
@@ -31,8 +31,8 @@ include('./includes/topo.php');
       <span class="star-label">Toque para avaliar</span>
     </div>
 
-    <textarea class="comment-areaAvaliacao" maxlength="350" placeholder="Comentário opcional" ></textarea>
-    <div class="NumCaracteres"  id="char-count">0 / 500</div>
+    <textarea class="comment-areaAvaliacao" maxlength="350" placeholder="Comentário opcional"></textarea>
+    <div class="NumCaracteres" id="char-count">0 / 500</div>
     <button class="submit-btnAvaliacaoSER">Enviar avaliação</button>
   </div>
 
@@ -55,14 +55,12 @@ include('./includes/topo.php');
       <span class="star-label">Toque para avaliar</span>
     </div>
 
-    <textarea class="comment-areaAvaliacao" maxlength="350" placeholder="Comentário opcional" ></textarea>
+    <textarea class="comment-areaAvaliacao" maxlength="350" placeholder="Comentário opcional"></textarea>
     <div class="NumCaracteres" id="char-count">0 / 500</div>
     <button class="submit-btnAvaliacaoSER">Enviar avaliação</button>
   </div>
+</div>
 
-  
-  </div>
-  
 
 </div>
 
@@ -71,6 +69,3 @@ include('./includes/topo.php');
   <div class="empty-title">Nenhum serviço encontrado</div>
   <div class="empty-text">Tente outro filtro ou ative a opção<br>para ver todos os serviços prestados <br> do condomínio.</div>
 </div>
-
-
-
