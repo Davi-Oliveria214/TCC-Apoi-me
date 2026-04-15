@@ -104,27 +104,99 @@ function fechar(opcao) {
 const modal_form = document.getElementById("modal-form");
 const abrir = document.getElementById("abrirModal");
 
-abrir.addEventListener("click", () => {
-  modal_form.style.display = "flex";
-});
+// abrir.addEventListener("click", () => {
+//   modal_form.style.display = "flex";
+// });
 
-// fechar clicando fora
-modal_form.addEventListener("click", (e) => {
-  if (e.target === modal_form) {
-    modal_form.style.display = "none";
-  }
-});
+// // fechar clicando fora
+// modal_form.addEventListener("click", (e) => {
+//   if (e.target === modal_form) {
+//     modal_form.style.display = "none";
+//   }
+// });
 
 const botaoGerar = document.getElementById("gerarCodigo");
 const codigoDiv = document.getElementById("codigoGerado");
 
-botaoGerar.addEventListener("click", () => {
-  const codigo = Math.floor(1000 + Math.random() * 9000);
-  codigoDiv.textContent = "Código: " + codigo;
-});
+// botaoGerar.addEventListener("click", () => {
+//   const codigo = Math.floor(1000 + Math.random() * 9000);
+//   codigoDiv.textContent = "Código: " + codigo;
+// });
 
 const fechar_modal = document.getElementById("fecharModal");
 
-fechar_modal.addEventListener("click", () => {
-  modal_form.style.display = "none";
+// fechar_modal.addEventListener("click", () => {
+//   modal_form.style.display = "none";
+// });
+
+
+
+
+
+function applyFilter() {
+  const cards = document.querySelectorAll(".card");
+  let visibleCount = 0;
+
+  cards.forEach(card => {
+    const isAvaliado = card.classList.contains("avaliado");
+
+    let show = false;
+
+    if (currentFilter === "todos") show = true;
+    if (currentFilter === "pendente") show = !isAvaliado;
+    if (currentFilter === "avaliado") show = isAvaliado;
+
+    card.style.display = show ? "block" : "none";
+    if (show) visibleCount++;
+  });
+
+  document.getElementById("emptyState").style.display =
+    visibleCount === 0 ? "block" : "none";
+}
+
+document.querySelectorAll(".cardAvaliar").forEach(card => {
+  const stars = card.querySelectorAll(".star");
+  let rating = 0;
+
+  stars.forEach((star, index) => {
+    star.addEventListener("click", () => {
+      rating = index + 1;
+
+      stars.forEach((s, i) => {
+        s.style.color = i < rating ? "#FFD700" : "#ccc";
+      });
+
+      card.setAttribute("data-rating", rating);
+    });
+  });
+
+  const button = card.querySelector(".submit-btn");
+
+  button.addEventListener("click", () => {
+    const ratingValue = card.getAttribute("data-rating");
+    const comment = card.querySelector(".comment-area").value;
+
+    if (!ratingValue) {
+      alert("Selecione uma nota!");
+      return;
+    }
+
+    card.classList.add("avaliado");
+
+    button.innerText = "Avaliado ✅";
+    button.disabled = true;
+
+    card.querySelector(".star-label").innerText = "Avaliado";
+
+    console.log("Avaliação enviada:", {
+      nota: ratingValue,
+      comentario: comment
+    });
+
+    applyFilter();
+  });
 });
+
+// Inicialização
+applyFilter();
+
