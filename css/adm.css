@@ -288,7 +288,7 @@
   margin: 20px;
 }
 
-.card,
+.cardAdm,
 .cardPerfil {
   background: var(--dourado-palido);
   border-radius: 12px;
@@ -308,11 +308,6 @@
 
 .field {
   margin-bottom: 15px;
-}
-
-label {
-  font-size: 13px;
-
 }
 
 .input-wrap {
@@ -347,16 +342,6 @@ label {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-}
-
-.btn {
-  border-radius: 8px;
-  padding: 8px 14px;
-  cursor: pointer;
-  border: none;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
 .btn-ghost {
