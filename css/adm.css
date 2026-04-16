@@ -114,10 +114,14 @@
   margin: 20px;
 }
 
+<<<<<<< HEAD
 .pPerfil{
   color: var(--dourado);
 }
 
+=======
+.cardAdm,
+>>>>>>> 4d0525b56a0ef49872a751a67f19f3f08ae57241
 .cardPerfil {
   background: var(--dourado-palido);
   border-radius: 12px;
@@ -139,10 +143,13 @@
   margin-bottom: 15px;
 }
 
+<<<<<<< HEAD
 label {
   font-size: 13px;
 }
 
+=======
+>>>>>>> 4d0525b56a0ef49872a751a67f19f3f08ae57241
 .input-wrap {
   display: flex;
   align-items: center;
@@ -172,6 +179,7 @@ label {
   gap: 10px;
 }
 
+<<<<<<< HEAD
 .btnPerfil {
   border-radius: 8px;
   padding: 8px 14px;
@@ -183,6 +191,9 @@ label {
 }
 
 .btn-ghostPerfil {
+=======
+.btn-ghost {
+>>>>>>> 4d0525b56a0ef49872a751a67f19f3f08ae57241
   background: transparent;
   color: var(--verde-musgo);
   border: 1px solid var(--verde-musgo);

@@ -56,6 +56,37 @@
     font-weight: bold;
 }
 
+.main-agendar textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    outline: none;
+    font-size: 1rem;
+    background: var(--branco);
+    transition: 0.3s;
+    font-family: inherit;
+    min-height: 100px;
+}
+
+.main-agendar textarea:focus {
+    border: 2px solid var(--dourado);
+    box-shadow: 0 0 10px rgba(176, 130, 43, 0.5);
+}
+
+.input-group {
+    padding: 10px 20px !important;
+}
+
+.input-group label {
+    display: block;
+    color: var(--dourado-palido);
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
 .main-agendar button {
     width: 90%;
     margin: 10px auto;
