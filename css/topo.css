@@ -2,6 +2,7 @@
    Cabeçalho e Navegação
 =========================== */
 .topo-cabecalho {
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,6 +12,7 @@
     background-color: var(--verde-musgo-medio);
     flex-wrap: wrap;
     gap: 15px;
+    z-index: 999;
 }
 
 .img-logo {

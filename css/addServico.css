@@ -1,12 +1,9 @@
-/* ====== CONTAINER ====== */
 .main-add {
     width: 100vw;
     min-height: calc(100vh - 80px);
-
     display: flex;
     justify-content: center;
     align-items: flex-start;
-
     background-color: var(--dourado-fraco);
     padding: 20px 10px;
 }
@@ -43,7 +40,6 @@
     flex-direction: column;
 }
 
-/* INPUTS PADRÃO APP */
 .box-addServicos input,
 .box-addServicos select,
 .box-addServicos textarea {
@@ -59,7 +55,6 @@
     transition: 0.3s;
 }
 
-/* FOCO */
 .box-addServicos input:focus,
 .box-addServicos select:focus,
 .box-addServicos textarea:focus {
