@@ -1,3 +1,24 @@
+:root {
+    --preto-acinzentado: #1f1f1f;
+    --verde-musgo: #0c3a3f;
+    --verde-musgo-medio: #2d6057;
+    --verde-musgo-palido: #96a37f;
+    --branco: #ffffff;
+    --dourado: #b0822b;
+    --dourado-palido: #d8b469;
+    --dourado-fraco: #ffe6a7;
+
+    /* RGB */
+    --preto-rgba: 31, 31, 31;
+    --verde-musgo-rgba: 12, 58, 63;
+    --verde-musgo-medio-rgba: 45, 96, 87;
+    --verde-musgo-palido-rgba: 150, 163, 127;
+    --branco-rgba: 255, 255, 255;
+    --dourado-rgba: 176, 130, 43;
+    --dourado-palido-rgba: 216, 180, 105;
+    --dourado-fraco-rgba: 255, 230, 167;
+}
+
 .main-add {
     width: 100vw;
     min-height: calc(100vh - 80px);
@@ -16,6 +37,9 @@
     flex-direction: column;
     align-items: center;
     gap: 25px;
+    padding: 10px 15px;
+    border: 2px solid var(--dourado);
+    border-radius: 5px
 }
 
 /* TÍTULO */
@@ -70,7 +94,7 @@
     display: none;
 }
 
-.box-add > label {
+.box-add label {
     padding: 15px;
     border-radius: 20px;
     border: 2px dashed var(--dourado);
@@ -81,12 +105,12 @@
     transition: 0.3s;
 }
 
-.box-add > label:hover {
+.box-add>label:hover {
     background-color: rgba(var(--dourado-rgba), 0.4);
 }
 
 /* ====== BOTÕES ====== */
-.form-add > div {
+.form-add>div {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -109,4 +133,41 @@
 .form-add button:first-child:hover {
     background-color: var(--verde-musgo-medio);
     transform: translateY(-2px);
+}
+
+#preview {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 3px solid var(--dourado);
+    margin-top: 15px;
+    display: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.box-addServicos label {
+    padding: 15px;
+    border-radius: 20px;
+    border: 2px dashed var(--dourado);
+    text-align: center;
+    cursor: pointer;
+    background-color: rgba(var(--dourado-rgba), 0.1);
+    color: var(--dourado);
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.box-addServicos label:hover {
+    background-color: rgba(var(--dourado-rgba), 0.25);
+    border-style: solid;
+    transform: scale(1.02);
+}
+
+.box-addServicos label::before {
+    font-size: 1.5rem;
 }

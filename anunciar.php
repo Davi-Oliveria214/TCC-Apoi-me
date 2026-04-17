@@ -40,11 +40,33 @@ include('./includes/topo.php');
                 <textarea name="descricao" id="idDescricao" style="resize: none;" placeholder="Descricao" required></textarea>
             </div>
 
-            <label for="idImagem">Imagem (opcional)</label>
-            <input type="file" id="idImagem" name="imagem" style="display: none;">
+            <div class="box-addServicos">
+                <label for="idImagem">Clique para selecionar uma imagem</label>
+                <input type="file" id="idImagem" name="imagem" style="display: none;">
+                <img src="" alt="Prévia da imagem" id="preview">
+            </div>
         </section>
-        <div>
-            <button>Adicionar</button>
-        </div>
+
+        <div><button type="submit">Adicionar</button></div>
     </form>
 </main>
+
+<script>
+    const imageInput = document.getElementById('idImagem');
+    const preview = document.getElementById('preview');
+
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

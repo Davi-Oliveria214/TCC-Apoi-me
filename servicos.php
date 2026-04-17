@@ -43,7 +43,7 @@ include('./util/avisos.php');
                         <div class="card-reservados">
                             <div class="btn-img">
                                 <img src="<?php echo $imgRes ?>" alt="Profissional">
-                                <button class="btn-cancelar">Cancelar</button>
+                                <button class="btn-cancelar" onclick="cancelar(<?php echo $idContrato ?>)">Cancelar</button>
                             </div>
 
                             <div class="title-date">
@@ -63,6 +63,16 @@ include('./util/avisos.php');
                 endif;
                 ?>
             </div>
+            <div id="modalConfirmacao" class="modal-overlay" style="display:none;">
+                <div class="modal-content">
+                    <h3>Cancelar Agendamento?</h3>
+                    <p>Você tem certeza que deseja cancelar este serviço? Esta ação não pode ser desfeita.</p>
+                    <div class="modal-buttons">
+                        <button id="btnConfirmarSim" class="btn-confirmar">Sim, Cancelar</button>
+                        <button onclick="fecharModal()" class="btn-voltar">Não, Manter</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -72,34 +82,36 @@ include('./util/avisos.php');
             <?php
             $sql = request("servicos?codigo=eq.{$_SESSION['codigo']}&select=*&order=nome.asc");
 
-            if (!empty($sql) && !isset($sql['error'])) {
-                foreach ($sql as $servico) {
+            if (!empty($sql) && !isset($sql['error'])) :
+                foreach ($sql as $servico) :
                     $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
                     $horaFim = date('H:i', strtotime($servico['hora_fim']));
                     $imgServ = !empty($servico['imagem']) ? $servico['imagem'] : './img/default-servico.jpg';
+            ?>
+                    <div class="card card-servico">
+                        <img src="<?php echo htmlspecialchars($imgServ); ?>" alt="">
 
-                    
+                        <div>
+                            <div class="info-card">
+                                <h2 class="titulo-card"><?php echo htmlspecialchars($servico['nome']); ?></h2>
+                                <p><?php echo htmlspecialchars($servico['descricao']); ?></p>
+                            </div>
 
-                    echo "<div class='card card-servico'>";
-                    echo "<img src='" . htmlspecialchars($imgServ) . "' alt=''>";
-                    echo "<div>";
-                    echo "<div class='info-card'>";
-                    echo "<h2 class='titulo-card'>" . htmlspecialchars($servico['nome']) . "</h2>";
-                    echo "<p>" . htmlspecialchars($servico['descricao']) . "</p>";
-                    echo "</div>";
-                    echo "<div class='cronograma'>";
-                    echo "<p>Das <time>$horaInicio</time> Até <time>$horaFim</time></p>";
-                    echo "</div>";
-                    echo "<div class='box-btn-servico'>";
-                    echo "<a href='./agendar.php?id={$servico['id']}' class='btn'>Contratar</a>";
-                    echo "<a href='./mensagens.php?id={$servico['id']}' class='btn'>Chat</a>";
-                    echo "</div>";
-                    echo "</div>";
-                    echo "</div>";
-                }
-            } else {
+                            <div class="cronograma">
+                                <p>Das <time><?php echo $horaInicio; ?></time> Até <time><?php echo $horaFim; ?></time></p>
+                            </div>
+
+                            <div class="box-btn-servico">
+                                <a href="./agendar.php?id=<?php echo $servico['id']; ?>" class="btn">Contratar</a>
+                                <a href="./mensagens.php?id=<?php echo $servico['id']; ?>" class="btn">Chat</a>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                endforeach;
+            else :
                 echo "<h2 class='aviso-vazio'>Nenhum serviço disponível para o seu condomínio.</h2>";
-            }
+            endif;
             ?>
         </section>
     </section>

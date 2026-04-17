@@ -28,8 +28,6 @@ window.addEventListener("load", ajustarTamanho);
 
 // Filtra os serviços por categoria
 function filtrar(categoria) {
-  console.log("Filtrando categoria:", categoria);
-
   $.ajax({
     type: "POST",
     url: "../util/filtro.php",
@@ -101,36 +99,40 @@ function fechar(opcao) {
   }
 }
 
-const modal_form = document.getElementById("modal-form");
-const abrir = document.getElementById("abrirModal");
+// Modal cancelar
+let idParaCancelar = null;
 
-// abrir.addEventListener("click", () => {
-//   modal_form.style.display = "flex";
-// });
+window.cancelar = function (id) {
+  idParaCancelar = id;
+  const modal = document.getElementById('modalConfirmacao');
+  if (modal) modal.style.display = 'flex';
+};
 
-// // fechar clicando fora
-// modal_form.addEventListener("click", (e) => {
-//   if (e.target === modal_form) {
-//     modal_form.style.display = "none";
-//   }
-// });
+window.fecharModal = function () {
+  const modal = document.getElementById('modalConfirmacao');
+  if (modal) modal.style.display = 'none';
+  idParaCancelar = null;
+};
 
-const botaoGerar = document.getElementById("gerarCodigo");
-const codigoDiv = document.getElementById("codigoGerado");
-
-// botaoGerar.addEventListener("click", () => {
-//   const codigo = Math.floor(1000 + Math.random() * 9000);
-//   codigoDiv.textContent = "Código: " + codigo;
-// });
-
-const fechar_modal = document.getElementById("fecharModal");
-
-// fechar_modal.addEventListener("click", () => {
-//   modal_form.style.display = "none";
-// });
-
-
-
+const btnSim = document.getElementById('btnConfirmarSim');
+if (btnSim) {
+  btnSim.addEventListener('click', function () {
+    if (idParaCancelar) {
+      $.ajax({
+        type: "POST",
+        url: "./controls/cancelar.php",
+        data: { resp: idParaCancelar },
+        success: function (resposta) {
+          window.location.reload();
+        },
+        error: function (xhr, status, error) {
+          alert("Erro ao cancelar o serviço.");
+        }
+      });
+    }
+    fecharModal();
+  });
+}
 
 
 function applyFilter() {
@@ -199,4 +201,3 @@ document.querySelectorAll(".cardAvaliar").forEach(card => {
 
 // Inicialização
 applyFilter();
-
