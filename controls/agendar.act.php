@@ -2,31 +2,16 @@
 session_start();
 require_once(__DIR__ . '/../conexao.php');
 
-// Verifica se os dados foram enviados
-if (empty($_POST['data']) || empty($_POST['hora'])) {
-    $_SESSION["mensagem"] = "Preencha todos os campos.";
-    header("Location: ../agendar.php");
-    exit;
-}
-
-// Pega os dados do formulário
+$idServico = $_POST['id_servico'];
 $d = $_POST['data'];
 $h = $_POST['hora'];
-$obs = $_POST['observacao'] ?? null;
+$obs = $_POST['observacao'];
+$idCliente = $_SESSION['id'];
 
-// Pega dados da sessão
-$idServico   = $_SESSION['idServico'] ?? null;
-$idPrestador = $_SESSION['idPrestador'] ?? null;
-$idCliente   = $_SESSION['id'] ?? null;
+$dadosServico = request("servicos?select=id_prestador&id=eq.$idServico", "GET");
+$idPrestador = $dadosServico[0]['id_prestador'];
 
-// Validação extra
-if (!$idServico || !$idPrestador || !$idCliente) {
-    $_SESSION["mensagem"] = "Sessão inválida. Tente novamente.";
-    header("Location: ../servicos.php");
-    exit;
-}
-
-$servico = [
+$dadosParaSalvar = [
     "hora" => $h,
     "dia" => $d,
     "id_servico" => $idServico,
@@ -35,17 +20,13 @@ $servico = [
     "observacao" => $obs
 ];
 
-// Envia para API / banco
-$sql = request("contratados", "POST", $servico);
+$sql = request("contratados", "POST", $dadosParaSalvar);
 
-// Verifica erro
-if (empty($sql) || isset($sql['error'])) {
-    $_SESSION["mensagem"] = "Erro ao agendar serviço.";
-    header("Location: ../agendar.php");
-    exit;
+if (isset($sql['error'])) {
+    http_response_code(400);
+    $_SESSION["mensagem"] = "Erro ao agendar: " . $sql['error']['message'];
+    echo json_encode(["status" => "erro", "mensagem" => $_SESSION["mensagem"]]);
+} else {
+    $_SESSION["mensagem"] = "Serviço agendado com sucesso!";
+    echo json_encode(["status" => "sucesso"]);
 }
-
-// Sucesso
-$_SESSION["mensagem"] = "Serviço agendado com sucesso!";
-header("Location: ../servicos.php");
-exit;

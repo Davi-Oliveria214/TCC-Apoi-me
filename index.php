@@ -49,7 +49,9 @@ include('./includes/topo.php');
                             <span><?php echo $horaInicio ?></span>
                         </div>
                         <div class='box-btn'>
-                            <a href='./agendar.php?id=<?php echo $servico["id"] ?>' class='btn'>Agendar serviço</a>
+                            <button onclick="abrirModalAgendar(<?php echo $servico['id'] ?>, '<?php echo $servico['nome'] ?>', '<?php echo $imagem ?>')" class="btn">
+                                Agendar serviço
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -81,7 +83,9 @@ include('./includes/topo.php');
         </div>
     </section>
 </main>
+
 <?php
+include('./includes/modais.php');
 include('./includes/rodape.php');
 ?>
 

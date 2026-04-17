@@ -43,7 +43,9 @@ include('./util/avisos.php');
                         <div class="card-reservados">
                             <div class="btn-img">
                                 <img src="<?php echo $imgRes ?>" alt="Profissional">
-                                <button class="btn-cancelar" onclick="cancelar(<?php echo $idContrato ?>)">Cancelar</button>
+                                <button type="button" class="btn-cancelar" onclick="cancelar(<?php echo $idContrato ?>)">
+                                    Cancelar
+                                </button>
                             </div>
 
                             <div class="title-date">
@@ -62,16 +64,6 @@ include('./util/avisos.php');
                     echo "<h2 class='aviso-vazio'>Você ainda não reservou nenhum serviço.</h2>";
                 endif;
                 ?>
-            </div>
-            <div id="modalConfirmacao" class="modal-overlay" style="display:none;">
-                <div class="modal-content">
-                    <h3>Cancelar Agendamento?</h3>
-                    <p>Você tem certeza que deseja cancelar este serviço? Esta ação não pode ser desfeita.</p>
-                    <div class="modal-buttons">
-                        <button id="btnConfirmarSim" class="btn-confirmar">Sim, Cancelar</button>
-                        <button onclick="fecharModal()" class="btn-voltar">Não, Manter</button>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -102,7 +94,9 @@ include('./util/avisos.php');
                             </div>
 
                             <div class="box-btn-servico">
-                                <a href="./agendar.php?id=<?php echo $servico['id']; ?>" class="btn">Contratar</a>
+                                <button onclick="abrirModalAgendar(<?php echo $servico['id'] ?>, '<?php echo $servico['nome'] ?>', '<?php echo $imagem ?>')" class="btn">
+                                    Agendar serviço
+                                </button>
                                 <a href="./mensagens.php?id=<?php echo $servico['id']; ?>" class="btn">Chat</a>
                             </div>
                         </div>
@@ -117,4 +111,6 @@ include('./util/avisos.php');
     </section>
 </main>
 
-<?php include "./includes/rodape.php"; ?>
+<?php
+include "./includes/modais.php";
+include "./includes/rodape.php"; ?>

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <script src="./libs/jquery.js"></script>
     <script src="./js/app.js" defer></script>
+    <script src="./js/modais.js"></script>
     <title>TCC</title>
 </head>
 

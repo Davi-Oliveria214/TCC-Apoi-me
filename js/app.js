@@ -99,105 +99,69 @@ function fechar(opcao) {
   }
 }
 
-// Modal cancelar
-let idParaCancelar = null;
+// function applyFilter() {
+//   const cards = document.querySelectorAll(".card");
+//   let visibleCount = 0;
 
-window.cancelar = function (id) {
-  idParaCancelar = id;
-  const modal = document.getElementById('modalConfirmacao');
-  if (modal) modal.style.display = 'flex';
-};
+//   cards.forEach(card => {
+//     const isAvaliado = card.classList.contains("avaliado");
 
-window.fecharModal = function () {
-  const modal = document.getElementById('modalConfirmacao');
-  if (modal) modal.style.display = 'none';
-  idParaCancelar = null;
-};
+//     let show = false;
 
-const btnSim = document.getElementById('btnConfirmarSim');
-if (btnSim) {
-  btnSim.addEventListener('click', function () {
-    if (idParaCancelar) {
-      $.ajax({
-        type: "POST",
-        url: "./controls/cancelar.php",
-        data: { resp: idParaCancelar },
-        success: function (resposta) {
-          window.location.reload();
-        },
-        error: function (xhr, status, error) {
-          alert("Erro ao cancelar o serviço.");
-        }
-      });
-    }
-    fecharModal();
-  });
-}
+//     if (currentFilter === "todos") show = true;
+//     if (currentFilter === "pendente") show = !isAvaliado;
+//     if (currentFilter === "avaliado") show = isAvaliado;
 
+//     card.style.display = show ? "block" : "none";
+//     if (show) visibleCount++;
+//   });
 
-function applyFilter() {
-  const cards = document.querySelectorAll(".card");
-  let visibleCount = 0;
+//   document.getElementById("emptyState").style.display =
+//     visibleCount === 0 ? "block" : "none";
+// }
 
-  cards.forEach(card => {
-    const isAvaliado = card.classList.contains("avaliado");
+// document.querySelectorAll(".cardAvaliar").forEach(card => {
+//   const stars = card.querySelectorAll(".star");
+//   let rating = 0;
 
-    let show = false;
+//   stars.forEach((star, index) => {
+//     star.addEventListener("click", () => {
+//       rating = index + 1;
 
-    if (currentFilter === "todos") show = true;
-    if (currentFilter === "pendente") show = !isAvaliado;
-    if (currentFilter === "avaliado") show = isAvaliado;
+//       stars.forEach((s, i) => {
+//         s.style.color = i < rating ? "#FFD700" : "#ccc";
+//       });
 
-    card.style.display = show ? "block" : "none";
-    if (show) visibleCount++;
-  });
+//       card.setAttribute("data-rating", rating);
+//     });
+//   });
 
-  document.getElementById("emptyState").style.display =
-    visibleCount === 0 ? "block" : "none";
-}
+//   const button = card.querySelector(".submit-btn");
 
-document.querySelectorAll(".cardAvaliar").forEach(card => {
-  const stars = card.querySelectorAll(".star");
-  let rating = 0;
+//   button.addEventListener("click", () => {
+//     const ratingValue = card.getAttribute("data-rating");
+//     const comment = card.querySelector(".comment-area").value;
 
-  stars.forEach((star, index) => {
-    star.addEventListener("click", () => {
-      rating = index + 1;
+//     if (!ratingValue) {
+//       alert("Selecione uma nota!");
+//       return;
+//     }
 
-      stars.forEach((s, i) => {
-        s.style.color = i < rating ? "#FFD700" : "#ccc";
-      });
+//     card.classList.add("avaliado");
 
-      card.setAttribute("data-rating", rating);
-    });
-  });
+//     button.innerText = "Avaliado";
+//     button.disabled = true;
 
-  const button = card.querySelector(".submit-btn");
+//     card.querySelector(".star-label").innerText = "Avaliado";
 
-  button.addEventListener("click", () => {
-    const ratingValue = card.getAttribute("data-rating");
-    const comment = card.querySelector(".comment-area").value;
+//     console.log("Avaliação enviada:", {
+//       nota: ratingValue,
+//       comentario: comment
+//     });
 
-    if (!ratingValue) {
-      alert("Selecione uma nota!");
-      return;
-    }
+//     applyFilter();
+//   });
+// });
 
-    card.classList.add("avaliado");
-
-    button.innerText = "Avaliado ✅";
-    button.disabled = true;
-
-    card.querySelector(".star-label").innerText = "Avaliado";
-
-    console.log("Avaliação enviada:", {
-      nota: ratingValue,
-      comentario: comment
-    });
-
-    applyFilter();
-  });
-});
-
-// Inicialização
-applyFilter();
+// // Inicialização
+// applyFilter();

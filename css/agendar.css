@@ -1,135 +1,111 @@
-.main-agendar {
-    min-height: 100vh;
-    display: flex;
+/* Estilo Base dos Modais */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(var(--preto-rgba), 0.80);
+    display: none;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    z-index: 9999;
+    backdrop-filter: blur(4px);
 }
 
-.main-agendar form {
-    width: 100%;
-    max-width: 500px;
-    background: var(--verde-musgo);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-    display: flex;
-    flex-direction: column;
-}
-
-.main-agendar img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.main-agendar form>div {
-    padding: 15px;
-}
-
-.main-agendar p {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: var(--dourado);
+.modal-content {
+    background-color: var(--verde-musgo);
+    padding: 40px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 450px;
     text-align: center;
+    color: var(--branco);
+    border: 3px solid var(--dourado);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(var(--dourado-rgba), 0.3);
 }
 
-.main-agendar input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: 2px solid transparent;
-    outline: none;
-    font-size: 1rem;
-    background: var(--branco);
-    transition: 0.3s;
+.modal-content h2, .modal-content h3 {
+    color: var(--dourado-palido);
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.main-agendar input:focus {
-    border: 2px solid var(--dourado);
-    box-shadow: 0 0 10px rgba(176, 130, 43, 0.5);
-}
-
-.main-agendar input[readonly] {
-    background: var(--verde-musgo-palido);
-    color: var(--preto-acinzentado);
-    font-weight: bold;
-}
-
-.main-agendar textarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: 2px solid transparent;
-    outline: none;
-    font-size: 1rem;
-    background: var(--branco);
-    transition: 0.3s;
-    font-family: inherit;
-    min-height: 100px;
-}
-
-.main-agendar textarea:focus {
-    border: 2px solid var(--dourado);
-    box-shadow: 0 0 10px rgba(176, 130, 43, 0.5);
-}
-
+/* Ajustes nos Campos de Entrada */
 .input-group {
-    padding: 10px 20px !important;
+    text-align: left;
+    margin-bottom: 15px;
 }
 
 .input-group label {
     display: block;
-    color: var(--dourado-palido);
-    font-size: 0.85rem;
+    color: var(--dourado-fraco);
     margin-bottom: 5px;
     font-weight: bold;
-    text-transform: uppercase;
 }
 
-.main-agendar button {
-    width: 90%;
-    margin: 10px auto;
-    padding: 12px;
+.input-group input, .input-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--verde-musgo-medio);
+    background-color: rgba(var(--branco-rgba), 0.05);
+    color: var(--branco);
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+    border-color: var(--dourado);
+    background-color: rgba(var(--branco-rgba), 0.1);
+}
+
+/* Botões com foco no Dourado */
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn-confirmar {
+    flex: 1;
+    background-color: var(--dourado);
+    color: var(--verde-musgo); /* Texto escuro sobre fundo claro para legibilidade */
     border: none;
-    border-radius: 12px;
-    font-size: 1rem;
+    padding: 12px;
+    border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
+    transition: background 0.3s, transform 0.2s;
 }
 
-.main-agendar button[type="submit"] {
-    background: var(--dourado);
-    color: var(--preto-acinzentado);
+.btn-confirmar:hover {
+    background-color: var(--dourado-palido);
+    transform: translateY(-2px);
 }
 
-.main-agendar button[type="submit"]:hover {
-    background: var(--dourado-palido);
-    transform: scale(1.03);
+.btn-voltar {
+    flex: 1;
+    background-color: transparent;
+    color: var(--dourado-palido);
+    border: 2px solid var(--dourado-palido);
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
-.main-agendar button[type="button"] {
-    background: transparent;
-    color: var(--dourado);
-    border: 2px solid var(--dourado);
+.btn-voltar:hover {
+    background-color: rgba(var(--dourado-rgba), 0.1);
+    color: var(--dourado-fraco);
+    border-color: var(--dourado-fraco);
 }
 
-.main-agendar button[type="button"]:hover {
-    background: var(--dourado);
-    color: var(--preto-acinzentado);
-}
-
-@media (max-width: 500px) {
-    .main-agendar form {
-        border-radius: 15px;
-    }
-
-    .main-agendar img {
-        height: 160px;
-    }
-
-    .main-agendar p {
-        font-size: 1.2rem;
-    }
+/* Imagem do Serviço no Modal */
+#modalImgServico {
+    border: 2px solid var(--dourado-palido);
+    margin-bottom: 15px;
 }
