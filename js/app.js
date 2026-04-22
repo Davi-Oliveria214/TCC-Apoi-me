@@ -102,10 +102,9 @@ function load(abrir) {
 
 document.addEventListener('click', function (e) {
   const estrela = e.target.closest('.star');
-
   if (!estrela) return;
 
-  const container = estrela.closest('.star-row');
+  const container = estrela.closest('.star-rating');
   const estrelas = container.querySelectorAll('.star');
   const inputOculto = container.querySelector('.nota-input');
   const label = container.querySelector('.star-label');
@@ -116,7 +115,7 @@ document.addEventListener('click', function (e) {
   label.textContent = `Nota: ${valor} / 5`;
 
   estrelas.forEach(s => {
-    if (s.getAttribute('data-value') <= valor) {
+    if (parseInt(s.getAttribute('data-value')) <= parseInt(valor)) {
       s.classList.add('active');
     } else {
       s.classList.remove('active');
@@ -125,11 +124,13 @@ document.addEventListener('click', function (e) {
 });
 
 document.addEventListener('input', function (e) {
-  if (e.target.matches('#area-comentario')) {
+  if (e.target.matches('.comment-area')) {
     const textarea = e.target;
-    const contador = document.getElementById('char-count');
+    const contador = textarea.parentElement.querySelector('.char-count');
 
-    contador.textContent = `${textarea.value.length} / 500`;
+    if (contador) {
+      contador.textContent = `${textarea.value.length} / 500`;
+    }
   }
 });
 
@@ -151,7 +152,7 @@ document.addEventListener('change', function (e) {
     const reader = new FileReader();
 
     reader.onload = function (event) {
-      const container = input.closest('.upload-wrapper') || input.parentElement;
+      const container = input.closest('.input-group');
       const preview = container.querySelector('.preview-imagem');
 
       if (preview) {
@@ -161,4 +162,4 @@ document.addEventListener('change', function (e) {
 
     reader.readAsDataURL(file);
   }
-})
+});
