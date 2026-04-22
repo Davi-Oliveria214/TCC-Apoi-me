@@ -11,7 +11,7 @@ if (!isset($_SESSION['email_reset_aprovado'])) {
 
 <main class="autenticar">
     <div class="div-form">
-        <form action="./controls/atualizar_senha.php" method="post" class="form">
+        <form action="./controls/atualizar_senha.php" method="post" class="form ativar-load">
             <h1>Nova Senha</h1>
             <p>Defina sua nova senha para o e-mail: <b><?php echo $_SESSION['email_reset_aprovado']; ?></b></p>
             <div class="box-auth">
@@ -28,3 +28,5 @@ if (!isset($_SESSION['email_reset_aprovado'])) {
         </form>
     </div>
 </main>
+
+<?php include("./includes/rodape.php"); ?>

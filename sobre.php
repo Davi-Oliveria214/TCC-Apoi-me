@@ -51,6 +51,4 @@ include('./includes/topo.php');
     </article>
 </main>
 
-<?php
-include('./includes/rodape.php');
-?>
+<?php include('./includes/rodape.php'); ?>

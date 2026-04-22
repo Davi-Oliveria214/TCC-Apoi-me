@@ -9,7 +9,7 @@ include('./includes/topo.php');
         <div>
             <?php
             $servicos = request(
-                "contratados?select=id,hora,dia,servicos(nome,descricao,imagem)&id_cliente=eq.$id",
+                "contratados?select=id,hora,dia,confirmado,servicos(nome,descricao,imagem)&id_cliente=eq.$id",
                 "GET"
             );
 
@@ -27,7 +27,7 @@ include('./includes/topo.php');
                                 <span></span>
                             </div>
                             <div class='box-btn'>
-                                <a href='./controls/avaliar.php?id=<?php echo $servico["id"] ?>' class='btn'>Avaliar serviço</a>
+                                <button type="button" onclick="abrirAvaliar('<?php echo $servico['id'] ?>', '<?php echo $servico['servicos']['nome'] ?>', '<?php echo $servico['servicos']['imagem'] ?>', '<?php echo $servico['dia'] ?>', '<?php echo $servico['hora'] ?>', '<?php echo $servico['confirmado'] ?>')" class="btn">Avaliar serviço</button>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@ include('./includes/topo.php');
         <div>
             <?php
             $servicos = request(
-                "contratados?select=id,hora,dia,servicos(nome,descricao,imagem)&id_prestador=eq.$id",
+                "contratados?select=id,hora,dia,confirmado,servicos(nome,descricao,imagem)&id_prestador=eq.$id",
                 "GET"
             );
 
@@ -64,7 +64,7 @@ include('./includes/topo.php');
                                 <span><?php echo $hora ?></span>
                             </div>
                             <div class='box-btn'>
-                                <a href='./controls/avaliar.php?id=<?php echo $servico["id"] ?>' class='btn'>Avaliar serviço</a>
+                                <button class='btn' onclick="abrirAvaliar(<?php echo $servico['id'] ?>, <?php echo $servico['servicos']['nome'] ?>, <?php echo $servico['servicos']['imagem'] ?>, <?php echo $servico['dia'] ?>, <?php echo $servico['hora'] ?>, <?php echo $servico['confirmado'] ?>)">Avaliar serviço</button>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@ include('./includes/topo.php');
         <div>
             <?php
             $servicos = request(
-                "contratados?select=id,hora,dia,servicos(nome,descricao,imagem)&id_cliente=eq.$id&avaliar=eq.true",
+                "contratados?select=id,hora,dia,confirmado,servicos(nome,descricao,imagem)&id_cliente=eq.$id&avaliar=eq.true",
                 "GET"
             );
 
@@ -101,7 +101,7 @@ include('./includes/topo.php');
                                 <span><?php echo $hora ?></span>
                             </div>
                             <div class='box-btn'>
-                                <a href='./controls/avaliar.php?id=<?php echo $servico["id"] ?>' class='btn'>Avaliar serviço</a>
+                                <button class='btn' onclick="abrirAvaliar(<?php echo $servico['id'] ?>, <?php echo $servico['servicos']['nome'] ?>, <?php echo $servico['servicos']['imagem'] ?>, <?php echo $servico['dia'] ?>, <?php echo $servico['hora'] ?>, <?php echo $servico['confirmado'] ?>)">Avaliar serviço</button>
                             </div>
                         </div>
                     </div>
@@ -114,3 +114,5 @@ include('./includes/topo.php');
         </div>
     </section>
 </main>
+
+<?php include("./includes/rodape.php"); ?>

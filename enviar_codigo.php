@@ -12,7 +12,7 @@ $tipo = $_GET['tipo_envio'] ?? '';
             <div class="recover-card">
                 <h1 class="recover-title">Enviar código</h1>
                 <p class="recover-subtitle">Insira seu email. Um código de redefinição será enviado.</p>
-                <form action="./controls/enviar_recuperacao.act.php" method="post" class="recover-form">
+                <form action="./controls/enviar_recuperacao.act.php" method="post" class="recover-form ativar-load">
                     <input type="email" name="email" placeholder="Digite seu email" class="recover-input" required>
                     <select name="categoria" id="" required>
                         <option value="" disabled <?php echo empty($tipo) ? 'selected' : ''; ?> hidden>Tipo do código</option>
@@ -32,3 +32,5 @@ $tipo = $_GET['tipo_envio'] ?? '';
     </main>
     <img src="./img/banner.png" alt="" class="banner">
 </div>
+
+<?php include("./includes/rodape.php"); ?>

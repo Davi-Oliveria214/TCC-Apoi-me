@@ -3,6 +3,10 @@ const topo = document.getElementById("topo");
 const inicial = document.getElementById("inicial");
 const user_icon = document.querySelector(".user-icon");
 
+window.addEventListener('scroll', function () {
+  topo.toggleAttribute('topo-fixo', window.scrollY > 80)
+});
+
 function ajustarTamanho() {
   if (img !== null) {
     let calc = img.offsetHeight - topo.offsetHeight;
@@ -48,6 +52,10 @@ function filtrar(categoria) {
   });
 }
 
+window.document.getElementById('ativar-load')?.addEventListener('submit', function () {
+  load(true)
+})
+
 // Menu topo
 const burguer = document.getElementById("burguer");
 const nav = document.getElementById("nav-id");
@@ -74,94 +82,61 @@ function configMenu() {
   burguer.classList.toggle("abrir");
 }
 
-// Rodapé
-const institucional = document.getElementById("institucional");
-const atendimento = document.getElementById("atendimento");
-const cliente = document.getElementById("cliente");
+function load(abrir) {
+  const body = document.getElementById('body-load')
 
-function abrir_info(opcao) {
-  if (opcao == 1) {
-    institucional.classList.toggle("expandir");
-  } else if (opcao == 2) {
-    atendimento.classList.toggle("expandir");
+  if (abrir) {
+    $.ajax({
+      url: "./util/load.php",
+      success: function (res) {
+        body.innerHTML = res;
+        $(body).fadeIn();
+      }
+    })
   } else {
-    cliente.classList.toggle("expandir");
+    $(body).fadeOut(400, function () {
+      body.innerHTML = ''
+    })
   }
 }
 
-function fechar(opcao) {
-  if (opcao == 1) {
-    institucional.classList.toggle("expandir");
-  } else if (opcao == 2) {
-    atendimento.classList.toggle("expandir");
-  } else {
-    cliente.classList.toggle("expandir");
+document.addEventListener('click', function (e) {
+  const estrela = e.target.closest('.star');
+
+  if (!estrela) return;
+
+  const container = estrela.closest('.star-row');
+  const estrelas = container.querySelectorAll('.star');
+  const inputOculto = container.querySelector('.nota-input');
+  const label = container.querySelector('.star-label');
+
+  const valor = estrela.getAttribute('data-value');
+  inputOculto.value = valor;
+
+  label.textContent = `Nota: ${valor} / 5`;
+
+  estrelas.forEach(s => {
+    if (s.getAttribute('data-value') <= valor) {
+      s.classList.add('active');
+    } else {
+      s.classList.remove('active');
+    }
+  });
+});
+
+document.addEventListener('input', function (e) {
+  if (e.target.matches('#area-comentario')) {
+    const textarea = e.target;
+    const contador = document.getElementById('char-count');
+
+    contador.textContent = `${textarea.value.length} / 500`;
   }
-}
+});
 
-// function applyFilter() {
-//   const cards = document.querySelectorAll(".card");
-//   let visibleCount = 0;
+document.addEventListener('submit', function (e) {
+  const form = e.target;
 
-//   cards.forEach(card => {
-//     const isAvaliado = card.classList.contains("avaliado");
-
-//     let show = false;
-
-//     if (currentFilter === "todos") show = true;
-//     if (currentFilter === "pendente") show = !isAvaliado;
-//     if (currentFilter === "avaliado") show = isAvaliado;
-
-//     card.style.display = show ? "block" : "none";
-//     if (show) visibleCount++;
-//   });
-
-//   document.getElementById("emptyState").style.display =
-//     visibleCount === 0 ? "block" : "none";
-// }
-
-// document.querySelectorAll(".cardAvaliar").forEach(card => {
-//   const stars = card.querySelectorAll(".star");
-//   let rating = 0;
-
-//   stars.forEach((star, index) => {
-//     star.addEventListener("click", () => {
-//       rating = index + 1;
-
-//       stars.forEach((s, i) => {
-//         s.style.color = i < rating ? "#FFD700" : "#ccc";
-//       });
-
-//       card.setAttribute("data-rating", rating);
-//     });
-//   });
-
-//   const button = card.querySelector(".submit-btn");
-
-//   button.addEventListener("click", () => {
-//     const ratingValue = card.getAttribute("data-rating");
-//     const comment = card.querySelector(".comment-area").value;
-
-//     if (!ratingValue) {
-//       alert("Selecione uma nota!");
-//       return;
-//     }
-
-//     card.classList.add("avaliado");
-
-//     button.innerText = "Avaliado";
-//     button.disabled = true;
-
-//     card.querySelector(".star-label").innerText = "Avaliado";
-
-//     console.log("Avaliação enviada:", {
-//       nota: ratingValue,
-//       comentario: comment
-//     });
-
-//     applyFilter();
-//   });
-// });
-
-// // Inicialização
-// applyFilter();
+  if (form.matches('.ativar-load')) {
+    load(true)
+  }
+})

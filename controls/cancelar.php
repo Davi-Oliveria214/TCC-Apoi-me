@@ -7,14 +7,10 @@ if (!empty($_POST['resp'])) {
     $res = request("contratados?id=eq.$id", "DELETE");
 
     $_SESSION['mensagem'] = "Serviço cancelado com sucesso!";
-
-    echo json_encode([
-        "status" => "success"
-    ]);
+    header("Location: ../servicos.php");
+    exit();
 } else {
     $_SESSION['mensagem'] = "Erro ao cancelar o serviço.";
-
-    echo json_encode([
-        "status" => "erro"
-    ]);
+    header("Location: ../servicos.php");
+    exit();
 }

@@ -49,7 +49,7 @@ include('./includes/topo.php');
                             <span><?php echo $horaInicio ?></span>
                         </div>
                         <div class='box-btn'>
-                            <button onclick="abrirModalAgendar(<?php echo $servico['id'] ?>, '<?php echo $servico['nome'] ?>', '<?php echo $imagem ?>')" class="btn">
+                            <button onclick="abrirModalAgendar(<?php echo $servico['id'] ?>, '<?php echo $servico['nome'] ?>', '<?php echo $servico['imagem'] ?>')" class="btn">
                                 Agendar serviço
                             </button>
                         </div>
@@ -63,7 +63,7 @@ include('./includes/topo.php');
         ?>
     </section>
 
-    <section class="parceiros-principal">
+    <section class="parceiros-principal" id="publicidade">
         <h2>Publicidade</h2>
         <div>
             <article class="card-publicidade">
@@ -84,9 +84,6 @@ include('./includes/topo.php');
     </section>
 </main>
 
-<?php
-include('./includes/modais.php');
-include('./includes/rodape.php');
-?>
+<?php include('./includes/rodape.php'); ?>
 
 <script src="./js/carrossel.js"></script>

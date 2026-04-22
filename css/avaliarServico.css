@@ -10,7 +10,7 @@
 }
 
 .filter-bar {
-  padding: 17px ;
+  padding: 17px;
   display: flex;
   gap: 8px;
   background-color: #0c3a3f;
@@ -25,7 +25,7 @@
   background: var(--verde-musgo-medio);
   color: var(--dourado-fraco);
   cursor: pointer;
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
 .filter-chip.active {
@@ -37,7 +37,7 @@
   max-width: 1200px;
   margin: 30px auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); 
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 24px;
   padding: 0 20px;
 }
@@ -55,7 +55,7 @@
 
 .cardAvaliar:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
 .cardAvaliar-top {
@@ -66,13 +66,17 @@
 }
 
 .service-icon {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255,255,255,0.05);
+}
+
+.service-icon>img {
+  width: 100%;
+  border-radius: 5px;
 }
 
 .service-name {
@@ -135,10 +139,10 @@
   background: var(--dourado-palido);
   color: var(--preto-acinzentado);
   resize: none;
-  font-size: 14px; 
+  font-size: 14px;
   outline: none;
   box-sizing: border-box;
-  min-height: 80px; 
+  min-height: 80px;
 }
 
 .submit-btnAvaliacaoSER {
@@ -160,7 +164,7 @@
   filter: brightness(1.1);
 }
 
-.NumCaracteres{
+.NumCaracteres {
   text-align: end;
   color: var(--dourado);
   font-size: 13px;
@@ -191,7 +195,7 @@
   color: var(--preto-acinzentado);
 }
 
-.NumCaracteres{
+.NumCaracteres {
   text-align: end;
   color: var(--dourado);
   font-size: 14px;

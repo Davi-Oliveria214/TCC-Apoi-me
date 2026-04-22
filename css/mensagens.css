@@ -176,13 +176,10 @@
 #mensagem-texto {
     flex: 1;
     padding: 12px;
-
     border-radius: 10px;
     border: 1px solid var(--dourado);
-
     background-color: var(--branco);
     color: var(--preto-acinzentado);
-
     font-size: 14px;
 }
 
@@ -201,34 +198,25 @@
     background-color: var(--verde-musgo-medio);
 }
 
-/* ====== MODAL FUNDO (overlay mais elegante) ====== */
+/* ====== MODAL FUNDO  ====== */
 #adicionar {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.95);
-
-    background: linear-gradient(
-        135deg,
-        var(--dourado-fraco),
-        var(--dourado-palido)
-    );
-
+    background: linear-gradient(135deg,
+            var(--dourado-fraco),
+            var(--dourado-palido));
     border: 2px solid var(--dourado);
     border-radius: 20px;
-
     padding: 25px 20px;
     width: 320px;
     max-width: 90%;
-
     display: flex;
     flex-direction: column;
     gap: 15px;
-
     box-shadow: 0 20px 40px rgba(var(--preto-rgba), 0.3);
-
-    z-index: 10;
-
+    z-index: 900;
     animation: aparecerModal 0.25s ease forwards;
 }
 
@@ -238,6 +226,7 @@
         opacity: 0;
         transform: translate(-50%, -60%) scale(0.9);
     }
+
     to {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
@@ -357,9 +346,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(3px);
-
-    z-index: 5;
+    z-index: 800;
 }

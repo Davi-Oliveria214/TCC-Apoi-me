@@ -2,6 +2,10 @@
    Cabeçalho e Navegação
 =========================== */
 .topo-cabecalho {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 800;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,7 +15,15 @@
     background-color: var(--verde-musgo-medio);
     flex-wrap: wrap;
     gap: 15px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+.topo-cabecalho.topo-fixo {
+    min-height: 60px;
+    background-color: rgba(43, 61, 44, 0.85);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding: 5px 15px;
 }
 
 .img-logo {
@@ -34,7 +46,7 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(var(--preto-rgba), 0.5);
-    z-index: 1;
+    z-index: 950;
     transition: all 0.5s ease;
 
     &.ativo {

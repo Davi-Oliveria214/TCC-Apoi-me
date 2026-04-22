@@ -28,7 +28,7 @@ include("./includes/topo.php");
 
 <main class="autenticar">
     <div class="div-form">
-        <form action="./controls/verificar.act.php" method="post" class="form">
+        <form action="./controls/verificar.act.php" method="post" class="form ativar-load">
             <h1>Confirmar Código</h1>
             <p>Digite o código enviado para seu e-mail.</p>
 
@@ -47,3 +47,5 @@ include("./includes/topo.php");
         </form>
     </div>
 </main>
+
+<?php include("./includes/rodape.php"); ?>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once(__DIR__ . '/../conexao.php');
+require_once(__DIR__ . '/../util/enviar_email.php');
 
 if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['comentario'])) {
     $_SESSION['mensagem'] = "Preencha todos os campos necessários";
@@ -9,27 +10,16 @@ if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['comentario'
 }
 
 $nome = $_POST['nome'];
-$email = $_POST['email'];
+$email = trim($_POST['email']);
 $comentario = $_POST['comentario'];
 
-$sql = request("feedback?email=eq.$email&select=id", "GET");
-
-if (empty($sql) && !isset($sql['error'])) {
-    $dados = ["nome" => $nome, "email" => $email, "mensagem" => $comentario];
-
-    $enviar = request("feedback", "POST", $dados);
-} else {
-    $id = $sql[0]['id'];
-    $dados = ["mensagem" => $comentario];
-
-    $enviar = request("feedback?id=eq.$id", "PATCH", $dados);
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $_SESSION['mensagem'] = "Esse email não existe!";
+    header('Location: ../contato.php');
+    exit();
 }
 
-if (!isset($enviar['error'])) {
-    $_SESSION['mensagem'] = "Mensagem enviada com sucesso!!!";
-} else {
-    $_SESSION['mensagem'] = "Erro ao mandar comentário";
-}
+emailContato($email, $nome, $comentario);
 
 header('Location: ../contato.php');
 exit();

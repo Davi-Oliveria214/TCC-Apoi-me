@@ -25,8 +25,10 @@ $sql = request("contratados", "POST", $dadosParaSalvar);
 if (isset($sql['error'])) {
     http_response_code(400);
     $_SESSION["mensagem"] = "Erro ao agendar: " . $sql['error']['message'];
-    echo json_encode(["status" => "erro", "mensagem" => $_SESSION["mensagem"]]);
+    header("Location: ../servicos.php");
+    exit();
 } else {
     $_SESSION["mensagem"] = "Serviço agendado com sucesso!";
-    echo json_encode(["status" => "sucesso"]);
+    header("Location: ../servicos.php");
+    exit();
 }

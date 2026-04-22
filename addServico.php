@@ -4,7 +4,7 @@ include('./includes/topo.php');
 ?>
 
 <main class="main-add">
-    <form action="./controls/addServico.php" method="post" class="form-add ativar-load" enctype="multipart/form-data">
+    <form action="./controls/addServico.php" method="post" class="form-add">
         <h1>Criar Anúncio</h1>
         <section class="box-add">
             <div class="box-addServicos">
@@ -29,46 +29,22 @@ include('./includes/topo.php');
             </div>
 
             <div class="box-addServicos">
-                <input type="date" id="idData" name="data" placeholder="Data (Opicional)">
+                <input type="text" id="idData" name="data" placeholder="Data (Opicional)">
             </div>
 
             <div class="box-addServicos">
-                <input type="time" id="idHorario" name="horario" placeholder="Horario (Opicional)">
+                <input type="text" id="idHorario" name="horario" placeholder="Horario (Opicional)">
             </div>
 
             <div class="box-addServicos">
                 <textarea name="descricao" id="idDescricao" style="resize: none;" placeholder="Descricao" required></textarea>
             </div>
 
-            <div class="box-addServicos">
-                <label for="idImagem">Clique para selecionar uma imagem</label>
-                <input type="file" id="idImagem" name="imagem" style="display: none;">
-                <img src="" alt="Prévia da imagem" id="preview">
-            </div>
+            <label for="idImagem">Imagem (opcional)</label>
+            <input type="file" id="idImagem" name="imagem" style="display: none;">
         </section>
-
-        <div><button type="submit">Adicionar</button></div>
+        <div>
+            <button>Adicionar</button>
+        </div>
     </form>
 </main>
-
-<script>
-    const imageInput = document.getElementById('idImagem');
-    const preview = document.getElementById('preview');
-
-    imageInput.addEventListener('change', function() {
-        const file = this.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            }
-
-            reader.readAsDataURL(file);
-        }
-    });
-</script>
-
-<?php include("./includes/rodape.php"); ?>

@@ -6,7 +6,7 @@ include('./util/avisos.php');
 
 <div class="div-auth">
     <main id="contato">
-        <form action="./controls/feedback.php" method="post" class="fale-conosco">
+        <form action="./controls/feedback.php" method="post" class="fale-conosco ativar-load">
             <h1>Fale Conosco</h1>
             <div class="info-contato">
                 <input type="text" name="nome" id="textNome" placeholder="Nome:" required value="<?php echo $nome ?? '' ?>">
@@ -22,3 +22,5 @@ include('./util/avisos.php');
 
     <img src="./img/banner.png" alt="" class="banner">
 </div>
+
+<?php include("./includes/rodape.php"); ?>

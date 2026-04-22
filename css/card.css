@@ -2,7 +2,7 @@
     flex-shrink: 0;
     scroll-snap-align: none;
     width: 260px;
-    min-height: 280px;
+    height: clamp(360px, 365px, 370px);
     display: grid;
     flex-direction: column;
     background-color: var(--verde-musgo);

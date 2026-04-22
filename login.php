@@ -6,7 +6,7 @@ include("./includes/topo.php");
 <div class="div-auth">
     <main class="autenticar">
         <div class="div-form">
-            <form action="./controls/login.act.php" method="post" class="form">
+            <form action="./controls/login.act.php" method="post" class="form ativar-load">
                 <h1>Login</h1>
                 <div class="box-auth">
                     <label for="idChave">Chave de acesso</label>
@@ -31,3 +31,5 @@ include("./includes/topo.php");
 
     <img src="./img/banner.png" alt="" class="banner">
 </div>
+
+<?php include("./includes/rodape.php"); ?>

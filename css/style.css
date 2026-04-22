@@ -3,14 +3,15 @@
 @import "./servicos.css";
 @import "./card.css";
 @import "./auth.css";
-@import "./adm.css";
 @import "./usuario.css";
 @import "./mensagens.css";
-@import "./addServico.css";
+@import "./anuncio.css";
 @import "./historico.css";
 @import "./agendar.css";
 @import "./aviso_senha.css";
 @import "./avaliarServico.css";
+@import "./load.css";
+@import "./oferecidos.css";
 
 /* ===========================
    RESET GLOBAL
@@ -26,6 +27,7 @@
   scrollbar-width: none;
   outline: none;
   color: var(--dourado);
+  scroll-behavior: smooth;
 }
 
 body {
@@ -38,6 +40,10 @@ body {
 
 input[type="text"] {
   color: var(--preto-acinzentado);
+}
+
+p::first-letter {
+  text-transform: uppercase;
 }
 
 main {
@@ -56,6 +62,30 @@ main {
   font-family: "FonteBotao";
   src: url("../font/Roboto/static/Roboto-Condensed-ExtraBold.ttf");
   font-weight: 900;
+}
+
+/* ===========================
+   PALETA DE CORES  
+=========================== */
+:root {
+  --preto-acinzentado: #1f1f1f;
+  --verde-musgo: #0c3a3f;
+  --verde-musgo-medio: #2d6057;
+  --verde-musgo-palido: #96a37f;
+  --branco: #ffffff;
+  --dourado: #b0822b;
+  --dourado-palido: #d8b469;
+  --dourado-fraco: #ffe6a7;
+
+  /* RGB */
+  --preto-rgba: 31, 31, 31;
+  --verde-musgo-rgba: 12, 58, 63;
+  --verde-musgo-medio-rgba: 45, 96, 87;
+  --verde-musgo-palido-rgba: 150, 163, 127;
+  --branco-rgba: 255, 255, 255;
+  --dourado-rgba: 176, 130, 43;
+  --dourado-palido-rgba: 216, 180, 105;
+  --dourado-fraco-rgba: 255, 230, 167;
 }
 
 /* PÁGINA INICIAL */
@@ -214,30 +244,6 @@ main {
 }
 
 /* ===========================
-   PALETA DE CORES (UNIFICADA)
-=========================== */
-:root {
-  --preto-acinzentado: #1f1f1f;
-  --verde-musgo: #0c3a3f;
-  --verde-musgo-medio: #2d6057;
-  --verde-musgo-palido: #96a37f;
-  --branco: #ffffff;
-  --dourado: #b0822b;
-  --dourado-palido: #d8b469;
-  --dourado-fraco: #ffe6a7;
-
-  /* RGB */
-  --preto-rgba: 31, 31, 31;
-  --verde-musgo-rgba: 12, 58, 63;
-  --verde-musgo-medio-rgba: 45, 96, 87;
-  --verde-musgo-palido-rgba: 150, 163, 127;
-  --branco-rgba: 255, 255, 255;
-  --dourado-rgba: 176, 130, 43;
-  --dourado-palido-rgba: 216, 180, 105;
-  --dourado-fraco-rgba: 255, 230, 167;
-}
-
-/* ===========================
    ELEMENTOS PADRÃO
 =========================== */
 #sessao-servicos,
@@ -266,7 +272,6 @@ main {
   justify-content: space-between;
   list-style: none;
   padding: 10px;
-  display: flex;
   flex-wrap: wrap;
   gap: 50px;
   color: var(--dourado-fraco);
@@ -282,76 +287,11 @@ main {
   font-weight: bold;
 }
 
-.invisivel {
-  display: none;
-}
-
-/* ===========================
-   MELHORIA DO RODAPÉ E MODAIS
-=========================== */
-.expandir {
-  display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px);
-  z-index: 1000;
-  cursor: pointer;
-}
-
-.expandir>li {
-  background-color: var(--dourado-fraco);
-  min-width: 300px;
-  max-width: 90%;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  border: 2px solid var(--dourado);
-  transform: scale(1);
-  animation: abrirModal 0.3s ease-out;
-  cursor: default;
-  text-align: center;
-}
-
-@keyframes abrirModal {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.expandir>li b {
-  display: block;
-  font-size: 1.6rem;
-  color: var(--verde-musgo);
-  margin-bottom: 15px;
-  border-bottom: 2px solid var(--dourado-palido);
-  padding-bottom: 10px;
-}
-
-.expandir>li p,
-.expandir>li a {
-  color: var(--verde-musgo-medio);
-  line-height: 1.8;
-  font-size: 1.1rem;
-}
-
 .rodape ul li {
-  cursor: pointer;
   transition: opacity 0.3s;
 }
 
-.rodape ul li:hover {
+.rodape ul li a:hover {
   opacity: 0.8;
 }
 
@@ -390,19 +330,19 @@ main {
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 2.4rem;
+  font-size: calc(1rem + 1.5vw);
   color: var(--dourado);
 }
 
 /* ===========================
-   MENSAGENS DE AVISO (PHP)
+   MENSAGENS DE AVISO
 =========================== */
 .msg-avisos {
   position: fixed;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10;
+  z-index: 9999;
   background-color: var(--verde-musgo);
   color: var(--dourado-fraco);
   border: 2px solid var(--dourado);
@@ -446,7 +386,7 @@ main {
     padding: 12px 20px;
   }
 
-  .parceiros-principal>div{
+  .parceiros-principal>div {
     justify-content: center;
   }
 }

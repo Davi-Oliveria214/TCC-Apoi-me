@@ -53,7 +53,18 @@ include('./util/avisos.php');
                                 <p>Data: <time><?php echo $dataRes ?></time> <br> Hora: <time><?php echo $horario ?></time></p>
 
                                 <div class="acoes-reservados">
-                                    <a href="#" class="btn-link btn-detalhes">Ver Detalhes</a>
+                                    <a href="javascript:void(0)"
+                                        class="btn-link btn-detalhes"
+                                        onclick="abrirModalDetalhes(
+                                                '<?php echo $nomeServ ?>', 
+                                                '<?php echo addslashes($descricaoServ) ?>', 
+                                                '<?php echo $imgRes ?>', 
+                                                '<?php echo $dataRes ?>', 
+                                                '<?php echo $horario ?>', 
+                                                '<?php echo $status ?>'
+                                            )">
+                                        Ver Detalhes
+                                    </a>
                                     <a href="./mensagens.php" class="btn-link btn-chat">Chat</a>
                                 </div>
                             </div>
@@ -94,7 +105,7 @@ include('./util/avisos.php');
                             </div>
 
                             <div class="box-btn-servico">
-                                <button onclick="abrirModalAgendar(<?php echo $servico['id'] ?>, '<?php echo $servico['nome'] ?>', '<?php echo $imagem ?>')" class="btn">
+                                <button onclick="abrirModalAgendar(<?php echo $servico['id'] ?>, '<?php echo $servico['nome'] ?>', '<?php echo $servico['imagem'] ?>')" class="btn">
                                     Agendar serviço
                                 </button>
                                 <a href="./mensagens.php?id=<?php echo $servico['id']; ?>" class="btn">Chat</a>
@@ -111,6 +122,4 @@ include('./util/avisos.php');
     </section>
 </main>
 
-<?php
-include "./includes/modais.php";
-include "./includes/rodape.php"; ?>
+<?php include "./includes/rodape.php"; ?>

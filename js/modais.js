@@ -1,92 +1,109 @@
+const loadModal = document.getElementById('body-load')
 window.idParaCancelar = null;
 
 // CANCELAR
 window.cancelar = function (id) {
-    window.idParaCancelar = id;
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: { tipo: 'cancelar', id_registro: id },
+        success: function (resp) {
+            loadModal.innerHTML = resp
 
-    const modal = document.getElementById('modalConfirmacao');
-    if (modal) modal.style.display = 'flex';
+            const modal = document.querySelector('.modal-overlay')
+
+            if (modal) modal.style.display = 'flex';
+        }
+    });
 };
 
-// FECHAR MODAL CANCELAR
-window.fecharModal = function () {
-    const modal = document.getElementById('modalConfirmacao');
-    if (modal) modal.style.display = 'none';
-
-    window.idParaCancelar = null;
-};
-
-// MODAL AGENDAR
+// --- MODAL AGENDAR ---
 window.abrirModalAgendar = function (id, nome, imagem) {
-    const modal = document.getElementById('modalAgendar');
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: { tipo: 'agendar', id_registro: id, nome_servico: nome, img_servico: imagem },
+        success: function (resp) {
+            loadModal.innerHTML = resp
 
-    if (modal) {
-        document.getElementById('modalIdServico').value = id;
-        document.getElementById('modalNomeServico').innerText = nome;
-        document.getElementById('modalImgServico').src = imagem;
+            const modal = document.querySelector('.modal-overlay')
 
-        modal.style.display = 'flex';
-    }
+            modal.style.display = 'flex';
+        }
+    })
 };
 
-window.fecharModalAgendar = function () {
-    const modal = document.getElementById('modalAgendar');
-    if (modal) modal.style.display = 'none';
+// --- MODAL DETALHES ---
+window.abrirModalDetalhes = function (nome, descricao, imagem, data, hora, status) {
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: { nome_servico: nome, desc: descricao, img_servico: imagem, data: data, hora: hora, status: status },
+        success: function (resp) {
+            loadModal.innerHTML = resp
+
+            const modal = document.querySelector('.modal-overlay')
+
+            modal.style.display = 'flex';
+        }
+    })
 };
 
-document.addEventListener('DOMContentLoaded', function () {
-    const btnSim = document.getElementById('btnConfirmarSim');
+// Modal avaliar
+window.abrirAvaliar = function (id, nome, imagem, data, hora, status) {
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: { tipo: "avaliar", id_registro: id, nome_servico: nome, img_servico: imagem, data: data, hora: hora, status: status },
+        success: function (resp) {
+            loadModal.innerHTML = resp
 
-    if (btnSim) {
-        btnSim.addEventListener('click', function () {
-            if (!idParaCancelar) return;
+            const modal = document.querySelector('.modal-overlay')
 
-            $.ajax({
-                type: "POST",
-                url: "./controls/cancelar.php",
-                data: { resp: idParaCancelar },
-                success: function () {
-                    location.reload();
-                },
-                error: function () {
-                    alert("Erro ao cancelar o serviço.");
-                }
-            });
+            modal.style.display = 'flex';
+        }
+    })
+}
 
-            window.fecharModal();
-        });
-    }
+function excluirOferecidos(id) {
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: { tipo: 'excluir', id_registro: id },
+        success: function (resp) {
+            loadModal.innerHTML = resp
 
-    const formAgendar = $('#formAgendarRapido');
+            const modal = document.querySelector('.modal-overlay')
 
-    if (formAgendar.length) {
-        formAgendar.on('submit', function (e) {
-            e.preventDefault();
+            modal.style.display = 'flex';
+        }
+    })
+}
 
-            $.ajax({
-                type: "POST",
-                url: "./controls/agendar.act.php",
-                data: $(this).serialize(),
-                success: function () {
-                    location.reload();
-                },
-                error: function () {
-                    alert("Erro ao processar agendamento.");
-                }
-            });
-        });
-    }
-});
+function pausarServico(id, ativo) {
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: { tipo: 'pausar', id_registro: id, ativo: ativo },
+        success: function (resp) {
+            loadModal.innerHTML = resp
 
+            const modal = document.querySelector('.modal-overlay')
+
+            modal.style.display = 'flex';
+        }
+    })
+}
+
+// Fechar
 window.addEventListener('click', function (event) {
-    const modalAgendar = document.getElementById('modalAgendar');
-    const modalConfirmar = document.getElementById('modalConfirmacao');
+    const overlay = document.querySelector('.modal-overlay');
 
-    if (event.target && event.target.id === 'modalAgendar') {
-        fecharModalAgendar();
-    }
-
-    if (event.target && event.target.id === 'modalConfirmacao') {
-        fecharModal();
-    }
+    if (event.target === overlay) fecharModais();
 });
+
+window.fecharModais = function () {
+    const modal = document.querySelector('.modal-overlay');
+
+    if (modal) modal.remove();
+};

@@ -1,0 +1,116 @@
+.main-historico {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    padding: 20px;
+    gap: 20px;
+    align-items: start;
+}
+
+.historico-box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 20px;
+    border: 2px solid var(--dourado);
+    background: rgba(var(--verde-musgo-medio-rgba), 0.15);
+    backdrop-filter: blur(6px);
+}
+
+.historico-box > h1 {
+    font-size: 1.6rem;
+    text-align: center;
+    color: var(--dourado);
+}
+
+.historico-box > div {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.card-servico {
+    background: var(--verde-musgo);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card-servico:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.card-servico img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card-servico > div {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.titulo-card {
+    font-size: 1.2rem;
+    color: var(--dourado);
+}
+
+.info-card p {
+    color: var(--branco);
+    opacity: 0.85;
+    font-size: 0.95rem;
+}
+
+.info-card span {
+    font-size: 0.85rem;
+    color: var(--dourado-palido);
+}
+
+.box-btn {
+    margin-top: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 12px;
+    background: var(--dourado);
+    color: var(--preto-acinzentado);
+    text-align: center;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: var(--dourado-palido);
+    transform: scale(1.05);
+}
+
+#aviso {
+    color: var(--dourado);
+    text-align: center;
+    opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+    .main-historico {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .card-servico img {
+        height: 150px;
+    }
+
+    .titulo-card {
+        font-size: 1.1rem;
+    }
+}

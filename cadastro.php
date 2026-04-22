@@ -7,7 +7,7 @@ include('./util/avisos.php');
 <div class="div-auth">
     <main class="autenticar">
         <div class="div-form">
-            <form action="./controls/cadastro.act.php" method="post" class="form">
+            <form action="./controls/cadastro.act.php" method="post" class="form ativar-load">
                 <h1>Cadastro</h1>
                 <div class="box-auth">
                     <label for="idNome">Nome</label>
@@ -28,7 +28,7 @@ include('./util/avisos.php');
 
                 <div class="box-auth">
                     <label for="selectType">Tipo de morador</label>
-                    <select name="tipo_usuario" id="selectType" >
+                    <select name="tipo_usuario" id="selectType">
                         <option value="" disabled selected hidden>Tipo de cadastro</option>
                         <option value="morador">Morador</option>
                         <option value="sindico">Síndico</option>
@@ -64,3 +64,5 @@ include('./util/avisos.php');
 
     <img src="./img/banner.png" alt="" class="banner">
 </div>
+
+<?php include("./includes/rodape.php"); ?>
