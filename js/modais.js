@@ -38,7 +38,7 @@ window.abrirModalDetalhes = function (nome, descricao, imagem, data, hora, statu
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",
-        data: { nome_servico: nome, desc: descricao, img_servico: imagem, data: data, hora: hora, status: status },
+        data: { nome_servico: nome, desc: descricao, img_servico: imagem, data: data, hora_inicio: hora, status: status },
         success: function (resp) {
             loadModal.innerHTML = resp
 
@@ -85,6 +85,21 @@ function pausarServico(id, ativo) {
         url: "./includes/modais.php",
         type: "GET",
         data: { tipo: 'pausar', id_registro: id, ativo: ativo },
+        success: function (resp) {
+            loadModal.innerHTML = resp
+
+            const modal = document.querySelector('.modal-overlay')
+
+            modal.style.display = 'flex';
+        }
+    })
+}
+
+function abrirEdicao(id, nome, imagem, data, hora_inicio, hora_fim, status) {
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: { tipo: "editar", id_registro: id, nome_servico: nome, img_servico: imagem, data: data, hora_inicio: hora_inicio, hora_fim: hora_fim, status: status },
         success: function (resp) {
             loadModal.innerHTML = resp
 

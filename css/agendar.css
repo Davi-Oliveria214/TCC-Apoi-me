@@ -169,6 +169,40 @@
     margin-bottom: 15px;
 }
 
+.label-preview {
+    display: block;
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    border: 2px dashed var(--dourado);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.overlay-upload {
+    position: absolute;
+    inset: 0;
+    background: rgba(var(--verde-musgo-rgba), 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.overlay-upload span {
+    color: var(--branco);
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.label-preview:hover .overlay-upload {
+    opacity: 1;
+}
+
 @media (max-height: 600px) {
     .modal-content {
         padding: 20px;
