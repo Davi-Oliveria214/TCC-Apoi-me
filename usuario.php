@@ -94,6 +94,13 @@ include('./includes/topo.php');
       </div>
 
       <div class="fieldPerfil">
+      <label>Novo e-mail</label>
+      <div class="input-wrap">
+        <input type="email" id="emailConfirm" placeholder="Novo e-mail">
+      </div>
+    </div>
+
+      <div class="fieldPerfil">
         <label>Confirmar novo e-mail</label>
         <div class="input-wrap">
           <input type="email" id="emailConfirm" placeholder="repita o e-mail">

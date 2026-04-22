@@ -8,7 +8,7 @@ include('./includes/topo.php');
 </main>
 
 <script>
-    const imageInput = document.getElementById('idImagem');
+                const imageInput = document.getElementById('idImagem');
     const preview = document.getElementById('preview');
 
     imageInput.addEventListener('change', function() {

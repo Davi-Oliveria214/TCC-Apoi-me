@@ -100,6 +100,13 @@ include('./includes/topo.php');
       </div>
     </div>
 
+    <div class="fieldPerfil">
+      <label>Confirmar novo e-mail</label>
+      <div class="input-wrap">
+        <input type="email" id="emailConfirm" placeholder="repita o e-mail">
+      </div>
+    </div>
+
     <div class="divider"></div>
     <div class="actions">
       <button class="btnPerfil btn-ghostPerfil" onclick="resetField('email','joao@exemplo.com'); resetField('emailConfirm','')">Cancelar</button>
@@ -107,7 +114,7 @@ include('./includes/topo.php');
         Atualizar E-mail
       </button>
     </div>
-  </div>
+  </di  v>
 
   <div class="cardPerfil">
     <div class="card-title">

@@ -85,12 +85,14 @@
 
 .btn {
     padding: 5px 10px;
-    background-color: var(--dourado);
+    background-color: var(--dourado-fraco);
     color: var(--preto-acinzentado);
     border-radius: 12px;
-    font-family: "FonteBotao", sans-serif;
     font-weight: 700;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -102,7 +104,7 @@
     }
 }
 
-.box-btn-servico{
+.box-btn-servico {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 5px;
@@ -139,7 +141,7 @@ Card Avisos
             & h2 {
                 font-size: 0.9rem;
                 text-align: 0;
-                color: var(--branco);
+                color: var(--verde-musgo);
             }
         }
     }
@@ -158,7 +160,7 @@ Card Avisos
     }
 
     & p {
-        color: var(--branco);
+        color: var(--verde-musgo);
     }
 }
 
@@ -270,7 +272,7 @@ Card Publicidade
 }
 
 .title-date h3 {
-    color: var(--branco);
+    color: var(--dourado-fraco);
     font-size: 1.6rem;
     margin: 0;
 }
@@ -282,7 +284,7 @@ Card Publicidade
     line-height: 1.2;
 }
 
-.title-date time{
+.title-date time {
     color: var(--dourado-fraco);
 }
 
@@ -302,13 +304,13 @@ Card Publicidade
 }
 
 .btn-cancelar {
-    background-color: var(--dourado-fraco);
-    color: var(--preto-acinzentado);
+    background-color: var(--dourado);
+    color: var(--verde-musgo);
 }
 
 .btn-detalhes,
 .btn-chat {
-    background-color: var(--dourado);
+    background-color: var(--dourado-fraco);
     color: var(--preto-acinzentado);
     margin-bottom: 8px;
 }

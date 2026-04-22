@@ -128,7 +128,7 @@ if ($tipo == 'agendar'):
     </div>
 <?php elseif ($tipo == 'editar') : ?>
 
-    <div class="modal-overlay" style="display: flex;">
+    <div class="modal-overlay" style="display: none;">
         <form action="./controls/editar_servico.act.php" method="post" enctype="multipart/form-data" class="modal-content modal-editar ativar-load">
             <input type="hidden" name="id_servico" value="<?php echo $id_registro ?>">
 
@@ -146,25 +146,25 @@ if ($tipo == 'agendar'):
                 <div class="input-row">
                     <div class="input-group">
                         <label>Início</label>
-                        <input type="time" name="hora_inicio" value="<?php echo $hora_inicio ?>" required>
+                        <input type="time" name="hora_inicio" value="<?php echo date("H:i", $hora_inicio) ?>" required>
                     </div>
                     <div class="input-group">
                         <label>Término</label>
-                        <input type="time" name="hora_fim" value="<?php echo $hora_fim ?>" required>
+                        <input type="time" name="hora_fim" value="<?php echo date("H:i", $hora_fim) ?>" required>
                     </div>
                 </div>
 
                 <div class="input-group">
                     <label>Alterar Imagem (Opcional)</label>
                     <div class="upload-wrapper">
-                        <label for="edit-img" class="label-preview">
+                        <label for="idImagem" class="label-preview">
                             <img id="preview" src="<?php echo $img_servico ?>" alt="Preview">
                             <div class="overlay-upload">
                                 <span>📷 Alterar Foto</span>
                             </div>
                         </label>
 
-                        <input type="file" name="imagem" id="edit-img" accept="image/*" style="display: none;">
+                        <input type="file" name="imagem" id="idImagem" accept="image/*" style="display: none;">
                         <p class="file-hint">Clique na imagem para alterar. Mantenha vazio para não mudar.</p>
                     </div>
                 </div>
@@ -175,75 +175,57 @@ if ($tipo == 'agendar'):
                 <button type="button" class="btn-voltar" onclick="fecharModais()">Cancelar</button>
             </div>
         </form>
-        <script>
-            const imageInput = document.getElementById('edit-img');
-            const preview = document.getElementById('preview');
-
-            if (imageInput) {
-                imageInput.addEventListener('change', function() {
-                    const file = this.files[0];
-
-                    if (file) {
-                        const reader = new FileReader();
-
-                        reader.onload = function(e) {
-                            preview.src = e.target.result;
-                        }
-
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
-        </script>
     </div>
 
 <?php elseif ($tipo == 'novo') : ?>
-    
-    <form action="./controls/addServico.php" method="post" class="form-add ativar-load" enctype="multipart/form-data">
-        <h1>Criar Anúncio</h1>
-        <section class="box-add">
-            <div class="box-addServicos">
-                <input type="text" id="idNome" name="nome" placeholder="Nome do anúncio" required>
-            </div>
 
-            <div class="box-addServicos">
-                <select name="categoria" id="idCategorias" required>
-                    <option value="" disabled selected hidden>Tipo do serviço</option>
-                    <?php
-                    $sql = request("categorias?select=*", "GET");
+    <div class="modal-overlay" style="display: flex;">
+        <form action="./controls/addServico.php" method="post" class="form-add ativar-load" enctype="multipart/form-data">
+            <h1>Criar Anúncio</h1>
+            <section class="box-add">
+                <div class="box-addServicos">
+                    <input type="text" id="idNome" name="nome" placeholder="Nome do anúncio" required>
+                </div>
 
-                    if (!empty($sql) && !isset($sql['error'])):
-                        foreach ($sql as $categoria):
-                    ?>
-                            <option value="<?php echo $categoria['id'] ?>"><?php echo $categoria['nome'] ?></option>
-                    <?php
-                        endforeach;
-                    endif;
-                    ?>
-                </select>
-            </div>
+                <div class="box-addServicos">
+                    <select name="categoria" id="idCategorias" required>
+                        <option value="" disabled selected hidden>Tipo do serviço</option>
+                        <?php
+                        $sql = request("categorias?select=*", "GET");
 
-            <div class="box-addServicos">
-                <input type="date" id="idData" name="data" placeholder="Data (Opicional)">
-            </div>
+                        if (!empty($sql) && !isset($sql['error'])):
+                            foreach ($sql as $categoria):
+                        ?>
+                                <option value="<?php echo $categoria['id'] ?>"><?php echo $categoria['nome'] ?></option>
+                        <?php
+                            endforeach;
+                        endif;
+                        ?>
+                    </select>
+                </div>
 
-            <div class="box-addServicos">
-                <input type="time" id="idHorario" name="horario" placeholder="Horario (Opicional)">
-            </div>
+                <div class="box-addServicos">
+                    <input type="date" id="idData" name="data" placeholder="Data (Opicional)">
+                </div>
 
-            <div class="box-addServicos">
-                <textarea name="descricao" id="idDescricao" style="resize: none;" placeholder="Descricao" required></textarea>
-            </div>
+                <div class="box-addServicos">
+                    <input type="time" id="idHorario" name="horario" placeholder="Horario (Opicional)">
+                </div>
 
-            <div class="box-addServicos">
-                <label for="idImagem">Clique para selecionar uma imagem</label>
-                <input type="file" id="idImagem" name="imagem" style="display: none;">
-                <img src="" alt="Prévia da imagem" id="preview">
-            </div>
-        </section>
+                <div class="box-addServicos">
+                    <textarea name="descricao" id="idDescricao" style="resize: none;" placeholder="Descricao" required></textarea>
+                </div>
 
-        <div><button type="submit">Adicionar</button></div>
-    </form>
+                <div class="box-addServicos">
+                    <label for="idImagem">Clique para selecionar uma imagem</label>
+                    <input type="file" id="idImagem" name="imagem" style="display: none;">
+                    <img src="" alt="Prévia da imagem" id="preview">
+                </div>
+            </section>
+
+            <div><button type="submit">Adicionar</button></div>
+        </form>
+    </div>
 
 <?php else : ?>
 

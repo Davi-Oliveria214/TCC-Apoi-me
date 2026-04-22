@@ -18,11 +18,11 @@ include('./util/avisos.php');
                     <input type="email" name="email" id="idEmail" placeholder="Email" required>
                 </div>
                 <div class="box-auth">
-                    <label for="idSenha">Senha</label>
+                    <label for="idSenha">Senha (min: 8)</label>
                     <input type="password" name="senha" id="idSenha" placeholder="Senha" required>
                 </div>
                 <div class="box-auth">
-                    <label for="idRptSenha">Repita senha</label>
+                    <label for="idRptSenha">Repita senha (min: 8)</label>
                     <input type="password" name="rptSenha" id="idRptSenha" placeholder="Repita senha" required>
                 </div>
 

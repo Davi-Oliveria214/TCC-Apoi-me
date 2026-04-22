@@ -1,16 +1,3 @@
-/* ====== CONTAINER ====== */
-.main-add {
-    width: 100vw;
-    min-height: calc(100vh - 80px);
-
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-
-    background-color: var(--dourado-fraco);
-    padding: 20px 10px;
-}
-
 /* ====== FORM ====== */
 .form-add {
     width: 100%;

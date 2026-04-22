@@ -140,3 +140,25 @@ document.addEventListener('submit', function (e) {
     load(true)
   }
 })
+
+document.addEventListener('change', function (e) {
+  if (e.target.classList.contains('input-imagem')) {
+    const input = e.target;
+    const file = input.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+      const container = input.closest('.upload-wrapper') || input.parentElement;
+      const preview = container.querySelector('.preview-imagem');
+
+      if (preview) {
+        preview.src = event.target.result;
+      }
+    };
+
+    reader.readAsDataURL(file);
+  }
+})

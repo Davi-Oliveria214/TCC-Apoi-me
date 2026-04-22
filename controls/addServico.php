@@ -46,10 +46,10 @@ $sql = request("servicos", "POST", $dados);
 
 if (isset($sql['error'])) {
     $_SESSION["mensagem"] = "Erro ao enviar serviço";
-    header("Location: ../anunciar.php");
+    header("Location: ../oferecidos.php");
     exit;
 }
 
 $_SESSION["mensagem"] = "Serviço anúnciado com sucesso!!!";
-header("Location: ../anunciar.php");
+header("Location: ../oferecidos.php");
 exit;

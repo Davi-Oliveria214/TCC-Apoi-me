@@ -110,6 +110,21 @@ function abrirEdicao(id, nome, imagem, data, hora_inicio, hora_fim, status) {
     })
 }
 
+function novoServico() {
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: { tipo: "novo" },
+        success: function (resp) {
+            loadModal.innerHTML = resp
+
+            const modal = document.querySelector('.modal-overlay')
+
+            modal.style.display = 'flex';
+        }
+    })
+}
+
 // Fechar
 window.addEventListener('click', function (event) {
     const overlay = document.querySelector('.modal-overlay');
