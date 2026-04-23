@@ -137,3 +137,21 @@ window.fecharModais = function () {
 
     if (modal) modal.remove();
 };
+
+$(document).on('change', '[name="data"]', function () {
+    const data = this.value;
+    const idServico = document.querySelector('[name="id_servico"]').value;
+
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: {
+            tipo: 'horarios',
+            data: data,
+            id_registro: idServico
+        },
+        success: function (resp) {
+            document.getElementById('horarios').innerHTML = resp;
+        }
+    });
+});

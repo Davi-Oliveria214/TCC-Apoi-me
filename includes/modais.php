@@ -13,6 +13,45 @@ $hora_fim = $_GET['hora_fim'] ?? '';
 $duracao = $_GET['duracao'] ?? '';
 $status = $_GET['status'] ?? '';
 $ativo = $_GET['ativo'] ?? '';
+
+if ($tipo == 'horarios') {
+
+    $dataSelecionada = $_GET['data'];
+    $id_servico = $_GET['id_registro'];
+
+    $servico = request("servicos?id=eq.$id_servico")[0];
+
+    $hora_inicio = $servico['hora_inicio'];
+    $hora_fim = $servico['hora_fim'];
+    $duracao = strtotime($servico['duracao']);
+
+    $duracaoMin = (int) date('i', $duracao) + (int) date('H', $duracao) * 60;
+
+    $reservas = request("contratados?dia=eq.$dataSelecionada&id_servico=eq.$id_servico");
+
+    $ocupados = [];
+    if (!empty($reservas) && !isset($reservas['error'])) {
+        foreach ($reservas as $r) {
+            $ocupados[] = date('H:i', strtotime($r['hora']));
+        }
+    }
+
+    $inicio = strtotime($hora_inicio);
+    $fim = strtotime($hora_fim);
+    $intervalo = max(1, $duracaoMin) * 60;
+
+    for ($i = $inicio; $i <= $fim; $i += $intervalo):
+        $hora = date("H:i", $i);
+        $bloqueado = in_array($hora, $ocupados);
+?>
+        <option value="<?php echo $hora ?>" <?php echo $bloqueado ? 'disabled' : '' ?>>
+            <?php echo $hora ?> <?php echo $bloqueado ? '(Indisponível)' : '' ?>
+        </option>
+<?php
+    endfor;
+
+    exit;
+}
 ?>
 
 <div class="modal-overlay" style="display: flex;">
@@ -27,7 +66,7 @@ $ativo = $_GET['ativo'] ?? '';
 
             <div class="modal-body">
                 <?php
-
+                $hora_reserva = request("contratados?dia=eq.$dia&hora=eq.$hora_selecionada");
                 ?>
 
                 <img src="<?php echo $img_servico ?>" class="modal-img-destaque">
@@ -38,14 +77,9 @@ $ativo = $_GET['ativo'] ?? '';
                     </div>
                     <div class="input-group">
                         <label for="hora">Hora</label>
-                        <input type="time"
-                            step="3600"
-                            name="hora"
-                            id="horarios"
-                            min="<?php echo $hora_inicio; ?>"
-                            max="<?php echo $hora_fim; ?>"
-                            list="horario_duracao"
-                            required>
+                        <select name="hora" id="horarios" required>
+                            <option value="">Selecione uma data</option>
+                        </select>
                         <small class="helper-text">
                             Disponível entre <?php echo $hora_inicio; ?> e <?php echo $hora_fim; ?>
                         </small>
@@ -236,7 +270,6 @@ $ativo = $_GET['ativo'] ?? '';
                 <button type="button" onclick="fecharModais()" class="btn-voltar">Cancelar</button>
             </div>
         </form>
-
     <?php else : ?>
         <div class="modal-content modal-padrao">
             <div class="modal-header">
