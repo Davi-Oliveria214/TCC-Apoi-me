@@ -2,9 +2,9 @@
 session_start();
 require_once(__DIR__ . '/../conexao.php');
 
-if (empty($_POST['nome']) || empty($_POST['categoria']) || empty($_POST['descricao'])) {
+if (empty($_POST['nome']) || empty($_POST['categoria']) || empty($_POST['descricao']) || empty($_POST['hora_inicio']) || empty($_POST['hora_fim']) || empty($_POST['duracao'])) {
     $_SESSION["mensagem"] = "Preencha os campos obrigatórios.";
-    header("Location: ../anunciar.php");
+    header("Location: ../oferecidos.php");
     exit;
 }
 
@@ -13,15 +13,13 @@ $codigo = $_SESSION['codigo'];
 $nome = $_POST['nome'];
 $categoria = $_POST['categoria'];
 $descricao = $_POST['descricao'];
+$hora_inicio = $_POST['hora_inicio'];
+$hora_fim = $_POST['hora_fim'];
+$duracao = $_POST['duracao'];
 
 $data;
 if (!empty($_POST['data'])) {
     $data = $_POST['data'];
-}
-
-$horario;
-if (!empty($_POST['horario'])) {
-    $horario = $_POST['horario'];
 }
 
 $imagem;
@@ -37,7 +35,9 @@ $dados = [
     "codigo" => $codigo,
     "categoria" => $categoria,
     "id_prestador" => $id,
-    "hora_inicio" => $horario,
+    "hora_inicio" => $hora_inicio,
+    "hora_fim" => $hora_fim,
+    "duracao" => $duracao,
     "dia" => $data,
     "imagem" => $imagem
 ];

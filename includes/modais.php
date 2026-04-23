@@ -5,11 +5,12 @@ require_once(__DIR__ . '/../conexao.php');
 $tipo = $_GET['tipo'] ?? '';
 $id_registro = $_GET['id_registro'] ?? '';
 $nome_servico = $_GET['nome_servico'] ?? '';
-$desc = $_GET['desc'] ?? ''; // Ajustado para bater com o JS
+$desc = $_GET['desc'] ?? '';
 $img_servico = $_GET['img_servico'] ?? '';
 $data = $_GET['data'] ?? '';
 $hora_inicio = $_GET['hora_inicio'] ?? '';
 $hora_fim = $_GET['hora_fim'] ?? '';
+$duracao = $_GET['duracao'] ?? '';
 $status = $_GET['status'] ?? '';
 $ativo = $_GET['ativo'] ?? '';
 ?>
@@ -21,21 +22,49 @@ $ativo = $_GET['ativo'] ?? '';
             <input type="hidden" name="id_servico" value="<?php echo $id_registro ?>">
 
             <div class="modal-header">
-                <div class="modal-icon">📅</div>
                 <h3>Agendar: <?php echo $nome_servico ?></h3>
             </div>
 
             <div class="modal-body">
+                <?php
+
+                ?>
+
                 <img src="<?php echo $img_servico ?>" class="modal-img-destaque">
                 <div class="input-row">
                     <div class="input-group">
                         <label>Data</label>
-                        <input type="date" name="data" required>
+                        <input type="date" name="data" min="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                     <div class="input-group">
-                        <label>Hora</label>
-                        <input type="time" name="hora" required>
+                        <label for="hora">Hora</label>
+                        <input type="time"
+                            step="3600"
+                            name="hora"
+                            id="horarios"
+                            min="<?php echo $hora_inicio; ?>"
+                            max="<?php echo $hora_fim; ?>"
+                            list="horario_duracao"
+                            required>
+                        <small class="helper-text">
+                            Disponível entre <?php echo $hora_inicio; ?> e <?php echo $hora_fim; ?>
+                        </small>
                     </div>
+
+                    <datalist id="horario_duracao">
+                        <?php
+                        $inicio = strtotime($hora_inicio);
+                        $fim = strtotime($hora_fim);
+                        $intervalo = $duracao * 60;
+
+                        for ($i = $inicio; $i <= $fim; $i += $intervalo):
+                            $horaFormatada = date("H:i", $i);
+                        ?>
+                            <option value="<?php echo $horaFormatada ?>">
+                                <?php echo $horaFormatada ?>
+                            </option>
+                        <?php endfor; ?>
+                    </datalist>
                 </div>
                 <div class="input-group">
                     <label>Observações</label>
@@ -57,7 +86,6 @@ $ativo = $_GET['ativo'] ?? '';
             <input type="hidden" name="<?php echo $isExcluir ? 'id_servico' : 'resp' ?>" value="<?php echo $id_registro ?>">
 
             <div class="modal-header">
-                <div class="modal-icon icon-danger"><?php echo $isExcluir ? '🗑️' : '⚠️' ?></div>
                 <h3><?php echo $isExcluir ? 'Excluir Serviço?' : 'Cancelar?' ?></h3>
             </div>
 
@@ -79,7 +107,6 @@ $ativo = $_GET['ativo'] ?? '';
             <input type="hidden" value="<?php echo $id_registro ?>" name="id_servico">
 
             <div class="modal-header">
-                <div class="modal-icon">⭐</div>
                 <h3>Avaliar Serviço</h3>
             </div>
 
@@ -124,7 +151,6 @@ $ativo = $_GET['ativo'] ?? '';
             <input type="hidden" name="id_servico" value="<?php echo $id_registro ?>">
 
             <div class="modal-header">
-                <div class="modal-icon"><?php echo $isEdit ? '📝' : '➕' ?></div>
                 <h3><?php echo $isEdit ? 'Editar Anúncio' : 'Novo Anúncio' ?></h3>
             </div>
 
@@ -135,23 +161,59 @@ $ativo = $_GET['ativo'] ?? '';
                 </div>
 
                 <?php if (!$isEdit): ?>
+
                     <div class="input-group">
                         <label>Categoria</label>
                         <select name="categoria" required>
                             <option value="" disabled selected>Selecione o tipo</option>
+                            <?php
+                            $categorias = request("categorias?select=id,nome&order=nome.asc", "GET");
+                            foreach ($categorias as $categoria) :
+                            ?>
+                                <option value="<?php echo $categoria['id'] ?>"><?php echo $categoria['nome'] ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 <?php endif; ?>
 
                 <div class="input-row">
                     <div class="input-group">
-                        <label>Início</label>
-                        <input type="time" name="hora_inicio" value="<?php echo $hora_inicio ?>" required>
+                        <label for="hora_inicio">Início</label>
+                        <input type="time" name="hora_inicio" value="<?php echo $hora_inicio ?>" list="horarios-comuns" required>
                     </div>
+
                     <div class="input-group">
-                        <label>Término</label>
-                        <input type="time" name="hora_fim" value="<?php echo $hora_fim ?>" required>
+                        <label for="hora_fim">Término</label>
+                        <input type="time" name="hora_fim" value="<?php echo $hora_fim ?>" list="horarios-comuns" required>
                     </div>
+
+                    <datalist id="horarios-comuns">
+                        <option value="08:00">
+                        <option value="09:00">
+                        <option value="10:00">
+                        <option value="11:00">
+                        <option value="12:00">
+                        <option value="13:00">
+                        <option value="14:00">
+                        <option value="15:00">
+                        <option value="16:00">
+                        <option value="17:00">
+                        <option value="18:00">
+                    </datalist>
+                </div>
+
+                <div class="input-group">
+                    <label>Tempo de duração</label>
+                    <input type="time" name="duracao" value="<?php echo $duracao ?>" list="tempos-comuns" required>
+
+                    <datalist id="tempos-comuns">
+                        <option value="00:30">
+                        <option value="01:00">
+                        <option value="01:30">
+                        <option value="02:00">
+                        <option value="02:30">
+                        <option value="03:00">
+                    </datalist>
                 </div>
 
                 <div class="input-group">
@@ -162,8 +224,8 @@ $ativo = $_GET['ativo'] ?? '';
                 <div class="input-group">
                     <label>Imagem do Serviço</label>
                     <label for="idImagem" class="upload-area">
-                        <img id="preview" class="preview-imagem" src="<?php echo $img_servico ?: './img/placeholder.png' ?>">
-                        <div class="upload-overlay"><span>📷 Alterar Foto</span></div>
+                        <img id="preview" class="preview-imagem" src="<?php echo $img_servico ?>">
+                        <div class="upload-overlay"><span>Alterar Foto</span></div>
                     </label>
                     <input type="file" name="imagem" id="idImagem" class="input-imagem" accept="image/*" style="display: none;">
                 </div>
@@ -178,7 +240,6 @@ $ativo = $_GET['ativo'] ?? '';
     <?php else : ?>
         <div class="modal-content modal-padrao">
             <div class="modal-header">
-                <div class="modal-icon">🔍</div>
                 <h3>Detalhes do Agendamento</h3>
             </div>
             <div class="modal-body">

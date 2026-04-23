@@ -18,11 +18,11 @@ window.cancelar = function (id) {
 };
 
 // --- MODAL AGENDAR ---
-window.abrirModalAgendar = function (id, nome, imagem) {
+window.abrirModalAgendar = function (id, nome, imagem, hora_inicio, hora_fim, duracao) {
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",
-        data: { tipo: 'agendar', id_registro: id, nome_servico: nome, img_servico: imagem },
+        data: { tipo: 'agendar', id_registro: id, nome_servico: nome, img_servico: imagem, hora_inicio: hora_inicio, hora_fim: hora_fim, duracao: duracao },
         success: function (resp) {
             loadModal.innerHTML = resp
 
@@ -95,11 +95,11 @@ function pausarServico(id, ativo) {
     })
 }
 
-function abrirEdicao(id, nome, imagem, data, hora_inicio, hora_fim, status) {
+function abrirEdicao(id, nome, imagem, hora_inicio, hora_fim, duracao, status, descricao) {
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",
-        data: { tipo: "editar", id_registro: id, nome_servico: nome, img_servico: imagem, data: data, hora_inicio: hora_inicio, hora_fim: hora_fim, status: status },
+        data: { tipo: "editar", id_registro: id, nome_servico: nome, img_servico: imagem, hora_inicio: hora_inicio, hora_fim: hora_fim, duracao: duracao, status: status, desc: descricao },
         success: function (resp) {
             loadModal.innerHTML = resp
 

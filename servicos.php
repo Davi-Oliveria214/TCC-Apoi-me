@@ -38,7 +38,7 @@ include('./util/avisos.php');
 
                         $nomeServ = $res['servicos']['nome'];
                         $descricaoServ = $res['servicos']['descricao'];
-                        $imgRes = !empty($res['servicos']['imagem']) ? $res['servicos']['imagem'] : './img/default-servico.jpg';
+                        $imgRes = $res['servicos']['imagem'];
                 ?>
                         <div class="card-reservados">
                             <div class="btn-img">
@@ -89,7 +89,8 @@ include('./util/avisos.php');
                 foreach ($sql as $servico) :
                     $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
                     $horaFim = date('H:i', strtotime($servico['hora_fim']));
-                    $imgServ = !empty($servico['imagem']) ? $servico['imagem'] : './img/default-servico.jpg';
+                    $duracao = date('H:i', strtotime($servico['duracao']));
+                    $imgServ = $servico['imagem'];
             ?>
                     <div class="card card-servico">
                         <img src="<?php echo htmlspecialchars($imgServ); ?>" alt="">
@@ -105,7 +106,7 @@ include('./util/avisos.php');
                             </div>
 
                             <div class="box-btn-servico">
-                                <button onclick="abrirModalAgendar(<?php echo $servico['id'] ?>, '<?php echo $servico['nome'] ?>', '<?php echo $servico['imagem'] ?>')" class="btn">
+                                <button onclick="abrirModalAgendar(<?php echo $servico['id'] ?>, '<?php echo $servico['nome'] ?>', '<?php echo $imgServ ?>', '<?php echo $horaInicio ?>', '<?php echo $horaFim ?>', '<?php echo $duracao  ?>')" class="btn">
                                     Agendar serviço
                                 </button>
                                 <a href="./mensagens.php?id=<?php echo $servico['id']; ?>" class="btn">Chat</a>
