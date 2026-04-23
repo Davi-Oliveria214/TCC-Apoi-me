@@ -182,7 +182,7 @@ if ($tipo == 'horarios') {
         $action = $isEdit ? "./controls/editar_servico.act.php" : "./controls/addServico.php";
     ?>
         <form action="<?php echo $action ?>" method="post" enctype="multipart/form-data" class="modal-content modal-padrao modal-large ativar-load">
-            <input type="hidden" name="id_servico" value="<?php echo $id_registro ?>">
+            <input type="hidden" value="<?php echo $id_registro ?>" name="id_servico">
 
             <div class="modal-header">
                 <h3><?php echo $isEdit ? 'Editar Anúncio' : 'Novo Anúncio' ?></h3>

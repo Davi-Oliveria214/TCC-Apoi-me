@@ -29,7 +29,7 @@ if (!empty($_POST['imagem'])) {
     $imagem = "./img/condomino.png";
 }
 
-$dados = [
+$dadosSalvar = [
     "nome" => $nome,
     "descricao" => $descricao,
     "codigo" => $codigo,
@@ -42,7 +42,7 @@ $dados = [
     "imagem" => $imagem
 ];
 
-$sql = request("servicos", "POST", $dados);
+$sql = request("servicos", "POST", $dadosSalvar);
 
 if (isset($sql['error'])) {
     $_SESSION["mensagem"] = "Erro ao enviar serviço";

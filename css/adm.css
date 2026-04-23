@@ -9,10 +9,6 @@
   --dourado-fraco: #ffe6a7;
 }
 
-* {
-  scroll-behavior: smooth;
-}
-
 .contentAdm {
   margin-top: 60px;
   padding: 20px;

@@ -91,11 +91,14 @@ include('./includes/topo.php');
                         </div>
 
                         <div class="card-reservas">
-                            <span class="num">0</span> reservas este mês
+                            <?php
+                            $reservados = request("contratados?id_prestador=eq.{$id}&select=count");
+                            ?>
+                            <span class="num"><?php echo $reservados[0]['conut'] ?? 0; ?></span> reservas este mês
                         </div>
 
                         <div class="card-acoes">
-                            <button class="btn-acao btn-link" onclick="abrirEdicao('<?php $s['servicos']['id'] ?>', '<?php echo $s['nome'] ?>', 
+                            <button class="btn-acao btn-link" onclick="abrirEdicao('<?php echo $s['id'] ?>', '<?php echo $s['nome'] ?>', 
                                                 '<?php echo $s['imagem'] ?>',
                                                 '<?php echo $hora_inicio ?>', 
                                                 '<?php echo $hora_fim ?>',
