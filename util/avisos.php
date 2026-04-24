@@ -23,7 +23,7 @@ if (isset($_SESSION["mensagem"])) {
             <?php if ($tipo === "desconectado") : ?>
                 setTimeout(() => {
                     window.location.href = "./login.php";
-                });
+                }, 200);
             <?php endif; ?>
 
         }, 4500);

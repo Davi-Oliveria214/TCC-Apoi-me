@@ -19,6 +19,12 @@ window.cancelar = function (id) {
 
 // --- MODAL AGENDAR ---
 window.abrirModalAgendar = function (id, nome, imagem, hora_inicio, hora_fim, duracao) {
+    if (!window.usuarioLogado) {
+        alert("Você precisa estar logado para agendar!");
+        window.location.href = "./login.php";
+        return;
+    }
+
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",
@@ -28,7 +34,7 @@ window.abrirModalAgendar = function (id, nome, imagem, hora_inicio, hora_fim, du
 
             const modal = document.querySelector('.modal-overlay')
 
-            modal.style.display = 'flex';
+            if (modal) modal.style.display = 'flex';
         }
     })
 };
@@ -44,7 +50,7 @@ window.abrirModalDetalhes = function (nome, descricao, imagem, data, hora, statu
 
             const modal = document.querySelector('.modal-overlay')
 
-            modal.style.display = 'flex';
+            if (modal) modal.style.display = 'flex';
         }
     })
 };
@@ -60,7 +66,7 @@ window.abrirAvaliar = function (id, nome, imagem, data, hora, status) {
 
             const modal = document.querySelector('.modal-overlay')
 
-            modal.style.display = 'flex';
+            if (modal) modal.style.display = 'flex';
         }
     })
 }
@@ -75,7 +81,7 @@ function excluirOferecidos(id) {
 
             const modal = document.querySelector('.modal-overlay')
 
-            modal.style.display = 'flex';
+            if (modal) modal.style.display = 'flex';
         }
     })
 }
@@ -90,7 +96,7 @@ function pausarServico(id, ativo) {
 
             const modal = document.querySelector('.modal-overlay')
 
-            modal.style.display = 'flex';
+            if (modal) modal.style.display = 'flex';
         }
     })
 }
@@ -105,7 +111,7 @@ function abrirEdicao(id, nome, imagem, hora_inicio, hora_fim, duracao, status, d
 
             const modal = document.querySelector('.modal-overlay')
 
-            modal.style.display = 'flex';
+            if (modal) modal.style.display = 'flex';
         }
     })
 }
@@ -120,7 +126,7 @@ function novoServico() {
 
             const modal = document.querySelector('.modal-overlay')
 
-            modal.style.display = 'flex';
+            if (modal) modal.style.display = 'flex';
         }
     })
 }
@@ -140,7 +146,7 @@ window.verAvaliacao = function (nome, imagem, comentario, nota) {
             loadModal.innerHTML = resp;
 
             const modal = document.querySelector('.modal-overlay');
-            modal.style.display = 'flex';
+            if (modal) modal.style.display = 'flex';
         }
     });
 };

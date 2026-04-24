@@ -22,7 +22,7 @@ if (!empty($servico)) :
             <span><?php echo $horaInicio ?></span>
         </div>
         <div class='box-btn'>
-            <a href='./controls/agendar.php?id=<?php echo $s["id"] ?>' class='btn'>
+            <a href='./controls/agendar.act.php?id=<?php echo $s["id"] ?>' class='btn'>
                 Agendar serviço
             </a>
         </div>
