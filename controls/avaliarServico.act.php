@@ -10,9 +10,40 @@ if ($nota == 0) {
     exit;
 }
 
-$id_servico = $_POST['id'];
+if (empty($_POST['id_servico']) || empty($_SESSION['id'])) {
+    $_SESSION["mensagem"] = "Erro ao enviar avaliação.";
+    header("Location: ../historico.php");
+    exit;
+}
+
+$id_cliente = $_SESSION['id'];
+$id_servico = $_POST['id_servico'];
 $comentario = $_POST['comentario'];
 
-$_SESSION["mensagem"] = "Estamos em produção dessa mecânica!!!";
+$dadosSalvar = [
+    "nota" => $nota,
+    "comentario" => $comentario,
+    "id_servico" => $id_servico,
+    "id_cliente" => $id_cliente,
+];
+
+$avaliar = request("avaliacao", "POST", $dadosSalvar);
+
+if (!$avaliar || isset($avaliar['error'])) {
+    $_SESSION["mensagem"] = "Erro ao enviar avaliação!";
+    header("Location: ../historico.php");
+    exit;
+}
+
+$status = request("contratados?id_cliente=eq.{$id_cliente}", "PATCH", [
+    "avaliar" => true
+]);
+
+if (!$status || isset($status['error'])) {
+    $_SESSION["mensagem"] = "Avaliação salva, mas erro ao atualizar status.";
+} else {
+    $_SESSION["mensagem"] = "Avaliação enviada com sucesso!";
+}
+
 header("Location: ../historico.php");
 exit;

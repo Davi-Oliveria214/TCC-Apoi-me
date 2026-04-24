@@ -125,6 +125,26 @@ function novoServico() {
     })
 }
 
+window.verAvaliacao = function (nome, imagem, comentario, nota) {
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: {
+            tipo: "ver_avaliacao",
+            nome_servico: nome,
+            img_servico: imagem,
+            comentario: comentario,
+            nota: nota
+        },
+        success: function (resp) {
+            loadModal.innerHTML = resp;
+
+            const modal = document.querySelector('.modal-overlay');
+            modal.style.display = 'flex';
+        }
+    });
+};
+
 // Fechar
 window.addEventListener('click', function (event) {
     const overlay = document.querySelector('.modal-overlay');

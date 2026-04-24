@@ -8,6 +8,7 @@ $nome_servico = $_GET['nome_servico'] ?? '';
 $desc = $_GET['desc'] ?? '';
 $img_servico = $_GET['img_servico'] ?? '';
 $data = $_GET['data'] ?? '';
+$comentario = $_GET['comentario'];
 $hora_inicio = $_GET['hora_inicio'] ?? '';
 $hora_fim = $_GET['hora_fim'] ?? '';
 $duracao = $_GET['duracao'] ?? '';
@@ -270,6 +271,40 @@ if ($tipo == 'horarios') {
                 <button type="button" onclick="fecharModais()" class="btn-voltar">Cancelar</button>
             </div>
         </form>
+    <?php elseif ($tipo == 'ver_avaliacao'): ?>
+
+        <div class="modal-content modal-padrao">
+            <div class="modal-header">
+                <h3>Avaliação do Serviço</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="mini-card-servico">
+                    <img src="<?php echo $img_servico ?>">
+                    <div>
+                        <strong><?php echo $nome_servico ?></strong>
+                    </div>
+                </div>
+
+                <div style="margin-top:15px;">
+                    <strong>Nota:</strong>
+                    <?php
+                    $nota = (int) $_GET['nota'];
+                    echo str_repeat("★", $nota);
+                    ?>
+                </div>
+
+                <div style="margin-top:10px;">
+                    <strong>Comentário:</strong>
+                    <p><?php echo !empty($comentario) ? $comentario : 'Sem comentário.' ?></p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button onclick="fecharModais()" class="btn-voltar">Fechar</button>
+            </div>
+        </div>
+
     <?php else : ?>
         <div class="modal-content modal-padrao">
             <div class="modal-header">
