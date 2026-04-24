@@ -13,8 +13,9 @@ include('./util/avisos.php');
     <a class="img-logo" href="index.php">
         <img src="./img/condomino.png" alt="Logo">
     </a>
-
-    <input type="text" class="pesquisa" placeholder="Pesquisar">
+    <input type="text" class="pesquisa" id="pesquisa"
+        placeholder="Pesquisar"
+        oninput="pesquisa(this.value)">
 
     <?php
     if (!empty($_SESSION["id"])):

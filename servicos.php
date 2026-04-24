@@ -79,7 +79,7 @@ include('./util/avisos.php');
         </div>
     </section>
 
-    <section class="servicos-publicados">
+    <section class="servicos-publicados resultado-pesquisa">
         <h1>Serviços Disponíveis</h1>
         <section class="sessao-servicos">
             <?php

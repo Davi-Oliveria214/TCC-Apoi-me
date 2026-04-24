@@ -29,7 +29,7 @@ include('./includes/topo.php');
         </ul>
     </section>
 
-    <section class="informacoes-inicial" id="todos-servicos">
+    <section class="informacoes-inicial resultado-pesquisa" id="todos-servicos">
         <?php
         $servicos = request("servicos?select=*&order=criado.desc&limit=10", "GET");
 

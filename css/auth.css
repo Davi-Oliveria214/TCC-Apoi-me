@@ -217,7 +217,7 @@
 }
 
 .recover-input::placeholder {
-    color: var(--dourado);
+    color: rgba(--preto-rgba, 0.5);
 }
 
 .recover-button {

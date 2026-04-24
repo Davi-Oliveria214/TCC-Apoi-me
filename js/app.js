@@ -163,3 +163,17 @@ document.addEventListener('change', function (e) {
     reader.readAsDataURL(file);
   }
 });
+
+function pesquisa(valor) {
+  $.ajax({
+    url: "./includes/pesquisa.php",
+    type: "GET",
+    data: { pesquisa: valor },
+    success: function (resp) {
+      const resultado = document.querySelector(".resultado-pesquisa");
+      if (resultado) {
+        resultado.innerHTML = resp;
+      }
+    }
+  });
+}
