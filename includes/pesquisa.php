@@ -16,6 +16,7 @@ if (!empty($servicos) && !isset($servicos['error'])):
         $horaInicio = $servico['hora_inicio'] != null ? date('H:i', strtotime($servico['hora_inicio'])) : "Não informado";
         $horaFim = date('H:i', strtotime($servico['hora_fim']));
         $imagem = $servico['imagem'];
+        $duracao = date('H:i', strtotime($servico['duracao']));
 ?>
         <div class='card card-servico' data-id='<?php echo $servico["id"] ?>'>
             <img src='<?php echo $imagem ?>' alt=''>
@@ -26,7 +27,7 @@ if (!empty($servicos) && !isset($servicos['error'])):
                     <span><?php echo $horaInicio ?></span>
                 </div>
                 <div class='box-btn'>
-                    <button onclick="abrirModalAgendar(<?php echo $servico['id'] ?>, '<?php echo $servico['nome'] ?>', '<?php echo $servico['imagem'] ?>')" class="btn">
+                    <button onclick="abrirModalAgendar('<?php echo $servico['id'] ?>', '<?php echo $servico['nome'] ?>', '<?php echo $imagem ?>', '<?php echo $horaInicio ?>', '<?php echo $horaFim ?>', '<?php echo $duracao  ?>')" class="btn">
                         Agendar serviço
                     </button>
                 </div>

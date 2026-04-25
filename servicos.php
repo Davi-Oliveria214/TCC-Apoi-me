@@ -26,7 +26,7 @@ include('./util/avisos.php');
             <h1>Reservados</h1>
             <div class="box">
                 <?php
-                $endpoint = "contratados?id_cliente=eq.$id&select=id,dia,hora,confirmado,id_servico,servicos(nome,descricao,imagem,id_prestador)&order=dia.desc";
+                $endpoint = "contratados?id_cliente=eq.$id&select=id,dia,hora,confirmado,id_servico,observacao,servicos(nome,descricao,imagem,id_prestador)&order=dia.desc";
                 $sql = request($endpoint, "GET");
 
                 if (!empty($sql) && !isset($sql['error'])) :
@@ -61,7 +61,8 @@ include('./util/avisos.php');
                                                 '<?php echo $imgRes ?>', 
                                                 '<?php echo $dataRes ?>', 
                                                 '<?php echo $horario ?>', 
-                                                '<?php echo $status ?>'
+                                                '<?php echo $status ?>',
+                                                '<?php echo $res['observacao'] ?>'
                                             )">
                                         Ver Detalhes
                                     </a>
@@ -79,9 +80,9 @@ include('./util/avisos.php');
         </div>
     </section>
 
-    <section class="servicos-publicados resultado-pesquisa">
+    <section class="servicos-publicados">
         <h1>Serviços Disponíveis</h1>
-        <section class="sessao-servicos">
+        <section class="sessao-servicos resultado-pesquisa">
             <?php
             $sql = request("servicos?codigo=eq.{$_SESSION['codigo']}&select=*&order=nome.asc");
 
@@ -106,7 +107,7 @@ include('./util/avisos.php');
                             </div>
 
                             <div class="box-btn-servico">
-                                <button onclick="abrirModalAgendar(<?php echo $servico['id'] ?>, '<?php echo $servico['nome'] ?>', '<?php echo $imgServ ?>', '<?php echo $horaInicio ?>', '<?php echo $horaFim ?>', '<?php echo $duracao  ?>')" class="btn">
+                                <button onclick="abrirModalAgendar('<?php echo $servico['id'] ?>', '<?php echo $servico['nome'] ?>', '<?php echo $imgServ ?>', '<?php echo $horaInicio ?>', '<?php echo $horaFim ?>', '<?php echo $duracao ?>')" class="btn">
                                     Agendar serviço
                                 </button>
                                 <a href="./mensagens.php?id=<?php echo $servico['id']; ?>" class="btn">Chat</a>

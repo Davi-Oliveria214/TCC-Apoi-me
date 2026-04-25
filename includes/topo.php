@@ -14,8 +14,8 @@ include('./util/avisos.php');
         <img src="./img/condomino.png" alt="Logo">
     </a>
 
-    <input type="text" class="pesquisa" placeholder="Pesquisar"
-        oninput="if(this.value.length > 0) pesquisa(this.value)">
+    <input type="text" name="pesquisa" id="pesquisa" placeholder="Pesquisar"
+        oninput="pesquisa(this.value)">
 
     <?php
     if (!empty($_SESSION["id"])):
@@ -63,7 +63,7 @@ include('./util/avisos.php');
                 <li><a href="../usuario.php">Perfil</a></li>
                 <li><a href="../servicos.php">Serviços</a></li>
                 <li><a href="../mensagens.php">Chat</a></li>
-                <li><a href="../oferecidos.php">Anunciar</a></li>
+                <li><a href="../anunciar.php">Anunciar</a></li>
                 <li class="sair-logout"><a href="./includes/logout.php">Sair</a></li>
                 <li class="historico"><a href="../historico.php">Histórico</a></li>
                 <?php if ($tipo_usuario == 1): ?>

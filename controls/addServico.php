@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../conexao.php');
 
 if (empty($_POST['nome']) || empty($_POST['categoria']) || empty($_POST['descricao']) || empty($_POST['hora_inicio']) || empty($_POST['hora_fim']) || empty($_POST['duracao'])) {
     $_SESSION["mensagem"] = "Preencha os campos obrigatórios.";
-    header("Location: ../oferecidos.php");
+    header("Location: ../anunciar.php");
     exit;
 }
 
@@ -46,10 +46,10 @@ $sql = request("servicos", "POST", $dadosSalvar);
 
 if (isset($sql['error'])) {
     $_SESSION["mensagem"] = "Erro ao enviar serviço";
-    header("Location: ../oferecidos.php");
+    header("Location: ../anunciar.php");
     exit;
 }
 
 $_SESSION["mensagem"] = "Serviço anúnciado com sucesso!!!";
-header("Location: ../oferecidos.php");
+    header("Location: ../anunciar.php");
 exit;

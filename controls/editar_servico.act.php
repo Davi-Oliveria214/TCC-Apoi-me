@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../conexao.php');
 
 if (empty($_POST['nome']) || empty($_POST['descricao']) || empty($_POST['hora_inicio']) || empty($_POST['hora_fim']) || empty($_POST['duracao'])) {
     $_SESSION["mensagem"] = "Preencha os campos obrigatórios.";
-    header("Location: ../oferecidos.php");
+    header("Location: ../anunciar.php");
     exit;
 }
 
@@ -20,7 +20,7 @@ $verificar = request("servicos?id_prestador=eq.{$id_prestador}&id=eq.{$id_servic
 
 if (empty($verificar) || isset($verificar['error'])) {
     $_SESSION["mensagem"] = "Erro: Serviço não encontrado ou você não tem permissão.";
-    header("Location: ../oferecidos.php");
+    header("Location: ../anunciar.php");
     exit;
 }
 
@@ -47,10 +47,10 @@ $edit = request("servicos?id_prestador=eq.{$id_prestador}&id=eq.{$id_servico}", 
 
 if (isset($edit['error'])) {
     $_SESSION["mensagem"] = "Erro ao editar serviço";
-    header("Location: ../oferecidos.php");
+    header("Location: ../anunciar.php");
     exit;
 }
 
 $_SESSION["mensagem"] = "Serviço editado com sucesso!!!";
-header("Location: ../oferecidos.php");
+    header("Location: ../anunciar.php");
 exit;

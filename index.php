@@ -36,8 +36,9 @@ include('./includes/topo.php');
         if (!empty($servicos) && !isset($servicos['error'])) :
             shuffle($servicos);
             foreach ($servicos as $servico) :
-                $horaInicio = $servico['hora_inicio'] != null ? date('H:i', strtotime($servico['hora_inicio'])) : "Não informado";
+                $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
                 $horaFim = date('H:i', strtotime($servico['hora_fim']));
+                $duracao = date('H:i', strtotime($servico['duracao']));
                 $imagem = $servico['imagem'];
         ?>
                 <div class='card card-servico' data-id='<?php echo $servico["id"] ?>'>
@@ -48,11 +49,9 @@ include('./includes/topo.php');
                             <p><?php echo $servico['descricao'] ?></p>
                             <span><?php echo $horaInicio ?></span>
                         </div>
-                        <div class='box-btn'>
-                            <button onclick="abrirModalAgendar(<?php echo $servico['id'] ?>, '<?php echo $servico['nome'] ?>', '<?php echo $servico['imagem'] ?>')" class="btn">
-                                Agendar serviço
-                            </button>
-                        </div>
+                        <button onclick="abrirModalAgendar('<?php echo $servico['id'] ?>', '<?php echo $servico['nome'] ?>', '<?php echo $imagem ?>', '<?php echo $horaInicio ?>', '<?php echo $horaFim ?>', '<?php echo $duracao ?>')" class="btn">
+                            Agendar serviço
+                        </button>
                     </div>
                 </div>
         <?php

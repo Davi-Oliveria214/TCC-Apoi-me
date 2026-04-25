@@ -126,7 +126,7 @@
 }
 
 /* Elementos de Interface */
-.pesquisa {
+#pesquisa {
     width: clamp(180px, 50%, 350px);
     padding: 5px 10px;
     border-radius: 20px;
@@ -136,7 +136,7 @@
     outline: none;
 }
 
-.pesquisa::placeholder {
+#pesquisa::placeholder {
     color: rgba(var(--dourado-fraco-rgba), 1);
 }
 

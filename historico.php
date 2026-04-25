@@ -17,6 +17,7 @@ include('./includes/topo.php');
                 shuffle($servicos);
 
                 foreach ($servicos as $servico) :
+                    $hora = date('H:i', strtotime($servico['hora']));
             ?>
                     <div class='card card-servico' data-id='<?php echo $servico["id"] ?>'>
                         <img src='<?php echo $servico['servicos']['imagem'] ?>' alt=''>
@@ -24,10 +25,10 @@ include('./includes/topo.php');
                             <div class='info-card'>
                                 <h2 class='titulo-card'><?php echo $servico['servicos']['nome'] ?></h2>
                                 <p><?php echo $servico['servicos']['descricao'] ?></p>
-                                <span></span>
+                                <span><?php echo $hora ?></span>
                             </div>
                             <div class='box-btn'>
-                                <button type="button" onclick="abrirAvaliar('<?php echo $servico['servicos']['id'] ?>', '<?php echo $servico['servicos']['nome'] ?>', '<?php echo $servico['servicos']['imagem'] ?>', '<?php echo $servico['dia'] ?>', '<?php echo $servico['hora'] ?>', '<?php echo $servico['confirmado'] ?>')" class="btn">Avaliar serviço</button>
+                                <button type="button" onclick="abrirAvaliar('<?php echo $servico['servicos']['id'] ?>', '<?php echo $servico['servicos']['nome'] ?>', '<?php echo $servico['servicos']['imagem'] ?>', '<?php echo $servico['dia'] ?>', '<?php echo $servico['hora'] ?>', '<?php echo $servico['confirmado'] ?>', '<?php echo $servico['id'] ?>')" class="btn">Avaliar serviço</button>
                             </div>
                         </div>
                     </div>
@@ -53,7 +54,7 @@ include('./includes/topo.php');
 
                 foreach ($servicos as $servico) :
                     $hora = date('H:i', strtotime($servico['hora']));
-                    $imagem = !empty($servico['servicos']['imagem']) ? $servico['servicos']['imagem'] : './img/default.jpg';
+                    $imagem = $servico['servicos']['imagem'];
             ?>
                     <div class='card card-servico' data-id='<?php echo $servico['servicos']["id"] ?>'>
                         <img src='<?php echo $servico['servicos']['imagem'] ?>' alt=''>
@@ -64,7 +65,7 @@ include('./includes/topo.php');
                                 <span><?php echo $hora ?></span>
                             </div>
                             <div class='box-btn'>
-                                <button class='btn' onclick="abrirAvaliar(<?php echo $servico['id'] ?>, <?php echo $servico['servicos']['nome'] ?>, <?php echo $servico['servicos']['imagem'] ?>, <?php echo $servico['dia'] ?>, <?php echo $servico['hora'] ?>, <?php echo $servico['confirmado'] ?>)">Avaliar serviço</button>
+                                <button class='btn' onclick="abrirAvaliar('<?php echo $servico['id'] ?>', '<?php echo $servico['servicos']['nome'] ?>', '<?php echo $servico['servicos']['imagem'] ?>', '<?php echo $servico['dia'] ?>', '<?php echo $servico['hora'] ?>', '<?php echo $servico['confirmado'] ?>', '<?php echo $servico['id'] ?>')">Avaliar serviço</button>
                             </div>
                         </div>
                     </div>
@@ -105,7 +106,8 @@ include('./includes/topo.php');
                                             '<?php echo $servico['servicos']['nome'] ?>',
                                             '<?php echo $imagem ?>',
                                             '<?php echo addslashes($servico['avaliacao'][0]['comentario'] ?? '') ?>',
-                                            '<?php echo $servico['avaliacao'][0]['nota'] ?? 0 ?>'
+                                            '<?php echo $servico['avaliacao'][0]['nota'] ?>',
+                                            '<?php echo $servico['id'] ?>'
                                         )">
                                     Ver avaliação
                                 </button>

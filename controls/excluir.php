@@ -9,7 +9,7 @@ $verificar = request("servicos?id_prestador=eq.{$id}&id=eq.{$id_servico}", "GET"
 
 if (empty($verificar) || isset($verificar['error'])) {
     $_SESSION["mensagem"] = "Erro: Serviço não encontrado ou você não tem permissão.";
-    header("Location: ../oferecidos.php");
+    header("Location: ../anunciar.php");
     exit;
 }
 
@@ -21,5 +21,5 @@ if (isset($del['error'])) {
     $_SESSION["mensagem"] = "Serviço excluído com sucesso!";
 }
 
-header("Location: ../oferecidos.php");
+header("Location: ../anunciar.php");
 exit;

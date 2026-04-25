@@ -164,6 +164,7 @@ document.addEventListener('change', function (e) {
   }
 });
 
+// Barra de pesquisa
 function pesquisa(valor) {
   $.ajax({
     url: "./includes/pesquisa.php",

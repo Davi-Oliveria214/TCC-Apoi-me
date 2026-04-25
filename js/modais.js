@@ -20,8 +20,7 @@ window.cancelar = function (id) {
 // --- MODAL AGENDAR ---
 window.abrirModalAgendar = function (id, nome, imagem, hora_inicio, hora_fim, duracao) {
     if (!window.usuarioLogado) {
-        alert("Você precisa estar logado para agendar!");
-        window.location.href = "./login.php";
+        window.location.href = "./util/setAviso.php";
         return;
     }
 
@@ -40,11 +39,16 @@ window.abrirModalAgendar = function (id, nome, imagem, hora_inicio, hora_fim, du
 };
 
 // --- MODAL DETALHES ---
-window.abrirModalDetalhes = function (nome, descricao, imagem, data, hora, status) {
+window.abrirModalDetalhes = function (nome, descricao, imagem, data, hora, status, obs) {
+    if (!window.usuarioLogado) {
+        window.location.href = "./util/setAviso.php";
+        return;
+    }
+
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",
-        data: { nome_servico: nome, desc: descricao, img_servico: imagem, data: data, hora_inicio: hora, status: status },
+        data: { nome_servico: nome, desc: descricao, img_servico: imagem, data: data, hora_inicio: hora, status: status, observacao: obs },
         success: function (resp) {
             loadModal.innerHTML = resp
 
@@ -56,11 +60,16 @@ window.abrirModalDetalhes = function (nome, descricao, imagem, data, hora, statu
 };
 
 // Modal avaliar
-window.abrirAvaliar = function (id, nome, imagem, data, hora, status) {
+window.abrirAvaliar = function (id, nome, imagem, data, hora, status, id_contrato) {
+    if (!window.usuarioLogado) {
+        window.location.href = "./util/setAviso.php";
+        return;
+    }
+
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",
-        data: { tipo: "avaliar", id_registro: id, nome_servico: nome, img_servico: imagem, data: data, hora: hora, status: status },
+        data: { tipo: "avaliar", id_registro: id, nome_servico: nome, img_servico: imagem, data: data, hora: hora, status: status, id_contrato: id_contrato },
         success: function (resp) {
             loadModal.innerHTML = resp
 
@@ -72,6 +81,11 @@ window.abrirAvaliar = function (id, nome, imagem, data, hora, status) {
 }
 
 function excluirOferecidos(id) {
+    if (!window.usuarioLogado) {
+        window.location.href = "./util/setAviso.php";
+        return;
+    }
+
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",
@@ -87,6 +101,11 @@ function excluirOferecidos(id) {
 }
 
 function pausarServico(id, ativo) {
+    if (!window.usuarioLogado) {
+        window.location.href = "./util/setAviso.php";
+        return;
+    }
+
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",
@@ -102,6 +121,11 @@ function pausarServico(id, ativo) {
 }
 
 function abrirEdicao(id, nome, imagem, hora_inicio, hora_fim, duracao, status, descricao) {
+    if (!window.usuarioLogado) {
+        window.location.href = "./util/setAviso.php";
+        return;
+    }
+
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",
@@ -117,6 +141,11 @@ function abrirEdicao(id, nome, imagem, hora_inicio, hora_fim, duracao, status, d
 }
 
 function novoServico() {
+    if (!window.usuarioLogado) {
+        window.location.href = "./util/setAviso.php";
+        return;
+    }
+
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",
@@ -132,6 +161,11 @@ function novoServico() {
 }
 
 window.verAvaliacao = function (nome, imagem, comentario, nota) {
+    if (!window.usuarioLogado) {
+        window.location.href = "./util/setAviso.php";
+        return;
+    }
+
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",

@@ -19,12 +19,14 @@ if (empty($_POST['id_servico']) || empty($_SESSION['id'])) {
 $id_cliente = $_SESSION['id'];
 $id_servico = $_POST['id_servico'];
 $comentario = $_POST['comentario'];
+$id_contrato = $_POST['id_contrato'];
 
 $dadosSalvar = [
     "nota" => $nota,
     "comentario" => $comentario,
     "id_servico" => $id_servico,
     "id_cliente" => $id_cliente,
+    "id_contrato" => $id_contrato
 ];
 
 $avaliar = request("avaliacao", "POST", $dadosSalvar);
@@ -35,7 +37,7 @@ if (!$avaliar || isset($avaliar['error'])) {
     exit;
 }
 
-$status = request("contratados?id_cliente=eq.{$id_cliente}", "PATCH", [
+$status = request("contratados?id=eq.{$id_contrato}", "PATCH", [
     "avaliar" => true
 ]);
 
