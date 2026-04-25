@@ -1,5 +1,7 @@
 <?php
-session_start();
+require_once(__DIR__ . '/../includes/funcoes.php');
+exigirMetodo();
+
 require_once(__DIR__ . '/../conexao.php');
 
 if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['telefone']) || empty($_POST['comentario']) || empty($_POST['nota'])) {

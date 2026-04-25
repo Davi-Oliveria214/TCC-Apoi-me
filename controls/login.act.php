@@ -1,9 +1,11 @@
 <?php
-session_start();
+require_once(__DIR__ . '/../includes/funcoes.php');
+exigirMetodo();
+
 require_once(__DIR__ . '/../conexao.php');
 require_once(__DIR__ . '/../util/enviar_email.php');
 
-// 1. Validação de campos vazios
+// Validação de campos vazios
 if (
     empty($_POST['email']) ||
     empty($_POST['senha']) ||
@@ -18,23 +20,23 @@ $email = trim($_POST['email']);
 $senha = $_POST['senha'];
 $chave = trim($_POST['chave']);
 
-// 2. Busca o usuário no banco
+// Busca o usuário no banco
 $sql = request("usuarios?email=eq." . urlencode($email) . "&select=*", "GET");
 
 if (empty($sql) || isset($sql['error'])) {
-    $_SESSION["mensagem"] = "E-mail não cadastrado.";
+    $_SESSION["mensagem"] = "Email ou senha inválidos.";
     header("Location: ../cadastro.php");
     exit;
 }
 
 $usuario = $sql[0];
 
-// 3. VERIFICAÇÃO DE E-MAIL
+// VERIFICAÇÃO DE E-MAIL
 if (!$usuario['email_verificado']) {
     $nome = $usuario['nome'];
 
     // Gerar código e pegar horario
-    $codigo = rand(100000, 999999);
+    $codigo = random_int(100000, 999999);
     $agora = date('Y-m-d H:i:sO');
 
     // Salvando no banco de dados
@@ -51,14 +53,14 @@ if (!$usuario['email_verificado']) {
     exit;
 }
 
-// 4. Validação da Senha
+// Validação da Senha
 if (!password_verify($senha, $usuario['senha'])) {
-    $_SESSION["mensagem"] = "Senha incorreta.";
+    $_SESSION["mensagem"] = "Email ou senha inválidos.";
     header("Location: ../login.php");
     exit;
 }
 
-// 5. Validação da Chave do Condomínio / Buscamos se o código do condomínio existe
+// Validação da Chave do Condomínio / Buscamos se o código do condomínio existe
 $sqlChave = request("condominios?codigo=eq." . urlencode($chave) . "&select=id", "GET");
 
 if (empty($sqlChave) || isset($sqlChave['error'])) {
@@ -67,7 +69,7 @@ if (empty($sqlChave) || isset($sqlChave['error'])) {
     exit;
 }
 
-// 6. Vinculação do usuário ao condomínio (PATCH)
+// Vinculação do usuário ao condomínio (PATCH)
 $dadosUpdate = ["codigo" => (int)$chave];
 $update = request("usuarios?id=eq.{$usuario['id']}", "PATCH", $dadosUpdate);
 
@@ -77,7 +79,7 @@ if (isset($update['error'])) {
     exit;
 }
 
-// 7. Autenticação com sucesso - Criação da Sessão
+// Autenticação com sucesso - Criação da Sessão
 $_SESSION["id"] = $usuario['id'];
 $_SESSION["nome"] = $usuario['nome'];
 $_SESSION["login"] = true;

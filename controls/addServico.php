@@ -1,9 +1,7 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+require_once(__DIR__ . '/../includes/funcoes.php');
+exigirMetodo();
 
-session_start();
 require_once(__DIR__ . '/../conexao.php');
 
 if (empty($_POST['nome']) || empty($_POST['categoria']) || empty($_POST['descricao']) || empty($_POST['hora_inicio']) || empty($_POST['hora_fim']) || empty($_POST['duracao'])) {

@@ -35,35 +35,14 @@ function enviarEmail($email, $nome, $codigo, $fluxo = 'cadastro', $chave = '')
             $link = $_ENV['EMAIL_URL'] . "?email=" . urlencode($email) . "&codigo=" . $codigo . "&tipo_codigo=" . trim($fluxo);
         }
 
-        $corpoEmail = "";
-        if (trim($fluxo) === 'cadastro') {
-            $corpoEmail = "<h2>Bem-vindo ao Apoie-me!</h2>
-                          <p>Olá <b>$nomeEscapado</b>, seu código de ativação é: <b>$codigo</b></p>
-                          <a href='$link'>Clique aqui para validar sua conta</a>";
-        } else if (trim($fluxo) === 'recuperar') {
-            $corpoEmail = "<h2>Recuperação de Senha</h2>
-                          <p>Olá <b>$nomeEscapado</b>, seu código de segurança é: <b>$codigo</b></p>
-                          <p>Use o link para prosseguir: <a href='$link'>Redefinir Senha</a></p>";
-        } else if (trim($fluxo) === 'chave') {
-            $corpoEmail = "<h2>Bem-vindo, Administrador!</h2>
-                  <p>Olá <b>$nomeEscapado</b>, sua conta foi criada com sucesso.</p>
-                  <p>Seu código de ativação é: <b>$codigo</b></p>
-                  <p><b>Chave de Acesso do seu Condomínio:</b> <span style='font-size: 20px; color: #b0822b;'>$chave</span></p>
-                  <p>Compartilhe esta chave apenas com os moradores do seu prédio.</p>
-                  <p><a href='$link'>Clique aqui para validar sua conta e começar</a></p>";
-        } else {
-            $corpoEmail = "<h2>Seu código de verificação Apoie-me</h2>
-                  <p>Olá $nomeEscapado, seu código é: <b>$codigo</b></p>
-                  <p>Use o link para prosseguir: <a href='$link'>Link código</a></p>";
-        }
-        $mail->Body = $corpoEmail;
+        $mail->Body = textosEmails($nome, $codigo, $link, $fluxo, $chave);
         $mail->AltBody = "Olá $nomeEscapado, seu código de verificação é: $codigo";
 
         $mail->send();
+
+        return true;
     } catch (Exception $e) {
-        $_SESSION["mensagem"] = "Erro ao enviar email";
-        header("Location: ../cadastro.php");
-        exit;
+        return false;
     }
 }
 
@@ -122,5 +101,34 @@ function emailContato($email, $nome, $comentario)
         $_SESSION["mensagem"] = "Sua mensagem foi enviada com sucesso!";
     } catch (Exception $e) {
         $_SESSION["mensagem"] = "Erro ao enviar contato. Tente novamente mais tarde.";
+    }
+}
+
+function textosEmails($nome, $codigo, $link, $fluxo, $chave = '')
+{
+    $nomeEscapado = htmlspecialchars($nome);
+
+    switch (trim($fluxo)) {
+        case 'cadastro':
+            return "<h2>Bem-vindo ao Apoie-me!</h2>
+                    <p>Olá <b>$nomeEscapado</b>, seu código de ativação é: <b>$codigo</b></p>
+                    <a href='$link'>Clique aqui para validar sua conta</a>";
+
+        case 'recuperar':
+            return "<h2>Recuperação de Senha</h2>
+                    <p>Olá <b>$nomeEscapado</b>, seu código de segurança é: <b>$codigo</b></p>
+                    <p>Use o link: <a href='$link'>Redefinir Senha</a></p>";
+
+        case 'chave':
+            return "<h2>Bem-vindo, Administrador!</h2>
+                    <p>Olá <b>$nomeEscapado</b>, sua conta foi criada.</p>
+                    <p>Código: <b>$codigo</b></p>
+                    <p><b>Chave:</b> <span style='font-size:20px;color:#b0822b;'>$chave</span></p>
+                    <a href='$link'>Validar conta</a>";
+
+        default:
+            return "<h2>Código de verificação</h2>
+                    <p>Olá $nomeEscapado, seu código é: <b>$codigo</b></p>
+                    <a href='$link'>Abrir link</a>";
     }
 }

@@ -1,5 +1,7 @@
 <?php
-session_start();
+require_once(__DIR__ . '/../includes/funcoes.php');
+exigirMetodo();
+
 require_once(__DIR__ . '/../conexao.php');
 
 if (!isset($_SESSION['email_reset_aprovado'])) {
@@ -9,13 +11,13 @@ if (!isset($_SESSION['email_reset_aprovado'])) {
 
 if (empty($_POST['senha']) || empty($_POST['rpt_senha'])) {
     $_SESSION["mensagem"] = "Preencha todos os campos.";
-    header("Location: ../nova_senha.php");
+    header("Location: ../redefinir_senha.php");
     exit;
 }
 
 if ($_POST['senha'] != $_POST['rpt_senha']) {
     $_SESSION["mensagem"] = "A senhas não são iguais";
-    header("Location: ../nova_senha.php");
+    header("Location: ./redefinir_senha.php");
     exit;
 }
 
@@ -30,5 +32,5 @@ $dados = [
 $res = request("usuarios?email=eq.$email", "PATCH", $dados);
 
 $msg = urlencode("Senha alterada! Por favor, faça login novamente.");
-header("Location: ../util/limpar_sessao.php?msg=$msg");
+header("Location: ./util/limpar_sessao.php?msg=$msg");
 exit();

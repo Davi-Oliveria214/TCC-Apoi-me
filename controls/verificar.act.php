@@ -1,5 +1,7 @@
 <?php
-session_start();
+require_once(__DIR__ . '/../includes/funcoes.php');
+exigirMetodo();
+
 require_once(__DIR__ . '/../conexao.php');
 
 $email = $_SESSION['email_verificar'] ?? $_POST['email'] ?? $_GET['email'] ?? null;
@@ -37,7 +39,7 @@ if (!empty($user) && isset($user[0]['codigo_verificacao']) && $user[0]['codigo_v
     if ($tipo_codigo == 'recuperar') {
         $_SESSION['email_reset_aprovado'] = $email;
         unset($_SESSION['email_verificar']);
-        header("Location: ../nova_senha.php");
+        header("Location: ..redefinir_senha.php");
         exit;
     }
 

@@ -1,4 +1,7 @@
 <?php
+require_once './includes/funcoes.php';
+loginFeito();
+
 include("./includes/head.php");
 include("./includes/topo.php");
 ?>
@@ -10,15 +13,15 @@ include("./includes/topo.php");
                 <h1>Login</h1>
                 <div class="box-auth">
                     <label for="idChave">Chave de acesso</label>
-                    <input type="text" name="chave" id="idChave" placeholder="Chave" required>
+                    <input type="text" name="chave" id="idChave" onkeydown="if(event.key === ' ') event.preventDefault()" placeholder="Chave" required>
                 </div>
                 <div class="box-auth">
                     <label for="idEmail">Email</label>
-                    <input type="email" name="email" id="idEmail" placeholder="Email" required>
+                    <input type="email" name="email" id="idEmail" onkeydown="if(event.key === ' ') event.preventDefault()" placeholder="Email" required>
                 </div>
                 <div class="box-auth">
                     <label for="idSenha">Senha</label>
-                    <input type="password" name="senha" id="idSenha" placeholder="Senha" required>
+                    <input type="password" name="senha" id="idSenha" onkeydown="if(event.key === ' ') event.preventDefault()" placeholder="Senha" required>
                 </div>
                 <div class="box-btn">
                     <a href="./enviar_codigo.php?tipo_envio=redefinir" class="btn-link">Esqueci a senha</a>

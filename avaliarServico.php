@@ -1,4 +1,7 @@
 <?php
+require_once './includes/funcoes.php';
+exigirLogin();
+
 include('./includes/head.php');
 include('./includes/topo.php');
 ?>
@@ -87,4 +90,4 @@ include('./includes/topo.php');
   });
 </script>
 
-<?php include("./includes/rodape.php"); ?>
+<?php include('./includes/rodape.php'); ?>

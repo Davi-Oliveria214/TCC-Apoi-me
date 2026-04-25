@@ -1,6 +1,8 @@
 <?php
+require_once(__DIR__ . '/../includes/funcoes.php');
+exigirMetodo();
+
 require_once(__DIR__ . '/../conexao.php');
-@session_start();
 
 if (empty($_POST['nome']) || empty($_POST['descricao']) || empty($_POST['hora_inicio']) || empty($_POST['hora_fim']) || empty($_POST['duracao'])) {
     $_SESSION["mensagem"] = "Preencha os campos obrigatórios.";

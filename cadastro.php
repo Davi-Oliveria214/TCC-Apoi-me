@@ -1,7 +1,9 @@
 <?php
+require_once './includes/funcoes.php';
+loginFeito();
+
 include('./includes/head.php');
-include("./includes/topo.php");
-include('./util/avisos.php');
+include('./includes/topo.php');
 ?>
 
 <div class="div-auth">
@@ -15,15 +17,15 @@ include('./util/avisos.php');
                 </div>
                 <div class="box-auth">
                     <label for="idEmail">Email</label>
-                    <input type="email" name="email" id="idEmail" placeholder="Email" required>
+                    <input type="email" name="email" id="idEmail" placeholder="Email" onkeydown="if(event.keyCode == 32)" required>
                 </div>
                 <div class="box-auth">
                     <label for="idSenha">Senha (min: 8)</label>
-                    <input type="password" name="senha" id="idSenha" placeholder="Senha" required>
+                    <input type="password" name="senha" id="idSenha" min="8" onkeydown="if(event.key === ' ') event.preventDefault()" placeholder="Senha" required>
                 </div>
                 <div class="box-auth">
                     <label for="idRptSenha">Repita senha (min: 8)</label>
-                    <input type="password" name="rptSenha" id="idRptSenha" placeholder="Repita senha" required>
+                    <input type="password" name="rptSenha" id="idRptSenha" min="8" onkeydown="if(event.key === ' ') event.preventDefault()" placeholder="Repita senha" required>
                 </div>
 
                 <div class="box-auth">
@@ -42,6 +44,7 @@ include('./util/avisos.php');
 
                 <div class="box-btn">
                     <button type="submit" class="btn btn-auth">Criar conta</button>
+                    <a href="./login.php" class="btn btn-auth">Login</a>
                 </div>
             </form>
         </div>
@@ -65,4 +68,4 @@ include('./util/avisos.php');
     <img src="./img/banner.png" alt="" class="banner">
 </div>
 
-<?php include("./includes/rodape.php"); ?>
+<?php include('./includes/rodape.php'); ?>

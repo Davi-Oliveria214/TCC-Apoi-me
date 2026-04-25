@@ -1,4 +1,7 @@
 <?php
+require_once './includes/funcoes.php';
+exigirLogin();
+
 include('./includes/head.php');
 include('./includes/topo.php');
 ?>

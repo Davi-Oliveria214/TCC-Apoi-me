@@ -1,6 +1,6 @@
 <?php
-include("./includes/head.php");
-include("./includes/topo.php");
+include('./includes/head.php');
+include('./includes/topo.php');
 ?>
 
 <div class="div-auth">
@@ -43,4 +43,4 @@ include("./includes/topo.php");
     <img src="./img/banner.png" alt="" class="banner">
 </div>
 
-<?php include("./includes/rodape.php"); ?>
+<?php include('./includes/rodape.php'); ?>

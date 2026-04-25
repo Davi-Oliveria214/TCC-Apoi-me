@@ -1,7 +1,6 @@
 <?php
-include("./includes/head.php");
-include("./includes/topo.php");
-include('./util/avisos.php');
+include('./includes/head.php');
+include('./includes/topo.php');
 
 $tipo = $_GET['tipo_envio'] ?? '';
 ?>
@@ -33,4 +32,4 @@ $tipo = $_GET['tipo_envio'] ?? '';
     <img src="./img/banner.png" alt="" class="banner">
 </div>
 
-<?php include("./includes/rodape.php"); ?>
+<?php include('./includes/rodape.php'); ?>

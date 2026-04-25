@@ -22,8 +22,8 @@ if (isset($_SESSION['id_usuario']) && $_SESSION['email_usuario'] !== $email_url)
 $_SESSION['email_verificar'] = $email_url;
 $_SESSION['tipo_codigo'] = $tipo_codigo;
 
-include("./includes/head.php");
-include("./includes/topo.php");
+include('./includes/head.php');
+include('./includes/topo.php');
 ?>
 
 <main class="autenticar">
@@ -48,4 +48,4 @@ include("./includes/topo.php");
     </div>
 </main>
 
-<?php include("./includes/rodape.php"); ?>
+<?php include('./includes/rodape.php'); ?>
