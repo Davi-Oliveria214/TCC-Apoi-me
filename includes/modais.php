@@ -271,6 +271,7 @@ if ($tipo == 'horarios') {
                 <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
             </div>
         </form>
+        
     <?php elseif ($tipo == 'ver_avaliacao'): ?>
 
         <div class="modal-content modal-padrao">

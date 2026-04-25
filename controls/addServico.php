@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 require_once(__DIR__ . '/../conexao.php');
 
@@ -17,16 +21,55 @@ $hora_inicio = $_POST['hora_inicio'];
 $hora_fim = $_POST['hora_fim'];
 $duracao = $_POST['duracao'];
 
-$data;
-if (!empty($_POST['data'])) {
-    $data = $_POST['data'];
-}
+$data = !empty($_POST['data']) ? $_POST['data'] : null;
 
-$imagem;
-if (!empty($_POST['imagem'])) {
-    $imagem = $_POST['imagem'];
-} else {
-    $imagem = "./img/condomino.png";
+$bucket = $_ENV['BALDE'];
+$imagem = trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/$bucket/deufalt.png";
+
+if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
+    $arquivo = $_FILES['imagem'];
+
+    $tmp = $arquivo['tmp_name'];
+    $nomeImg = $arquivo['name'];
+
+    $nomeFinal = uniqid() . "_" . $nomeImg;
+
+    $url = trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/$bucket/$nomeFinal";
+
+    $ch = curl_init($url);
+
+    $extensao = pathinfo($nomeImg, PATHINFO_EXTENSION);
+    $tipoMime = ($extensao == 'png') ? 'image/png' : 'image/jpeg';
+
+    curl_setopt_array($ch, [
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_HTTPHEADER => [
+            "Authorization: Bearer " . trim($_ENV['BALDE_KEY']),
+            "Content-Type: " . $tipoMime
+        ],
+        CURLOPT_POSTFIELDS => file_get_contents($tmp)
+    ]);
+
+    $response = curl_exec($ch);
+
+    if (curl_errno($ch)) {
+        $_SESSION["mensagem"] = "Erro CURL: " . curl_error($ch);
+        header("Location: ../anunciar.php");
+        exit;
+    }
+
+    $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    if ($status != 200 && $status != 201) {
+        $_SESSION["mensagem"] = "Erro no upload (HTTP $status): $response";
+        header("Location: ../anunciar.php");
+        exit;
+    }
+
+    $imagem = $_ENV['SUPABASE_URL'] . "/storage/v1/object/public/$bucket/$nomeFinal";
 }
 
 $dadosSalvar = [
@@ -51,5 +94,5 @@ if (isset($sql['error'])) {
 }
 
 $_SESSION["mensagem"] = "Serviço anúnciado com sucesso!!!";
-    header("Location: ../anunciar.php");
+header("Location: ../anunciar.php");
 exit;
