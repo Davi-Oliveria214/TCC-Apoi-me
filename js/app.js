@@ -134,14 +134,31 @@ document.addEventListener('input', function (e) {
   }
 });
 
-document.addEventListener('submit', function (e) {
-  const form = e.target;
+// Tela de carregar
+document.addEventListener('click', function (e) {
+  const link = e.target.closest('a');
+  if (link) {
+    const href = link.getAttribute('href');
 
-  if (form.matches('.ativar-load')) {
-    load(true)
+    if (href &&
+      !href.startsWith('#') &&
+      link.target !== '_blank' &&
+      !href.startsWith('javascript')) {
+      load(true);
+      return;
+    }
+  }
+
+  const btn = e.target.closest('button[type="submit"], input[type="submit"]');
+  if (btn) {
+    const form = btn.closest('form');
+    if (form && form.classList.contains('ativar-load')) {
+      load(true);
+    }
   }
 })
 
+// Imagem em tempo real
 document.addEventListener('change', function (e) {
   if (e.target.classList.contains('input-imagem')) {
     const input = e.target;
