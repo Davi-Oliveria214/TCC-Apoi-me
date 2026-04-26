@@ -51,14 +51,13 @@ include('./includes/topo.php');
 
     <!-- FILTROS -->
     <div class="filtros">
-        <button class="filtro-btn ativo">Todos</button>
-        <button class="filtro-btn">Ativos</button>
-        <button class="filtro-btn">Pausados</button>
-        <button class="filtro-btn">Inativos</button>
+        <button class="filtro-btn ativo" onclick="filtro('anuncio',0)">Todos</button>
+        <button class="filtro-btn" onclick="filtro('anuncio',1)">Ativos</button>
+        <button class="filtro-btn" onclick="filtro('anuncio',2)">Pausados</button>
     </div>
 
     <!-- GRID DE SERVIÇOS -->
-    <div class="grid-servicos">
+    <div class="grid-servicos local-filtro">
         <?php
         $sql = request("servicos?id_prestador=eq.{$id}");
 
@@ -143,5 +142,9 @@ include('./includes/topo.php');
         ?>
     </div>
 </main>
+
+<script>
+
+</script>
 
 <?php include('./includes/rodape.php'); ?>

@@ -5,9 +5,9 @@ session_start();
 $valor = $_GET['pesquisa'];
 
 if (empty($valor)) {
-    $servicos = request("servicos?select=*&order=criado.desc&limit=10", "GET");
+    $servicos = request("servicos?status=eq.true&select=*&order=criado.desc&limit=10", "GET");
 } else {
-    $servicos = request("servicos?nome=ilike.*$valor*");
+    $servicos = request("servicos?status=eq.true&nome=ilike.*$valor*");
 }
 
 if (!empty($servicos) && !isset($servicos['error'])):

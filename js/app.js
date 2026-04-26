@@ -188,10 +188,22 @@ function pesquisa(valor) {
     type: "GET",
     data: { pesquisa: valor },
     success: function (resp) {
-      const resultado = document.querySelector(".resultado-pesquisa");
+      const resultado = document.querySelector(".local-filtro");
       if (resultado) {
         resultado.innerHTML = resp;
       }
+    }
+  });
+}
+
+function filtro(local, item) {
+  $.ajax({
+    url: "./util/filtro.php",
+    type: "POST",
+    data: { type: local, item: item },
+    success: function (resp) {
+      const filtro_local = document.querySelector('.local-filtro')
+      if (filtro_local) filtro_local.innerHTML = resp;
     }
   });
 }

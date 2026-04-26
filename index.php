@@ -13,25 +13,26 @@ include('./includes/topo.php');
 <main class="principal-inicial">
     <section class="inicial-escolha" id="filtro">
         <ul>
+            <li onclick="filtro('servicos',0)">Todos</li>
             <?php
-            echo "<li onclick='filtrar(0)'>Todos</li>";
-
             $categorias = request("categorias?select=id,nome&order=nome.asc", "GET");
 
             if (!empty($categorias) && !isset($categorias['error'])) {
                 foreach ($categorias as $cate) {
                     $idCate = $cate['id'];
                     $nomeCate = htmlspecialchars($cate['nome']);
-                    echo "<li onclick='filtrar($idCate)'>$nomeCate</li>";
+            ?>
+                    <li onclick="filtro('servicos',<?php echo $idCate ?>)"><?php echo $nomeCate ?></li>
+            <?php
                 }
             }
             ?>
         </ul>
     </section>
 
-    <section class="informacoes-inicial resultado-pesquisa" id="todos-servicos">
+    <section class="informacoes-inicial local-filtro" id="todos-servicos">
         <?php
-        $servicos = request("servicos?select=*&order=criado.desc&limit=10", "GET");
+        $servicos = request("servicos?status=eq.true&select=*&order=criado.desc&limit=10", "GET");
 
         if (!empty($servicos) && !isset($servicos['error'])) :
             shuffle($servicos);

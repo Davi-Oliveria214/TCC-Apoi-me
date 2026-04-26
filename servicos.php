@@ -28,7 +28,7 @@ include('./includes/topo.php');
             <h1>Reservados</h1>
             <div class="box">
                 <?php
-                $endpoint = "contratados?id_cliente=eq.$id&select=id,dia,hora,confirmado,id_servico,observacao,servicos(nome,descricao,imagem,id_prestador)&order=dia.desc";
+                $endpoint = "contratados?id_cliente=eq.$id&status=eq.true&select=id,dia,hora,confirmado,id_servico,observacao,servicos(nome,descricao,imagem,id_prestador)&order=dia.desc";
                 $sql = request($endpoint, "GET");
 
                 if (!empty($sql) && !isset($sql['error'])) :
@@ -84,9 +84,9 @@ include('./includes/topo.php');
 
     <section class="servicos-publicados">
         <h1>Serviços Disponíveis</h1>
-        <section class="sessao-servicos resultado-pesquisa">
+        <section class="sessao-servicos local-filtro">
             <?php
-            $sql = request("servicos?codigo=eq.{$_SESSION['codigo']}&select=*&order=nome.asc");
+            $sql = request("servicos?codigo=eq.{$_SESSION['codigo']}&status=eq.true&select=*&order=nome.asc");
 
             if (!empty($sql) && !isset($sql['error'])) :
                 foreach ($sql as $servico) :
