@@ -6,48 +6,78 @@ include('./includes/head.php');
 include('./includes/topo.php');
 ?>
 
+<?php
+$sql = request("usuarios?codigo=eq.{$_SESSION['codigo']}&select=count");
+?>
+
 <div class="contentAdm">
   <?php if ($tipo_usuario == 'sindico'): ?>
     <div id="page-dashboard" class="page active">
       <div class="section-headerADM">
-        <div class="textos">
-          <h1>Visão Geral</h1>
-          <p>Resumo do condomínio em tempo real</p>
+        <div class="section-headerADM">
+          <div class="textos">
+            <h1>Visão Geral</h1>
+            <p>Resumo do condomínio em tempo real</p>
+          </div>
+
+          <div class="acoes-adm">
+            <button class="btn-criar-aviso" onclick="abrirModalAviso('<?php echo $_SESSION['id'] ?>', '<?php echo $_SESSION['codigo'] ?>')">
+              + Criar Aviso
+            </button>
+          </div>
         </div>
 
         <div class="stats">
           <div class="stat-card">
             <div class="stat-label">Moradores Cadastrados</div>
-            <div class="stat-value" id="stat-moradores">0</div>
+            <div class="stat-value" id="stat-moradores"><?php echo $sql[0]['count'] ?></div>
             <div class="stat-sub">via código de acesso</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-label">Códigos Ativos</div>
-            <div class="stat-value" id="stat-ativos">0</div>
-            <div class="stat-sub">aguardando uso</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Códigos Utilizados</div>
-            <div class="stat-value" id="stat-usados">0</div>
-            <div class="stat-sub">desde o início</div>
-          </div>
         </div>
       </div>
 
       <div class="card-adm">
-        <div class="card-titleadm">🕐 Atividade Recente</div>
+        <div class="card-titleadm">🕐 Quadro de avisos</div>
         <div id="dashboard-activity">
-          <div class="empty">
-            <div class="empty-icon">📭</div>
-            <p>Nenhuma atividade ainda. Gere o primeiro código!</p>
-          </div>
+          <?php
+          $avisos = request("avisos?codigo=eq.{$_SESSION['codigo']}");
+
+          if (!empty($avisos) && !isset($avisos['error'])):
+            foreach ($avisos as $aviso):
+              $criado = date("d/m/Y H:i", strtotime($aviso['criado_em']));
+              $data = date("d/m/Y", strtotime($aviso['data_evento']));
+          ?>
+              <div class="card-avisos">
+                <div class="titulo-avisos">
+                  <img src="./icon/icone.png" alt="">
+                  <div>
+                    <h2><?php echo $aviso['titulo'] ?></h2>
+                    <span class="autor">Por: <?php echo $aviso['autor'] ?></span>
+                  </div>
+                </div>
+
+                <div class="datas-aviso">
+                  <span>Evento: <?php echo $data ?></span>
+                  <span>Postado em: <?php echo $criado ?></span>
+                </div>
+
+                <p>
+                  <?php echo $aviso['mensagem'] ?>
+                </p>
+              </div>
+            <?php
+            endforeach;
+          else:
+            ?>
+            <div class="empty">
+              <p>Nenhuma aviso criado!</p>
+            </div>
+          <?php
+          endif;
+          ?>
         </div>
       </div>
 
-      <div class="card-adm">
-        <div class="card-titleadm">Criar Avisos</div>
-        <div id="dashboard-activity"></div>
-      </div>
     </div>
   <?php endif; ?>
 
@@ -97,11 +127,11 @@ include('./includes/topo.php');
       </div>
 
       <div class="fieldPerfil">
-      <label>Novo e-mail</label>
-      <div class="input-wrap">
-        <input type="email" id="emailConfirm" placeholder="Novo e-mail">
+        <label>Novo e-mail</label>
+        <div class="input-wrap">
+          <input type="email" id="emailConfirm" placeholder="Novo e-mail">
+        </div>
       </div>
-    </div>
 
       <div class="fieldPerfil">
         <label>Confirmar novo e-mail</label>
@@ -158,7 +188,6 @@ include('./includes/topo.php');
           <button class="toggle-pw" onclick="togglePw('confirmPw',this)" tabindex="-1">
         </div>
       </div>
-
 
       <div class="actions">
         <button class="btnPerfil btn-ghostPerfil" onclick="clearPasswords()">Cancelar</button>

@@ -11,16 +11,39 @@ include('./includes/topo.php');
         <div class="avisos-condominio quadro">
             <h1>Quadro de Avisos</h1>
             <div class="box">
-                <div class="card-avisos">
-                    <div class="titulo-avisos">
-                        <img src="./icon/icone.png" alt="">
-                        <div>
-                            <h2>Manutenção de Elevadores</h2>
-                            <p>15/03/2026</p>
+                <?php
+                $avisos = request("avisos?codigo={$_SESSION['codigo']}");
+                if (!empty($avisos) && isset($avisos['error'])):
+                    foreach ($avisos as $aviso):
+                        $cridado = date("d/m/Y", $aviso['criado_em']);
+                        $data = date("d/m/Y", $aviso['data_evento']);
+                ?>
+                        <div class="card-avisos">
+                            <div class="titulo-avisos">
+                                <img src="./icon/icone.png" alt="">
+                                <div>
+                                    <h2><?php echo $aviso['titulo'] ?></h2>
+                                    <span class="autor">Por: <?php echo $aviso['autor'] ?>/span>
+                                </div>
+                            </div>
+
+                            <div class="datas-aviso">
+                                <span>Evento: <?php echo $data ?></span>
+                                <span>Postado em: <?php echo $cridado ?></span>
+                            </div>
+
+                            <p>
+                                <?php echo $aviso['mensagem'] ?>
+                            </p>
                         </div>
-                    </div>
-                    <p>Informamos que o elevador social do bloco A passará por manutenção preventiva das 14h às 16h.</p>
-                </div>
+                    <?php
+                    endforeach;
+                else:
+                    ?>
+                    <h2 class='aviso-vazio'>Nenhum aviso do condominio</h2>
+                <?php
+                endif;
+                ?>
             </div>
         </div>
 

@@ -160,6 +160,21 @@ function novoServico() {
     })
 }
 
+function abrirModalAviso() {
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: { tipo: "aviso" },
+        success: function (resp) {
+            loadModal.innerHTML = resp
+
+            const modal = document.querySelector('.modal-overlay')
+
+            if (modal) modal.style.display = 'flex';
+        }
+    })
+}
+
 window.verAvaliacao = function (nome, imagem, comentario, nota) {
     if (!window.usuarioLogado) {
         window.location.href = "./util/setAviso.php";

@@ -271,7 +271,7 @@ if ($tipo == 'horarios') {
                 <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
             </div>
         </form>
-        
+
     <?php elseif ($tipo == 'ver_avaliacao'): ?>
 
         <div class="modal-content modal-padrao">
@@ -331,6 +331,38 @@ if ($tipo == 'horarios') {
                 <button type="submit" class="btn-modais">
                     <?php echo $ativoAtual ? 'Pausar' : 'Ativar' ?>
                 </button>
+                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+            </div>
+        </form>
+    <?php elseif ($tipo == 'aviso'): ?>
+
+        <form action="./controls/criar_aviso.act.php" method="post" class="modal-content modal-padrao ativar-load">
+            <div class="modal-header">
+                <h3>Criar Aviso</h3>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="input-group">
+                    <label>Título</label>
+                    <input type="text" name="titulo" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Data do Evento</label>
+                    <input type="date" name="data_evento" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Mensagem</label>
+                    <textarea name="mensagem" class="comment-area" rows="4" maxlength="500" placeholder="Descreva o aviso..." required></textarea>
+                    <div class="char-count">0 / 500</div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais">Publicar Aviso</button>
                 <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
             </div>
         </form>

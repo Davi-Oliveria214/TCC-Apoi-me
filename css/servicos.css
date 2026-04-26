@@ -101,6 +101,7 @@
 ======================= */
 .avisos-condominio {
     flex: 1;
+    min-width: clamp(320px, 370px, 400px) ;
     height: 100%;
     background-color: var(--dourado-fraco);
 }
@@ -118,6 +119,7 @@
 ======================= */
 .box {
     width: 100%;
+    height: 100%;
     padding: 10px;
     display: flex;
     gap: 15px;

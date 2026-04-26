@@ -27,7 +27,7 @@
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 16px;
   margin-bottom: 36px;
 }
@@ -62,7 +62,7 @@
 }
 
 .card-adm {
-  background: var(--dourado-palido);
+  background: transparent;
   border: 3px solid var(--dourado);
   color: var(--verde-musgo);
   border-radius: 8px;
@@ -78,7 +78,7 @@
   gap: 10px;
 }
 
-.card-titleadm p{
+.card-titleadm p {
   color: var(--verde-musgo);
 }
 
@@ -240,4 +240,24 @@
 
 .headerPERFIL-tag {
   margin-right: 10px;
+}
+
+.acoes-adm {
+  display: flex;
+  align-items: center;
+}
+
+.btn-criar-aviso {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--verde-musgo);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.2s;
+}
+
+.btn-criar-aviso:hover {
+  opacity: 0.9;
 }
