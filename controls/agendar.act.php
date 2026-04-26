@@ -20,7 +20,7 @@ $dadosServico = request("servicos?select=id_prestador&id=eq.$idServico", "GET");
 $idPrestador = $dadosServico[0]['id_prestador'];
 
 if ($idPrestador == $idCliente) {
-    $_SESSION["mensagem"] = "Você não pode contratar o serviço para se proprio!";
+    $_SESSION["mensagem"] = "Você não pode contratar o próprio serviço!";
     header("Location: ../servicos.php");
     exit();
 }

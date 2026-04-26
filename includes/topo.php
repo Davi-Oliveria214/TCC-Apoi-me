@@ -4,6 +4,8 @@ require_once(__DIR__ . '/../conexao.php');
 
 $pag = basename($_SERVER['PHP_SELF']);
 
+$local = $pag == "anunciar.php" ? 'anunciar' : 'publico';
+
 $classe = "navegacao";
 include('./util/avisos.php');
 ?>
@@ -15,7 +17,7 @@ include('./util/avisos.php');
     </a>
 
     <input type="text" name="pesquisa" id="pesquisa" placeholder="Pesquisar"
-        oninput="pesquisa(this.value)">
+        oninput="pesquisa('<?php echo $local ?>',this.value)">
 
     <?php
     if (!empty($_SESSION["id"])):

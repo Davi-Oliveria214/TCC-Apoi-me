@@ -104,11 +104,11 @@ function cadastrar($nome, $email, $senhaHash, $codigo, $img, $tipo_usuario, $dad
         "nome" => $nome,
         "email" => $email,
         "senha" => $senhaHash,
+        "imagem" => $img,
         "codigo_verificacao" => $codigo,
         "email_verificado" => false,
-        "imagem" => $img,
-        "tipo_usuario" => $tipo_usuario,
         "codigo_criado_em" => date('Y-m-d H:i:sO'),
+        "tipo_usuario" => $tipo_usuario,
         "cnpj_vinculado" => $cnpj
     ];
 

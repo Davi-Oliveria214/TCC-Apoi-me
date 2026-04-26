@@ -9,14 +9,14 @@ $nome_servico = $_GET['nome_servico'] ?? '';
 $desc = $_GET['desc'] ?? '';
 $img_servico = $_GET['img_servico'] ?? '';
 $data = $_GET['data'] ?? '';
-$comentario = $_GET['comentario'];
+$comentario = $_GET['comentario'] ?? '';
 $hora_inicio = $_GET['hora_inicio'] ?? '';
 $hora_fim = $_GET['hora_fim'] ?? '';
 $duracao = $_GET['duracao'] ?? '';
 $status = $_GET['status'] ?? '';
 $ativo = $_GET['ativo'] ?? '';
 $nota = $_GET['nota'] ?? '';
-$observacao = $_GET['observacao'];
+$observacao = $_GET['observacao'] ?? '';
 
 if ($tipo == 'horarios') {
 

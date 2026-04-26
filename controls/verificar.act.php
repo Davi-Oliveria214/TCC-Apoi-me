@@ -39,7 +39,7 @@ if (!empty($user) && isset($user[0]['codigo_verificacao']) && $user[0]['codigo_v
     if ($tipo_codigo == 'recuperar') {
         $_SESSION['email_reset_aprovado'] = $email;
         unset($_SESSION['email_verificar']);
-        header("Location: ..redefinir_senha.php");
+        header("Location: ../redefinir_senha.php");
         exit;
     }
 

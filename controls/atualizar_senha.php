@@ -17,7 +17,7 @@ if (empty($_POST['senha']) || empty($_POST['rpt_senha'])) {
 
 if ($_POST['senha'] != $_POST['rpt_senha']) {
     $_SESSION["mensagem"] = "A senhas não são iguais";
-    header("Location: ./redefinir_senha.php");
+    header("Location: ../redefinir_senha.php");
     exit;
 }
 

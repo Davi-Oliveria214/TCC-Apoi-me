@@ -17,7 +17,7 @@ include('./includes/topo.php');
             <?php
             $categorias = request("categorias?select=id,nome&order=nome.asc", "GET");
 
-            if (!empty($categorias) && !isset($categorias['error'])) {
+            if (!empty($categorias) && !isset($categorias['code']) && !isset($categorias['error'])) {
                 foreach ($categorias as $cate) {
                     $idCate = $cate['id'];
                     $nomeCate = htmlspecialchars($cate['nome']);

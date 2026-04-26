@@ -114,7 +114,7 @@ include('./includes/topo.php');
                                 Editar
                             </button>
 
-                            <button class="btn-acao btn-link" onclick="pausarServico(<?php echo $s['id'] ?>, <?php echo $estaAtivo ?>)">
+                            <button class="btn-acao btn-link" onclick="pausarServico('<?php echo $s['id'] ?>', '<?php echo $estaAtivo ?>')">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <rect x="6" y="4" width="4" height="16" />
                                     <rect x="14" y="4" width="4" height="16" />
@@ -122,7 +122,7 @@ include('./includes/topo.php');
                                 <?php echo $estaAtivo ? 'Pausar' : 'Ativar' ?>
                             </button>
 
-                            <button class="btn-acao btn-link" onclick="excluirOferecidos(<?php echo $s['id'] ?>)">
+                            <button class="btn-acao btn-link" onclick="excluirOferecidos('<?php echo $s['id'] ?>')">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="3 6 5 6 21 6" />
                                     <path d="M19 6l-1 14H6L5 6" />

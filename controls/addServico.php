@@ -19,8 +19,6 @@ $hora_inicio = $_POST['hora_inicio'];
 $hora_fim = $_POST['hora_fim'];
 $duracao = $_POST['duracao'];
 
-$data = !empty($_POST['data']) ? $_POST['data'] : null;
-
 $bucket = $_ENV['BALDE'];
 $imagem = trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/$bucket/deufalt.png";
 
@@ -73,14 +71,13 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
 $dadosSalvar = [
     "nome" => $nome,
     "descricao" => $descricao,
-    "codigo" => $codigo,
-    "categoria" => $categoria,
+    "imagem" => $imagem,
     "id_prestador" => $id,
+    "categoria" => $categoria,
+    "codigo" => $codigo,
     "hora_inicio" => $hora_inicio,
     "hora_fim" => $hora_fim,
     "duracao" => $duracao,
-    "dia" => $data,
-    "imagem" => $imagem
 ];
 
 $sql = request("servicos", "POST", $dadosSalvar);

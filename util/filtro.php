@@ -8,9 +8,9 @@ $tipo = $_POST['type'] ?? 'servicos';
 
 if ($tipo === "servicos") :
     if ($resp == 0) {
-        $sql = request("servicos?status=eq.true&select=id,nome,imagem,descricao,hora_inicio,hora_fim,dia", "GET");
+        $sql = request("servicos?status=eq.true&select=*", "GET");
     } else {
-        $sql = request("servicos?categoria=eq.$resp&status=eq.true&select=id,nome,imagem,descricao,hora_inicio,hora_fim,dia", "GET");
+        $sql = request("servicos?categoria=eq.$resp&status=eq.true&select=*", "GET");
     }
 
     if (!empty($sql) && !isset($sql['error'])) :

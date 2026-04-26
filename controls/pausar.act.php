@@ -4,6 +4,7 @@ exigirMetodo();
 
 require_once(__DIR__ . '/../conexao.php');
 
+
 $id = $_SESSION['id'];
 $id_servico = $_POST['id_servico'];
 $ativo = filter_var($_POST['status'], FILTER_VALIDATE_BOOLEAN);
