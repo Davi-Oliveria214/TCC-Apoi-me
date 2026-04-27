@@ -23,7 +23,7 @@ include('./util/avisos.php');
     if (!empty($_SESSION["id"])):
         $id = $_SESSION["id"];
 
-        $res = request("usuarios?id=eq.$id&select=nome,email,imagem,codigo,tipo_usuario", "GET");
+        $res = request("usuarios?id=eq.$id&select=nome,email,imagem,codigo,tipo_usuario,user_date", "GET");
 
         if (!empty($res) && !isset($res['error'])) {
             $usuario = $res[0];
@@ -32,6 +32,7 @@ include('./util/avisos.php');
             $email = $usuario['email'];
             $img = $usuario['imagem'];
             $tipo_usuario = $usuario['tipo_usuario'];
+            $user_date = $usuario['user_date'];
             $_SESSION['codigo'] =  $usuario['codigo'];
         }
     ?>

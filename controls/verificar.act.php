@@ -7,6 +7,7 @@ require_once(__DIR__ . '/../conexao.php');
 $email = $_SESSION['email_verificar'] ?? $_POST['email'] ?? $_GET['email'] ?? null;
 $codigoDigitado = $_POST['codigo'] ?? null;
 $tipo_codigo = $_POST['tipo_codigo'] ?? $_SESSION['tipo_codigo'] ?? '';
+$novo_email = $_SESSION['novo_email'] ?? '';
 
 if (empty($email) || empty($codigoDigitado)) {
     $_SESSION["mensagem"] = "Dados insuficientes para a verificação.";
@@ -40,6 +41,30 @@ if (!empty($user) && isset($user[0]['codigo_verificacao']) && $user[0]['codigo_v
         $_SESSION['email_reset_aprovado'] = $email;
         unset($_SESSION['email_verificar']);
         header("Location: ../redefinir_senha.php");
+        exit;
+    }
+
+    if ($tipo_codigo == 'alterar_email') {
+        if (empty($novo_email)) {
+            $_SESSION["mensagem"] = "Erro ao validar email!";
+            header("Location: ../usuario.php");
+            exit;
+        }
+
+        $dados = [
+            "email" => $novo_email
+        ];
+
+        $alterado = request("usuarios?email=eq.{$email}", "PATCH", $dados);
+
+        if ($alterado) {
+            $_SESSION["mensagem"] = "Erro ao alterar email!";
+        } else {
+            $_SESSION["mensagem"] = "Novo email alterado com sucesso!";
+        }
+
+        unset($_SESSION);
+        header("Location: ../login.php");
         exit;
     }
 

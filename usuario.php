@@ -8,9 +8,70 @@ include('./includes/topo.php');
 
 <?php
 $sql = request("usuarios?codigo=eq.{$_SESSION['codigo']}&select=count");
+
+$condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
 ?>
 
-<div class="contentAdm">
+<div class="contentUser">
+  <div class="perfil-container">
+    <header class="perfil-hero">
+      <div class="perfil-center">
+        <div class="avatar-wrapper">
+          <img src="./icon/icone.png" alt="Avatar" class="avatar-img">
+          <button class="btn-edit-avatar" title="Mudar foto">📷</button>
+        </div>
+      </div>
+      <div class="hero-info">
+        <h1><?php echo $nome ?></h1>
+
+        <div class="badges-wrapper">
+          <span class="badge-role">Tipo: <?php echo ucfirst($tipo_usuario) ?></span>
+          <span class="badge-condo">Condominio: <?php echo $condominio[0]['nome'] ?? 'Não informado' ?></span>
+        </div>
+
+        <div class="detalhes-info">
+          <p><strong>Endereço:</strong> <?php echo $condominio[0]['endereco'] ?? 'Não informado' ?></p>
+
+          <p><strong>Conta criada:</strong> <?php echo date('d/m/Y', strtotime($user_date)); ?></p>
+        </div>
+      </div>
+    </header>
+
+    <div class="perfil-grid">
+      <div class="perfil-card">
+        <div class="card-content">
+          <h3>Dados Pessoais</h3>
+          <p><strong>Nome:</strong> <?php echo $nome ?></p>
+        </div>
+        <button type="button" class="btn-action-outline" onclick="editarPerfil('editar_nome')">Editar nome</button>
+      </div>
+
+      <div class="perfil-card">
+        <div class="card-content">
+          <h3>E-mail e Contato</h3>
+          <p><strong>E-mail:</strong> <?php echo $email ?></p>
+        </div>
+        <button type="button" class="btn-action-outline" onclick="editarPerfil('editar_email')">Alterar email</button>
+      </div>
+
+      <div class="perfil-card">
+        <div class="card-content">
+          <h3>Segurança</h3>
+          <p>Altere sua senha por aqui</p>
+        </div>
+        <button type="button" class="btn-action-outline">Trocar Senha</button>
+      </div>
+
+      <div class="perfil-card">
+        <div class="card-content">
+          <h3>Chave</h3>
+          <p>Chave de acesso do condominio</p>
+        </div>
+        <button type="button" class="btn-action-outline" onclick="editarPerfil('editar_codigo')">Mudar chave</button>
+      </div>
+    </div>
+  </div>
+
   <?php if ($tipo_usuario == 'sindico'): ?>
     <div id="page-dashboard" class="page active">
       <div class="section-headerADM">
@@ -37,7 +98,7 @@ $sql = request("usuarios?codigo=eq.{$_SESSION['codigo']}&select=count");
       </div>
 
       <div class="card-adm">
-        <div class="card-titleadm">🕐 Quadro de avisos</div>
+        <div class="card-titleadm">Quadro de avisos</div>
         <div id="dashboard-activity">
           <?php
           $avisos = request("avisos?codigo=eq.{$_SESSION['codigo']}");
@@ -70,133 +131,15 @@ $sql = request("usuarios?codigo=eq.{$_SESSION['codigo']}&select=count");
           else:
             ?>
             <div class="empty">
-              <p>Nenhuma aviso criado!</p>
+              <p>Nenhum aviso criado!</p>
             </div>
           <?php
           endif;
           ?>
         </div>
       </div>
-
     </div>
   <?php endif; ?>
-
-  <div class="containerPerfil">
-    <div class="headerPERFIL">
-      <h1>Meu Perfil</h1>
-      <p class="pPerfil">Gerencie suas informações pessoais.</p>
-    </div>
-    <div class="cardPerfil">
-      <div class="card-titlePERFIL">
-        Informações Pessoais
-      </div>
-
-      <div class="fieldPerfil">
-        <label>Nome de usuário</label>
-        <div class="input-wrap">
-          <input type="text" id="username" placeholder="seu_usuario" value="<?php echo $nome ?>">
-        </div>
-      </div>
-
-      <div class="fieldPerfil">
-        <label>Nome completo</label>
-        <div class="input-wrap">
-          <input type="text" id="fullname" placeholder="Seu nome completo" value="<?php echo $nome ?>">
-        </div>
-      </div>
-
-      <div class="divider"></div>
-      <div class="actions">
-        <button class="btnPerfil btn-ghostPerfil" onclick="resetField('username','<?php echo $nome ?>'); resetField('fullname','<?php echo $nome ?>')">Cancelar</button>
-        <button class="btnPerfil btn-primaryPerfil " onclick="saveSection('nome')">
-          Salvar
-        </button>
-      </div>
-    </div>
-
-    <div class="cardPerfil">
-      <div class="card-titlePERFIL">
-        Endereço de E-mail
-      </div>
-
-      <div class="fieldPerfil">
-        <label>E-mail atual</label>
-        <div class="input-wrap">
-          <input type="email" id="email" placeholder="seu@email.com" value="<?php echo $email ?>">
-        </div>
-      </div>
-
-      <div class="fieldPerfil">
-        <label>Novo e-mail</label>
-        <div class="input-wrap">
-          <input type="email" id="emailConfirm" placeholder="Novo e-mail">
-        </div>
-      </div>
-
-      <div class="fieldPerfil">
-        <label>Confirmar novo e-mail</label>
-        <div class="input-wrap">
-          <input type="email" id="emailConfirm" placeholder="repita o e-mail">
-        </div>
-      </div>
-
-      <div class="divider"></div>
-      <div class="actions">
-        <button class="btnPerfil btn-ghostPerfil" onclick="resetField('email','joao@exemplo.com'); resetField('emailConfirm','')">Cancelar</button>
-        <button class="btnPerfil btn-primaryPerfil" onclick="saveSection('email')">
-          Atualizar E-mail
-        </button>
-      </div>
-    </div>
-
-    <div class="cardPerfil">
-      <div class="card-title">
-        Segurança — Senha
-      </div>
-
-      <div class="fieldPerfil">
-        <label>Senha atual</label>
-        <div class="input-wrap">
-          <input type="password" id="currentPw" placeholder="••••••••">
-          <button class="toggle-pw" onclick="togglePw('currentPw',this)" tabindex="-1">
-          </button>
-        </div>
-      </div>
-
-      <div class="fieldPerfil">
-        <label>Nova senha</label>
-        <div class="input-wrap">
-          <input type="password" id="newPw" placeholder="Mínimo 8 caracteres" oninput="checkStrength(this.value)">
-          <button class="toggle-pw" onclick="togglePw('newPw',this)" tabindex="-1">
-          </button>
-        </div>
-        <div class="pw-strength" id="pwStrength">
-          <div class="strength-bars">
-            <div class="strength-bar" id="sb1"></div>
-            <div class="strength-bar" id="sb2"></div>
-            <div class="strength-bar" id="sb3"></div>
-            <div class="strength-bar" id="sb4"></div>
-          </div>
-          <span class="strength-label" id="strengthLabel"></span>
-        </div>
-      </div>
-
-      <div class="fieldPerfil">
-        <label>Confirmar nova senha</label>
-        <div class="input-wrap">
-          <input type="password" id="confirmPw" placeholder="Repita a nova senha">
-          <button class="toggle-pw" onclick="togglePw('confirmPw',this)" tabindex="-1">
-        </div>
-      </div>
-
-      <div class="actions">
-        <button class="btnPerfil btn-ghostPerfil" onclick="clearPasswords()">Cancelar</button>
-        <button class="btnPerfil btn-primaryPerfil" onclick="saveSection('senha')">
-          Alterar Senha
-        </button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <?php include("./includes/rodape.php"); ?>

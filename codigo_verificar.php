@@ -4,6 +4,7 @@ session_start();
 $email_url = $_GET['email'] ?? '';
 $codigo_url = $_GET['codigo'] ?? '';
 $tipo_codigo = $_GET['tipo_codigo'] ?? '';
+$novo_email = $_GET['novo_email'] ?? '';
 
 if (empty($email_url)) {
     $_SESSION["mensagem"] = "Acesso inválido.";
@@ -21,6 +22,7 @@ if (isset($_SESSION['id_usuario']) && $_SESSION['email_usuario'] !== $email_url)
 
 $_SESSION['email_verificar'] = $email_url;
 $_SESSION['tipo_codigo'] = $tipo_codigo;
+$_SESSION['novo_email'] = $novo_email;
 
 include('./includes/head.php');
 include('./includes/topo.php');
@@ -33,6 +35,8 @@ include('./includes/topo.php');
             <p>Digite o código enviado para seu e-mail.</p>
 
             <input type="hidden" name="tipo_codigo" value="<?php echo $tipo_codigo; ?>">
+
+            <input type="hidden" name="novo_email" value="<?php echo $novo_email; ?>">
 
             <input type="hidden" name="email_recuperar" value="<?php echo $email_url; ?>">
 

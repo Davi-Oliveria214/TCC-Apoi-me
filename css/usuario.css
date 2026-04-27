@@ -1,5 +1,6 @@
-.contentAdm {
+.contentUser {
   padding: 20px;
+  min-height: 100vh;
 }
 
 .content {
@@ -47,7 +48,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--verde-musgo);
 }
 
 .stat-value {
@@ -66,8 +67,7 @@
   border: 3px solid var(--dourado);
   color: var(--verde-musgo);
   border-radius: 8px;
-  padding: 28px 32px;
-  margin-bottom: 24px;
+  padding: 15px 20px;
 }
 
 .card-titleadm {
@@ -85,7 +85,8 @@
 .empty {
   text-align: center;
   padding: 48px 0;
-  color: var(--muted);
+  color: var(--verde-musgo);
+  opacity: 0.7;
 }
 
 .empty .empty-icon {
@@ -97,167 +98,281 @@
   font-size: 0.9rem;
 }
 
-.containerPerfil {
-  background: var(--dourado-fraco);
-  padding: 10px;
-  margin-top: 1px;
-  min-height: 100vh;
-  margin: 20px;
-}
-
-.pPerfil {
-  color: var(--dourado);
-}
-
-.cardAdm,
-.cardPerfil {
-  background: var(--dourado-palido);
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 20px;
-  border: 3px solid var(--dourado);
-}
-
-.card-titlePERFIL {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: var(--verde-musgo);
-}
-
-.fieldPerfil {
-  margin-bottom: 15px;
-}
-
-.input-wrap {
-  display: flex;
-  align-items: center;
-  background: var(--dourado-fraco);
-  border-radius: 8px;
-  margin-top: 5px;
-  padding: 8px;
-  border: 1px solid transparent;
-}
-
-.input-wrap:focus-within {
-  border-color: var(--verde-musgo);
-}
-
-.input-wrap input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--preto-acinzentado);
-  padding: 6px;
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.btnPerfil {
-  border-radius: 8px;
-  padding: 8px 14px;
-  cursor: pointer;
-  border: none;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.btn-ghostPerfil:hover {
-  background: var(--verde-musgo);
-  color: var(--dourado);
-}
-
-.btn-primaryPerfil {
-  background: var(--verde-musgo);
-  color: var(--dourado-fraco);
-
-}
-
-.btn-primaryPerfil:hover {
-  background: var(--dourado);
-  color: var(--verde-musgo);
-  border: 3px solid var(--dourado);
-}
-
-.toggle-pw {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--dourado-palido);
-}
-
-.pw-strength {
-  margin-top: 5px;
-}
-
-.strength-bars {
-  display: flex;
-  gap: 4px;
-}
-
-.strength-bar {
-  height: 5px;
-  flex: 1;
-  background: var(--preto-acinzentado);
-  border-radius: 3px;
-}
-
-.strength-bar.active {
-  background: var(--dourado);
-}
-
-.strength-label {
-  font-size: 12px;
-  color: var(--verde-musgo-palido);
-}
-
-.headerPERFIL {
-  display: flex;
-  align-items: end;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.headerPERFIL h1 {
-  margin: 0;
-  font-size: 26px;
-}
-
-.headerPERFIL p {
-  margin: 0;
-  font-size: 13px;
-  opacity: 0.9;
-}
-
-
-.headerPERFIL-tag {
-  margin-right: 10px;
-}
-
-.acoes-adm {
-  display: flex;
-  align-items: center;
-}
-
 .btn-criar-aviso {
   padding: 8px 14px;
   border: none;
   border-radius: 8px;
   background: var(--verde-musgo);
-  color: #fff;
+  color: var(--branco);
   cursor: pointer;
   font-size: 0.85rem;
   transition: 0.2s;
+  font-weight: bold;
 }
 
 .btn-criar-aviso:hover {
   opacity: 0.9;
+}
+
+/* === CONTAINER PRINCIPAL DO PERFIL === */
+.perfil-container {
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease;
+}
+
+/* HERO SECTION DO PERFIL */
+.perfil-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+  background: var(--verde-musgo);
+  padding: 2rem;
+  border-radius: 20px;
+  border: 3px solid var(--dourado);
+  margin-bottom: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.avatar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  position: relative;
+}
+
+.avatar-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid var(--dourado);
+  object-fit: cover;
+  background: var(--dourado-palido);
+}
+
+.btn-edit-avatar {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  background: var(--dourado);
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .perfil-center {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-info {
+    width: 100%;
+    text-align: center;
+  }
+
+  .badges-wrapper {
+    justify-content: center;
+  }
+
+  .detalhes-info {
+    align-items: center;
+  }
+}
+
+.hero-info h1 {
+  color: var(--branco);
+  font-size: 2.2rem;
+  margin-bottom: 0.8rem;
+}
+
+/* ESTILOS DOS BADGES */
+.badges-wrapper {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.badge-role {
+  background: transparent;
+  color: var(--branco);
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  border: 2px solid var(--dourado);
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.badge-condo {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--branco);
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-weight: bold;
+}
+
+/* ESTILOS DAS INFORMAÇÕES DETALHADAS */
+.detalhes-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.detalhes-info p {
+  color: var(--branco);
+  opacity: 0.9;
+  margin: 0;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detalhes-info span {
+  font-size: 1.1rem;
+}
+
+/* GRID DE CARDS DO PERFIL */
+.perfil-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.perfil-card {
+  background: transparent;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 3px solid var(--dourado);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.perfil-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(176, 130, 43, 0.15);
+}
+
+.card-content h3 {
+  color: var(--dourado);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.card-content p {
+  color: var(--verde-musgo);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.text-off {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+/* BOTÕES DOS CARDS DE PERFIL */
+.btn-action-outline {
+  margin-top: auto;
+  background: transparent;
+  border: 2px solid var(--dourado);
+  color: var(--verde-musgo);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-action-outline:hover {
+  background: var(--dourado);
+  color: var(--branco);
+}
+
+/* =======================
+   CARD AVISOS
+======================= */
+.card-avisos {
+  width: clamp(250px, 100%, 350px);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 10px;
+  background: var(--dourado-palido);
+}
+
+.card-avisos .titulo-avisos {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.card-avisos img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.card-avisos h2 {
+  font-size: 1rem;
+  color: var(--verde-musgo);
+  margin: 0;
+}
+
+.card-avisos .autor {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.datas-aviso {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  gap: 2px;
+  color: var(--verde-musgo);
+}
+
+.card-avisos>p {
+  height: 70px;
+  overflow-y: auto;
+  padding: 5px;
+  text-align: justify;
+  font-size: 0.85rem;
+  color: var(--verde-musgo);
+}
+
+#dashboard-activity {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

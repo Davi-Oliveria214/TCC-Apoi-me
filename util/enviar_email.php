@@ -3,7 +3,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-function enviarEmail($email, $nome, $codigo, $fluxo = 'cadastro', $chave = '')
+function enviarEmail($email, $nome, $codigo, $fluxo = 'cadastro', $chave = '', $novo = '')
 {
     $mail = new PHPMailer(true);
     try {
@@ -32,7 +32,7 @@ function enviarEmail($email, $nome, $codigo, $fluxo = 'cadastro', $chave = '')
 
         $nomeEscapado = htmlspecialchars($nome);
         if (isset($codigo)) {
-            $link = $_ENV['EMAIL_URL'] . "?email=" . urlencode($email) . "&codigo=" . $codigo . "&tipo_codigo=" . trim($fluxo);
+            $link = $_ENV['EMAIL_URL'] . "?email=" . urlencode($email) . "&codigo=" . $codigo . "&tipo_codigo=" . trim($fluxo) . (!empty($novo) ? "&novo_email=" . urlencode($novo) : "");
         }
 
         $mail->Body = textosEmails($nome, $codigo, $link, $fluxo, $chave);
@@ -125,7 +125,25 @@ function textosEmails($nome, $codigo, $link, $fluxo, $chave = '')
                     <p>Código: <b>$codigo</b></p>
                     <p><b>Chave:</b> <span style='font-size:20px;color:#b0822b;'>$chave</span></p>
                     <a href='$link'>Validar conta</a>";
+        case 'alterar_email':
+            return "<div style='font-family: sans-serif; max-width: 500px; color: #333;'>
+            <h2 style='color: #2e4a3b;'>Confirmação de Novo E-mail</h2>
+            <p>Olá, <b>$nomeEscapado</b>!</p>
+            <p>Recebemos uma solicitação para vincular este endereço de e-mail à sua conta no <b>Apoie ME</b>.</p>
+            
+            <div style='background: #fdfaf3; border: 1px dashed #b0822b; padding: 20px; text-align: center; border-radius: 12px; margin: 20px 0;'>
+                <p style='margin-bottom: 10px; font-size: 14px;'>Seu código de validação é:</p>
+                <span style='font-size: 32px; font-weight: bold; color: #b0822b; letter-spacing: 5px;'>$codigo</span>
+            </div>
 
+            <p>Se preferir, basta clicar no botão abaixo para confirmar a alteração:</p>
+            <a href='$link' style='display: inline-block; padding: 14px 25px; background-color: #2e4a3b; color: #fdfaf3; text-decoration: none; border-radius: 8px; font-weight: bold;'>Validar Novo E-mail</a>
+
+            <hr style='border: 0; border-top: 1px solid #eee; margin-top: 30px;'>
+            <p style='font-size: 12px; color: #888;'>
+                Se você não solicitou essa alteração, nenhuma ação é necessária. Outra pessoa pode ter digitado seu e-mail por engano.
+            </p>
+        </div>";
         default:
             return "<h2>Código de verificação</h2>
                     <p>Olá $nomeEscapado, seu código é: <b>$codigo</b></p>

@@ -1,6 +1,8 @@
 <?php
+require_once(__DIR__ . '/../includes/funcoes.php');
+exigirMetodo('GET');
+
 require_once(__DIR__ . '/../conexao.php');
-@session_start();
 
 $tipo = $_GET['tipo'] ?? '';
 $id_registro = $_GET['id_registro'] ?? '';
@@ -18,6 +20,8 @@ $ativo = $_GET['ativo'] ?? '';
 $nota = $_GET['nota'] ?? '';
 $observacao = $_GET['observacao'] ?? '';
 
+$morador = request("usuarios?id=eq.{$_SESSION['id']}&select=nome,email,codigo");
+var_dump($morador);
 if ($tipo == 'horarios') {
 
     $dataSelecionada = $_GET['data'];
@@ -366,7 +370,113 @@ if ($tipo == 'horarios') {
                 <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
             </div>
         </form>
+    <?php elseif ($tipo == 'editar_nome'): ?>
 
+        <form action="../controls/editar_perfil.act.php" method="post" class="modal-content modal-padrao ativar-load">
+            <input type="hidden" name="campo" value="nome">
+
+            <div class="modal-header">
+                <h3>Alterar Nome</h3>
+            </div>
+
+            <div class="modal-body">
+                <p>
+                    Como você gostaria de ser chamado na plataforma?
+                </p>
+                <div class="input-group">
+                    <label>Nome atual</label>
+                    <input type="text" value="<?php echo $morador[0]['nome'] ?>" disabled>
+                </div>
+                <div class="input-group">
+                    <label>Novo nome</label>
+                    <input type="text" name="valor" placeholder="Digite o novo nome" required>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais">Salvar Nome</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+            </div>
+        </form>
+
+    <?php elseif ($tipo == 'editar_email'): ?>
+        <form action="../controls/editar_perfil.act.php" method="post" class="modal-content modal-padrao ativar-load">
+            <input type="hidden" name="campo" value="email">
+
+            <div class="modal-header">
+                <h3>Alterar E-mail</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Email atual</label>
+                    <input type="email" value="<?php echo $morador[0]['email']  ?>" disabled>
+                </div>
+                <div class="input-group">
+                    <label>Novo Email</label>
+                    <input type="email" name="valor" placeholder="exemplo@email.com" required>
+                </div>
+                <p>Você precisará usar este novo e-mail no seu próximo login.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais">Atualizar E-mail</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+            </div>
+        </form>
+
+    <?php elseif ($tipo == 'editar_senha'): ?>
+        <form action="../controls/editar_perfil.act.php" method="post" class="modal-content modal-padrao ativar-load">
+            <input type="hidden" name="campo" value="senha">
+
+            <div class="modal-header">
+                <h3>Alterar Senha</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Nova Senha</label>
+                    <input type="password" name="nova_senha" minlength="6" placeholder="Mínimo 6 caracteres" required>
+                </div>
+                <div class="input-group">
+                    <label>Confirmar Nova Senha</label>
+                    <input type="password" name="confirmar_senha" minlength="6" placeholder="Repita a nova senha" required>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais">Redefinir Senha</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+            </div>
+        </form>
+
+    <?php elseif ($tipo == 'editar_codigo'): ?>
+        <form action="../controls/editar_perfil.act.php" method="post" class="modal-content modal-padrao ativar-load">
+            <input type="hidden" name="campo" value="codigo">
+
+            <div class="modal-header">
+                <h3>Código do Condomínio</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Chave de Acesso atual</label>
+                    <input type="text" value="<?php echo $morador[0]['codigo'] ?? '' ?>">
+                </div>
+                <div class="input-group">
+                    <label>Chave de Acesso</label>
+                    <input type="text" name="valor" maxlength="4" placeholder="Digite o código" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                </div>
+                <p>
+                    Este código vincula sua conta ao condomínio selecionado.
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais">Salvar Código</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+            </div>
+        </form>
     <?php else : ?>
         <div class="modal-content modal-padrao">
             <div class="modal-header">

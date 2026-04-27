@@ -83,8 +83,16 @@ function cadastrar($nome, $email, $senhaHash, $codigo, $img, $tipo_usuario, $dad
         $cnpj = $dadosCondominio['cnpj'];
         $chave = random_int(1000, 9999);
 
+        $endereco = $dadosCondominio['descricao_tipo_de_logradouro'] . ' ' .
+            $dadosCondominio['logradouro'];
+
         request("condominios", "POST", [
             "nome" => $dadosCondominio['razao_social'],
+            "bairro" => $dadosCondominio['bairro'],
+            "endereco" => $endereco,
+            "municipio" => $dadosCondominio['municipio'],
+            "uf" => $dadosCondominio['uf'],
+            "cep" => $dadosCondominio['cep'],
             "cnpj_condominio" => $cnpj,
             "codigo" => $chave
         ]);

@@ -29,5 +29,5 @@ if (isset($resp['error'])) {
     $_SESSION["mensagem"] = "Aviso feito com sucesso!";
 }
 
-// header("Location: ../usuario.php");
+header("Location: ../usuario.php");
 exit;
