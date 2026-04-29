@@ -22,7 +22,7 @@ include('./includes/topo.php');
                 <div class="box-auth">
                     <label for="idSenha">Senha (min: 8)</label>
                     <input type="password" name="senha" id="idSenha" min="8" onkeydown="if(event.key === ' ') event.preventDefault()" oninput="verificarSenha(this.value)" placeholder="Senha" required>
-                    <p class="texto-senha"></p>
+                    <p class="texto-senha" style="color: var(--verde-musgo-medio);"></p>
                 </div>
                 <div class="box-auth">
                     <label for="idRptSenha">Repita senha (min: 8)</label>

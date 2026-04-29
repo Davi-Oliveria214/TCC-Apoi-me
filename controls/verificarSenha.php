@@ -12,7 +12,7 @@ $pronto = false;
 
 if (!empty($pass)) {
     if (stripos($pass, $nome) !== false || stripos($pass, $email) !== false) {
-        $msg_pass = "Senha não pode conter seu nome ou email";
+        $msg_pass = "A senha não pode conter seu nome ou email";
         $pronto = false;
     } else if (
         !preg_match('/[A-Z]/', $pass) ||
@@ -20,7 +20,7 @@ if (!empty($pass)) {
         !preg_match('/[0-9]/', $pass) ||
         !preg_match('/[\W]/', $pass)
     ) {
-        $msg_pass = "Senha precisa ter: maiúscula, minúscula, número e símbolo";
+        $msg_pass = "A senha precisa ter: maiúscula, minúscula, número e símbolo";
         $pronto = false;
     } else if ($pass != $rptSenha) {
         $msg_pass = "As senhas não são iguais";
