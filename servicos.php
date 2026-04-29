@@ -12,18 +12,18 @@ include('./includes/topo.php');
             <h1>Quadro de Avisos</h1>
             <div class="box">
                 <?php
-                $avisos = request("avisos?codigo={$_SESSION['codigo']}");
-                if (!empty($avisos) && isset($avisos['error'])):
+                $avisos = request("avisos?codigo=eq.{$_SESSION['codigo']}");
+                if (!empty($avisos) && !isset($avisos['error'])):
                     foreach ($avisos as $aviso):
-                        $cridado = date("d/m/Y", $aviso['criado_em']);
-                        $data = date("d/m/Y", $aviso['data_evento']);
+                        $cridado = date("d/m/Y", strtotime($aviso['criado_em']));
+                        $data = date("d/m/Y", strtotime($aviso['data_evento']));
                 ?>
                         <div class="card-avisos">
                             <div class="titulo-avisos">
                                 <img src="./icon/icone.png" alt="">
                                 <div>
                                     <h2><?php echo $aviso['titulo'] ?></h2>
-                                    <span class="autor">Por: <?php echo $aviso['autor'] ?>/span>
+                                    <span class="autor">Por: <?php echo $aviso['autor'] ?></span>
                                 </div>
                             </div>
 

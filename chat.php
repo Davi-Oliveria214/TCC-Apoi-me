@@ -37,7 +37,7 @@ include('./includes/topo.php');
         ?>
 
         <div class="iniciar-msg">
-            <button class="btn-inciar" style="width: 50px; height: 50px; font-size: 50px;">&#43;</button>
+            <button class="btn-inciar">&#43;</button>
         </div>
     </section>
     <section class="chat-msg">

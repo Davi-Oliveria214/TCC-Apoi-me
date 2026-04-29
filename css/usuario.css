@@ -28,7 +28,7 @@
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 36px;
 }
@@ -168,6 +168,11 @@
 }
 
 @media (max-width: 600px) {
+  .stats {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+  }
+
   .perfil-center {
     width: 100%;
     display: flex;
@@ -308,11 +313,11 @@
    CARD AVISOS
 ======================= */
 .card-avisos {
-  width: clamp(250px, 100%, 350px);
+  width: clamp(250px, 100%, 300px);
   padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   border-radius: 10px;
   background: var(--dourado-palido);
 }
@@ -349,7 +354,7 @@
 }
 
 .card-avisos>p {
-  height: 70px;
+  height: 60px;
   overflow-y: auto;
   padding: 5px;
   text-align: justify;
@@ -357,11 +362,17 @@
   color: var(--verde-musgo);
 }
 
+.aviso-btn {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 #dashboard-activity {
   width: 100%;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
 }
 

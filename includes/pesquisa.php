@@ -128,10 +128,12 @@ else :
                     </div>
                 </div>
             </div>
-<?php
+        <?php
         endforeach;
     else:
-        echo "<div class='aviso-vazio'>Você ainda não está oferecendo nenhum serviço.</div>";
+        ?>
+        <div class='aviso-vazio'>Você ainda não está oferecendo nenhum serviço.</div>
+<?php
     endif;
 endif;
 ?>

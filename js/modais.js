@@ -215,6 +215,19 @@ window.verAvaliacao = function (nome, imagem, comentario, nota) {
     });
 };
 
+function opcoesAviso(tipo, id) {
+    $.ajax({
+        url: "./includes/modais.php",
+        type: "GET",
+        data: { tipo: tipo, id_registro: id },
+        success: function (resp) {
+            loadModal.innerHTML = resp;
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) modal.style.display = 'flex';
+        }
+    })
+}
+
 // Fechar
 window.addEventListener('click', function (event) {
     const overlay = document.querySelector('.modal-overlay');

@@ -177,9 +177,9 @@
 }
 
 .badge-ativo {
-    background: rgba(45, 96, 87, 0.85);
-    color: #7ee8a2;
-    border: 1px solid rgba(126, 232, 162, 0.3);
+    background: rgba(var(--verde-musgo-medio-rgba), 0.2);
+    color: var(--verde-musgo);
+    border: 1px solid rgba(var(--verde-musgo-rgba), 0.3);
 }
 
 .badge-pausado {

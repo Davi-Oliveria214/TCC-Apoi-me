@@ -4,10 +4,6 @@ exigirLogin();
 
 include('./includes/head.php');
 include('./includes/topo.php');
-?>
-
-<?php
-$sql = request("usuarios?codigo=eq.{$_SESSION['codigo']}&select=count");
 
 $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
 ?>
@@ -89,9 +85,32 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
         </div>
 
         <div class="stats">
+          <?php
+          $resUsuarios = request("usuarios?codigo=eq.{$_SESSION['codigo']}&select=count");
+          $totalUsuarios = $resUsuarios[0]['count'];
+
+          $resServicos = request("servicos?codigo=eq.{$_SESSION['codigo']}&select=count");
+          $totalServicos = $resServicos[0]['count'];
+
+          $resAvisos = request("avisos?codigo=eq.{$_SESSION['codigo']}&select=count");
+          $totalAvisos = $resAvisos[0]['count'];
+          ?>
+
           <div class="stat-card">
-            <div class="stat-label">Moradores Cadastrados</div>
-            <div class="stat-value" id="stat-moradores"><?php echo $sql[0]['count'] ?></div>
+            <div class="stat-label">Moradores cadastrados</div>
+            <div class="stat-value" id="stat-moradores"><?php echo $totalUsuarios ?></div>
+            <div class="stat-sub">via código de acesso</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Serviços cadastrados</div>
+            <div class="stat-value" id="stat-moradores"><?php echo $totalServicos ?></div>
+            <div class="stat-sub">via código de acesso</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Quantidade de avisos</div>
+            <div class="stat-value" id="stat-moradores"><?php echo $totalAvisos ?></div>
             <div class="stat-sub">via código de acesso</div>
           </div>
         </div>
@@ -125,6 +144,11 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
                 <p>
                   <?php echo $aviso['mensagem'] ?>
                 </p>
+
+                <div class="aviso-btn">
+                  <button type="button" class="btn" onclick="opcoesAviso('editar_aviso','<?php echo $aviso['id'] ?>')">Editar</button>
+                  <button type="button" class="btn" onclick="opcoesAviso('apagar_aviso','<?php echo $aviso['id'] ?>')">Apagar</button>
+                </div>
               </div>
             <?php
             endforeach;

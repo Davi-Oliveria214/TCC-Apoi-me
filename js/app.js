@@ -192,6 +192,7 @@ function pesquisa(pagina, valor) {
       if (resultado) {
         resultado.innerHTML = resp;
       }
+      teste();
     }
   });
 }
@@ -206,4 +207,18 @@ function filtro(local, item) {
       if (filtro_local) filtro_local.innerHTML = resp;
     }
   });
+}
+
+function teste() {
+  const container = document.querySelector('.local-filtro');
+
+  if (container) {
+    const temAviso = container.querySelector('.aviso-vazio');
+
+    if (temAviso) {
+      container.style.display = 'flex';
+    } else {
+      container.style.display = 'grid';
+    }
+  }
 }

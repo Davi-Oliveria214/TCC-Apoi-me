@@ -21,7 +21,6 @@ $nota = $_GET['nota'] ?? '';
 $observacao = $_GET['observacao'] ?? '';
 
 $morador = request("usuarios?id=eq.{$_SESSION['id']}&select=nome,email,codigo");
-var_dump($morador);
 if ($tipo == 'horarios') {
 
     $dataSelecionada = $_GET['data'];
@@ -338,38 +337,7 @@ if ($tipo == 'horarios') {
                 <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
             </div>
         </form>
-    <?php elseif ($tipo == 'aviso'): ?>
 
-        <form action="./controls/criar_aviso.act.php" method="post" class="modal-content modal-padrao ativar-load">
-            <div class="modal-header">
-                <h3>Criar Aviso</h3>
-            </div>
-
-            <div class="modal-body">
-
-                <div class="input-group">
-                    <label>Título</label>
-                    <input type="text" name="titulo" required>
-                </div>
-
-                <div class="input-group">
-                    <label>Data do Evento</label>
-                    <input type="date" name="data_evento" required>
-                </div>
-
-                <div class="input-group">
-                    <label>Mensagem</label>
-                    <textarea name="mensagem" class="comment-area" rows="4" maxlength="500" placeholder="Descreva o aviso..." required></textarea>
-                    <div class="char-count">0 / 500</div>
-                </div>
-
-            </div>
-
-            <div class="modal-footer">
-                <button type="submit" class="btn-modais">Publicar Aviso</button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
-            </div>
-        </form>
     <?php elseif ($tipo == 'editar_nome'): ?>
 
         <form action="../controls/editar_perfil.act.php" method="post" class="modal-content modal-padrao ativar-load">
@@ -474,6 +442,102 @@ if ($tipo == 'horarios') {
 
             <div class="modal-footer">
                 <button type="submit" class="btn-modais">Salvar Código</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+            </div>
+        </form>
+    <?php elseif ($tipo == 'aviso'): ?>
+
+        <form action="./controls/avisos.act.php" method="post" class="modal-content modal-padrao ativar-load">
+            <input type="hidden" name="campo" value="criar">
+            <div class="modal-header">
+                <h3>Criar Aviso</h3>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="input-group">
+                    <label>Título</label>
+                    <input type="text" name="titulo" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Data do Evento</label>
+                    <input type="date" name="data_evento" min="<?php echo date('Y-m-d') ?>" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Mensagem</label>
+                    <textarea name="mensagem" class="comment-area" rows="4" maxlength="500" placeholder="Descreva o aviso..." required></textarea>
+                    <div class="char-count">0 / 500</div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais">Publicar Aviso</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+            </div>
+        </form>
+
+    <?php elseif ($tipo == 'editar_aviso'): ?>
+
+        <?php
+        $avisoAtual = request("avisos?id=eq.$id_registro");
+        $avisoAtual = (!empty($avisoAtual) && !isset($avisoAtual['error'])) ? $avisoAtual[0] : null;
+
+        $tituloAviso = $avisoAtual['titulo'] ?? '';
+        $dataAviso = $avisoAtual['data_evento'] ?? '';
+        $mensagemAviso = $avisoAtual['mensagem'] ?? '';
+        ?>
+
+        <form action="./controls/avisos.act.php" method="post" class="modal-content modal-padrao ativar-load">
+            <input type="hidden" name="id_aviso" value="<?php echo $id_registro ?>">
+            <input type="hidden" name="campo" value="editar">
+
+            <div class="modal-header">
+                <h3>Editar Aviso</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Título</label>
+                    <input type="text" name="titulo" value="<?php echo $tituloAviso ?>" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Data do Evento</label>
+                    <input type="date" name="data_evento" min="<?php echo date('Y-m-d') ?>" value="<?php echo $dataAviso ?>" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Mensagem</label>
+                    <textarea name="mensagem" class="comment-area" rows="4" maxlength="500" required><?php echo $mensagemAviso ?></textarea>
+                    <div class="char-count">0 / 500</div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais">Salvar Alterações</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+            </div>
+        </form>
+        
+    <?php elseif ($tipo == 'apagar_aviso'): ?>
+
+        <form action="./controls/avisos.act.php" method="post" class="modal-content modal-alerta ativar-load">
+            <input type="hidden" name="id_aviso" value="<?php echo $id_registro ?>">
+            <input type="hidden" name="campo" value="apagar">
+
+            <div class="modal-header">
+                <h3>Apagar Aviso?</h3>
+            </div>
+
+            <div class="modal-body">
+                <p>O aviso será removido do mural e os moradores não terão mais acesso a ele. Tem certeza que deseja continuar?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais">Sim, Apagar</button>
                 <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
             </div>
         </form>
