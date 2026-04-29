@@ -9,7 +9,7 @@ include('./includes/topo.php');
 <main class="principal">
     <section class="avisos-eventos">
         <div class="avisos-condominio quadro">
-            <h1>Quadro de Avisos</h1>
+            <h2>Quadro de Avisos</h2>
             <div class="box">
                 <?php
                 $avisos = request("avisos?codigo=eq.{$_SESSION['codigo']}");
@@ -48,7 +48,7 @@ include('./includes/topo.php');
         </div>
 
         <div class="reservados quadro">
-            <h1>Reservados</h1>
+            <h2>Reservados</h2>
             <div class="box">
                 <?php
                 $endpoint = "contratados?id_cliente=eq.$id&select=id,dia,hora,confirmado,id_servico,observacao,servicos(nome,descricao,imagem,id_prestador)status=eq.true&order=dia.desc";
@@ -106,7 +106,7 @@ include('./includes/topo.php');
     </section>
 
     <section class="servicos-publicados">
-        <h1>Serviços Disponíveis</h1>
+        <h2>Serviços Disponíveis</h2>
         <section class="sessao-servicos local-filtro">
             <?php
             $sql = request("servicos?codigo=eq.{$_SESSION['codigo']}&status=eq.true&select=*&order=nome.asc");
@@ -132,10 +132,12 @@ include('./includes/topo.php');
                             </div>
 
                             <div class="box-btn-servico">
-                                <button onclick="abrirModalAgendar('<?php echo $servico['id'] ?>', '<?php echo $servico['nome'] ?>', '<?php echo $imgServ ?>', '<?php echo $horaInicio ?>', '<?php echo $horaFim ?>', '<?php echo $duracao ?>')" class="btn">
-                                    Agendar serviço
-                                </button>
-                                <a href="./mensagens.php?id=<?php echo $servico['id']; ?>" class="btn">Chat</a>
+                                <?php if ($servico['id_prestador'] !=  $id) : ?>
+                                    <button onclick="abrirModalAgendar('<?php echo $servico['id'] ?>', '<?php echo $servico['nome'] ?>', '<?php echo $imgServ ?>', '<?php echo $horaInicio ?>', '<?php echo $horaFim ?>', '<?php echo $duracao ?>')" class="btn">
+                                        Agendar serviço
+                                    </button>
+                                    <a href="./mensagens.php?id=<?php echo $servico['id']; ?>" class="btn">Chat</a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

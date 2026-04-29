@@ -23,7 +23,6 @@
 .section-headerADM p {
   color: var(--dourado);
   margin-top: 6px;
-  font-size: 0.9rem;
 }
 
 .stats {
@@ -45,20 +44,17 @@
 }
 
 .stat-label {
-  font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--verde-musgo);
 }
 
 .stat-value {
-  font-size: 2.2rem;
   color: var(--gold-light);
   margin: 6px 0 2px;
 }
 
 .stat-sub {
-  font-size: 0.78rem;
   color: var(--verde-musgo);
 }
 
@@ -90,12 +86,10 @@
 }
 
 .empty .empty-icon {
-  font-size: 2.5rem;
   margin-bottom: 12px;
 }
 
 .empty p {
-  font-size: 0.9rem;
 }
 
 .btn-criar-aviso {
@@ -105,7 +99,6 @@
   background: var(--verde-musgo);
   color: var(--branco);
   cursor: pointer;
-  font-size: 0.85rem;
   transition: 0.2s;
   font-weight: bold;
 }
@@ -196,7 +189,6 @@
 
 .hero-info h1 {
   color: var(--branco);
-  font-size: 2.2rem;
   margin-bottom: 0.8rem;
 }
 
@@ -213,7 +205,6 @@
   color: var(--branco);
   padding: 4px 12px;
   border-radius: 50px;
-  font-size: 0.8rem;
   border: 2px solid var(--dourado);
   text-transform: uppercase;
   font-weight: bold;
@@ -224,7 +215,6 @@
   color: var(--branco);
   padding: 4px 12px;
   border-radius: 50px;
-  font-size: 0.8rem;
   border: 1px solid rgba(255, 255, 255, 0.3);
   font-weight: bold;
 }
@@ -240,14 +230,13 @@
   color: var(--branco);
   opacity: 0.9;
   margin: 0;
-  font-size: 0.9rem;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .detalhes-info span {
-  font-size: 1.1rem;
+  
 }
 
 /* GRID DE CARDS DO PERFIL */
@@ -276,13 +265,12 @@
 .card-content h3 {
   color: var(--dourado);
   margin-bottom: 1rem;
-  font-size: 1.1rem;
+  ;
   font-weight: bold;
 }
 
 .card-content p {
   color: var(--verde-musgo);
-  font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
 
@@ -335,20 +323,18 @@
 }
 
 .card-avisos h2 {
-  font-size: 1rem;
+  
   color: var(--verde-musgo);
   margin: 0;
 }
 
 .card-avisos .autor {
-  font-size: 0.9rem;
   opacity: 0.8;
 }
 
 .datas-aviso {
   display: flex;
   flex-direction: column;
-  font-size: 0.9rem;
   gap: 2px;
   color: var(--verde-musgo);
 }
@@ -358,7 +344,6 @@
   overflow-y: auto;
   padding: 5px;
   text-align: justify;
-  font-size: 0.85rem;
   color: var(--verde-musgo);
 }
 

@@ -28,7 +28,6 @@
 
 .titulo-texto-sobre h1 {
     color: var(--dourado-fraco);
-    font-size: clamp(20px, 5vw, 70px);
     letter-spacing: 5px;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
@@ -36,7 +35,6 @@
 .titulo-texto-sobre p {
     text-align: justify;
     width: 100%;
-    font-size: clamp(10px, 5vw, 25px);
     color: var(--branco);
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
@@ -50,13 +48,11 @@
 }
 
 .texto-principal-quem-somos p {
-    font-size: 1.15em;
     margin-bottom: 25px;
     color: var(--preto-acinzentado);
 }
 
 .paragrafo-destaque {
-    font-size: 2.2em;
     font-weight: 900;
     margin-bottom: 40px;
     text-align: start;
@@ -67,7 +63,6 @@
 
 .paragrafo-missao {
     font-style: italic;
-    font-size: 1.1em;
     padding: 15px;
     margin-top: 30px;
     border-left: 10px solid var(--verde-musgo);
@@ -101,12 +96,10 @@
 .info-nos h2 {
     color: var(--verde-musgo);
     margin-bottom: 10px;
-    font-size: 1.5em;
     border-bottom: 2px solid var(--dourado);
     padding-bottom: 5px;
 }
 
 .info-nos p {
     color: var(--preto-acinzentado);
-    font-size: 0.95em;
 }

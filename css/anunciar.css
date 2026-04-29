@@ -19,7 +19,6 @@
 
 .secao-header-info h2 {
     font-family: var(--fonte-display);
-    font-size: 2.8rem;
     font-weight: 600;
     color: var(--dourado);
     letter-spacing: 0.02em;
@@ -28,7 +27,6 @@
 
 .secao-header-info p {
     color: var(--verde-musgo);
-    font-size: 0.85rem;
     margin-top: 6px;
     letter-spacing: 0.04em;
 }
@@ -43,7 +41,6 @@
     padding: 12px 22px;
     border-radius: 10px;
     font-family: var(--fonte-corpo);
-    font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.25s ease;
@@ -93,19 +90,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    ;
     flex-shrink: 0;
 }
 
 .stat-texto p {
-    font-size: 0.75rem;
     color: rgba(var(--branco-rgba), 0.5);
     letter-spacing: 0.06em;
     text-transform: uppercase;
 }
 
 .stat-texto strong {
-    font-size: 1.5rem;
+    
     color: var(--dourado-palido);
     font-family: var(--fonte-display);
     font-weight: 600;
@@ -124,7 +120,6 @@
     color: var(--verde-musgo-medio);
     padding: 8px 18px;
     border-radius: 30px;
-    font-size: 0.82rem;
     cursor: pointer;
     transition: all 0.2s ease;
     letter-spacing: 0.03em;
@@ -169,7 +164,6 @@
     right: 14px;
     padding: 5px 12px;
     border-radius: 20px;
-    font-size: 0.72rem;
     font-weight: 500;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -231,14 +225,13 @@
 }
 
 .card-nome {
-    font-size: 1.5rem;
+    
     font-weight: 600;
     color: var(--dourado-palido);
     line-height: 1.2;
 }
 
 .card-descricao {
-    font-size: 0.84rem;
     color: rgba(var(--branco-rgba), 0.5);
     line-height: 1.6;
     display: -webkit-box;
@@ -260,7 +253,6 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.8rem;
     color: rgba(var(--branco), 0.5);
 }
 
@@ -280,7 +272,6 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.78rem;
     color: rgba(var(--branco), 0.5);
 }
 
@@ -301,7 +292,6 @@
     padding: 10px;
     border-radius: 8px;
     border: none;
-    font-size: 0.85rem;
     font-weight: 500;
     cursor: pointer;
     display: flex;
@@ -366,18 +356,16 @@
 }
 
 .vazio .icone-vazio {
-    font-size: 3rem;
     opacity: 0.4;
 }
 
 .vazio h3 {
     font-family: var(--fonte-display);
-    font-size: 1.6rem;
+    
     color: rgba(255, 255, 255, 0.35);
 }
 
 .vazio p {
-    font-size: 0.88rem;
     max-width: 300px;
 }
 

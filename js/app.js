@@ -82,6 +82,31 @@ function configMenu() {
   burguer.classList.toggle("abrir");
 }
 
+// Tela de carregar
+document.addEventListener('click', function (e) {
+  const link = e.target.closest('a');
+  if (!link) return;
+
+  const href = link.getAttribute('href');
+
+  if (
+    href &&
+    !href.startsWith('#') &&
+    !href.startsWith('javascript') &&
+    link.target !== '_blank'
+  ) {
+    load(true);
+  }
+});
+
+document.addEventListener('submit', function (e) {
+  const form = e.target;
+
+  if (form.classList.contains('ativar-load')) {
+    load(true);
+  }
+});
+
 function load(abrir) {
   const body = document.getElementById('body-load')
 
@@ -133,30 +158,6 @@ document.addEventListener('input', function (e) {
     }
   }
 });
-
-// Tela de carregar
-document.addEventListener('click', function (e) {
-  const link = e.target.closest('a');
-  if (link) {
-    const href = link.getAttribute('href');
-
-    if (href &&
-      !href.startsWith('#') &&
-      link.target !== '_blank' &&
-      !href.startsWith('javascript')) {
-      load(true);
-      return;
-    }
-  }
-
-  const btn = e.target.closest('button[type="submit"], input[type="submit"]');
-  if (btn) {
-    const form = btn.closest('form');
-    if (form && form.classList.contains('ativar-load')) {
-      load(true);
-    }
-  }
-})
 
 // Imagem em tempo real
 document.addEventListener('change', function (e) {
