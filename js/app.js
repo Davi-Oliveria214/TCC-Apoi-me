@@ -223,3 +223,31 @@ function teste() {
     }
   }
 }
+
+// Validar senha
+function verificarSenha(senha) {
+  const nome = document.getElementById('idNome')
+  const email = document.getElementById('idEmail')
+  const rptSenha = document.getElementById('idRptSenha')
+  const inputSenha = document.getElementById('idSenha')
+
+  $.ajax({
+    url: "./controls/verificarSenha.php",
+    type: "POST",
+    dataType: "json",
+    data: { pass: senha, rptSenha: rptSenha.value, nome: nome.value, email: email.value },
+    success: function (resp) {
+      const campoErro = document.querySelector('.texto-senha');
+
+      if (campoErro) {
+        campoErro.textContent = resp.msg;
+      }
+
+      if (resp.pronto === false) {
+        inputSenha.setCustomValidity(resp.msg);
+      } else {
+        inputSenha.setCustomValidity("");
+      }
+    }
+  });
+}

@@ -17,11 +17,12 @@ include('./includes/topo.php');
                 </div>
                 <div class="box-auth">
                     <label for="idEmail">Email</label>
-                    <input type="email" name="email" id="idEmail" placeholder="Email" onkeydown="if(event.keyCode == 32)" required>
+                    <input type="email" name="email" id="idEmail" placeholder="Email" onkeydown="if(event.key == ' ') event.preventDefault()" required>
                 </div>
                 <div class="box-auth">
                     <label for="idSenha">Senha (min: 8)</label>
-                    <input type="password" name="senha" id="idSenha" min="8" onkeydown="if(event.key === ' ') event.preventDefault()" placeholder="Senha" required>
+                    <input type="password" name="senha" id="idSenha" min="8" onkeydown="if(event.key === ' ') event.preventDefault()" oninput="verificarSenha(this.value)" placeholder="Senha" required>
+                    <p class="texto-senha"></p>
                 </div>
                 <div class="box-auth">
                     <label for="idRptSenha">Repita senha (min: 8)</label>
@@ -43,7 +44,7 @@ include('./includes/topo.php');
                 </div>
 
                 <div class="box-btn">
-                    <button type="submit" class="btn btn-auth">Criar conta</button>
+                    <button type="submit" id="btnEnviar" class="btn btn-auth">Criar conta</button>
                     <a href="./login.php" class="btn btn-auth">Login</a>
                 </div>
             </form>

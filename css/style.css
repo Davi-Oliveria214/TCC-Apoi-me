@@ -187,19 +187,18 @@ main {
 }
 
 #todos-servicos {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: hidden;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 280px;
+  grid-template-rows: 320px;
   gap: 20px;
   padding: 25px 15px;
   width: 100%;
-  justify-content: flex-start;
-  align-items: stretch;
+  overflow-x: hidden;
   cursor: grab;
   user-select: none;
 }
 
-/* Esconde a barra de rolagem */
 #todos-servicos::-webkit-scrollbar {
   display: none;
 }
