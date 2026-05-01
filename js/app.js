@@ -193,24 +193,33 @@ function pesquisa(pagina, valor) {
       if (resultado) {
         resultado.innerHTML = resp;
       }
-      teste();
+      gridFiltro()
     }
   });
 }
 
-function filtro(local, item) {
+function filtro(btn, local, item) {
+  $('.filtro-btn').removeClass('ativo');
+  $(btn).addClass('ativo');
+
   $.ajax({
     url: "./util/filtro.php",
     type: "POST",
     data: { type: local, item: item },
     success: function (resp) {
-      const filtro_local = document.querySelector('.local-filtro')
-      if (filtro_local) filtro_local.innerHTML = resp;
+      const filtro_local = document.querySelector('.local-filtro');
+      if (filtro_local) {
+        filtro_local.innerHTML = resp;
+      }
+      gridFiltro()
+    },
+    error: function () {
+      console.error("Erro ao carregar o filtro.");
     }
   });
 }
 
-function teste() {
+function gridFiltro() {
   const container = document.querySelector('.local-filtro');
 
   if (container) {
@@ -225,9 +234,10 @@ function teste() {
 }
 
 // Validar senha
-function verificarSenha(senha) {
+function verificarSenha() {
   const nome = document.getElementById('idNome')
   const email = document.getElementById('idEmail')
+  const senha = document.getElementById('idSenha')
   const rptSenha = document.getElementById('idRptSenha')
   const inputSenha = document.getElementById('idSenha')
 
@@ -235,7 +245,7 @@ function verificarSenha(senha) {
     url: "./controls/verificarSenha.php",
     type: "POST",
     dataType: "json",
-    data: { pass: senha, rptSenha: rptSenha.value, nome: nome.value, email: email.value },
+    data: { pass: senha.value, rptSenha: rptSenha.value, nome: nome.value, email: email.value },
     success: function (resp) {
       const campoErro = document.querySelector('.texto-senha');
 
@@ -250,4 +260,18 @@ function verificarSenha(senha) {
       }
     }
   });
+}
+
+function toggleSenha(idInput, imgElement) {
+  const input = document.getElementById(idInput);
+
+  if (input.type === 'password') {
+    input.type = 'text';
+    imgElement.src = './icon/visibility_lock.png';
+    imgElement.alt = 'Ocultar senha';
+  } else {
+    input.type = 'password';
+    imgElement.src = './icon/visibility.png';
+    imgElement.alt = 'Mostrar senha';
+  }
 }

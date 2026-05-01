@@ -61,7 +61,6 @@
 }
 
 .box-auth label {
-    
     font-weight: bold;
     color: var(--verde-musgo-medio);
 }
@@ -75,7 +74,6 @@
     border-radius: 8px;
     background-color: var(--dourado-fraco);
     color: var(--preto-acinzentado);
-    
     transition: border-color 0.3s ease;
 }
 
@@ -83,6 +81,58 @@
 .fale-conosco input:focus {
     border-color: var(--verde-musgo);
     outline: none;
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.olho-icon {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    user-select: none;  
+    width: 24px;
+    height: auto;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.olho-icon:hover {
+    opacity: 1;
+}
+
+.box-auth input {
+    padding-right: 40px !important;
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.olho-icon {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    user-select: none;
+    font-style: normal;
+    font-size: 1.1rem;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.olho-icon:hover {
+    opacity: 1;
+}
+
+.box-auth input {
+    padding-right: 40px !important;
 }
 
 /* Botões */
@@ -115,7 +165,7 @@
 }
 
 .btn-link {
-    
+
     color: var(--preto-acinzentado);
     text-decoration: none;
     transition: color 0.3s;
@@ -136,7 +186,7 @@
 }
 
 .info-contato label[for="idNota"] {
-    
+
     font-weight: bold;
     color: var(--verde-musgo-medio);
     margin-top: 5px;
@@ -149,7 +199,7 @@
     border-radius: 8px;
     background-color: var(--dourado-fraco);
     color: var(--preto-acinzentado);
-    
+
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
@@ -238,7 +288,7 @@
     border-radius: 8px;
     background-color: var(--dourado-fraco);
     color: var(--preto-acinzentado);
-    
+
     cursor: pointer;
 
     appearance: none;
@@ -338,7 +388,7 @@ Página: Enviar Código (Recuperação)
     border-radius: 10px;
     background-color: var(--dourado-fraco);
     color: var(--preto-acinzentado);
-    
+
     outline: none;
     transition: all 0.3s ease;
 }
@@ -355,7 +405,7 @@ Página: Enviar Código (Recuperação)
     border-radius: 10px;
     background-color: var(--dourado-fraco);
     color: var(--preto-acinzentado);
-    
+
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;

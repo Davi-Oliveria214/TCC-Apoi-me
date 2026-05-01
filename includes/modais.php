@@ -403,17 +403,30 @@ if ($tipo == 'horarios') {
 
             <div class="modal-body">
                 <div class="input-group">
-                    <label>Nova Senha</label>
-                    <input type="password" name="nova_senha" minlength="6" placeholder="Mínimo 6 caracteres" required>
+                    <label>Senha Atual</label>
+                    <input type="password" name="senha_atual" placeholder="Digite sua senha atual" required>
                 </div>
+
                 <div class="input-group">
-                    <label>Confirmar Nova Senha</label>
-                    <input type="password" name="confirmar_senha" minlength="6" placeholder="Repita a nova senha" required>
+                    <label for="idSenha">Nova Senha</label>
+                    <div class="input-container">
+                        <input type="password" name="nova_senha" id="idSenha" minlength="8" onkeydown="if(event.key === ' ') event.preventDefault()" oninput="verificarSenha()" placeholder="Senha" required>
+                        <img src="./icon/visibility.png" class="olho-icon" alt="Mostrar senha" onclick="toggleSenha('idSenha', this)">
+                    </div>
+                    <p class="texto-senha" style="color: var(--verde-musgo-medio);"></p>
+                </div>
+
+                <div class="input-group">
+                    <label for="idRptSenha">Confirmar Nova Senha</label>
+                    <div class="input-container">
+                        <input type="password" name="confirmar_senha" id="idRptSenha" minlength="8" onkeydown="if(event.key === ' ') event.preventDefault()" oninput="verificarSenha()" placeholder="Repita senha" required>
+                        <img src="./icon/visibility.png" class="olho-icon" alt="Mostrar senha" onclick="toggleSenha('idRptSenha', this)">
+                    </div>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn-modais">Redefinir Senha</button>
+                <button type="submit" id="btnEnviar" class="btn-modais">Redefinir Senha</button>
                 <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
             </div>
         </form>
@@ -521,7 +534,7 @@ if ($tipo == 'horarios') {
                 <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
             </div>
         </form>
-        
+
     <?php elseif ($tipo == 'apagar_aviso'): ?>
 
         <form action="./controls/avisos.act.php" method="post" class="modal-content modal-alerta ativar-load">

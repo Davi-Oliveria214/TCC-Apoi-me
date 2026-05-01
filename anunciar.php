@@ -51,9 +51,9 @@ include('./includes/topo.php');
 
     <!-- FILTROS -->
     <div class="filtros">
-        <button class="filtro-btn ativo" onclick="filtro('anuncio',0)">Todos</button>
-        <button class="filtro-btn" onclick="filtro('anuncio',1)">Ativos</button>
-        <button class="filtro-btn" onclick="filtro('anuncio',2)">Pausados</button>
+        <button class="filtro-btn ativo" onclick="filtro(this, 'anuncio', 0)">Todos</button>
+        <button class="filtro-btn" onclick="filtro(this, 'anuncio', 1)">Ativos</button>
+        <button class="filtro-btn" onclick="filtro(this, 'anuncio', 2)">Pausados</button>
     </div>
 
     <!-- GRID DE SERVIÇOS -->

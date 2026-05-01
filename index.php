@@ -85,5 +85,3 @@ include('./includes/topo.php');
 </main>
 
 <?php include('./includes/rodape.php'); ?>
-
-<script src="./js/carrossel.js"></script>

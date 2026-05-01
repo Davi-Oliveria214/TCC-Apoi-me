@@ -118,7 +118,6 @@ function textosEmails($nome, $codigo, $link, $fluxo, $chave = '')
             return "<h2>Recuperação de Senha</h2>
                     <p>Olá <b>$nomeEscapado</b>, seu código de segurança é: <b>$codigo</b></p>
                     <p>Use o link: <a href='$link'>Redefinir Senha</a></p>";
-
         case 'chave':
             return "<h2>Bem-vindo, Administrador!</h2>
                     <p>Olá <b>$nomeEscapado</b>, sua conta foi criada.</p>

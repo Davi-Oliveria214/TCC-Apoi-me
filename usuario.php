@@ -55,7 +55,7 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
           <h3>Segurança</h3>
           <p>Altere sua senha por aqui</p>
         </div>
-        <button type="button" class="btn-action-outline">Trocar Senha</button>
+        <button type="button" class="btn-action-outline" onclick="editarPerfil('editar_senha')">Trocar Senha</button>
       </div>
 
       <div class="perfil-card">

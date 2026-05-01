@@ -15,18 +15,27 @@ include('./includes/topo.php');
                     <label for="idNome">Nome</label>
                     <input type="text" name="nome" id="idNome" placeholder="Nome" required>
                 </div>
+
                 <div class="box-auth">
                     <label for="idEmail">Email</label>
                     <input type="email" name="email" id="idEmail" placeholder="Email" onkeydown="if(event.key == ' ') event.preventDefault()" required>
                 </div>
+
                 <div class="box-auth">
                     <label for="idSenha">Senha (min: 8)</label>
-                    <input type="password" name="senha" id="idSenha" min="8" onkeydown="if(event.key === ' ') event.preventDefault()" oninput="verificarSenha(this.value)" placeholder="Senha" required>
+                    <div class="input-container">
+                        <input type="password" name="senha" id="idSenha" minlength="8" onkeydown="if(event.key === ' ') event.preventDefault()" oninput="verificarSenha()" placeholder="Senha" required>
+                        <img src="./icon/visibility.png" class="olho-icon" alt="Mostrar senha" onclick="toggleSenha('idSenha', this)">
+                    </div>
                     <p class="texto-senha" style="color: var(--verde-musgo-medio);"></p>
                 </div>
+
                 <div class="box-auth">
                     <label for="idRptSenha">Repita senha (min: 8)</label>
-                    <input type="password" name="rptSenha" id="idRptSenha" min="8" onkeydown="if(event.key === ' ') event.preventDefault()" placeholder="Repita senha" required>
+                    <div class="input-container">
+                        <input type="password" name="rptSenha" id="idRptSenha" minlength="8" onkeydown="if(event.key === ' ') event.preventDefault()" oninput="verificarSenha()" placeholder="Repita senha" required>
+                        <img src="./icon/visibility.png" class="olho-icon" alt="Mostrar senha" onclick="toggleSenha('idRptSenha', this)">
+                    </div>
                 </div>
 
                 <div class="box-auth">
