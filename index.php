@@ -51,7 +51,7 @@ include('./includes/topo.php');
                             <span><?php echo $horaInicio ?></span>
                         </div>
                         <?php if (empty($id) || $id != $servico['id_prestador']): ?>
-                            <button onclick="abrirModalAgendar('<?php echo $servico['id'] ?>')" class="btn">
+                            <button onclick="<?php echo isset($id) ? "abrirModalAgendar('{$servico['id']}')" : "window.location.href = './util/setAviso.php';" ?>" class="btn">
                                 Agendar serviço
                             </button>
                         <?php endif; ?>

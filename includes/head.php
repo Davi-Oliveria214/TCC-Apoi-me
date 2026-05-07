@@ -9,7 +9,7 @@
     <script src="./libs/jquery.js"></script>
     <script src="./js/app.js" defer></script>
     <script src="./js/modais.js" defer></script>
-    <title>TCC</title>
+    <title>Apoie-me</title>
 </head>
 
 <body>
