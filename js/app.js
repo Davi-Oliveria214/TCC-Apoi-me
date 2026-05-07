@@ -30,28 +30,6 @@ function ajustarTamanho() {
 window.addEventListener("resize", ajustarTamanho);
 window.addEventListener("load", ajustarTamanho);
 
-// Filtra os serviços por categoria
-function filtrar(categoria) {
-  $.ajax({
-    type: "POST",
-    url: "../util/filtro.php",
-    data: { resp: categoria },
-    success: function (resposta) {
-      const container = document.getElementById("todos-servicos");
-
-      container.innerHTML = resposta;
-
-      container.scrollLeft = 0;
-
-      const totalCards = container.querySelectorAll(".card-servico").length;
-
-      if (container.offsetWidth > 600) {
-        velocidade = totalCards < 4 ? 0 : 0.7;
-      }
-    },
-  });
-}
-
 window.document.getElementById('ativar-load')?.addEventListener('submit', function () {
   load(true)
 })

@@ -13,7 +13,7 @@ include('./includes/topo.php');
 <main class="principal-inicial">
     <section class="inicial-escolha" id="filtro">
         <ul>
-            <li onclick="filtro('servicos',0)">Todos</li>
+            <li onclick="filtro(this,'servicos',0)">Todos</li>
             <?php
             $categorias = request("categorias?select=id,nome&order=nome.asc", "GET");
 
@@ -22,7 +22,7 @@ include('./includes/topo.php');
                     $idCate = $cate['id'];
                     $nomeCate = htmlspecialchars($cate['nome']);
             ?>
-                    <li onclick="filtro('servicos',<?php echo $idCate ?>)"><?php echo $nomeCate ?></li>
+                    <li onclick="filtro(this,'servicos',<?php echo $idCate ?>)"><?php echo $nomeCate ?></li>
             <?php
                 }
             }
@@ -50,9 +50,11 @@ include('./includes/topo.php');
                             <p><?php echo $servico['descricao'] ?></p>
                             <span><?php echo $horaInicio ?></span>
                         </div>
-                        <button onclick="abrirModalAgendar('<?php echo $servico['id'] ?>', '<?php echo $servico['nome'] ?>', '<?php echo $imagem ?>', '<?php echo $horaInicio ?>', '<?php echo $horaFim ?>', '<?php echo $duracao ?>')" class="btn">
-                            Agendar serviço
-                        </button>
+                        <?php if (empty($id) || $id != $servico['id_prestador']): ?>
+                            <button onclick="abrirModalAgendar('<?php echo $servico['id'] ?>')" class="btn">
+                                Agendar serviço
+                            </button>
+                        <?php endif; ?>
                     </div>
                 </div>
         <?php

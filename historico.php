@@ -19,7 +19,7 @@ include('./includes/topo.php');
                 foreach ($servicos as $servico) :
                     $hora = date('H:i', strtotime($servico['hora']));
             ?>
-                    <div class='card card-servico' data-id='<?php echo $servico["id"] ?>'>
+                    <div class='card-historico' data-id='<?php echo $servico["id"] ?>'>
                         <img src='<?php echo $servico['servicos']['imagem'] ?>' alt=''>
                         <div>
                             <div class='info-card'>
@@ -56,7 +56,7 @@ include('./includes/topo.php');
                     $hora = date('H:i', strtotime($servico['hora']));
                     $imagem = $servico['servicos']['imagem'];
             ?>
-                    <div class='card card-servico' data-id='<?php echo $servico['servicos']["id"] ?>'>
+                    <div class='card-historico' data-id='<?php echo $servico['servicos']["id"] ?>'>
                         <img src='<?php echo $servico['servicos']['imagem'] ?>' alt=''>
                         <div>
                             <div class='info-card'>
@@ -93,7 +93,7 @@ include('./includes/topo.php');
                     $hora = date('H:i', strtotime($servico['hora']));
                     $imagem = $servico['servicos']['imagem'];
             ?>
-                    <div class='card card-servico' data-id='<?php echo $servico["id"] ?>'>
+                    <div class='card-historico' data-id='<?php echo $servico["id"] ?>'>
                         <img src='<?php echo $servico['servicos']['imagem'] ?>' alt=''>
                         <div>
                             <div class='info-card'>

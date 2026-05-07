@@ -18,7 +18,7 @@ window.cancelar = function (id) {
 };
 
 // --- MODAL AGENDAR ---
-window.abrirModalAgendar = function (id, nome, imagem, hora_inicio, hora_fim, duracao) {
+window.abrirModalAgendar = function (id) {
     if (!window.usuarioLogado) {
         window.location.href = "./util/setAviso.php";
         return;
@@ -27,7 +27,7 @@ window.abrirModalAgendar = function (id, nome, imagem, hora_inicio, hora_fim, du
     $.ajax({
         url: "./includes/modais.php",
         type: "GET",
-        data: { tipo: 'agendar', id_registro: id, nome_servico: nome, img_servico: imagem, hora_inicio: hora_inicio, hora_fim: hora_fim, duracao: duracao },
+        data: { tipo: 'agendar', id_registro: id },
         success: function (resp) {
             loadModal.innerHTML = resp
 

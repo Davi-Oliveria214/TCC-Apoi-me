@@ -21,22 +21,25 @@ $nota = $_GET['nota'] ?? '';
 $observacao = $_GET['observacao'] ?? '';
 
 $morador = request("usuarios?id=eq.{$_SESSION['id']}&select=nome,email,codigo");
-if ($tipo == 'horarios') {
 
-    $dataSelecionada = $_GET['data'];
-    $id_servico = $_GET['id_registro'];
+function gerarOpcoesHorarios($id_servico, $dataSelecionada)
+{
+    $servico = request("servicos?id=eq.$id_servico");
 
-    $servico = request("servicos?id=eq.$id_servico")[0];
+    if (empty($servico) || isset($servico['error'])) {
+        return "<option value=''>Serviço não encontrado</option>";
+    }
 
+    $servico = $servico[0];
     $hora_inicio = $servico['hora_inicio'];
     $hora_fim = $servico['hora_fim'];
-    $duracao = strtotime($servico['duracao']);
 
-    $duracaoMin = (int) date('i', $duracao) + (int) date('H', $duracao) * 60;
+    $duracaoUnix = strtotime($servico['duracao']);
+    $duracaoMin = (int) date('i', $duracaoUnix) + (int) date('H', $duracaoUnix) * 60;
 
     $reservas = request("contratados?dia=eq.$dataSelecionada&id_servico=eq.$id_servico");
-
     $ocupados = [];
+
     if (!empty($reservas) && !isset($reservas['error'])) {
         foreach ($reservas as $r) {
             $ocupados[] = date('H:i', strtotime($r['hora']));
@@ -47,15 +50,28 @@ if ($tipo == 'horarios') {
     $fim = strtotime($hora_fim);
     $intervalo = max(1, $duracaoMin) * 60;
 
-    for ($i = $inicio; $i <= $fim; $i += $intervalo):
+    $html = "";
+
+    for ($i = $inicio; $i <= $fim; $i += $intervalo) {
         $hora = date("H:i", $i);
         $bloqueado = in_array($hora, $ocupados);
-?>
-        <option value="<?php echo $hora ?>" <?php echo $bloqueado ? 'disabled' : '' ?>>
-            <?php echo $hora ?> <?php echo $bloqueado ? '(Indisponível)' : '' ?>
-        </option>
-<?php
-    endfor;
+
+        $disabled = $bloqueado ? 'disabled' : '';
+        $textoIndisponivel = $bloqueado ? ' (Indisponível)' : '';
+
+        $html .= "<option value='{$hora}' {$disabled}>";
+        $html .= "{$hora} {$textoIndisponivel}";
+        $html .= "</option>";
+    }
+
+    return $html;
+}
+
+if ($tipo == 'horarios') {
+    $dataSelecionada = $_GET['data'];
+    $id_servico = $_GET['id_registro'];
+
+    echo gerarOpcoesHorarios($id_servico, $dataSelecionada);
 
     exit;
 }
@@ -63,16 +79,20 @@ if ($tipo == 'horarios') {
 
 <div class="modal-overlay" style="display: flex;">
 
-    <?php if ($tipo == 'agendar'): ?>
+    <?php if ($tipo == 'agendar'):
+        $agendar = request("servicos?id=eq.{$id_registro}");
+        $horaInicio = date('H:i', strtotime($agendar[0]['hora_inicio']));
+        $horaFim = date('H:i', strtotime($agendar[0]['hora_fim']));
+    ?>
         <form action="../controls/agendar.act.php" method="post" class="modal-content modal-padrao ativar-load">
             <input type="hidden" name="id_servico" value="<?php echo $id_registro ?>">
 
             <div class="modal-header">
-                <h3>Agendar: <?php echo $nome_servico ?></h3>
+                <h3>Agendar: <?php echo $agendar[0]['nome'] ?></h3>
             </div>
 
             <div class="modal-body">
-                <img src="<?php echo $img_servico ?>" class="modal-img-destaque">
+                <img src="<?php echo $agendar[0]['imagem'] ?>" class="modal-img-destaque">
                 <div class="input-row">
                     <div class="input-group">
                         <label>Data</label>
@@ -84,24 +104,9 @@ if ($tipo == 'horarios') {
                             <option value="">Selecione uma data</option>
                         </select>
                         <small class="helper-text">
-                            Disponível entre <?php echo $hora_inicio; ?> e <?php echo $hora_fim; ?>
+                            Disponível entre <?php echo $horaInicio; ?> e <?php echo $horaFim; ?>
                         </small>
                     </div>
-
-                    <datalist id="horario_duracao">
-                        <?php
-                        $inicio = strtotime($hora_inicio);
-                        $fim = strtotime($hora_fim);
-                        $intervalo = $duracao * 60;
-
-                        for ($i = $inicio; $i <= $fim; $i += $intervalo):
-                            $horaFormatada = date("H:i", $i);
-                        ?>
-                            <option value="<?php echo $horaFormatada ?>">
-                                <?php echo $horaFormatada ?>
-                            </option>
-                        <?php endfor; ?>
-                    </datalist>
                 </div>
                 <div class="input-group">
                     <label>Observações</label>
@@ -192,7 +197,7 @@ if ($tipo == 'horarios') {
                 <h3><?php echo $isEdit ? 'Editar Anúncio' : 'Novo Anúncio' ?></h3>
             </div>
 
-            <div class="modal-body corpo-scroll">
+            <div class="modal-body">
                 <div class="input-group">
                     <label>Nome do Anúncio</label>
                     <input type="text" name="nome" value="<?php echo $nome_servico ?>" required>

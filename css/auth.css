@@ -152,8 +152,8 @@
     padding: 12px;
     border: none;
     border-radius: 8px;
+    font-size: 1rem;
     cursor: pointer;
-    ;
     text-transform: uppercase;
     text-align: center;
     transition: background 0.3s ease;

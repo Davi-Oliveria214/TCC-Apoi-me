@@ -3,7 +3,7 @@ require_once(__DIR__ . '/../includes/funcoes.php');
 exigirMetodo();
 
 require(__DIR__ . '/../conexao.php');
-$resp = $_POST['item'];
+$resp = $_POST['item'] ?? 0;
 $tipo = $_POST['type'] ?? 'servicos';
 
 if ($tipo === "servicos") :
