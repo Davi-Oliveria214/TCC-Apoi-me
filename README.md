@@ -45,8 +45,7 @@ A estrutura de diretórios foi organizada para separar as responsabilidades da s
 ## ⚙️ Principais Funcionalidades
 * **Verificação de E-mail:** Fluxo de segurança via PHPMailer para validar novos registros.
 * **Marketplace de Serviços:** Interface para visualização de prestadores disponíveis no condomínio.
-<<<<<<< HEAD
+
 * **Sistema de Agendamento:** Lógica para reserva de horários e gestão de serviços solicitados.
-=======
+
 * **Sistema de Agendamento:** Lógica para reserva de horários e gestão de serviços solicitados.
->>>>>>> tcc-host
