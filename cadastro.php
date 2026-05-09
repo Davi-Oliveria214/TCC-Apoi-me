@@ -1,81 +1,168 @@
-<?php
-require_once './includes/funcoes.php';
-loginFeito();
+<?php include_once './includes/head.php'; ?>
+<?php include_once './includes/topo.php' ?>
 
-include('./includes/head.php');
-include('./includes/topo.php');
-?>
+<!-- PAINEL VISUAL -->
+<div class="painel-visual">
+    <div class="painel-visual-bg"></div>
 
-<div class="div-auth">
-    <main class="autenticar">
-        <div class="div-form">
-            <form action="./controls/cadastro.act.php" method="post" class="form ativar-load">
-                <h1>Cadastro</h1>
-                <div class="box-auth">
-                    <label for="idNome">Nome</label>
-                    <input type="text" name="nome" id="idNome" placeholder="Nome" required>
+    <div class="painel-topo"></div>
+
+    <div class="painel-rodape">
+        <h2>Tudo que seu condomínio precisa em um só lugar</h2>
+        <div class="beneficios">
+            <div class="beneficio">
+                <div class="beneficio-icone">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
                 </div>
-
-                <div class="box-auth">
-                    <label for="idEmail">Email</label>
-                    <input type="email" name="email" id="idEmail" placeholder="Email" onkeydown="if(event.key == ' ') event.preventDefault()" required>
+                <div class="beneficio-txt">
+                    <strong>Profissionais verificados</strong>
+                    <span>Todos os prestadores são moradores do seu condomínio</span>
                 </div>
-
-                <div class="box-auth">
-                    <label for="idSenha">Senha (min: 8)</label>
-                    <div class="input-container">
-                        <input type="password" name="senha" id="idSenha" minlength="8" onkeydown="if(event.key === ' ') event.preventDefault()" oninput="verificarSenha()" placeholder="Senha" required>
-                        <img src="./icon/visibility.png" class="olho-icon" alt="Mostrar senha" onclick="toggleSenha('idSenha', this)">
-                    </div>
-                    <p class="texto-senha" style="color: var(--verde-musgo-medio);"></p>
+            </div>
+            <div class="beneficio">
+                <div class="beneficio-icone">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
                 </div>
-
-                <div class="box-auth">
-                    <label for="idRptSenha">Repita senha (min: 8)</label>
-                    <div class="input-container">
-                        <input type="password" name="rptSenha" id="idRptSenha" minlength="8" onkeydown="if(event.key === ' ') event.preventDefault()" oninput="verificarSenha()" placeholder="Repita senha" required>
-                        <img src="./icon/visibility.png" class="olho-icon" alt="Mostrar senha" onclick="toggleSenha('idRptSenha', this)">
-                    </div>
+                <div class="beneficio-txt">
+                    <strong>Contratação segura</strong>
+                    <span>Histórico, avaliações e agendamento transparentes</span>
                 </div>
-
-                <div class="box-auth">
-                    <label for="selectType">Tipo de morador</label>
-                    <select name="tipo_usuario" id="selectType">
-                        <option value="" disabled selected hidden>Tipo de cadastro</option>
-                        <option value="morador">Morador</option>
-                        <option value="sindico">Síndico</option>
-                    </select>
+            </div>
+            <div class="beneficio">
+                <div class="beneficio-icone">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20,6 9,17 4,12" />
+                    </svg>
                 </div>
-
-                <div id="campoCnpj" class="box-auth" style="display: none;">
-                    <label for="cnpjId">CNPJ do condominio:</label>
-                    <input type="text" name="cnpj_condominio" id="cnpjId" placeholder="Digite o CNPJ">
+                <div class="beneficio-txt">
+                    <strong>Simples e rápido</strong>
+                    <span>Cadastro gratuito, sem complicação</span>
                 </div>
-
-                <div class="box-btn">
-                    <button type="submit" id="btnEnviar" class="btn btn-auth">Criar conta</button>
-                    <a href="./login.php" class="btn btn-auth">Login</a>
-                </div>
-            </form>
+            </div>
         </div>
-    </main>
-
-    <script>
-        const select = document.getElementById('selectType')
-        const cnpj = document.getElementById('campoCnpj')
-
-        select.addEventListener('change', function() {
-            if (this.value === 'sindico') {
-                cnpj.style.display = 'flex'
-                document.getElementById('cnpjId').required = true
-            } else {
-                cnpj.style.display = 'none'
-                document.getElementById('cnpjId').required = false
-            }
-        })
-    </script>
-
-    <img src="./img/banner.png" alt="" class="banner">
+    </div>
 </div>
 
-<?php include('./includes/rodape.php'); ?>
+<!-- PAINEL FORM -->
+<div class="painel-form">
+    <h1>Bem-vindo ao Apoie-me</h1>
+
+    <div class="form-wrapper">
+        <div class="form-header">
+            <span class="subtag">Crie sua conta</span>
+            <p>Preencha os dados abaixo para começar.</p>
+        </div>
+
+        <!-- Tipo de usuário como cards -->
+        <div class="tipo-selector">
+            <label class="tipo-opcao">
+                <input type="radio" name="tipo_visual" value="morador" checked onchange="tipoChange(this)">
+                <div class="tipo-card">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9,22 9,12 15,12 15,22" />
+                    </svg>
+                    <strong>Morador</strong>
+                    <small>Quero contratar serviços</small>
+                </div>
+            </label>
+            <label class="tipo-opcao">
+                <input type="radio" name="tipo_visual" value="sindico" onchange="tipoChange(this)">
+                <div class="tipo-card">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                    </svg>
+                    <strong>Síndico</strong>
+                    <small>Gerencio o condomínio</small>
+                </div>
+            </label>
+        </div>
+
+        <form action="./controls/cadastro.act.php" method="post">
+
+            <input type="hidden" name="tipo_usuario" id="tipo_usuario_hidden" value="morador">
+
+            <div class="campos-grid">
+
+                <!-- Nome -->
+                <div class="campo campo-full">
+                    <label for="idNome">Nome completo</label>
+                    <input type="text" name="nome" id="idNome" placeholder="Seu nome" required autocomplete="name">
+                </div>
+
+                <!-- Email -->
+                <div class="campo campo-full">
+                    <label for="idEmail">E-mail</label>
+                    <input type="email" name="email" id="idEmail" placeholder="seu@email.com"
+                        onkeydown="if(event.key == ' ') event.preventDefault()" required autocomplete="email">
+                </div>
+
+                <!-- Senha -->
+                <div class="campo">
+                    <label for="idSenha">Senha</label>
+                    <div class="campo-input-wrap">
+                        <input type="password" name="senha" id="idSenha" minlength="8"
+                            onkeydown="if(event.key === ' ') event.preventDefault()"
+                            oninput="verificarSenha(); checarForca(this.value)"
+                            placeholder="Mín. 8 caracteres" required autocomplete="new-password">
+                        <button type="button" class="olho-btn" onclick="toggleSenha('idSenha', this)" aria-label="Mostrar senha">
+                            <svg id="olho-idSenha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="forca-barra">
+                        <div class="forca-seg" id="f1"></div>
+                        <div class="forca-seg" id="f2"></div>
+                        <div class="forca-seg" id="f3"></div>
+                        <div class="forca-seg" id="f4"></div>
+                    </div>
+                    <span class="forca-texto" id="forca-txt"></span>
+                </div>
+
+                <!-- Confirmar Senha -->
+                <div class="campo">
+                    <label for="idRptSenha">Confirmar senha</label>
+                    <div class="campo-input-wrap">
+                        <input type="password" name="rptSenha" id="idRptSenha" minlength="8"
+                            onkeydown="if(event.key === ' ') event.preventDefault()"
+                            oninput="verificarSenha()"
+                            placeholder="Repita a senha" required autocomplete="new-password">
+                        <button type="button" class="olho-btn" onclick="toggleSenha('idRptSenha', this)" aria-label="Mostrar senha">
+                            <svg id="olho-idRptSenha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </button>
+                    </div>
+                    <span id="senha-match" style="font-size:12px; min-height:16px; display:block;"></span>
+                </div>
+
+                <!-- CNPJ (síndico) -->
+                <div class="campo campo-cnpj campo-full" id="campoCnpj">
+                    <label for="cnpjId">CNPJ do condomínio</label>
+                    <input type="text" name="cnpj_condominio" id="cnpjId" placeholder="XX.XXX.XXX/XXXX-XX" maxlength="18">
+                </div>
+
+            </div>
+
+            <button type="submit" id="btnEnviar" class="btn-submit">
+                Criar minha conta gratuita
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14m-7-7 7 7-7 7" />
+                </svg>
+            </button>
+        </form>
+
+        <p class="form-footer-txt">Já tem uma conta? <a href="./login.php">Fazer login →</a></p>
+    </div>
+</div>
+
+</div>

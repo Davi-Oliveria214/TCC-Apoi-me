@@ -1,17 +1,53 @@
 <div id="body-load"></div>
 
-<footer class="rodape">
-    <ul>
-        <li><b>Institucional</b>
-            <p><a href="./sobre.php">Sobre a empresa</a><br><a href="./index.php?#publicidade">Parceiros</a></p>
-        </li>
-        <li><b>Atendimento</b>
-            <p><a href="./contato.php">Fale Conosco</a><br><a href="mailto:apoie.me10@gmail.com">apoie.me10@gmail.com</a></p>
-        </li>
-        <li><b>Área do cliente</b>
-            <p><a href="<?php echo !empty($_SESSION['login']) ? './usuario.php' : './login.php' ?>">Minha Conta</a><br><?php echo isset($_SESSION['login']) ? '' : '<a href="../cadastro.php">Cadastre-se</a>' ?></p>
-        </li>
-    </ul>
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a class="logo" href="#">
+                    <div class="logo-marca">A</div>
+                    <span class="logo-texto">Apoie.me</span>
+                </a>
+                <p>Conectando necessidades a talentos dentro do seu condomínio, promovendo uma economia local segura e eficiente.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Institucional</h4>
+                <ul>
+                    <li><a href="#">Sobre nós</a></li>
+                    <li><a href="#">Como funciona</a></li>
+                    <li><a href="#">Parceiros</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Atendimento</h4>
+                <ul>
+                    <li><a href="#">Fale conosco</a></li>
+                    <li><a href="#">apoie.me10@gmail.com</a></li>
+                    <li><a href="#">Suporte</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Área do cliente</h4>
+                <ul>
+                    <li><a href="#">Minha conta</a></li>
+                    <li><a href="#">Cadastre-se</a></li>
+                    <li><a href="#">Meus agendamentos</a></li>
+                    <li><a href="#">Anunciar serviço</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2026 Apoie.me</span>
+            <span>Desenvolvido com AMOR para condomínios</span>
+        </div>
+    </div>
 </footer>
 
 </body>

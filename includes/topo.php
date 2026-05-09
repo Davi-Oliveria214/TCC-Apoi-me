@@ -4,21 +4,20 @@ require_once(__DIR__ . '/../conexao.php');
 
 $pag = basename($_SERVER['PHP_SELF']);
 
-$local = $pag == "anunciar.php" ? 'anunciar' : 'publico';
+$class = '';
+if ($pag == 'cadastro.php') {
+    $class = 'page-cadastro';
+} elseif ($pag == 'login.php') {
+    $class = 'page-login';
+} elseif ($pag == 'contato.php') {
+    $class = 'page-contato';
+}
 
-$classe = "navegacao";
-include('./util/avisos.php');
+include_once './util/avisos.php';
 ?>
 
-<header class="topo-cabecalho" id="topo">
-
-    <a class="img-logo" href="index.php">
-        <img src="./img/condomino.png" alt="Logo">
-    </a>
-
-    <input type="text" name="pesquisa" id="pesquisa" placeholder="Pesquisar"
-        oninput="pesquisa('<?php echo $local ?>',this.value)">
-
+<!-- HEADER -->
+<header>
     <?php
     if (!empty($_SESSION["id"])):
         $id = $_SESSION["id"];
@@ -35,20 +34,31 @@ include('./util/avisos.php');
             $user_date = $usuario['user_date'];
             $_SESSION['codigo'] =  $usuario['codigo'];
         }
+    endif;
     ?>
-        <div class="user">
-            <p>Olá, <?= htmlspecialchars($nome) ?></p>
+    <a class="logo" href="../index.php">
+        <div class="logo-marca">A</div>
+        <span class="logo-texto">Apoie-me</span>
+    </a>
 
-            <a href="usuario.php">
-                <img src="<?= htmlspecialchars($img) ?>"
-                    alt="Usuário">
-            </a>
+    <div class="header-busca">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input type="text" placeholder="Buscar serviços…">
+    </div>
 
-            <a href="../mensagens.php">
-                <img src="./icon/msg.png" alt="Mensagens">
-            </a>
-        </div>
-    <?php endif; ?>
+    <nav class="fundo-topo">
+        <ul class="nav-links">
+            <li><a href="../index.php">Início</a></li>
+            <?php if (!empty($id)) : ?><li><a href="#">Serviços</a></li> <?php endif; ?>
+            <li><a href="../sobre.php">Sobre</a></li>
+            <li><a href="../contato.php">Contato</a></li>
+        </ul>
+
+        <?php if (empty($id)) : ?> <a href="../login.php" class="btn-entrar">Entrar</a> <?php endif; ?>
+    </nav>
 
     <nav id="burguer" class="<?php echo isset($_SESSION['login']) ? 'topoLogado' : '' ?>">
         <div></div>
@@ -57,38 +67,10 @@ include('./util/avisos.php');
     </nav>
 </header>
 
-<nav class="<?php echo $classe ?> desativado" id="nav-id">
-    <div onclick="event.stopPropagation()">
-        <ul>
-            <li><a href="index.php">Início</a></li>
-
-            <?php if (!empty($_SESSION["login"])): ?>
-                <li><a href="../usuario.php">Perfil</a></li>
-                <li><a href="../servicos.php">Serviços</a></li>
-                <li><a href="../mensagens.php">Chat</a></li>
-                <li><a href="../anunciar.php">Anunciar</a></li>
-                <li class="sair-logout"><a href="./includes/logout.php">Sair</a></li>
-                <li class="historico"><a href="../historico.php">Histórico</a></li>
-                <?php if ($tipo_usuario == 1): ?>
-                    <li><a href="../adiministrador.php">Login</a></li>
-                <?php endif; ?>
-            <?php else: ?>
-                <?php if ($pag === "login.php"): ?>
-                    <li><a href="cadastro.php">Cadastro</a></li>
-                <?php elseif ($pag === "cadastro.php"): ?>
-                    <li><a href="../login.php">Login</a></li>
-                <?php else: ?>
-                    <li><a href="../login.php">Login</a></li>
-                    <li><a href="../cadastro.php">Cadastro</a></li>
-                <?php endif; ?>
-            <?php endif; ?>
-
-            <li><a href="../contato.php">Contato</a></li>
-            <li><a href="../sobre.php">Sobre</a></li>
-        </ul>
-    </div>
-</nav>
-
-<script>
-    window.usuarioLogado = <?php echo !empty($_SESSION['id']) ? 'true' : 'false'; ?>;
-</script>
+<?php
+if (!empty($class)) :
+?>
+    <div class="<?php echo $class ?>">
+    <?php
+endif;
+    ?>
