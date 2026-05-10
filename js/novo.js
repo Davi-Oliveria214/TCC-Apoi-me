@@ -108,3 +108,54 @@ function enviarForm(e) {
         document.getElementById('sucesso').style.display = 'block';
     }, 1200);
 }
+
+function filtro(btn, local, item) {
+    $('.filtro-item').removeClass('ativo');
+    $(btn).addClass('ativo');
+
+    $.ajax({
+        url: "./util/filtro.php",
+        type: "POST",
+        data: { type: local, item: item },
+        success: function (resp) {
+            const filtro_local = document.querySelector('.local-filtro');
+            if (filtro_local) {
+                filtro_local.innerHTML = resp;
+            }
+            gridFiltro()
+        },
+        error: function () {
+            console.error("Erro ao carregar o filtro.");
+        }
+    });
+}
+
+// Barra de pesquisa
+function pesquisa(pagina, valor) {
+    $.ajax({
+        url: "./includes/pesquisa.php",
+        type: "GET",
+        data: { pagina: pagina, pesquisa: valor },
+        success: function (resp) {
+            const resultado = document.querySelector(".local-filtro");
+            if (resultado) {
+                resultado.innerHTML = resp;
+            }
+            gridFiltro()
+        }
+    });
+}
+
+function gridFiltro() {
+    const container = document.querySelector('.local-filtro');
+
+    if (container) {
+        const temAviso = container.querySelector('.aviso-vazio');
+
+        if (temAviso) {
+            container.style.display = 'flex';
+        } else {
+            container.style.display = 'grid';
+        }
+    }
+}

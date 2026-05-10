@@ -4,7 +4,8 @@ require_once(__DIR__ . '/../conexao.php');
 
 $pag = basename($_SERVER['PHP_SELF']);
 
-$class = '';
+$local = ($pag == 'index.php') ? 'publico' : 'anunciar';
+
 if ($pag == 'cadastro.php') {
     $class = 'page-cadastro';
 } elseif ($pag == 'login.php') {
@@ -46,7 +47,7 @@ include_once './util/avisos.php';
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.35-4.35" />
         </svg>
-        <input type="text" placeholder="Buscar serviços…">
+        <input type="text" name="pesquisa" id="pesquisa" placeholder="Buscar serviços…" oninput="pesquisa('<?php echo $local ?>',this.value)">
     </div>
 
     <nav class="fundo-topo">

@@ -42,6 +42,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 html {
@@ -233,7 +234,7 @@ body {
   padding: 0 40px;
   border-bottom: 1px solid rgba(212, 168, 75, 0.2);
   position: sticky;
-  top: 72px;
+  top: 68px;
   z-index: 900;
 }
 
@@ -804,6 +805,15 @@ footer {
   text-decoration: none;
 }
 
+.aviso-vazio {
+  width: 100%;
+  text-align: center;
+  color: var(--dourado);
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 868px) {
   #burguer {
@@ -870,7 +880,7 @@ footer {
 
   .filtros-section {
     padding: 0 20px;
-    top: 60px;
+    top: 55px;
   }
 
   .servicos-section,

@@ -34,49 +34,6 @@ window.document.getElementById('ativar-load')?.addEventListener('submit', functi
   load(true)
 })
 
-// Menu topo
-const burguer = document.getElementById("burguer");
-const nav = document.getElementById("nav-id");
-
-nav.addEventListener("click", () => {
-  configMenu();
-});
-
-burguer.addEventListener("click", () => {
-  configMenu();
-});
-
-function configMenu() {
-  const isAtivo = nav.classList.contains("ativo");
-
-  if (isAtivo) {
-    nav.classList.remove("ativo");
-    nav.classList.add("desativado");
-  } else {
-    nav.classList.remove("desativado");
-    nav.classList.add("ativo");
-  }
-
-  burguer.classList.toggle("abrir");
-}
-
-// Tela de carregar
-document.addEventListener('click', function (e) {
-  const link = e.target.closest('a');
-  if (!link) return;
-
-  const href = link.getAttribute('href');
-
-  if (
-    href &&
-    !href.startsWith('#') &&
-    !href.startsWith('javascript') &&
-    link.target !== '_blank'
-  ) {
-    load(true);
-  }
-});
-
 document.addEventListener('submit', function (e) {
   const form = e.target;
 
@@ -159,57 +116,6 @@ document.addEventListener('change', function (e) {
     reader.readAsDataURL(file);
   }
 });
-
-// Barra de pesquisa
-function pesquisa(pagina, valor) {
-  $.ajax({
-    url: "./includes/pesquisa.php",
-    type: "GET",
-    data: { pagina: pagina, pesquisa: valor },
-    success: function (resp) {
-      const resultado = document.querySelector(".local-filtro");
-      if (resultado) {
-        resultado.innerHTML = resp;
-      }
-      gridFiltro()
-    }
-  });
-}
-
-function filtro(btn, local, item) {
-  $('.filtro-btn').removeClass('ativo');
-  $(btn).addClass('ativo');
-
-  $.ajax({
-    url: "./util/filtro.php",
-    type: "POST",
-    data: { type: local, item: item },
-    success: function (resp) {
-      const filtro_local = document.querySelector('.local-filtro');
-      if (filtro_local) {
-        filtro_local.innerHTML = resp;
-      }
-      gridFiltro()
-    },
-    error: function () {
-      console.error("Erro ao carregar o filtro.");
-    }
-  });
-}
-
-function gridFiltro() {
-  const container = document.querySelector('.local-filtro');
-
-  if (container) {
-    const temAviso = container.querySelector('.aviso-vazio');
-
-    if (temAviso) {
-      container.style.display = 'flex';
-    } else {
-      container.style.display = 'grid';
-    }
-  }
-}
 
 // Validar senha
 function verificarSenha() {

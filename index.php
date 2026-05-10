@@ -9,30 +9,29 @@
         <h1>A solução mora<br><em>ao seu lado</em></h1>
         <p>Conectamos moradores que precisam de serviços com profissionais do seu condomínio. Rápido, seguro e de confiança.</p>
         <div class="hero-acoes">
-            <a href="#" class="btn-principal">
+            <a href="<?php echo empty($_SESSION['id']) ? './login.php' : './servicos.php' ?>" class="btn-principal">
                 Ver serviços disponíveis
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h14m-7-7 7 7-7 7" />
                 </svg>
             </a>
-            <a href="#" class="btn-secundario">Anunciar meu serviço</a>
+            <a href="<?php echo empty($_SESSION['id']) ? './login.php' : './anunciar.php' ?>" class="btn-secundario">Anunciar meu serviço</a>
         </div>
     </div>
 </section>
 
 <!-- FILTROS -->
 <div class="filtros-section">
-    <div class="filtros-inner">
-        <div class="filtro-item ativo" onclick="ativarFiltro(this)">Todos</div>
-        <div class="filtro-item" onclick="ativarFiltro(this)">Limpeza</div>
-        <div class="filtro-item" onclick="ativarFiltro(this)">Elétrica</div>
-        <div class="filtro-item" onclick="ativarFiltro(this)">Hidráulica</div>
-        <div class="filtro-item" onclick="ativarFiltro(this)">Cuidados</div>
-        <div class="filtro-item" onclick="ativarFiltro(this)">Pets</div>
-        <div class="filtro-item" onclick="ativarFiltro(this)">Jardinagem</div>
-        <div class="filtro-item" onclick="ativarFiltro(this)">Reformas</div>
-        <div class="filtro-item" onclick="ativarFiltro(this)">Tecnologia</div>
-    </div>
+    <?php $categorias = request("categorias?select=*&order=nome.asc", "GET"); ?>
+    <ul class="filtros-inner">
+        <li class="filtro-item ativo" onclick="filtro(this, 'servicos', 0)">Todos</li>
+        <?php if (!empty($categorias) && !isset($categorias['code'])):
+            foreach ($categorias as $cate): ?>
+                <li class="filtro-item" onclick="filtro(this, 'servicos', <?php echo $cate['id'] ?>)"><?php echo $cate['nome'] ?></li>
+        <?php
+            endforeach;
+        endif; ?>
+    </ul>
 </div>
 
 <!-- SERVIÇOS -->
@@ -50,128 +49,51 @@
         </a>
     </div>
 
-    <div class="servicos-grid">
+    <div class="servicos-grid local-filtro">
 
-        <!-- Card 1 -->
-        <div class="card-servico">
-            <div class="card-img-wrap">
-                <img src="./img/faxineira.jpg" alt="Limpeza residencial">
-                <span class="card-categoria">Limpeza</span>
-                <span class="card-avaliacao">4.9</span>
-            </div>
-            <div class="card-corpo">
-                <h3 class="card-titulo">Limpeza residencial completa</h3>
-                <p class="card-desc">Serviço completo de limpeza para apartamentos e casas, incluindo todas as dependências.</p>
-                <div class="card-info">
-                    <div class="card-horario">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12,6 12,12 16,14" />
-                        </svg>
-                        08:00 – 18:00
+        <?php
+        $servicos = request("servicos?status=eq.true&select=*,categorias(nome),usuarios(nome)&order=criado.desc&limit=10", "GET");
+
+        if (!empty($servicos) && !isset($servicos['error'])) :
+            shuffle($servicos);
+            foreach ($servicos as $servico) :
+                $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
+                $horaFim = date('H:i', strtotime($servico['hora_fim']));
+                $duracao = date('H:i', strtotime($servico['duracao']));
+                $imagem = $servico['imagem'];
+        ?>
+                <div class="card-servico">
+                    <div class="card-img-wrap">
+                        <img src="<?php echo $imagem ?>" alt="<?php echo $servico['nome'] ?>">
+                        <span class="card-categoria"><?php echo $servico['categorias']['nome'] ?></span>
+                        <span class="card-avaliacao"><?php echo $servico['nota_geral'] ?></span>
                     </div>
-                    <div class="card-preco">R$ 120 <span>/sessão</span></div>
-                </div>
-            </div>
-            <div class="card-rodape">
-                <div class="prestador">
-                    <div class="prestador-avatar">MA</div>
-                    <span class="prestador-nome">Maria A.</span>
-                </div>
-                <button class="btn-agendar">Agendar</button>
-            </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="card-servico">
-            <div class="card-img-wrap">
-                <img src="./img/eletricista.jpg" alt="Serviços elétricos">
-                <span class="card-categoria">Elétrica</span>
-                <span class="card-avaliacao">4.8</span>
-            </div>
-            <div class="card-corpo">
-                <h3 class="card-titulo">Instalações e reparos elétricos</h3>
-                <p class="card-desc">Instalação de tomadas, iluminação, disjuntores e manutenção elétrica em geral.</p>
-                <div class="card-info">
-                    <div class="card-horario">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12,6 12,12 16,14" />
-                        </svg>
-                        07:00 – 17:00
+                    <div class="card-corpo">
+                        <h3 class="card-titulo"><?php echo $servico['nome'] ?></h3>
+                        <p class="card-desc"><?php echo $servico['descricao'] ?></p>
+                        <div class="card-info">
+                            <div class="card-horario">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12,6 12,12 16,14" />
+                                </svg>
+                                <?php echo $horaInicio ?> – <?php echo $horaFim ?>
+                            </div>
+                            <div class="card-preco">R$<?php echo $servico['preco_servico'] ?><span> / <?php echo $servico['tipo_cobrado'] ?></span></div>
+                        </div>
                     </div>
-                    <div class="card-preco">R$ 80 <span>/hora</span></div>
-                </div>
-            </div>
-            <div class="card-rodape">
-                <div class="prestador">
-                    <div class="prestador-avatar">JS</div>
-                    <span class="prestador-nome">João S.</span>
-                </div>
-                <button class="btn-agendar">Agendar</button>
-            </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="card-servico">
-            <div class="card-img-wrap">
-                <img src="./img/cuidador-de-cachorro.jpg" alt="Cuidador de pets">
-                <span class="card-categoria">Pets</span>
-                <span class="card-avaliacao">5.0</span>
-            </div>
-            <div class="card-corpo">
-                <h3 class="card-titulo">Cuidador e passeador de pets</h3>
-                <p class="card-desc">Passeios diários, cuidados especiais e acompanhamento com muito carinho e responsabilidade.</p>
-                <div class="card-info">
-                    <div class="card-horario">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12,6 12,12 16,14" />
-                        </svg>
-                        06:00 – 20:00
+                    <div class="card-rodape">
+                        <div class="prestador">
+                            <div class="prestador-avatar"><?php echo substr($servico['usuarios']['nome'], 0, 1) ?></div>
+                            <span class="prestador-nome"><?php echo $servico['usuarios']['nome'] ?></span>
+                        </div>
+                        <button class="btn-agendar">Agendar</button>
                     </div>
-                    <div class="card-preco">R$ 50 <span>/passeio</span></div>
                 </div>
-            </div>
-            <div class="card-rodape">
-                <div class="prestador">
-                    <div class="prestador-avatar">CL</div>
-                    <span class="prestador-nome">Carla L.</span>
-                </div>
-                <button class="btn-agendar">Agendar</button>
-            </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="card-servico">
-            <div class="card-img-wrap">
-                <img src="./img/baba.jpg" alt="Babá">
-                <span class="card-categoria">Cuidados</span>
-                <span class="card-avaliacao">4.7</span>
-            </div>
-            <div class="card-corpo">
-                <h3 class="card-titulo">Babá experiente e atenciosa</h3>
-                <p class="card-desc">Cuidados com crianças de todas as idades, com experiência e muito carinho.</p>
-                <div class="card-info">
-                    <div class="card-horario">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12,6 12,12 16,14" />
-                        </svg>
-                        08:00 – 22:00
-                    </div>
-                    <div class="card-preco">R$ 70 <span>/hora</span></div>
-                </div>
-            </div>
-            <div class="card-rodape">
-                <div class="prestador">
-                    <div class="prestador-avatar">PM</div>
-                    <span class="prestador-nome">Paula M.</span>
-                </div>
-                <button class="btn-agendar">Agendar</button>
-            </div>
-        </div>
-
+        <?php
+            endforeach;
+        endif;
+        ?>
     </div>
 </section>
 
@@ -278,8 +200,8 @@
         <h2>Faça parte da comunidade</h2>
         <p>Cadastre-se gratuitamente e descubra como é fácil contratar ou oferecer serviços no seu condomínio.</p>
         <div class="cta-acoes">
-            <?php if (empty($id)): ?><a href="#" class="btn-principal">Criar minha conta</a><?php endif; ?>
-            <a href="#" class="btn-secundario">Anunciar serviço</a>
+            <?php if (empty($id)): ?><a href="./cadastro.php" class="btn-principal">Criar minha conta</a><?php endif; ?>
+            <a href="<?php echo empty($_SESSION['id']) ? './login.php' : './anunciar.php' ?>" class="btn-secundario">Anunciar serviço</a>
         </div>
     </div>
 </section>
