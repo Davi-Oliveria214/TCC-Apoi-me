@@ -14,6 +14,8 @@ if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['comentario'
 $nome = $_POST['nome'];
 $email = trim($_POST['email']);
 $comentario = $_POST['comentario'];
+$tipo = $_POST['tipo'];
+$nota = $_POST['nota'];
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['mensagem'] = "Esse email não existe!";
@@ -21,7 +23,13 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
-emailContato($email, $nome, $comentario);
+$enviado = emailContato($email, $nome, $comentario, $tipo, $nota);
+
+if ($enviado) {
+    $_SESSION["mensagem"] = "Sua mensagem foi enviada com sucesso!";
+} else {
+    $_SESSION["mensagem"] = "Erro ao enviar contato. Tente novamente mais tarde.";
+}
 
 header('Location: ../contato.php');
 exit();

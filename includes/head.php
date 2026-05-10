@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <script src="./libs/jquery.js"></script>
     <script src="./js/novo.js" defer></script>
+    <script src="./js/novo_modais.js" defer></script>
 </head>
 
 <body>

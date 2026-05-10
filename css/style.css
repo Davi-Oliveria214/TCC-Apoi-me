@@ -1,6 +1,10 @@
-@import url('./topo.css');
-@import url('./auth.css');
+@import "./topo.css";
+@import "./auth.css";
 @import "./sobre.css";
+@import "./avisos.css";
+@import "./servicos.css";
+@import "./anunciar.css";
+@import "./historico.css";
 
 :root {
   --musgo: #0c3a3f;

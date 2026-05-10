@@ -9,13 +9,13 @@
         <h1>A solução mora<br><em>ao seu lado</em></h1>
         <p>Conectamos moradores que precisam de serviços com profissionais do seu condomínio. Rápido, seguro e de confiança.</p>
         <div class="hero-acoes">
-            <a href="<?php echo empty($_SESSION['id']) ? './login.php' : './servicos.php' ?>" class="btn-principal">
+            <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './servicos.php' ?>" class="btn-principal">
                 Ver serviços disponíveis
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h14m-7-7 7 7-7 7" />
                 </svg>
             </a>
-            <a href="<?php echo empty($_SESSION['id']) ? './login.php' : './anunciar.php' ?>" class="btn-secundario">Anunciar meu serviço</a>
+            <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './anunciar.php' ?>" class="btn-secundario">Anunciar meu serviço</a>
         </div>
     </div>
 </section>
@@ -24,10 +24,10 @@
 <div class="filtros-section">
     <?php $categorias = request("categorias?select=*&order=nome.asc", "GET"); ?>
     <ul class="filtros-inner">
-        <li class="filtro-item ativo" onclick="filtro(this, 'servicos', 0)">Todos</li>
+        <li class="filtro-item js-filtro ativo" onclick="filtro(this, 'servicos', 0)">Todos</li>
         <?php if (!empty($categorias) && !isset($categorias['code'])):
             foreach ($categorias as $cate): ?>
-                <li class="filtro-item" onclick="filtro(this, 'servicos', <?php echo $cate['id'] ?>)"><?php echo $cate['nome'] ?></li>
+                <li class="filtro-item js-filtro" onclick="filtro(this, 'servicos', <?php echo $cate['id'] ?>)"><?php echo $cate['nome'] ?></li>
         <?php
             endforeach;
         endif; ?>
@@ -41,7 +41,7 @@
             <h2>Serviços disponíveis</h2>
             <p>Profissionais verificados do seu condomínio</p>
         </div>
-        <a href="#" class="ver-todos">
+        <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './servicos.php' ?>" class="ver-todos">
             Ver todos
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14m-7-7 7 7-7 7" />
@@ -50,7 +50,6 @@
     </div>
 
     <div class="servicos-grid local-filtro">
-
         <?php
         $servicos = request("servicos?status=eq.true&select=*,categorias(nome),usuarios(nome)&order=criado.desc&limit=10", "GET");
 
@@ -90,8 +89,12 @@
                         <button class="btn-agendar">Agendar</button>
                     </div>
                 </div>
-        <?php
+            <?php
             endforeach;
+        else :
+            ?>
+            <div class='aviso-vazio'>Nenhum serviço encontrado</div>
+        <?php
         endif;
         ?>
     </div>
@@ -201,7 +204,7 @@
         <p>Cadastre-se gratuitamente e descubra como é fácil contratar ou oferecer serviços no seu condomínio.</p>
         <div class="cta-acoes">
             <?php if (empty($id)): ?><a href="./cadastro.php" class="btn-principal">Criar minha conta</a><?php endif; ?>
-            <a href="<?php echo empty($_SESSION['id']) ? './login.php' : './anunciar.php' ?>" class="btn-secundario">Anunciar serviço</a>
+            <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './anunciar.php' ?>" class="btn-secundario">Anunciar serviço</a>
         </div>
     </div>
 </section>

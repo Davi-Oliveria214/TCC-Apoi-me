@@ -110,7 +110,7 @@ function enviarForm(e) {
 }
 
 function filtro(btn, local, item) {
-    $('.filtro-item').removeClass('ativo');
+    $('.js-filtro').removeClass('ativo');
     $(btn).addClass('ativo');
 
     $.ajax({

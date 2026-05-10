@@ -53,7 +53,8 @@ include_once './util/avisos.php';
     <nav class="fundo-topo">
         <ul class="nav-links">
             <li><a href="../index.php">Início</a></li>
-            <?php if (!empty($id)) : ?><li><a href="#">Serviços</a></li> <?php endif; ?>
+            <?php if (!empty($id)) : ?><li><a href="../servicos.php">Serviços</a></li> <?php endif; ?>
+                <?php if (!empty($id)) : ?><li><a href="../usuario.php">Perfil</a></li> <?php endif; ?>
             <li><a href="../sobre.php">Sobre</a></li>
             <li><a href="../contato.php">Contato</a></li>
         </ul>

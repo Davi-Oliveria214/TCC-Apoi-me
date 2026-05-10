@@ -51,7 +51,7 @@ if ($tipo === "servicos") :
         endforeach;
     else :
         ?>
-        <div class='aviso-vazio'>Você ainda não está oferecendo nenhum serviço.</div>
+        <div class='aviso-vazio'>Nenhum serviço encontrado</div>
         <?php
     endif;
 
@@ -114,7 +114,7 @@ elseif ($tipo === 'anuncio') :
         endforeach;
     else:
         ?>
-        <div class='aviso-vazio'>Você ainda não está oferecendo nenhum serviço.</div>
+        <div class='aviso-vazio'>Você ainda não está oferecendo nenhum serviço</div>
 <?php
     endif;
 

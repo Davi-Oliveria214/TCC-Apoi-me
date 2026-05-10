@@ -1,0 +1,266 @@
+/* ============================================================
+   TOAST — CONTAINER
+   ============================================================ */
+.av-toast {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px 18px;
+
+    min-width: 300px;
+    max-width: 420px;
+    width: calc(100vw - 40px);
+
+    border-radius: 14px;
+    border: 1px solid transparent;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    transform: translateX(calc(100% + 24px));
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.35s ease;
+
+    overflow: hidden;
+}
+
+/* Estado visível */
+.av-toast--visivel {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Estado saindo */
+.av-toast--saindo {
+    transform: translateX(calc(100% + 24px));
+    opacity: 0;
+    transition: transform 0.35s ease-in, opacity 0.3s ease-in;
+}
+
+/* ============================================================
+   BARRA DE PROGRESSO (na base do toast)
+   ============================================================ */
+.av-toast-barra {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    /* começa em 100% e vai para 0% via JS */
+    border-radius: 0 0 14px 14px;
+    opacity: 0.6;
+}
+
+/* ============================================================
+   ÍCONE
+   ============================================================ */
+.av-toast-icone {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.av-toast-icone svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ============================================================
+   CORPO (mensagem)
+   ============================================================ */
+.av-toast-corpo {
+    flex: 1;
+    min-width: 0;
+}
+
+.av-toast-msg {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/* ============================================================
+   BOTÃO FECHAR
+   ============================================================ */
+.av-toast-fechar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 0.5;
+    transition: opacity 0.2s, background 0.2s;
+}
+
+.av-toast-fechar:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.av-toast-fechar svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ============================================================
+   VARIANTES POR TIPO
+   ============================================================ */
+
+/* ── SUCESSO ── */
+.av-toast--sucesso {
+    background: #f0faf4;
+    border-color: rgba(26, 122, 74, 0.25);
+    color: #144d2e;
+}
+
+.av-toast--sucesso .av-toast-icone {
+    background: rgba(26, 122, 74, 0.12);
+}
+
+.av-toast--sucesso .av-toast-icone svg {
+    stroke: #1a7a4a;
+}
+
+.av-toast--sucesso .av-toast-fechar svg {
+    stroke: #144d2e;
+}
+
+.av-toast--sucesso .av-toast-barra {
+    background: #1a7a4a;
+}
+
+/* ── ERRO ── */
+.av-toast--erro {
+    background: #fff4f4;
+    border-color: rgba(192, 57, 43, 0.25);
+    color: #7b1a1a;
+}
+
+.av-toast--erro .av-toast-icone {
+    background: rgba(192, 57, 43, 0.12);
+}
+
+.av-toast--erro .av-toast-icone svg {
+    stroke: #c0392b;
+}
+
+.av-toast--erro .av-toast-fechar svg {
+    stroke: #7b1a1a;
+}
+
+.av-toast--erro .av-toast-barra {
+    background: #c0392b;
+}
+
+/* ── AVISO ── */
+.av-toast--aviso {
+    background: #fffbee;
+    border-color: rgba(176, 130, 43, 0.3);
+    color: #6b4c00;
+}
+
+.av-toast--aviso .av-toast-icone {
+    background: rgba(176, 130, 43, 0.12);
+}
+
+.av-toast--aviso .av-toast-icone svg {
+    stroke: #b0822b;
+}
+
+.av-toast--aviso .av-toast-fechar svg {
+    stroke: #6b4c00;
+}
+
+.av-toast--aviso .av-toast-barra {
+    background: #b0822b;
+}
+
+/* ── INFO (padrão) ── */
+.av-toast--info {
+    background: #f0f7ff;
+    border-color: rgba(12, 58, 63, 0.2);
+    color: #0c3a3f;
+}
+
+.av-toast--info .av-toast-icone {
+    background: rgba(12, 58, 63, 0.08);
+}
+
+.av-toast--info .av-toast-icone svg {
+    stroke: #0c3a3f;
+}
+
+.av-toast--info .av-toast-fechar svg {
+    stroke: #0c3a3f;
+}
+
+.av-toast--info .av-toast-barra {
+    background: #0c3a3f;
+}
+
+.av-toast--desconectado {
+    background: #1e1e2e;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 230, 167, 0.9);
+}
+
+.av-toast--desconectado .av-toast-icone {
+    background: rgba(176, 130, 43, 0.15);
+}
+
+.av-toast--desconectado .av-toast-icone svg {
+    stroke: #d8b469;
+}
+
+.av-toast--desconectado .av-toast-fechar {
+    opacity: 0.4;
+}
+
+.av-toast--desconectado .av-toast-fechar svg {
+    stroke: rgba(255, 230, 167, 0.8);
+}
+
+.av-toast--desconectado .av-toast-barra {
+    background: #d8b469;
+}
+
+/* ============================================================
+   RESPONSIVIDADE
+   ============================================================ */
+@media (max-width: 480px) {
+    .av-toast {
+        top: auto;
+        bottom: 20px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+        min-width: 0;
+        max-width: none;
+    }
+
+    .av-toast {
+        transform: translateY(calc(100% + 24px));
+    }
+
+    .av-toast--visivel {
+        transform: translateY(0);
+    }
+
+    .av-toast--saindo {
+        transform: translateY(calc(100% + 24px));
+    }
+}

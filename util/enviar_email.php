@@ -46,7 +46,7 @@ function enviarEmail($email, $nome, $codigo, $fluxo = 'cadastro', $chave = '', $
     }
 }
 
-function emailContato($email, $nome, $comentario)
+function emailContato($email, $nome, $comentario, $tipo, $nota)
 {
     $mail = new PHPMailer(true);
 
@@ -98,9 +98,9 @@ function emailContato($email, $nome, $comentario)
 
         $mail->send();
 
-        $_SESSION["mensagem"] = "Sua mensagem foi enviada com sucesso!";
+        return true;
     } catch (Exception $e) {
-        $_SESSION["mensagem"] = "Erro ao enviar contato. Tente novamente mais tarde.";
+        return false;
     }
 }
 
