@@ -10,5 +10,11 @@ session_destroy();
 session_start();
 $_SESSION['mensagem'] = $mensagemDesejada;
 
+?>
+<script>
+    usuarioLogado = false;
+</script>
+<?php
+
 header("Location: ../login.php");
 exit();

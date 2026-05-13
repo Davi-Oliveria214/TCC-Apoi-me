@@ -54,7 +54,6 @@
         $servicos = request("servicos?status=eq.true&select=*,categorias(nome),usuarios(nome)&order=criado.desc&limit=10", "GET");
 
         if (!empty($servicos) && !isset($servicos['error'])) :
-            shuffle($servicos);
             foreach ($servicos as $servico) :
                 $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
                 $horaFim = date('H:i', strtotime($servico['hora_fim']));
@@ -86,7 +85,7 @@
                             <div class="prestador-avatar"><?php echo substr($servico['usuarios']['nome'], 0, 1) ?></div>
                             <span class="prestador-nome"><?php echo $servico['usuarios']['nome'] ?></span>
                         </div>
-                        <button class="btn-agendar">Agendar</button>
+                        <button class="btn-agendar" onclick="abrirModal('agendar','<?php echo  $servico['id'] ?>')">Agendar</button>
                     </div>
                 </div>
             <?php

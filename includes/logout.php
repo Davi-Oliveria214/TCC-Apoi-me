@@ -19,6 +19,12 @@ session_destroy();
 
 unset($nome, $email, $img, $usuario);
 
+?>
+<script>
+    usuarioLogado = false;
+</script>
+<?php
+
 $_SESSION['mensagem'] = "Você saiu com segurança.";
 header("Location: ../index.php");
 exit();

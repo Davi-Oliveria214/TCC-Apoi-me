@@ -1,7 +1,6 @@
 <?php include_once './includes/head.php'; ?>
 <?php include_once './includes/topo.php' ?>
 
-<!-- PAINEL VISUAL -->
 <div class="painel-visual">
     <div class="painel-visual-bg"></div>
 
@@ -12,10 +11,7 @@
         <div class="beneficios">
             <div class="beneficio">
                 <div class="beneficio-icone">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                    </svg>
+                    <img src="./icon/check-circle.png" alt="Verificados" width="18" height="18">
                 </div>
                 <div class="beneficio-txt">
                     <strong>Profissionais verificados</strong>
@@ -24,9 +20,7 @@
             </div>
             <div class="beneficio">
                 <div class="beneficio-icone">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
+                    <img src="./icon/shield.png" alt="Segurança" width="18" height="18">
                 </div>
                 <div class="beneficio-txt">
                     <strong>Contratação segura</strong>
@@ -35,9 +29,7 @@
             </div>
             <div class="beneficio">
                 <div class="beneficio-icone">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20,6 9,17 4,12" />
-                    </svg>
+                    <img src="./icon/zap.png" alt="Rápido" width="18" height="18">
                 </div>
                 <div class="beneficio-txt">
                     <strong>Simples e rápido</strong>
@@ -48,7 +40,6 @@
     </div>
 </div>
 
-<!-- PAINEL FORM -->
 <div class="painel-form">
     <h1>Bem-vindo ao Apoie-me</h1>
 
@@ -58,15 +49,11 @@
             <p>Preencha os dados abaixo para começar.</p>
         </div>
 
-        <!-- Tipo de usuário como cards -->
         <div class="tipo-selector">
             <label class="tipo-opcao">
                 <input type="radio" name="tipo_visual" value="morador" checked onchange="tipoChange(this)">
                 <div class="tipo-card">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                        <polyline points="9,22 9,12 15,12 15,22" />
-                    </svg>
+                    <img src="./icon/user.png" alt="Morador" width="24" height="24">
                     <strong>Morador</strong>
                     <small>Quero contratar serviços</small>
                 </div>
@@ -74,10 +61,7 @@
             <label class="tipo-opcao">
                 <input type="radio" name="tipo_visual" value="sindico" onchange="tipoChange(this)">
                 <div class="tipo-card">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 20h9" />
-                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                    </svg>
+                    <img src="./icon/build.png" alt="Síndico" width="24" height="24">
                     <strong>Síndico</strong>
                     <small>Gerencio o condomínio</small>
                 </div>
@@ -90,20 +74,17 @@
 
             <div class="campos-grid">
 
-                <!-- Nome -->
                 <div class="campo campo-full">
                     <label for="idNome">Nome completo</label>
                     <input type="text" name="nome" id="idNome" placeholder="Seu nome" required autocomplete="name">
                 </div>
 
-                <!-- Email -->
                 <div class="campo campo-full">
                     <label for="idEmail">E-mail</label>
                     <input type="email" name="email" id="idEmail" placeholder="seu@email.com"
                         onkeydown="if(event.key == ' ') event.preventDefault()" required autocomplete="email">
                 </div>
 
-                <!-- Senha -->
                 <div class="campo">
                     <label for="idSenha">Senha</label>
                     <div class="campo-input-wrap">
@@ -112,10 +93,7 @@
                             oninput="verificarSenha(); checarForca(this.value)"
                             placeholder="Mín. 8 caracteres" required autocomplete="new-password">
                         <button type="button" class="olho-btn" onclick="toggleSenha('idSenha', this)" aria-label="Mostrar senha">
-                            <svg id="olho-idSenha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                <circle cx="12" cy="12" r="3" />
-                            </svg>
+                            <img id="olho-idSenha" src="./icon/visibility.png" alt="Mostrar">
                         </button>
                     </div>
                     <div class="forca-barra">
@@ -127,7 +105,6 @@
                     <span class="forca-texto" id="forca-txt"></span>
                 </div>
 
-                <!-- Confirmar Senha -->
                 <div class="campo">
                     <label for="idRptSenha">Confirmar senha</label>
                     <div class="campo-input-wrap">
@@ -136,16 +113,12 @@
                             oninput="verificarSenha()"
                             placeholder="Repita a senha" required autocomplete="new-password">
                         <button type="button" class="olho-btn" onclick="toggleSenha('idRptSenha', this)" aria-label="Mostrar senha">
-                            <svg id="olho-idRptSenha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                <circle cx="12" cy="12" r="3" />
-                            </svg>
+                            <img id="olho-idRptSenha" src="./icon/visibility.png" alt="Mostrar">
                         </button>
                     </div>
                     <span id="senha-match" style="font-size:12px; min-height:16px; display:block;"></span>
                 </div>
 
-                <!-- CNPJ (síndico) -->
                 <div class="campo campo-cnpj campo-full" id="campoCnpj">
                     <label for="cnpjId">CNPJ do condomínio</label>
                     <input type="text" name="cnpj_condominio" id="cnpjId" placeholder="XX.XXX.XXX/XXXX-XX" maxlength="18">
@@ -155,9 +128,6 @@
 
             <button type="submit" id="btnEnviar" class="btn-submit">
                 Criar minha conta gratuita
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14m-7-7 7 7-7 7" />
-                </svg>
             </button>
         </form>
 

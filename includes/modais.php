@@ -1,44 +1,26 @@
 <?php
 require_once(__DIR__ . '/../includes/funcoes.php');
 exigirMetodo('GET');
-
 require_once(__DIR__ . '/../conexao.php');
 
 $tipo = $_GET['tipo'] ?? '';
-$id_registro = $_GET['id_registro'] ?? '';
-$id_contrato = $_GET['id_contrato'] ?? '';
-$nome_servico = $_GET['nome_servico'] ?? '';
-$desc = $_GET['desc'] ?? '';
-$img_servico = $_GET['img_servico'] ?? '';
-$data = $_GET['data'] ?? '';
-$comentario = $_GET['comentario'] ?? '';
-$hora_inicio = $_GET['hora_inicio'] ?? '';
-$hora_fim = $_GET['hora_fim'] ?? '';
-$duracao = $_GET['duracao'] ?? '';
-$status = $_GET['status'] ?? '';
-$ativo = $_GET['ativo'] ?? '';
-$nota = $_GET['nota'] ?? '';
-$observacao = $_GET['observacao'] ?? '';
+$id   = $_GET['id']   ?? '';
 
-$morador = request("usuarios?id=eq.{$_SESSION['id']}&select=nome,email,codigo");
+if ($tipo === 'horarios') {
+    $data       = $_GET['data']       ?? '';
+    $id_servico = $_GET['id_servico'] ?? '';
 
-function gerarOpcoesHorarios($id_servico, $dataSelecionada)
-{
     $servico = request("servicos?id=eq.$id_servico");
 
     if (empty($servico) || isset($servico['error'])) {
-        return "<option value=''>Serviço não encontrado</option>";
+        echo "<option value=''>Serviço não encontrado</option>";
+        exit;
     }
 
-    $servico = $servico[0];
-    $hora_inicio = $servico['hora_inicio'];
-    $hora_fim = $servico['hora_fim'];
-
-    $duracaoUnix = strtotime($servico['duracao']);
-    $duracaoMin = (int) date('i', $duracaoUnix) + (int) date('H', $duracaoUnix) * 60;
-
-    $reservas = request("contratados?dia=eq.$dataSelecionada&id_servico=eq.$id_servico");
-    $ocupados = [];
+    $s          = $servico[0];
+    $duracaoMin = (int) date('i', strtotime($s['duracao'])) + (int) date('H', strtotime($s['duracao'])) * 60;
+    $reservas   = request("contratados?dia=eq.$data&id_servico=eq.$id_servico");
+    $ocupados   = [];
 
     if (!empty($reservas) && !isset($reservas['error'])) {
         foreach ($reservas as $r) {
@@ -46,305 +28,504 @@ function gerarOpcoesHorarios($id_servico, $dataSelecionada)
         }
     }
 
-    $inicio = strtotime($hora_inicio);
-    $fim = strtotime($hora_fim);
+    $inicio    = strtotime($s['hora_inicio']);
+    $fim       = strtotime($s['hora_fim']);
     $intervalo = max(1, $duracaoMin) * 60;
 
-    $html = "";
-
-    for ($i = $inicio; $i <= $fim; $i += $intervalo) {
-        $hora = date("H:i", $i);
+    for ($t = $inicio; $t <= $fim; $t += $intervalo) {
+        $hora      = date('H:i', $t);
         $bloqueado = in_array($hora, $ocupados);
-
-        $disabled = $bloqueado ? 'disabled' : '';
-        $textoIndisponivel = $bloqueado ? ' (Indisponível)' : '';
-
-        $html .= "<option value='{$hora}' {$disabled}>";
-        $html .= "{$hora} {$textoIndisponivel}";
-        $html .= "</option>";
+        $disabled  = $bloqueado ? 'disabled' : '';
+        $sufixo    = $bloqueado ? ' (Indisponível)' : '';
+        echo "<option value='$hora' $disabled>$hora$sufixo</option>";
     }
+    exit;
+}
 
+function esc($v)
+{
+    return htmlspecialchars((string)$v, ENT_QUOTES);
+}
+
+function notaStars(int $nota, bool $inline = false): string
+{
+    $html = '';
+    for ($i = 1; $i <= 5; $i++) {
+        $cor   = $i <= $nota ? 'var(--dourado)' : 'var(--cinza)';
+        $html .= "<span style='color:$cor; font-size:" . ($inline ? '18px' : '22px') . ";'>★</span>";
+    }
     return $html;
 }
 
-if ($tipo == 'horarios') {
-    $dataSelecionada = $_GET['data'];
-    $id_servico = $_GET['id_registro'];
-
-    echo gerarOpcoesHorarios($id_servico, $dataSelecionada);
-
-    exit;
-}
+$usuario = request("usuarios?id=eq.{$_SESSION['id']}&select=nome,email,codigo");
+$usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
 ?>
 
-<div class="modal-overlay" style="display: flex;">
+<div class="modal-overlay" style="display:flex;">
 
-    <?php if ($tipo == 'agendar'):
-        $agendar = request("servicos?id=eq.{$id_registro}");
-        $horaInicio = date('H:i', strtotime($agendar[0]['hora_inicio']));
-        $horaFim = date('H:i', strtotime($agendar[0]['hora_fim']));
-    ?>
-        <form action="../controls/agendar.act.php" method="post" class="modal-content modal-padrao ativar-load">
-            <input type="hidden" name="id_servico" value="<?php echo $id_registro ?>">
-
-            <div class="modal-header">
-                <h3>Agendar: <?php echo $agendar[0]['nome'] ?></h3>
+    <?php
+    /* =====================================================================
+   AGENDAR
+   id = id do serviço
+   ===================================================================== */
+    if ($tipo === 'agendar'):
+        $servico = request("servicos?id=eq.$id");
+        if (empty($servico) || isset($servico['error'])): ?>
+            <div class="modal-content modal-alerta">
+                <div class="modal-header">
+                    <h3>Erro</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Serviço não encontrado.</p>
+                </div>
+                <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
             </div>
+        <?php else:
+            $s          = $servico[0];
+            $horaInicio = date('H:i', strtotime($s['hora_inicio']));
+            $horaFim    = date('H:i', strtotime($s['hora_fim']));
+        ?>
+            <form action="../controls/agendar.act.php" method="post" class="modal-content modal-padrao ativar-load">
+                <input type="hidden" name="id_servico" value="<?= esc($id) ?>">
 
-            <div class="modal-body">
-                <img src="<?php echo $agendar[0]['imagem'] ?>" class="modal-img-destaque">
-                <div class="input-row">
+                <div class="modal-header">
+                    <h3>Agendar: <?= esc($s['nome']) ?></h3>
+                </div>
+
+                <div class="modal-body">
+                    <img src="<?= esc($s['imagem']) ?>" class="modal-img-destaque" alt="<?= esc($s['nome']) ?>">
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Data</label>
+                            <input type="date" name="data" id="modal-data-input"
+                                min="<?= date('Y-m-d') ?>" required
+                                data-servico="<?= esc($id) ?>">
+                        </div>
+                        <div class="input-group">
+                            <label>Hora</label>
+                            <select name="hora" id="modal-hora-select" required>
+                                <option value="">Selecione uma data</option>
+                            </select>
+                            <small class="helper-text">Disponível entre <?= $horaInicio ?> e <?= $horaFim ?></small>
+                        </div>
+                    </div>
+
                     <div class="input-group">
-                        <label>Data</label>
-                        <input type="date" name="data" min="<?php echo date('Y-m-d'); ?>" required>
+                        <label>Observações</label>
+                        <textarea name="observacao" rows="3"
+                            placeholder="Algo que o prestador precise saber?"></textarea>
                     </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn-modais">Confirmar Agendamento</button>
+                    <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Voltar</button>
+                </div>
+            </form>
+        <?php endif; ?>
+
+    <?php
+
+    /* =====================================================================
+   CANCELAR AGENDAMENTO
+   id = id do contrato (resp)
+   ===================================================================== */
+    elseif ($tipo === 'cancelar'): ?>
+        <form action="../controls/cancelar.php" method="post" class="modal-content modal-alerta ativar-load">
+            <input type="hidden" name="resp" value="<?= esc($id) ?>">
+
+            <div class="modal-header">
+                <h3>Cancelar agendamento?</h3>
+            </div>
+
+            <div class="modal-body">
+                <p>Tem certeza que deseja cancelar esta solicitação? Esta ação não pode ser desfeita.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais btn-modais--danger">Sim, cancelar</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Voltar</button>
+            </div>
+        </form>
+
+    <?php
+
+    /* =====================================================================
+   EXCLUIR SERVIÇO
+   id = id do serviço
+   ===================================================================== */
+    elseif ($tipo === 'excluir'): ?>
+        <form action="../controls/excluir.php" method="post" class="modal-content modal-alerta ativar-load">
+            <input type="hidden" name="id_servico" value="<?= esc($id) ?>">
+
+            <div class="modal-header">
+                <h3>Excluir serviço?</h3>
+            </div>
+
+            <div class="modal-body">
+                <p>Esta ação é <strong>permanente</strong>. Todas as reservas futuras vinculadas a este serviço serão removidas.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais btn-modais--danger">Sim, excluir</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Voltar</button>
+            </div>
+        </form>
+
+        <?php
+
+    /* =====================================================================
+   AVALIAR SERVIÇO
+   id = id do contrato
+   ===================================================================== */
+    elseif ($tipo === 'avaliar'):
+        $contrato = request("contratados?id=eq.$id&select=id,dia,hora,confirmado,servicos(id,nome,imagem)");
+        if (empty($contrato) || isset($contrato['error'])): ?>
+            <div class="modal-content modal-alerta">
+                <div class="modal-header">
+                    <h3>Erro</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Contrato não encontrado.</p>
+                </div>
+                <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
+            </div>
+        <?php else:
+            $c       = $contrato[0];
+            $s       = $c['servicos'];
+            $dataFmt = date('d/m/Y', strtotime($c['dia']));
+            $horaFmt = date('H:i',   strtotime($c['hora']));
+            $status  = $c['confirmado'] ? 'Confirmado' : 'Pendente';
+        ?>
+            <form action="../controls/avaliarServico.act.php" method="post" class="modal-content modal-padrao ativar-load">
+                <input type="hidden" name="id_servico" value="<?= esc($s['id']) ?>">
+                <input type="hidden" name="id_contrato" value="<?= esc($c['id']) ?>">
+
+                <div class="modal-header">
+                    <h3>Avaliar Serviço</h3>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mini-card-servico">
+                        <img src="<?= esc($s['imagem']) ?>" alt="<?= esc($s['nome']) ?>">
+                        <div>
+                            <strong><?= esc($s['nome']) ?></strong>
+                            <small><?= esc($status) ?> — <?= $dataFmt ?> às <?= $horaFmt ?></small>
+                        </div>
+                    </div>
+
+                    <div class="star-rating">
+                        <input type="hidden" name="nota" class="nota-input" value="0" required>
+                        <div class="stars">
+                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                <span class="star" data-value="<?= $i ?>">★</span>
+                            <?php endfor; ?>
+                        </div>
+                        <span class="star-label">Clique nas estrelas para avaliar</span>
+                    </div>
+
                     <div class="input-group">
-                        <label for="horarios">Hora</label>
-                        <select name="hora" id="horarios" required>
-                            <option value="">Selecione uma data</option>
-                        </select>
-                        <small class="helper-text">
-                            Disponível entre <?php echo $horaInicio; ?> e <?php echo $horaFim; ?>
-                        </small>
+                        <textarea class="comment-area" name="comentario" maxlength="500"
+                            placeholder="Como foi sua experiência?"></textarea>
+                        <div class="char-count">0 / 500</div>
                     </div>
                 </div>
-                <div class="input-group">
-                    <label>Observações</label>
-                    <textarea name="observacao" rows="3" placeholder="Algo que o prestador precise saber?"></textarea>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn-modais">Enviar Avaliação</button>
+                    <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
+                </div>
+            </form>
+        <?php endif; ?>
+
+        <?php
+
+    /* =====================================================================
+   VER AVALIAÇÃO
+   id = id da avaliação
+   ===================================================================== */
+    elseif ($tipo === 'ver_avaliacao'):
+        $avaliacao = request("avaliacoes?id=eq.$id&select=nota,comentario,servicos(nome,imagem)");
+        if (empty($avaliacao) || isset($avaliacao['error'])): ?>
+            <div class="modal-content modal-alerta">
+                <div class="modal-header">
+                    <h3>Erro</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Avaliação não encontrada.</p>
+                </div>
+                <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
+            </div>
+        <?php else:
+            $av = $avaliacao[0];
+            $s  = $av['servicos'];
+        ?>
+            <div class="modal-content modal-padrao">
+                <div class="modal-header">
+                    <h3>Avaliação do Serviço</h3>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mini-card-servico">
+                        <img src="<?= esc($s['imagem']) ?>" alt="<?= esc($s['nome']) ?>">
+                        <div><strong><?= esc($s['nome']) ?></strong></div>
+                    </div>
+
+                    <div style="margin:15px 0 10px; font-size:24px;">
+                        <?= notaStars((int)$av['nota']) ?>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Comentário</label>
+                        <p style="padding:10px 0; line-height:1.6;">
+                            <?= !empty($av['comentario']) ? esc($av['comentario']) : '<em style="color:var(--cinza)">Sem comentário.</em>' ?>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button>
                 </div>
             </div>
+        <?php endif; ?>
 
-            <div class="modal-footer">
-                <button type="submit" class="btn-modais">Confirmar Agendamento</button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Voltar</button>
+        <?php
+
+    /* =====================================================================
+   DETALHES DO AGENDAMENTO
+   id = id do contrato
+   ===================================================================== */
+    elseif ($tipo === 'detalhes'):
+        $contrato = request("contratados?id=eq.$id&select=dia,hora,confirmado,observacao,servicos(nome,descricao,imagem)");
+        if (empty($contrato) || isset($contrato['error'])): ?>
+            <div class="modal-content modal-alerta">
+                <div class="modal-header">
+                    <h3>Erro</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Agendamento não encontrado.</p>
+                </div>
+                <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
             </div>
-        </form>
+        <?php else:
+            $c       = $contrato[0];
+            $s       = $c['servicos'];
+            $dataFmt = date('d/m/Y', strtotime($c['dia']));
+            $horaFmt = date('H:i',   strtotime($c['hora']));
+            $status  = $c['confirmado'] ? 'Confirmado' : 'Pendente';
+        ?>
+            <div class="modal-content modal-padrao">
+                <div class="modal-header">
+                    <h3>Detalhes do Agendamento</h3>
+                </div>
 
-    <?php elseif ($tipo == 'cancelar' || $tipo == 'excluir') :
-        $isExcluir = ($tipo == 'excluir');
-        $action = $isExcluir ? "./controls/excluir.php" : "./controls/cancelar.php";
+                <div class="modal-body">
+                    <img src="<?= esc($s['imagem']) ?>" class="modal-img-destaque" alt="<?= esc($s['nome']) ?>">
+
+                    <div class="detalhes-lista">
+                        <div class="detalhe-item">
+                            <label>Serviço</label>
+                            <p><?= esc($s['nome']) ?></p>
+                        </div>
+                        <div class="detalhe-item">
+                            <label>Descrição</label>
+                            <p><?= esc($s['descricao']) ?></p>
+                        </div>
+                        <div class="input-row">
+                            <div class="detalhe-item">
+                                <label>Data</label>
+                                <p><?= $dataFmt ?></p>
+                            </div>
+                            <div class="detalhe-item">
+                                <label>Hora</label>
+                                <p><?= $horaFmt ?></p>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="detalhe-item">
+                                <label>Status</label>
+                                <p class="status-badge"><?= esc($status) ?></p>
+                            </div>
+                            <div class="detalhe-item">
+                                <label>Observação</label>
+                                <p><?= !empty($c['observacao']) ? esc($c['observacao']) : '—' ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" onclick="fecharModais()" class="btn-modais">Entendi</button>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <?php
+
+    /* =====================================================================
+   PAUSAR / ATIVAR SERVIÇO
+   id = id do serviço
+   ===================================================================== */
+    elseif ($tipo === 'pausar'):
+        $servico = request("servicos?id=eq.$id&select=id,ativo,nome");
+        if (empty($servico) || isset($servico['error'])): ?>
+            <div class="modal-content modal-alerta">
+                <div class="modal-header">
+                    <h3>Erro</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Serviço não encontrado.</p>
+                </div>
+                <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
+            </div>
+        <?php else:
+            $s       = $servico[0];
+            $ativo   = (bool)$s['ativo'];
+            $titulo  = $ativo ? 'Pausar serviço?' : 'Ativar serviço?';
+            $msg     = $ativo
+                ? 'O serviço ficará <strong>indisponível</strong> para novos agendamentos.'
+                : 'O serviço voltará a ficar <strong>disponível</strong> para agendamentos.';
+            $btnTxt  = $ativo ? 'Pausar' : 'Ativar';
+            $novoStatus = $ativo ? 'false' : 'true';
+        ?>
+            <form action="../controls/pausar.act.php" method="post" class="modal-content modal-alerta ativar-load">
+                <input type="hidden" name="id_servico" value="<?= esc($id) ?>">
+                <input type="hidden" name="status" value="<?= $novoStatus ?>">
+
+                <div class="modal-header">
+                    <h3><?= $titulo ?></h3>
+                </div>
+
+                <div class="modal-body">
+                    <p><?= $msg ?></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn-modais"><?= $btnTxt ?></button>
+                    <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
+                </div>
+            </form>
+        <?php endif; ?>
+
+    <?php
+
+    /* =====================================================================
+   NOVO / EDITAR ANÚNCIO
+   id = id do serviço (vazio para novo)
+   ===================================================================== */
+    elseif ($tipo === 'novo' || $tipo === 'editar'):
+        $isEdit  = ($tipo === 'editar');
+        $action  = $isEdit ? '../controls/editar_servico.act.php' : '../controls/addServico.php';
+
+        $s = [];
+        if ($isEdit && $id) {
+            $res = request("servicos?id=eq.$id");
+            $s   = (!empty($res) && !isset($res['error'])) ? $res[0] : [];
+        }
+
+        $nomeServico = $s['nome']        ?? '';
+        $imgServico  = $s['imagem']      ?? '';
+        $horaIni     = isset($s['hora_inicio']) ? date('H:i', strtotime($s['hora_inicio'])) : '';
+        $horaFim     = isset($s['hora_fim'])    ? date('H:i', strtotime($s['hora_fim']))    : '';
+        $duracao     = isset($s['duracao'])     ? date('H:i', strtotime($s['duracao']))     : '';
+        $descricao   = $s['descricao']   ?? '';
     ?>
-        <form action="<?php echo $action ?>" method="post" class="modal-content modal-alerta ativar-load">
-            <input type="hidden" name="<?php echo $isExcluir ? 'id_servico' : 'resp' ?>" value="<?php echo $id_registro ?>">
+        <form action="<?= $action ?>" method="post" enctype="multipart/form-data"
+            class="modal-content modal-padrao modal-large ativar-load">
+            <input type="hidden" name="id_servico" value="<?= esc($id) ?>">
 
             <div class="modal-header">
-                <h3><?php echo $isExcluir ? 'Excluir Serviço?' : 'Cancelar?' ?></h3>
-            </div>
-
-            <div class="modal-body">
-                <p><?php echo $isExcluir
-                        ? 'Esta ação é permanente. Todas as reservas futuras vinculadas serão removidas.'
-                        : 'Tem certeza que deseja cancelar esta solicitação?' ?></p>
-            </div>
-
-            <div class="modal-footer">
-                <button type="submit" class="btn-modais">Confirmar</button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Voltar</button>
-            </div>
-        </form>
-
-    <?php elseif ($tipo == 'avaliar'): ?>
-
-        <form action="./controls/avaliarServico.act.php" method="post" class="modal-content modal-padrao ativar-load">
-            <input type="hidden" value="<?php echo $id_registro ?>" name="id_servico">
-            <input type="hidden" name="id_contrato" value="<?php echo $id_contrato ?>">
-
-            <div class="modal-header">
-                <h3>Avaliar Serviço</h3>
-            </div>
-
-            <div class="modal-body">
-                <div class="mini-card-servico">
-                    <img src="<?php echo $img_servico ?>">
-                    <div>
-                        <strong><?php echo $nome_servico ?></strong>
-                        <small><?php echo $status ?> — <?php echo $data ?></small>
-                    </div>
-                </div>
-
-                <div class="star-rating">
-                    <input type="hidden" name="nota" class="nota-input" value="0" required>
-                    <div class="stars">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                    <span class="star-label">Clique nas estrelas</span>
-                </div>
-
-                <div class="input-group">
-                    <textarea class="comment-area" name="comentario" maxlength="500" placeholder="Como foi sua experiência?"></textarea>
-                    <div class="char-count">0 / 500</div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="submit" class="btn-modais">Enviar Avaliação</button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
-            </div>
-        </form>
-
-    <?php elseif ($tipo == 'editar' || $tipo == 'novo') :
-        $isEdit = ($tipo == 'editar');
-        $action = $isEdit ? "./controls/editar_servico.act.php" : "./controls/addServico.php";
-    ?>
-        <form action="<?php echo $action ?>" method="post" enctype="multipart/form-data" class="modal-content modal-padrao modal-large ativar-load">
-            <input type="hidden" value="<?php echo $id_registro ?>" name="id_servico">
-
-            <div class="modal-header">
-                <h3><?php echo $isEdit ? 'Editar Anúncio' : 'Novo Anúncio' ?></h3>
+                <h3><?= $isEdit ? 'Editar Anúncio' : 'Novo Anúncio' ?></h3>
             </div>
 
             <div class="modal-body">
                 <div class="input-group">
                     <label>Nome do Anúncio</label>
-                    <input type="text" name="nome" value="<?php echo $nome_servico ?>" required>
+                    <input type="text" name="nome" value="<?= esc($nomeServico) ?>" required>
                 </div>
 
                 <?php if (!$isEdit): ?>
-
                     <div class="input-group">
                         <label>Categoria</label>
                         <select name="categoria" required>
                             <option value="" disabled selected>Selecione o tipo</option>
                             <?php
-                            $categorias = request("categorias?select=id,nome&order=nome.asc", "GET");
-                            foreach ($categorias as $categoria) :
+                            $categorias = request("categorias?select=id,nome&order=nome.asc");
+                            if (!empty($categorias) && !isset($categorias['error'])):
+                                foreach ($categorias as $cat):
                             ?>
-                                <option value="<?php echo $categoria['id'] ?>"><?php echo $categoria['nome'] ?></option>
-                            <?php endforeach; ?>
+                                    <option value="<?= esc($cat['id']) ?>"><?= esc($cat['nome']) ?></option>
+                            <?php
+                                endforeach;
+                            endif;
+                            ?>
                         </select>
                     </div>
                 <?php endif; ?>
 
                 <div class="input-row">
                     <div class="input-group">
-                        <label for="hora_inicio">Início</label>
-                        <input type="time" name="hora_inicio" value="<?php echo $hora_inicio ?>" list="horarios-comuns" required>
+                        <label>Início</label>
+                        <input type="time" name="hora_inicio" value="<?= esc($horaIni) ?>"
+                            list="horarios-comuns" required>
                     </div>
-
                     <div class="input-group">
-                        <label for="hora_fim">Término</label>
-                        <input type="time" name="hora_fim" value="<?php echo $hora_fim ?>" list="horarios-comuns" required>
+                        <label>Término</label>
+                        <input type="time" name="hora_fim" value="<?= esc($horaFim) ?>"
+                            list="horarios-comuns" required>
                     </div>
-
                     <datalist id="horarios-comuns">
-                        <option value="08:00">
-                        <option value="09:00">
-                        <option value="10:00">
-                        <option value="11:00">
-                        <option value="12:00">
-                        <option value="13:00">
-                        <option value="14:00">
-                        <option value="15:00">
-                        <option value="16:00">
-                        <option value="17:00">
-                        <option value="18:00">
+                        <?php foreach (['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'] as $h): ?>
+                            <option value="<?= $h ?>">
+                            <?php endforeach; ?>
                     </datalist>
                 </div>
 
                 <div class="input-group">
-                    <label>Tempo de duração</label>
-                    <input type="time" name="duracao" value="<?php echo $duracao ?>" list="tempos-comuns" required>
-
+                    <label>Duração por atendimento</label>
+                    <input type="time" name="duracao" value="<?= esc($duracao) ?>"
+                        list="tempos-comuns" required>
                     <datalist id="tempos-comuns">
-                        <option value="00:30">
-                        <option value="01:00">
-                        <option value="01:30">
-                        <option value="02:00">
-                        <option value="02:30">
-                        <option value="03:00">
+                        <?php foreach (['00:30', '01:00', '01:30', '02:00', '02:30', '03:00'] as $t): ?>
+                            <option value="<?= $t ?>">
+                            <?php endforeach; ?>
                     </datalist>
                 </div>
 
                 <div class="input-group">
                     <label>Descrição</label>
-                    <textarea name="descricao" rows="4" required><?php echo $desc ?></textarea>
+                    <textarea name="descricao" rows="4" required><?= esc($descricao) ?></textarea>
                 </div>
 
                 <div class="input-group">
                     <label>Imagem do Serviço</label>
                     <label for="idImagem" class="upload-area">
-                        <img id="preview" class="preview-imagem" src="<?php echo $img_servico ?>">
+                        <img id="preview" class="preview-imagem"
+                            src="<?= esc($imgServico) ?>"
+                            style="<?= empty($imgServico) ? 'display:none;' : '' ?>">
                         <div class="upload-overlay"><span>Alterar Foto</span></div>
                     </label>
-                    <input type="file" name="imagem" id="idImagem" class="input-imagem" accept="image/*" style="display: none;">
+                    <input type="file" name="imagem" id="idImagem" class="input-imagem"
+                        accept="image/*" style="display:none;">
                 </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="submit" class="btn-modais"><?php echo $isEdit ? 'Salvar Alterações' : 'Publicar Anúncio' ?></button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
-            </div>
-        </form>
-
-    <?php elseif ($tipo == 'ver_avaliacao'): ?>
-
-        <div class="modal-content modal-padrao">
-            <div class="modal-header">
-                <h3>Avaliação do Serviço</h3>
-            </div>
-
-            <div class="modal-body">
-                <div class="mini-card-servico">
-                    <img src="<?php echo $img_servico ?>">
-                    <div>
-                        <strong><?php echo $nome_servico ?></strong>
-                    </div>
-                </div>
-
-                <div style="margin-top:15px;">
-                    <?php
-                    $nota = (int) $_GET['nota'];
-                    echo str_repeat("★", $nota);
-                    ?>
-                </div>
-
-                <div style="margin-top:10px;">
-                    <strong>Comentário:</strong>
-                    <p><?php echo !empty($comentario) ? $comentario : 'Sem comentário.' ?></p>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button onclick="fecharModais()" class="btn-modais">Fechar</button>
-            </div>
-        </div>
-    <?php elseif ($tipo == 'pausar'): ?>
-
-        <?php
-        $ativoAtual = ($ativo === 'true' || $ativo === '1');
-        $novoStatus = $ativoAtual ? false : true;
-        ?>
-
-        <form action="./controls/pausar.act.php" method="post" class="modal-content modal-alerta ativar-load">
-            <input type="hidden" name="id_servico" value="<?php echo $id_registro ?>">
-            <input type="hidden" name="status" value="<?php echo $novoStatus ? 'true' : 'false' ?>">
-
-            <div class="modal-header">
-                <h3><?php echo $ativoAtual ? 'Pausar serviço?' : 'Ativar serviço?' ?></h3>
-            </div>
-
-            <div class="modal-body">
-                <p>
-                    <?php echo $ativoAtual
-                        ? 'O serviço ficará indisponível para novos agendamentos.'
-                        : 'O serviço voltará a ficar disponível para agendamentos.' ?>
-                </p>
             </div>
 
             <div class="modal-footer">
                 <button type="submit" class="btn-modais">
-                    <?php echo $ativoAtual ? 'Pausar' : 'Ativar' ?>
+                    <?= $isEdit ? 'Salvar Alterações' : 'Publicar Anúncio' ?>
                 </button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
             </div>
         </form>
 
-    <?php elseif ($tipo == 'editar_nome'): ?>
+    <?php
 
+    /* =====================================================================
+   EDITAR NOME
+   (sem id — usa sessão)
+   ===================================================================== */
+    elseif ($tipo === 'editar_nome'): ?>
         <form action="../controls/editar_perfil.act.php" method="post" class="modal-content modal-padrao ativar-load">
             <input type="hidden" name="campo" value="nome">
 
@@ -353,12 +534,10 @@ if ($tipo == 'horarios') {
             </div>
 
             <div class="modal-body">
-                <p>
-                    Como você gostaria de ser chamado na plataforma?
-                </p>
+                <p>Como você gostaria de ser chamado na plataforma?</p>
                 <div class="input-group">
                     <label>Nome atual</label>
-                    <input type="text" value="<?php echo $morador[0]['nome'] ?>" disabled>
+                    <input type="text" value="<?= esc($usuario['nome'] ?? '') ?>" disabled>
                 </div>
                 <div class="input-group">
                     <label>Novo nome</label>
@@ -368,11 +547,16 @@ if ($tipo == 'horarios') {
 
             <div class="modal-footer">
                 <button type="submit" class="btn-modais">Salvar Nome</button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
             </div>
         </form>
 
-    <?php elseif ($tipo == 'editar_email'): ?>
+    <?php
+
+    /* =====================================================================
+   EDITAR E-MAIL
+   ===================================================================== */
+    elseif ($tipo === 'editar_email'): ?>
         <form action="../controls/editar_perfil.act.php" method="post" class="modal-content modal-padrao ativar-load">
             <input type="hidden" name="campo" value="email">
 
@@ -382,23 +566,30 @@ if ($tipo == 'horarios') {
 
             <div class="modal-body">
                 <div class="input-group">
-                    <label>Email atual</label>
-                    <input type="email" value="<?php echo $morador[0]['email']  ?>" disabled>
+                    <label>E-mail atual</label>
+                    <input type="email" value="<?= esc($usuario['email'] ?? '') ?>" disabled>
                 </div>
                 <div class="input-group">
-                    <label>Novo Email</label>
+                    <label>Novo e-mail</label>
                     <input type="email" name="valor" placeholder="exemplo@email.com" required>
                 </div>
-                <p>Você precisará usar este novo e-mail no seu próximo login.</p>
+                <p style="font-size:13px; color:var(--cinza); margin-top:6px;">
+                    Você precisará usar este novo e-mail no próximo login.
+                </p>
             </div>
 
             <div class="modal-footer">
                 <button type="submit" class="btn-modais">Atualizar E-mail</button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
             </div>
         </form>
 
-    <?php elseif ($tipo == 'editar_senha'): ?>
+    <?php
+
+    /* =====================================================================
+   EDITAR SENHA
+   ===================================================================== */
+    elseif ($tipo === 'editar_senha'): ?>
         <form action="../controls/editar_perfil.act.php" method="post" class="modal-content modal-padrao ativar-load">
             <input type="hidden" name="campo" value="senha">
 
@@ -409,34 +600,52 @@ if ($tipo == 'horarios') {
             <div class="modal-body">
                 <div class="input-group">
                     <label>Senha Atual</label>
-                    <input type="password" name="senha_atual" placeholder="Digite sua senha atual" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="idSenha">Nova Senha</label>
                     <div class="input-container">
-                        <input type="password" name="nova_senha" id="idSenha" minlength="8" onkeydown="if(event.key === ' ') event.preventDefault()" oninput="verificarSenha()" placeholder="Senha" required>
-                        <img src="./icon/visibility.png" class="olho-icon" alt="Mostrar senha" onclick="toggleSenha('idSenha', this)">
+                        <input type="password" name="senha_atual"
+                            placeholder="Digite sua senha atual" required>
                     </div>
-                    <p class="texto-senha" style="color: var(--verde-musgo-medio);"></p>
                 </div>
 
                 <div class="input-group">
-                    <label for="idRptSenha">Confirmar Nova Senha</label>
+                    <label>Nova Senha</label>
                     <div class="input-container">
-                        <input type="password" name="confirmar_senha" id="idRptSenha" minlength="8" onkeydown="if(event.key === ' ') event.preventDefault()" oninput="verificarSenha()" placeholder="Repita senha" required>
-                        <img src="./icon/visibility.png" class="olho-icon" alt="Mostrar senha" onclick="toggleSenha('idRptSenha', this)">
+                        <input type="password" name="nova_senha" id="idSenha"
+                            minlength="8"
+                            onkeydown="if(event.key===' ')event.preventDefault()"
+                            oninput="verificarSenha()"
+                            placeholder="Mínimo 8 caracteres" required>
+                        <img src="../icon/visibility.png" class="olho-icon" alt="Mostrar senha"
+                            onclick="toggleSenha('idSenha', this)">
+                    </div>
+                    <p class="texto-senha" style="color:var(--musgo-medio);"></p>
+                </div>
+
+                <div class="input-group">
+                    <label>Confirmar Nova Senha</label>
+                    <div class="input-container">
+                        <input type="password" name="confirmar_senha" id="idRptSenha"
+                            minlength="8"
+                            onkeydown="if(event.key===' ')event.preventDefault()"
+                            oninput="verificarSenha()"
+                            placeholder="Repita a nova senha" required>
+                        <img src="../icon/visibility.png" class="olho-icon" alt="Mostrar senha"
+                            onclick="toggleSenha('idRptSenha', this)">
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer">
                 <button type="submit" id="btnEnviar" class="btn-modais">Redefinir Senha</button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
             </div>
         </form>
 
-    <?php elseif ($tipo == 'editar_codigo'): ?>
+    <?php
+
+    /* =====================================================================
+   EDITAR CÓDIGO DO CONDOMÍNIO
+   ===================================================================== */
+    elseif ($tipo === 'editar_codigo'): ?>
         <form action="../controls/editar_perfil.act.php" method="post" class="modal-content modal-padrao ativar-load">
             <input type="hidden" name="campo" value="codigo">
 
@@ -446,70 +655,75 @@ if ($tipo == 'horarios') {
 
             <div class="modal-body">
                 <div class="input-group">
-                    <label>Chave de Acesso atual</label>
-                    <input type="text" value="<?php echo $morador[0]['codigo'] ?? '' ?>">
+                    <label>Código atual</label>
+                    <input type="text" value="<?= esc($usuario['codigo'] ?? '') ?>" disabled>
                 </div>
                 <div class="input-group">
-                    <label>Chave de Acesso</label>
-                    <input type="text" name="valor" maxlength="4" placeholder="Digite o código" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                    <label>Novo código</label>
+                    <input type="text" name="valor" maxlength="4"
+                        placeholder="4 dígitos"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
                 </div>
-                <p>
+                <p style="font-size:13px; color:var(--cinza); margin-top:6px;">
                     Este código vincula sua conta ao condomínio selecionado.
                 </p>
             </div>
 
             <div class="modal-footer">
                 <button type="submit" class="btn-modais">Salvar Código</button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
             </div>
         </form>
-    <?php elseif ($tipo == 'aviso'): ?>
 
-        <form action="./controls/avisos.act.php" method="post" class="modal-content modal-padrao ativar-load">
+    <?php
+
+    /* =====================================================================
+   CRIAR AVISO (síndico)
+   ===================================================================== */
+    elseif ($tipo === 'aviso'): ?>
+        <form action="../controls/avisos.act.php" method="post" class="modal-content modal-padrao ativar-load">
             <input type="hidden" name="campo" value="criar">
+
             <div class="modal-header">
                 <h3>Criar Aviso</h3>
             </div>
 
             <div class="modal-body">
-
                 <div class="input-group">
                     <label>Título</label>
-                    <input type="text" name="titulo" required>
+                    <input type="text" name="titulo" placeholder="Ex: Reunião de condomínio" required>
                 </div>
-
                 <div class="input-group">
                     <label>Data do Evento</label>
-                    <input type="date" name="data_evento" min="<?php echo date('Y-m-d') ?>" required>
+                    <input type="date" name="data_evento" min="<?= date('Y-m-d') ?>" required>
                 </div>
-
                 <div class="input-group">
                     <label>Mensagem</label>
-                    <textarea name="mensagem" class="comment-area" rows="4" maxlength="500" placeholder="Descreva o aviso..." required></textarea>
+                    <textarea name="mensagem" class="comment-area" rows="4"
+                        maxlength="500"
+                        placeholder="Descreva o aviso..." required></textarea>
                     <div class="char-count">0 / 500</div>
                 </div>
-
             </div>
 
             <div class="modal-footer">
                 <button type="submit" class="btn-modais">Publicar Aviso</button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
             </div>
         </form>
 
-    <?php elseif ($tipo == 'editar_aviso'): ?>
+    <?php
 
-        <?php
-        $avisoAtual = request("avisos?id=eq.$id_registro");
-        $avisoAtual = (!empty($avisoAtual) && !isset($avisoAtual['error'])) ? $avisoAtual[0] : null;
-
-        $tituloAviso = $avisoAtual['titulo'] ?? '';
-        $dataAviso = $avisoAtual['data_evento'] ?? '';
-        $mensagemAviso = $avisoAtual['mensagem'] ?? '';
-        ?>
-
-        <form action="./controls/avisos.act.php" method="post" class="modal-content modal-padrao ativar-load">
-            <input type="hidden" name="id_aviso" value="<?php echo $id_registro ?>">
+    /* =====================================================================
+   EDITAR AVISO
+   id = id do aviso
+   ===================================================================== */
+    elseif ($tipo === 'editar_aviso'):
+        $aviso = request("avisos?id=eq.$id");
+        $a     = (!empty($aviso) && !isset($aviso['error'])) ? $aviso[0] : [];
+    ?>
+        <form action="../controls/avisos.act.php" method="post" class="modal-content modal-padrao ativar-load">
+            <input type="hidden" name="id_aviso" value="<?= esc($id) ?>">
             <input type="hidden" name="campo" value="editar">
 
             <div class="modal-header">
@@ -519,88 +733,68 @@ if ($tipo == 'horarios') {
             <div class="modal-body">
                 <div class="input-group">
                     <label>Título</label>
-                    <input type="text" name="titulo" value="<?php echo $tituloAviso ?>" required>
+                    <input type="text" name="titulo" value="<?= esc($a['titulo'] ?? '') ?>" required>
                 </div>
-
                 <div class="input-group">
                     <label>Data do Evento</label>
-                    <input type="date" name="data_evento" min="<?php echo date('Y-m-d') ?>" value="<?php echo $dataAviso ?>" required>
+                    <input type="date" name="data_evento"
+                        min="<?= date('Y-m-d') ?>"
+                        value="<?= esc($a['data_evento'] ?? '') ?>" required>
                 </div>
-
                 <div class="input-group">
                     <label>Mensagem</label>
-                    <textarea name="mensagem" class="comment-area" rows="4" maxlength="500" required><?php echo $mensagemAviso ?></textarea>
+                    <textarea name="mensagem" class="comment-area" rows="4"
+                        maxlength="500" required><?= esc($a['mensagem'] ?? '') ?></textarea>
                     <div class="char-count">0 / 500</div>
                 </div>
             </div>
 
             <div class="modal-footer">
                 <button type="submit" class="btn-modais">Salvar Alterações</button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
             </div>
         </form>
 
-    <?php elseif ($tipo == 'apagar_aviso'): ?>
+    <?php
 
-        <form action="./controls/avisos.act.php" method="post" class="modal-content modal-alerta ativar-load">
-            <input type="hidden" name="id_aviso" value="<?php echo $id_registro ?>">
+    /* =====================================================================
+   APAGAR AVISO
+   id = id do aviso
+   ===================================================================== */
+    elseif ($tipo === 'apagar_aviso'): ?>
+        <form action="../controls/avisos.act.php" method="post" class="modal-content modal-alerta ativar-load">
+            <input type="hidden" name="id_aviso" value="<?= esc($id) ?>">
             <input type="hidden" name="campo" value="apagar">
 
             <div class="modal-header">
-                <h3>Apagar Aviso?</h3>
+                <h3>Apagar aviso?</h3>
             </div>
 
             <div class="modal-body">
-                <p>O aviso será removido do mural e os moradores não terão mais acesso a ele. Tem certeza que deseja continuar?</p>
+                <p>O aviso será removido do mural e os moradores não terão mais acesso a ele. Tem certeza?</p>
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn-modais">Sim, Apagar</button>
-                <button type="button" onclick="fecharModais()" class="btn-modais">Cancelar</button>
+                <button type="submit" class="btn-modais btn-modais--danger">Sim, apagar</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
             </div>
         </form>
-    <?php else : ?>
-        <div class="modal-content modal-padrao">
+
+    <?php
+
+    else: ?>
+        <div class="modal-content modal-alerta">
             <div class="modal-header">
-                <h3>Detalhes do Agendamento</h3>
+                <h3>Ops!</h3>
             </div>
             <div class="modal-body">
-                <img src="<?php echo $img_servico ?>" class="modal-img-destaque">
-                <div class="detalhes-lista">
-                    <div class="detalhe-item">
-                        <label>Serviço:</label>
-                        <p><?php echo $nome_servico ?></p>
-                    </div>
-                    <div class="detalhe-item">
-                        <label>Descrição:</label>
-                        <p><?php echo $desc ?></p>
-                    </div>
-                    <div class="input-row">
-                        <div class="detalhe-item">
-                            <label>Data:</label>
-                            <p><?php echo date('d/m/Y', strtotime($data)) ?></p>
-                        </div>
-                        <div class="detalhe-item">
-                            <label>Hora:</label>
-                            <p><?php echo $hora_inicio ?></p>
-                        </div>
-                    </div>
-                    <div class="input-row">
-                        <div class="detalhe-item">
-                            <label>Status:</label>
-                            <p class="status-badge"><?php echo $status ?></p>
-                        </div>
-                        <div class="detalhe-item">
-                            <label>Observação:</label>
-                            <p class="status-badge"><?php echo $observacao ?></p>
-                        </div>
-                    </div>
-                </div>
+                <p>Tipo de modal desconhecido: <code><?= esc($tipo) ?></code></p>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="fecharModais()" class="btn-modais">Entendi</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button>
             </div>
         </div>
-    <?php endif ?>
+
+    <?php endif; ?>
 
 </div>

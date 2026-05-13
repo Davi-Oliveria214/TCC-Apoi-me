@@ -54,9 +54,10 @@ include_once './util/avisos.php';
         <ul class="nav-links">
             <li><a href="../index.php">Início</a></li>
             <?php if (!empty($id)) : ?><li><a href="../servicos.php">Serviços</a></li> <?php endif; ?>
-                <?php if (!empty($id)) : ?><li><a href="../usuario.php">Perfil</a></li> <?php endif; ?>
+            <?php if (!empty($id)) : ?><li><a href="../usuario.php">Perfil</a></li> <?php endif; ?>
             <li><a href="../sobre.php">Sobre</a></li>
             <li><a href="../contato.php">Contato</a></li>
+            <?php if (!empty($id)) : ?><li><a href="../includes/logout.php">Sair</a></li> <?php endif; ?>
         </ul>
 
         <?php if (empty($id)) : ?> <a href="../login.php" class="btn-entrar">Entrar</a> <?php endif; ?>
@@ -67,7 +68,20 @@ include_once './util/avisos.php';
         <div></div>
         <div></div>
     </nav>
+
+    <script>
+        var usuarioLogado;
+        <?php if (!empty($id)) {
+        ?>usuarioLogado = true;
+        <?php
+        } else {
+        ?>usuarioLogado = false;
+        <?php
+        }  ?>
+    </script>
 </header>
+
+<div id="loadModal"></div>
 
 <?php
 if (!empty($class)) :

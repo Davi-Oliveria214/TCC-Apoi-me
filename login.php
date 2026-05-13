@@ -1,7 +1,6 @@
 <?php include_once './includes/head.php'; ?>
 <?php include_once './includes/topo.php' ?>
 
-<!-- PAINEL VISUAL ESQUERDO -->
 <div class="painel-visual">
     <div class="painel-visual-bg"></div>
 
@@ -18,7 +17,6 @@
     </div>
 </div>
 
-<!-- PAINEL FORMULÁRIO DIREITO -->
 <div class="painel-form">
     <div class="form-wrapper">
 
@@ -30,14 +28,10 @@
 
         <form action="./controls/login.act.php" method="post">
 
-            <!-- Chave de acesso -->
             <div class="campo">
                 <label for="idChave">Chave de acesso</label>
                 <div class="campo-input-wrap">
-                    <svg class="icone-campo" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
+                    <img class="icone-campo" src="./icon/chave.png" alt="Chave">
                     <input class="com-icone" type="text" name="chave" id="idChave"
                         onkeydown="if(event.key === ' ') event.preventDefault()"
                         placeholder="Digite sua chave" required autocomplete="off">
@@ -45,49 +39,35 @@
                 <span class="campo-hint">Chave fornecida pelo seu condomínio</span>
             </div>
 
-            <!-- Email -->
             <div class="campo">
                 <label for="idEmail">E-mail</label>
                 <div class="campo-input-wrap">
-                    <svg class="icone-campo" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                        <polyline points="22,6 12,13 2,6" />
-                    </svg>
+                    <img class="icone-campo" src="./icon/email.png" alt="E-mail">
                     <input class="com-icone" type="email" name="email" id="idEmail"
                         onkeydown="if(event.key === ' ') event.preventDefault()"
                         placeholder="seu@email.com" required autocomplete="email">
                 </div>
             </div>
 
-            <!-- Senha -->
             <div class="campo">
                 <label for="idSenha">Senha</label>
                 <div class="campo-input-wrap">
-                    <svg class="icone-campo" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
+                    <img class="icone-campo" src="./icon/lock.png" alt="Senha">
                     <input class="com-icone" type="password" name="senha" id="idSenha"
                         onkeydown="if(event.key === ' ') event.preventDefault()"
                         placeholder="Sua senha" required autocomplete="current-password">
                     <button type="button" class="olho-btn" onclick="toggleSenha('idSenha', this)" aria-label="Mostrar senha">
-                        <svg id="olho-idSenha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                            <circle cx="12" cy="12" r="3" />
-                        </svg>
+                        <img id="olho-idSenha" src="./icon/visibility.png" alt="Mostrar">
                     </button>
                 </div>
             </div>
 
             <div class="linha-extra">
-                <a href="./enviar_codigo.php?tipo_envio=redefinir" class="link-sutil">Esqueci minha senha</a>
+                <a href="./verificar_acesso.php?etapa=enviar" class="link-sutil">Esqueci minha senha</a>
             </div>
 
             <button type="submit" class="btn-submit">
                 Entrar na conta
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14m-7-7 7 7-7 7" />
-                </svg>
             </button>
 
         </form>
@@ -101,6 +81,5 @@
         <p class="form-footer-txt">
             <a href="./cadastro.php">Criar conta gratuita →</a>
         </p>
-
     </div>
 </div>

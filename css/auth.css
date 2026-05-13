@@ -74,7 +74,7 @@ div.page-contato {
 }
 
 /* Ícone dentro do input */
-.campo-input-wrap svg.icone-campo {
+.campo-input-wrap img.icone-campo {
     position: absolute;
     left: 14px;
     width: 18px;
@@ -93,7 +93,6 @@ div.page-contato {
     padding-left: 44px;
 }
 
-/* Hint e erro */
 .campo-hint {
     font-size: 12px;
     color: var(--cinza-claro);
@@ -106,7 +105,6 @@ div.page-contato {
     display: none;
 }
 
-/* Botão olho (mostrar/ocultar senha) */
 .olho-btn {
     position: absolute;
     right: 14px;
@@ -124,12 +122,11 @@ div.page-contato {
     color: var(--musgo);
 }
 
-.olho-btn svg {
-    width: 18px;
-    height: 18px;
+.olho-btn img {
+    width: 20px;
+    height: 20px;
 }
 
-/* Select com seta customizada */
 .campo select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%23b07c20' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -341,7 +338,7 @@ div.page-cadastro .painel-visual-bg::after {
     flex-shrink: 0;
 }
 
-.beneficio-icone svg {
+.beneficio-icone img {
     width: 18px;
     height: 18px;
     stroke: var(--dourado-palido);
@@ -841,7 +838,7 @@ header .logo-texto {
 
 /* ===== FAQ ===== */
 .faq-mini h3 {
-    
+
     font-size: 20px;
     color: var(--musgo);
     margin-bottom: 16px;
@@ -904,7 +901,7 @@ header .logo-texto {
 }
 
 .form-titulo {
-    
+
     font-size: 28px;
     color: var(--musgo);
     margin-bottom: 6px;
@@ -936,7 +933,7 @@ header .logo-texto {
     cursor: pointer;
     transition: all 0.2s;
     background: transparent;
-    
+
 }
 
 .tipo-pill:hover {
@@ -1024,7 +1021,7 @@ header .logo-texto {
 }
 
 .mensagem-sucesso h3 {
-    
+
     font-size: 24px;
     color: var(--musgo);
     margin-bottom: 10px;
