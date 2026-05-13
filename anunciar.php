@@ -14,7 +14,7 @@ include('./includes/topo.php');
                 <h1>Meus Serviços</h1>
                 <p>Gerencie os serviços que você oferece ao condomínio</p>
             </div>
-            <button class="an-btn-novo" onclick="novoServico()">
+            <button class="an-btn-novo" onclick="abrirModal('novo')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="12" y1="5" x2="12" y2="19" />
                     <line x1="5" y1="12" x2="19" y2="12" />
@@ -30,7 +30,7 @@ include('./includes/topo.php');
 
     $resAtivos = request("servicos?id_prestador=eq.{$id}&status=eq.true&select=count");
     $ativos = $resAtivos[0]['count'] ?? 0;
-    
+
     $pausados = $total - $ativos;
     ?>
     <div class="an-stats">
@@ -126,7 +126,7 @@ include('./includes/topo.php');
 
                         <div class="an-card-acoes">
                             <button class="an-btn-acao an-btn-editar"
-                                onclick="abrirEdicao('<?php echo $s['id'] ?>', '<?php echo htmlspecialchars($s['nome']) ?>', '<?php echo $s['imagem'] ?>', '<?php echo $horaI ?>', '<?php echo $horaF ?>', '<?php echo $dur ?>', '<?php echo $ativo ?>', '<?php echo addslashes($s['descricao']) ?>')">
+                                onclick="abrirModal('editar','<?php echo $s['id'] ?>')">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
                                     <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
@@ -134,7 +134,7 @@ include('./includes/topo.php');
                                 Editar
                             </button>
                             <button class="an-btn-acao an-btn-pausar"
-                                onclick="pausarServico('<?php echo $s['id'] ?>', '<?php echo $ativo ?>')">
+                                onclick="abrirModal('pausar','<?php echo $s['id'] ?>')">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <?php if ($ativo): ?>
                                         <rect x="6" y="4" width="4" height="16" />
@@ -146,7 +146,7 @@ include('./includes/topo.php');
                                 <?php echo $ativo ? 'Pausar' : 'Ativar' ?>
                             </button>
                             <button class="an-btn-acao an-btn-excluir"
-                                onclick="excluirOferecidos('<?php echo $s['id'] ?>')">
+                                onclick="abrirModal('excluir','<?php echo $s['id'] ?>')">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="3,6 5,6 21,6" />
                                     <path d="M19 6l-1 14H6L5 6" />
