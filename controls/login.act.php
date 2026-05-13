@@ -49,7 +49,7 @@ if (!$usuario['email_verificado']) {
     $_SESSION['email_verificar'] = $email;
     enviarEmail($email, $nome, $codigo);
     $_SESSION["mensagem"] = "Seu e-mail ainda não foi verificado. Verifique sua caixa de entrada.";
-    header("Location: ../aviso_codigo.php");
+    header("Location: ../verificar_acesso.php?etapa=aviso");
     exit;
 }
 

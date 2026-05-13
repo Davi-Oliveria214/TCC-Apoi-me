@@ -7,6 +7,7 @@
 @import "./historico.css";
 @import "./modais.css";
 @import "./verificar_acesso.css";
+@import "./usuario.css";
 
 :root {
   --musgo: #0c3a3f;

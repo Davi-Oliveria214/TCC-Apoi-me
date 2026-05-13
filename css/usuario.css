@@ -260,18 +260,17 @@
 }
 
 .us-card-icone {
-    width: 44px;
-    height: 44px;
+    width: 55px;
     background: rgba(12, 58, 63, 0.06);
     border-radius: 12px;
     display: flex;
+    padding: 3px;
     align-items: center;
     justify-content: center;
 }
 
-.us-card-icone svg {
-    width: 22px;
-    height: 22px;
+.us-card-icone img {
+    width: 45px;
     stroke: var(--musgo);
 }
 
@@ -391,9 +390,8 @@
     flex-shrink: 0;
 }
 
-.us-stat-icone svg {
-    width: 22px;
-    height: 22px;
+.us-stat-icone img {
+    width: 55px;
     stroke: var(--dourado-palido);
 }
 

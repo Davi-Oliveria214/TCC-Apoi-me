@@ -23,7 +23,8 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
           <?php endif; ?>
         </div>
         <button class="us-avatar-btn" title="Mudar foto">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
             <circle cx="12" cy="13" r="4" />
           </svg>
@@ -36,7 +37,8 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
         <div class="us-badges">
           <span class="us-badge us-badge-role"><?php echo ucfirst($tipo_usuario) ?></span>
           <span class="us-badge us-badge-condo">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
             </svg>
             <?php echo htmlspecialchars($condominio[0]['nome'] ?? 'Não informado') ?>
@@ -44,14 +46,16 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
         </div>
         <div class="us-detalhes">
           <span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
             <?php echo htmlspecialchars($condominio[0]['endereco'] ?? 'Endereço não informado') ?>
           </span>
           <span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="4" width="18" height="18" rx="2" />
               <line x1="16" y1="2" x2="16" y2="6" />
               <line x1="8" y1="2" x2="8" y2="6" />
@@ -65,7 +69,8 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
       <!-- Links rápidos -->
       <div class="us-hero-acoes">
         <a href="./historico.php" class="us-btn-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
             <polyline points="12,8 12,12 14,14" />
             <path d="M3.05 11a9 9 0 1 0 .5-4" />
             <polyline points="3,3 3,7 7,7" />
@@ -73,14 +78,16 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
           Histórico
         </a>
         <a href="./anunciar.php" class="us-btn-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
           Meus Serviços
         </a>
         <a href="./includes/logout.php" class="us-btn-link us-btn-logout">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
             <polyline points="16,17 21,12 16,7" />
             <line x1="21" y1="12" x2="9" y2="12" />
@@ -101,57 +108,50 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
 
         <div class="us-card">
           <div class="us-card-icone">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
+            <img src="./icon/user1.png" alt="">
           </div>
           <div class="us-card-txt">
             <h3>Dados Pessoais</h3>
             <p><?php echo htmlspecialchars($nome) ?></p>
           </div>
-          <button class="us-btn-editar" onclick="editarPerfil('editar_nome')">Editar nome</button>
+          <button class="us-btn-editar"
+            onclick="abrirModal('editar_nome','<?php echo $_SESSION['id'] ?>')">Editar nome</button>
         </div>
 
         <div class="us-card">
           <div class="us-card-icone">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-              <polyline points="22,6 12,13 2,6" />
-            </svg>
+            <img src="./icon/email.png" alt="">
           </div>
           <div class="us-card-txt">
             <h3>E-mail e Contato</h3>
             <p><?php echo htmlspecialchars($email) ?></p>
           </div>
-          <button class="us-btn-editar" onclick="editarPerfil('editar_email')">Alterar e-mail</button>
+          <button class="us-btn-editar"
+            onclick="abrirModal('editar_email','<?php echo $_SESSION['id'] ?>')">Alterar e-mail</button>
         </div>
 
         <div class="us-card">
           <div class="us-card-icone">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-            </svg>
+            <img src="./icon/lock.png" alt="">
           </div>
           <div class="us-card-txt">
             <h3>Segurança</h3>
             <p>Altere sua senha de acesso</p>
           </div>
-          <button class="us-btn-editar" onclick="editarPerfil('editar_senha')">Trocar senha</button>
+          <button class="us-btn-editar"
+            onclick="abrirModal('editar_senha','<?php echo $_SESSION['id'] ?>')">Trocar senha</button>
         </div>
 
         <div class="us-card">
           <div class="us-card-icone">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
-            </svg>
+            <img src="./icon/chave.png" alt="">
           </div>
           <div class="us-card-txt">
             <h3>Chave de Acesso</h3>
             <p>Chave do condomínio</p>
           </div>
-          <button class="us-btn-editar" onclick="editarPerfil('editar_codigo')">Mudar chave</button>
+          <button class="us-btn-editar"
+            onclick="abrirModal('editar_codigo','<?php echo $_SESSION['id'] ?>')">Mudar chave</button>
         </div>
 
       </div>
@@ -165,8 +165,9 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
             <h2 class="us-secao-titulo">Painel do Síndico</h2>
             <p>Visão geral do condomínio em tempo real</p>
           </div>
-          <button class="us-btn-aviso" onclick="abrirModalAviso('<?php echo $_SESSION['id'] ?>', '<?php echo $_SESSION['codigo'] ?>')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <button class="us-btn-aviso" onclick="abrirModal('aviso')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round">
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
@@ -186,12 +187,7 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
         <div class="us-stats">
           <div class="us-stat">
             <div class="us-stat-icone">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg>
+              <img src="./icon/users.png" alt="">
             </div>
             <div>
               <span class="us-stat-num"><?php echo $totalUsuarios ?></span>
@@ -200,10 +196,7 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
           </div>
           <div class="us-stat">
             <div class="us-stat-icone">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9,11 12,14 22,4" />
-                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-              </svg>
+              <img src="./icon/check.png" style="width: 75px;" alt="">
             </div>
             <div>
               <span class="us-stat-num"><?php echo $totalServicos ?></span>
@@ -212,10 +205,7 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
           </div>
           <div class="us-stat">
             <div class="us-stat-icone">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-              </svg>
+              <img src="./icon/sino.png" alt="">
             </div>
             <div>
               <span class="us-stat-num"><?php echo $totalAvisos ?></span>
@@ -249,16 +239,18 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
                   <p><?php echo htmlspecialchars($aviso['mensagem']) ?></p>
                   <div class="us-aviso-adm-acoes">
                     <button class="us-btn-adm us-btn-adm-editar"
-                      onclick="opcoesAviso('editar_aviso','<?php echo $aviso['id'] ?>')">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      onclick="abrirModal('editar_aviso','<?php echo $aviso['id'] ?>')">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
                         <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
                       </svg>
                       Editar
                     </button>
                     <button class="us-btn-adm us-btn-adm-apagar"
-                      onclick="opcoesAviso('apagar_aviso','<?php echo $aviso['id'] ?>')">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      onclick="abrirModal('apagar_aviso','<?php echo $aviso['id'] ?>')">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="3,6 5,6 21,6" />
                         <path d="M19 6l-1 14H6L5 6" />
                         <path d="M10 11v6M14 11v6" />
@@ -273,7 +265,8 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
             else:
               ?>
               <div class="us-adm-vazio">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                   <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                 </svg>

@@ -128,6 +128,6 @@ function cadastrar($nome, $email, $senhaHash, $codigo, $img, $tipo_usuario, $dad
         exit;
     }
 
-    header("Location: ../aviso_codigo.php");
+    header("Location: ../verificar_acesso.php?etapa=aviso");
     exit;
 }

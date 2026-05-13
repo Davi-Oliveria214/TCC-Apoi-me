@@ -614,8 +614,9 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                             onkeydown="if(event.key===' ')event.preventDefault()"
                             oninput="verificarSenha()"
                             placeholder="Mínimo 8 caracteres" required>
-                        <img src="../icon/visibility.png" class="olho-icon" alt="Mostrar senha"
-                            onclick="toggleSenha('idSenha', this)">
+                        <button type="button" class="olho-btn" onclick="toggleSenha('idSenha', this)" aria-label="Mostrar senha">
+                            <img id="olho-idSenha" src="./icon/visibility.png" class="olho-icon" alt="Mostrar">
+                        </button>
                     </div>
                     <p class="texto-senha" style="color:var(--musgo-medio);"></p>
                 </div>
@@ -628,8 +629,9 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                             onkeydown="if(event.key===' ')event.preventDefault()"
                             oninput="verificarSenha()"
                             placeholder="Repita a nova senha" required>
-                        <img src="../icon/visibility.png" class="olho-icon" alt="Mostrar senha"
-                            onclick="toggleSenha('idRptSenha', this)">
+                        <button type="button" class="olho-btn" onclick="toggleSenha('idRptSenha', this)" aria-label="Mostrar senha">
+                            <img id="olho-idRptSenha" src="./icon/visibility.png" class="olho-icon" alt="Mostrar">
+                        </button>
                     </div>
                 </div>
             </div>

@@ -60,40 +60,6 @@ function load(abrir) {
   }
 }
 
-document.addEventListener('click', function (e) {
-  const estrela = e.target.closest('.star');
-  if (!estrela) return;
-
-  const container = estrela.closest('.star-rating');
-  const estrelas = container.querySelectorAll('.star');
-  const inputOculto = container.querySelector('.nota-input');
-  const label = container.querySelector('.star-label');
-
-  const valor = estrela.getAttribute('data-value');
-  inputOculto.value = valor;
-
-  label.textContent = `Nota: ${valor} / 5`;
-
-  estrelas.forEach(s => {
-    if (parseInt(s.getAttribute('data-value')) <= parseInt(valor)) {
-      s.classList.add('active');
-    } else {
-      s.classList.remove('active');
-    }
-  });
-});
-
-document.addEventListener('input', function (e) {
-  if (e.target.matches('.comment-area')) {
-    const textarea = e.target;
-    const contador = textarea.parentElement.querySelector('.char-count');
-
-    if (contador) {
-      contador.textContent = `${textarea.value.length} / 500`;
-    }
-  }
-});
-
 // Imagem em tempo real
 document.addEventListener('change', function (e) {
   if (e.target.classList.contains('input-imagem')) {
@@ -116,46 +82,3 @@ document.addEventListener('change', function (e) {
     reader.readAsDataURL(file);
   }
 });
-
-// Validar senha
-function verificarSenha() {
-  const nome = document.getElementById('idNome')
-  const email = document.getElementById('idEmail')
-  const senha = document.getElementById('idSenha')
-  const rptSenha = document.getElementById('idRptSenha')
-  const inputSenha = document.getElementById('idSenha')
-
-  $.ajax({
-    url: "./controls/verificarSenha.php",
-    type: "POST",
-    dataType: "json",
-    data: { pass: senha.value, rptSenha: rptSenha.value, nome: nome.value, email: email.value },
-    success: function (resp) {
-      const campoErro = document.querySelector('.texto-senha');
-
-      if (campoErro) {
-        campoErro.textContent = resp.msg;
-      }
-
-      if (resp.pronto === false) {
-        inputSenha.setCustomValidity(resp.msg);
-      } else {
-        inputSenha.setCustomValidity("");
-      }
-    }
-  });
-}
-
-function toggleSenha(idInput, imgElement) {
-  const input = document.getElementById(idInput);
-
-  if (input.type === 'password') {
-    input.type = 'text';
-    imgElement.src = './icon/visibility_lock.png';
-    imgElement.alt = 'Ocultar senha';
-  } else {
-    input.type = 'password';
-    imgElement.src = './icon/visibility.png';
-    imgElement.alt = 'Mostrar senha';
-  }
-}

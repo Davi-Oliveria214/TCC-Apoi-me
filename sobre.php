@@ -236,10 +236,10 @@ include('./includes/topo.php');
         <h2>Faça parte da comunidade</h2>
         <p>Cadastre-se gratuitamente e descubra como é fácil contratar ou oferecer serviços no seu condomínio.</p>
         <div class="cta-acoes">
-            <?php if (empty($id)): ?><a href="#" class="btn-principal">Criar minha conta</a><?php endif; ?>
-            <a href="#" class="btn-secundario">Anunciar serviço</a>
+            <?php if (empty($id)): ?><a href="./cadastro.php" class="btn-principal">Criar minha conta</a><?php endif; ?>
+            <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './anunciar.php' ?>" class="btn-secundario" class="btn-secundario">Anunciar serviço</a>
         </div>
     </div>
-</section>  
+</section>
 
 <?php include('./includes/rodape.php'); ?>

@@ -75,7 +75,7 @@ if (!empty($sql_email) && !isset($sql_email['error'])) {
         enviarEmail($email, $nome, $codigo, 'cadastro');
 
         $_SESSION["mensagem"] = "Novo código enviado para seu e-mail.";
-        header("Location: ../aviso_codigo.php");
+        header("Location: ../verificar_acesso.php?etapa=aviso");
         exit;
     }
 }

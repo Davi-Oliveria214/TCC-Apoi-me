@@ -51,7 +51,7 @@ switch ($tipo) {
                 "codigo_criado_em" => $agora
             ];
             request("usuarios?id=eq.{$id_usuario}", "PATCH", $dados);
-            header("Location: ../aviso_codigo.php");
+            header("Location: ../verificar_acesso.php?etapa=aviso");
             exit;
         }
         break;

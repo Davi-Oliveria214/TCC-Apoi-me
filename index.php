@@ -7,15 +7,19 @@
     <div class="hero-conteudo">
         <div class="hero-tag">Plataforma de serviços para condomínios</div>
         <h1>A solução mora<br><em>ao seu lado</em></h1>
-        <p>Conectamos moradores que precisam de serviços com profissionais do seu condomínio. Rápido, seguro e de confiança.</p>
+        <p>Conectamos moradores que precisam de serviços com profissionais do seu condomínio. Rápido, seguro e de
+            confiança.</p>
         <div class="hero-acoes">
-            <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './servicos.php' ?>" class="btn-principal">
+            <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './servicos.php' ?>"
+                class="btn-principal">
                 Ver serviços disponíveis
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h14m-7-7 7 7-7 7" />
                 </svg>
             </a>
-            <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './anunciar.php' ?>" class="btn-secundario">Anunciar meu serviço</a>
+            <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './anunciar.php' ?>"
+                class="btn-secundario">Anunciar meu serviço</a>
         </div>
     </div>
 </section>
@@ -27,7 +31,8 @@
         <li class="filtro-item js-filtro ativo" onclick="filtro(this, 'servicos', 0)">Todos</li>
         <?php if (!empty($categorias) && !isset($categorias['code'])):
             foreach ($categorias as $cate): ?>
-                <li class="filtro-item js-filtro" onclick="filtro(this, 'servicos', <?php echo $cate['id'] ?>)"><?php echo $cate['nome'] ?></li>
+                <li class="filtro-item js-filtro" onclick="filtro(this, 'servicos', <?php echo $cate['id'] ?>)">
+                    <?php echo $cate['nome'] ?></li>
         <?php
             endforeach;
         endif; ?>
@@ -43,7 +48,8 @@
         </div>
         <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './servicos.php' ?>" class="ver-todos">
             Ver todos
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14m-7-7 7 7-7 7" />
             </svg>
         </a>
@@ -71,13 +77,15 @@
                         <p class="card-desc"><?php echo $servico['descricao'] ?></p>
                         <div class="card-info">
                             <div class="card-horario">
-                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
                                     <circle cx="12" cy="12" r="10" />
                                     <polyline points="12,6 12,12 16,14" />
                                 </svg>
                                 <?php echo $horaInicio ?> – <?php echo $horaFim ?>
                             </div>
-                            <div class="card-preco">R$<?php echo $servico['preco_servico'] ?><span> / <?php echo $servico['tipo_cobrado'] ?></span></div>
+                            <div class="card-preco">R$<?php echo $servico['preco_servico'] ?><span> /
+                                    <?php echo $servico['tipo_cobrado'] ?></span></div>
                         </div>
                     </div>
                     <div class="card-rodape">
@@ -85,7 +93,14 @@
                             <div class="prestador-avatar"><?php echo substr($servico['usuarios']['nome'], 0, 1) ?></div>
                             <span class="prestador-nome"><?php echo $servico['usuarios']['nome'] ?></span>
                         </div>
-                        <button class="btn-agendar" onclick="abrirModal('agendar','<?php echo  $servico['id'] ?>')">Agendar</button>
+                        <?php
+                        if (!empty($id) && $_SESSION['id'] != $servico['id_prestador']):
+                        ?>
+                            <button class="btn-agendar"
+                                onclick="<?php echo !empty($_SESSION['id']) ? "abrirModal('agendar','{$servico['id']}')" : "./util/setAviso.php" ?>">Agendar</button>
+                        <?php
+                        endif;
+                        ?>
                     </div>
                 </div>
             <?php
@@ -112,7 +127,8 @@
             <div class="passo">
                 <span class="passo-num">01</span>
                 <div class="passo-icone">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8" />
                         <path d="m21 21-4.35-4.35" />
                     </svg>
@@ -124,7 +140,8 @@
             <div class="passo">
                 <span class="passo-num">02</span>
                 <div class="passo-icone">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
                     </svg>
@@ -136,7 +153,8 @@
             <div class="passo">
                 <span class="passo-num">03</span>
                 <div class="passo-icone">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                         <line x1="16" y1="2" x2="16" y2="6" />
                         <line x1="8" y1="2" x2="8" y2="6" />
@@ -150,7 +168,8 @@
             <div class="passo">
                 <span class="passo-num">04</span>
                 <div class="passo-icone">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <polyline points="20,6 9,17 4,12" />
                     </svg>
                 </div>
@@ -203,7 +222,8 @@
         <p>Cadastre-se gratuitamente e descubra como é fácil contratar ou oferecer serviços no seu condomínio.</p>
         <div class="cta-acoes">
             <?php if (empty($id)): ?><a href="./cadastro.php" class="btn-principal">Criar minha conta</a><?php endif; ?>
-            <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './anunciar.php' ?>" class="btn-secundario">Anunciar serviço</a>
+            <a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './anunciar.php' ?>"
+                class="btn-secundario">Anunciar serviço</a>
         </div>
     </div>
 </section>

@@ -46,7 +46,6 @@ document.addEventListener('keydown', (e) => {
 });
 
 function inicializarModal() {
-
     const stars = loadModal.querySelectorAll('.star');
     const notaInput = loadModal.querySelector('.nota-input');
     const starLabel = loadModal.querySelector('.star-label');

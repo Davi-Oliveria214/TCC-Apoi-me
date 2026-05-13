@@ -38,7 +38,7 @@
                     <li><a href="#">Minha conta</a></li>
                     <li><a href="#">Cadastre-se</a></li>
                     <li><a href="#">Meus agendamentos</a></li>
-                    <li><a href="#">Anunciar serviço</a></li>
+                    <li><a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './anunciar.php' ?>" class="btn-secundario">Anunciar serviço</a></li>
                 </ul>
             </div>
         </div>

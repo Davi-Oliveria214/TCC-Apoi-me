@@ -167,7 +167,7 @@
     border-bottom: 1px solid rgba(176, 130, 43, 0.2);
 }
 
-.sv-quadro-header svg {
+.sv-quadro-header img {
     width: 18px;
     height: 18px;
     stroke: var(--dourado-palido);
@@ -229,9 +229,9 @@
     flex-shrink: 0;
 }
 
-.sv-aviso-icone svg {
-    width: 16px;
-    height: 16px;
+.sv-aviso-icone img {
+    width: 18px;
+    height: 18px;
     stroke: var(--dourado-palido);
 }
 
@@ -344,9 +344,9 @@
     gap: 4px;
 }
 
-.sv-res-datas svg {
-    width: 12px;
-    height: 12px;
+.sv-res-datas img {
+    width: 15px;
+    height: 15px;
     stroke: var(--dourado-palido);
 }
 
@@ -406,12 +406,6 @@
     gap: 8px;
     padding: 24px 16px;
     text-align: center;
-}
-
-.sv-vazio svg {
-    width: 32px;
-    height: 32px;
-    stroke: rgba(176, 130, 43, 0.4);
 }
 
 .sv-vazio p {
