@@ -10,7 +10,7 @@ include('./includes/topo.php');
     <div class="sobre-hero-bg"></div>
     <div class="sobre-hero-inner">
         <span class="subtag">Conheça a plataforma</span>
-        <h1>A solução mora<br><em>ao seu lado</em></h1>
+        <h1>A solução mora<br><em>ao lado</em></h1>
         <p>Um espaço que conecta pessoas e promove a colaboração dentro do condomínio, unindo moradores e gestão em harmonia.</p>
     </div>
     <div class="sobre-hero-onda">
@@ -27,8 +27,8 @@ include('./includes/topo.php');
             <div class="quem-texto">
                 <span class="subtag-escuro">Nossa história</span>
                 <h2>Quem somos</h2>
-                <p>Somos um grupo de desenvolvedores apaixonados por tecnologia e pelo seu potencial de transformar o cotidiano. O que começou como um projeto acadêmico evoluiu para uma missão real: facilitar a vida em condomínios e comunidades por meio da colaboração.</p>
-                <p>Acreditamos que a solução para muitos problemas do dia a dia está mais próxima do que imaginamos — muitas vezes, na porta ao lado. Nossa plataforma nasceu para ser a ponte entre quem precisa de um serviço e quem tem o talento para realizá-lo, promovendo uma economia local circular, segura e eficiente.</p>
+                <p>Somos um grupo de desenvolvedores de sistemas apaixonados por tecnologia e pelo seu potencial de transformar o cotidiano. O que começou como um projeto acadêmico evoluiu para uma missão real: facilitar a vida em condomínios e comunidades por meio da colaboração.</p>
+                <p>Acreditamos que a solução para muitos problemas do dia a dia está mais próxima do que imaginamos e muitas vezes, na porta ao lado. Nossa plataforma nasceu para ser a ponte entre quem precisa de um serviço e quem tem o talento para realizá-lo, promovendo uma economia local circular, segura e eficiente.</p>
                 <blockquote class="quem-citacao">
                     "A tecnologia deve servir para aproximar as pessoas, não apenas conectá-las a telas."
                 </blockquote>
@@ -69,7 +69,7 @@ include('./includes/topo.php');
                     </svg>
                 </div>
                 <h3>Missão</h3>
-                <p>Oferecer soluções digitais que fortaleçam a confiança, a comunicação e a organização em condomínios, promovendo eficiência na contratação de serviços e melhoria da qualidade de vida dos moradores.</p>
+                <p>Oferecer soluções digitais que fortaleçam a confiança, a comunicação e a organização em condomínios e comunidades residenciais, promovendo a eficiência na contratação de serviços e a melhoria da qualidade de vida dos moradores. </p>
             </div>
 
             <div class="mvv-card mvv-card--destaque">
@@ -80,7 +80,7 @@ include('./includes/topo.php');
                     </svg>
                 </div>
                 <h3>Visão</h3>
-                <p>Ser reconhecida como a principal referência nacional em plataformas digitais de gestão comunitária e compartilhamento de serviços, expandindo a atuação para diferentes contextos residenciais.</p>
+                <p>Ser reconhecida como a principal referência nacional em plataformas digitais de gestão comunitária e compartilhamento de serviços, expandindo sua atuação para diferentes contextos residenciais. </p>
             </div>
 
             <div class="mvv-card">
@@ -91,11 +91,11 @@ include('./includes/topo.php');
                 </div>
                 <h3>Valores</h3>
                 <ul class="valores-lista">
-                    <li><strong>Inovação</strong> — soluções criativas e tecnológicas</li>
-                    <li><strong>Transparência</strong> — relações claras e de confiança</li>
-                    <li><strong>Segurança</strong> — proteção de dados e credibilidade</li>
-                    <li><strong>Colaboração</strong> — cooperação entre usuários</li>
-                    <li><strong>Sustentabilidade</strong> — eficiência coletiva</li>
+                    <li><strong>Inovação:</strong> Buscando constantemente soluções criativas e tecnológicas.</li>
+                    <li><strong>Transparência:</strong> Garantir relações claras e de confiança entre moradores, administradores e prestadores.</li>
+                    <li><strong>Segurança:</strong> Priorizar a proteção de dados e a credibilidade dos serviços oferecidos.</li>
+                    <li><strong>Colaboração:</strong> Estimular a cooperação entre usuários para o fortalecimento da comunidade.</li>
+                    <li><strong>Sustentabilidade:</strong> Adotar práticas que otimizem recursos e promovam eficiência coletiva.</li>
                 </ul>
             </div>
 
@@ -190,12 +190,11 @@ include('./includes/topo.php');
         <div class="time-header">
             <span class="subtag-escuro">As pessoas por trás</span>
             <h2>Nosso time</h2>
-            <p>Estudantes apaixonados por tecnologia e pelo impacto que ela pode causar na vida das pessoas.</p>
         </div>
         <div class="time-grid">
 
             <div class="membro-card">
-                <div class="membro-avatar">DM</div>
+                <div class="membro-avatar">DO</div>
                 <div class="membro-info">
                     <strong>Davi Oliveira</strong>
                     <span>Desenvolvedor Full Stack</span>
@@ -203,26 +202,26 @@ include('./includes/topo.php');
             </div>
 
             <div class="membro-card">
-                <div class="membro-avatar">TF</div>
+                <div class="membro-avatar">JL</div>
                 <div class="membro-info">
-                    <strong>Integrante do Time</strong>
-                    <span>Desenvolvedor</span>
+                    <strong>Julia Lafaelly</strong>
+                    <span>Desenvolvedora Front-end</span>
                 </div>
             </div>
 
             <div class="membro-card">
-                <div class="membro-avatar">AL</div>
+                <div class="membro-avatar">TS</div>
                 <div class="membro-info">
-                    <strong>Integrante do Time</strong>
-                    <span>Designer & Front-end</span>
+                    <strong>Tassia Silva</strong>
+                    <span>Gerenciadora de documentos</span>
                 </div>
             </div>
 
             <div class="membro-card">
-                <div class="membro-avatar">RS</div>
+                <div class="membro-avatar">AP</div>
                 <div class="membro-info">
-                    <strong>Integrante do Time</strong>
-                    <span>Back-end & Banco de Dados</span>
+                    <strong>Agatha Pereira</strong>
+                    <span>Designer</span>
                 </div>
             </div>
 

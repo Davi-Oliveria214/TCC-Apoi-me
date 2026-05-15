@@ -203,3 +203,5 @@ include('./includes/topo.php');
         }, 1200);
     }
 </script>
+
+<?php include('./includes/rodape.php'); ?>
