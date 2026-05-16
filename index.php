@@ -57,7 +57,11 @@
 
     <div class="servicos-grid local-filtro">
         <?php
-        $servicos = request("servicos?status=eq.true&select=*,categorias(nome),usuarios(nome)&order=criado.desc&limit=10", "GET");
+        if (empty($_SESSION['codigo'])) {
+            $servicos = request("servicos?status=eq.true&select=*,categorias(nome),usuarios(nome)&order=criado.desc&limit=10", "GET");
+        } else {
+            $servicos = request("servicos?status=eq.true&codigo=eq.{$_SESSION['codigo']}&select=*,categorias(nome),usuarios(nome)&order=criado.desc&limit=10", "GET");
+        }
 
         if (!empty($servicos) && !isset($servicos['error'])) :
             foreach ($servicos as $servico) :
@@ -94,10 +98,10 @@
                             <span class="prestador-nome"><?php echo $servico['usuarios']['nome'] ?></span>
                         </div>
                         <?php
-                        if (!empty($id) && $_SESSION['id'] != $servico['id_prestador']):
+                        if (empty($id) || $_SESSION['id'] != $servico['id_prestador']):
                         ?>
                             <button class="btn-agendar"
-                                onclick="<?php echo !empty($_SESSION['id']) ? "abrirModal('agendar','{$servico['id']}')" : "./util/setAviso.php" ?>">Agendar</button>
+                                onclick="<?php echo !empty($_SESSION['id']) ? "abrirModal('agendar','{$servico['id']}')" : "window.location.href='./util/setAviso.php'" ?>">Agendar</button>
                         <?php
                         endif;
                         ?>

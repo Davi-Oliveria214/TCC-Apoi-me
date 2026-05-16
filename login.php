@@ -1,3 +1,7 @@
+<?php
+require_once './includes/funcoes.php';
+loginFeito();
+?>
 <?php include_once './includes/head.php'; ?>
 <?php include_once './includes/topo.php' ?>
 
@@ -31,7 +35,10 @@
             <div class="campo">
                 <label for="idChave">Chave de acesso</label>
                 <div class="campo-input-wrap">
-                    <img class="icone-campo" src="./icon/chave.png" alt="Chave">
+                    <svg class="icone-campo" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
                     <input class="com-icone" type="text" name="chave" id="idChave"
                         onkeydown="if(event.key === ' ') event.preventDefault()"
                         placeholder="Digite sua chave" required autocomplete="off">
@@ -42,7 +49,10 @@
             <div class="campo">
                 <label for="idEmail">E-mail</label>
                 <div class="campo-input-wrap">
-                    <img class="icone-campo" src="./icon/email.png" alt="E-mail">
+                    <svg class="icone-campo" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>
                     <input class="com-icone" type="email" name="email" id="idEmail"
                         onkeydown="if(event.key === ' ') event.preventDefault()"
                         placeholder="seu@email.com" required autocomplete="email">
@@ -52,7 +62,10 @@
             <div class="campo">
                 <label for="idSenha">Senha</label>
                 <div class="campo-input-wrap">
-                    <img class="icone-campo" src="./icon/lock.png" alt="Senha">
+                    <svg class="icone-campo" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
                     <input class="com-icone" type="password" name="senha" id="idSenha"
                         onkeydown="if(event.key === ' ') event.preventDefault()"
                         placeholder="Sua senha" required autocomplete="current-password">

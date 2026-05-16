@@ -15,7 +15,7 @@ $id_usuario = $_SESSION['id'];
 $tipo = trim($_POST['campo']);
 $valor = $_POST['valor'] ?? '';
 
-if ($tipo !== 'senha' && empty(trim($valor))) {
+if ($tipo !== 'senha' && $tipo !== 'imagem_perfil' && empty(trim($valor))) {
     $_SESSION["mensagem"] = "Preencha todos os campos.";
     header("Location: ../usuario.php");
     exit;
@@ -99,6 +99,7 @@ switch ($tipo) {
             "senha" => password_hash($nova_senha, PASSWORD_DEFAULT)
         ];
         break;
+
     case 'codigo':
         $verificar = request("condominios?codigo=eq.{$valor}");
 
@@ -113,18 +114,97 @@ switch ($tipo) {
         ];
         break;
 
-    default:
-        $_SESSION["mensagem"] = "Erro ao editar perfil!";
-        header("Location: ../usuario.php");
-        exit;
+    case 'imagem_perfil':
+        if (!isset($_FILES['imagem']) || $_FILES['imagem']['error'] !== 0) {
+            $_SESSION["mensagem"] = "Selecione uma imagem válida.";
+            header("Location: ../usuario.php");
+            exit;
+        }
+
+        $arquivo = $_FILES['imagem'];
+        $tmp = $arquivo['tmp_name'];
+        $nomeImg = $arquivo['name'];
+
+        $bucket = $_ENV['BALDE'];
+        $supabaseUrl = trim($_ENV['SUPABASE_URL']);
+        $baldeKey = trim($_ENV['BALDE_KEY']);
+
+        $buscaUsuario = request("usuarios?id=eq.{$id_usuario}&select=imagem");
+        if (!empty($buscaUsuario) && !isset($buscaUsuario['error'])) {
+            $urlAntiga = $buscaUsuario[0]['imagem'] ?? '';
+
+            if (!empty($urlAntiga) && strpos($urlAntiga, 'deufalt.png') === false) {
+                $partesUrl = explode("/$bucket/", $urlAntiga);
+                $nomeArquivoAntigo = end($partesUrl);
+
+                if (!empty($nomeArquivoAntigo)) {
+                    $urlDelete = $supabaseUrl . "/storage/v1/object/$bucket/$nomeArquivoAntigo";
+                    $chDel = curl_init($urlDelete);
+                    curl_setopt_array($chDel, [
+                        CURLOPT_CUSTOMREQUEST => "DELETE",
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_SSL_VERIFYHOST => false,
+                        CURLOPT_HTTPHEADER => [
+                            "Authorization: Bearer " . $baldeKey
+                        ]
+                    ]);
+                    curl_exec($chDel);
+                }
+            }
+        }
+
+        $extensao = pathinfo($nomeImg, PATHINFO_EXTENSION);
+        $nomeFinal = "avatar_" . $id_usuario . "_" . uniqid() . "." . $extensao;
+
+        $urlUpload = $supabaseUrl . "/storage/v1/object/$bucket/$nomeFinal";
+        $tipoMime = ($extensao == 'png') ? 'image/png' : 'image/jpeg';
+
+        $ch = curl_init($urlUpload);
+        curl_setopt_array($ch, [
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer " . $baldeKey,
+                "Content-Type: " . $tipoMime
+            ],
+            CURLOPT_POSTFIELDS => file_get_contents($tmp)
+        ]);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            $_SESSION["mensagem"] = "Erro CURL: " . curl_error($ch);
+            header("Location: ../usuario.php");
+            exit;
+        }
+
+        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($status != 200 && $status != 201) {
+            $_SESSION["mensagem"] = "Erro no upload (HTTP $status): $response";
+            header("Location: ../usuario.php");
+            exit;
+        }
+
+        $urlPublicaImagem = $supabaseUrl . "/storage/v1/object/public/$bucket/$nomeFinal";
+
+        $dados = [
+            "imagem" => $urlPublicaImagem
+        ];
+
+        $_SESSION['usuario_imagem'] = $urlPublicaImagem;
+        break;
 }
 
 $sql = request("usuarios?id=eq.{$id_usuario}", "PATCH", $dados);
 
 if (isset($sql['error'])) {
-    $_SESSION["mensagem"] = "Erro ao atualizar $tipo";
+    $_SESSION["mensagem"] = "Erro ao atualizar " . ($tipo === 'imagem_perfil' ? 'foto de perfil' : $tipo);
 } else {
-    $_SESSION["mensagem"] = "$tipo atualizado com sucesso!!";
+    $_SESSION["mensagem"] = ($tipo === 'imagem_perfil' ? 'Foto de perfil' : ucfirst($tipo)) . " atualizada com sucesso!!";
 }
 
 header("Location: ../usuario.php");

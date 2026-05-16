@@ -508,6 +508,36 @@
     color: #f5a898;
 }
 
+.upload-area.avatar-upload {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.upload-area.avatar-upload .preview-imagem {
+    border-radius: 50%;
+}
+
+.upload-area.avatar-upload .upload-overlay {
+    border-radius: 50%;
+    opacity: 1;
+    background: rgba(12, 38, 40, 0.45);
+}
+
+.upload-area.avatar-upload:has(.preview-imagem[src]:not([src=""])) .upload-overlay {
+    opacity: 0;
+    background: rgba(12, 38, 40, 0.75);
+}
+
+.upload-area.avatar-upload:has(.preview-imagem[src]:not([src=""])):hover .upload-overlay {
+    opacity: 1;
+}
+
 @media (max-width: 600px) {
     .modal-overlay {
         padding: 12px;

@@ -49,11 +49,17 @@ if ($tipo === "servicos") :
             </div>
         <?php
         endforeach;
-    else :
+    else:
         ?>
-        <div class='aviso-vazio'>Nenhum serviço encontrado</div>
-        <?php
-    endif;
+        <div class="sv-vazio-grid">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+            </svg>
+            <h3>Nenhum serviço encontradol</h3>
+            <a href="./anunciar.php" class="sv-btn-agendar">Anunciar serviço</a>
+        </div>
+        <?php endif;
 
 elseif ($tipo === 'anuncio') :
     $id = $_SESSION['id'];
@@ -114,8 +120,13 @@ elseif ($tipo === 'anuncio') :
         endforeach;
     else:
         ?>
-        <div class='aviso-vazio'>Você ainda não está oferecendo nenhum serviço</div>
-<?php
-    endif;
-
+        <div class="sv-vazio-grid">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+            </svg>
+            <h3>Nenhum serviço encontrado</h3>
+            <a href="./anunciar.php" class="sv-btn-agendar">Anunciar serviço</a>
+        </div>
+<?php endif;
 endif;

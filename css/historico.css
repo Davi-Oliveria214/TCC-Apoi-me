@@ -430,3 +430,175 @@
         max-height: 360px;
     }
 }
+
+/* Corrige SVGs quebrados */
+.hi-card svg,
+.hi-chip svg,
+.hi-card-meta svg,
+.hi-btn-avaliar svg,
+.hi-card-nota svg,
+.hi-card-status svg {
+    flex-shrink: 0;
+    display: block;
+}
+
+.hi-card-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.hi-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.hi-chip svg {
+    width: 13px;
+    height: 13px;
+}
+
+/* Prestador */
+.hi-chip--prest {
+    background: rgba(12, 58, 63, 0.08);
+    color: var(--musgo);
+}
+
+.hi-chip--prest svg {
+    stroke: var(--musgo);
+}
+
+/* Cliente */
+.hi-chip--cliente {
+    background: rgba(70, 130, 180, 0.12);
+    color: #35719b;
+}
+
+.hi-chip--cliente svg {
+    stroke: #35719b;
+}
+
+/* Preço */
+.hi-chip--preco {
+    background: rgba(176, 130, 43, 0.12);
+    color: var(--dourado);
+}
+
+.hi-chip--preco svg {
+    stroke: var(--dourado);
+}
+
+.hi-card-nota-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    padding: 5px 9px;
+    border-radius: 999px;
+
+    background: rgba(255, 200, 60, 0.92);
+    color: #5f4600;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.hi-card-img-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    background:
+        linear-gradient(135deg,
+            rgba(12, 58, 63, 0.08),
+            rgba(176, 130, 43, 0.08));
+
+    color: var(--cinza);
+}
+
+.hi-card-img-placeholder svg {
+    width: 32px;
+    height: 32px;
+    stroke: rgba(176, 130, 43, 0.5);
+}
+
+.hi-card-img-placeholder span {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.hi-card-info p,
+.hi-comentario {
+    -webkit-box-orient: vertical;
+}
+
+.hi-lista {
+    padding-right: 6px;
+}
+
+.hi-card {
+    position: relative;
+    isolation: isolate;
+}
+
+.hi-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, 0.02),
+            transparent);
+
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+}
+
+.hi-card:hover::before {
+    opacity: 1;
+}
+
+@media (max-width: 480px) {
+
+    .hi-card-img {
+        height: 110px;
+    }
+
+    .hi-card-info {
+        padding: 12px;
+    }
+
+    .hi-card-info h3 {
+        font-size: 13px;
+    }
+
+    .hi-chip {
+        font-size: 10px;
+        padding: 5px 8px;
+    }
+
+    .hi-btn-avaliar {
+        font-size: 11px;
+    }
+}

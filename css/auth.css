@@ -74,7 +74,7 @@ div.page-contato {
 }
 
 /* Ícone dentro do input */
-.campo-input-wrap img.icone-campo {
+.campo-input-wrap svg.icone-campo {
     position: absolute;
     left: 14px;
     width: 18px;
@@ -338,7 +338,7 @@ div.page-cadastro .painel-visual-bg::after {
     flex-shrink: 0;
 }
 
-.beneficio-icone img {
+.beneficio-icone svg {
     width: 18px;
     height: 18px;
     stroke: var(--dourado-palido);

@@ -157,7 +157,7 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
    ===================================================================== */
     elseif ($tipo === 'excluir'): ?>
         <form action="../controls/excluir.php" method="post" class="modal-content modal-alerta ativar-load">
-            <input type="hidden" name="id_servico" value="<?= esc($id) ?>">
+            <input type="hidden" name="id_servico" value="<?php echo $id ?>">
 
             <div class="modal-header">
                 <h3>Excluir serviço?</h3>
@@ -368,7 +368,7 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
    id = id do serviço
    ===================================================================== */
     elseif ($tipo === 'pausar'):
-        $servico = request("servicos?id=eq.$id&select=id,ativo,nome");
+        $servico = request("servicos?id=eq.$id&select=id,status,nome");
         if (empty($servico) || isset($servico['error'])): ?>
             <div class="modal-content modal-alerta">
                 <div class="modal-header">
@@ -380,8 +380,7 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                 <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
             </div>
         <?php else:
-            $s       = $servico[0];
-            $ativo   = (bool)$s['ativo'];
+            $ativo   = $servico[0]['status'];
             $titulo  = $ativo ? 'Pausar serviço?' : 'Ativar serviço?';
             $msg     = $ativo
                 ? 'O serviço ficará <strong>indisponível</strong> para novos agendamentos.'
@@ -680,8 +679,48 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
     <?php
 
     /* =====================================================================
-   CRIAR AVISO (síndico)
+   EDITAR Foto de perfil
    ===================================================================== */
+    elseif ($tipo === 'editar_img_perfil'): ?>
+        <form action="../controls/editar_perfil.act.php" method="post" enctype="multipart/form-data" class="modal-content modal-padrao ativar-load">
+            <input type="hidden" name="campo" value="imagem_perfil">
+
+            <div class="modal-header">
+                <h3>Alterar Foto de Perfil</h3>
+            </div>
+
+            <div class="modal-body" style="text-align: center;">
+                <div class="input-group">
+                    <label style="text-align: center; display: block; margin-bottom: 12px;">Sua nova foto</label>
+
+                    <label class="upload-area avatar-upload">
+                        <input type="file" name="imagem" id="idFotoPerfil" accept="image/png, image/jpeg, image/jpg" style="display: none;" onchange="previewAvatar(this)" required>
+
+                        <img id="avatarPreview" class="preview-imagem" src="" style="display: none;" alt="Preview da imagem">
+
+                        <div class="upload-overlay">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--dourado);">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                                <circle cx="12" cy="13" r="4" />
+                            </svg>
+                            <span style="font-size: 11px; margin-top: 4px;">Escolher Foto</span>
+                        </div>
+                    </label>
+                </div>
+                <p style="font-size:13px; color:var(--cinza); margin-top:12px; text-align: center;">
+                    Clique no círculo para selecionar o arquivo. Formatos aceitos: JPG ou PNG.
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais">Salvar Nova Foto</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
+            </div>
+        </form>
+    <?php
+    /* =====================================================================
+        CRIAR AVISO (síndico)
+        ===================================================================== */
     elseif ($tipo === 'aviso'): ?>
         <form action="../controls/avisos.act.php" method="post" class="modal-content modal-padrao ativar-load">
             <input type="hidden" name="campo" value="criar">

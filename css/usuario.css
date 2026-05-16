@@ -269,8 +269,8 @@
     justify-content: center;
 }
 
-.us-card-icone img {
-    width: 45px;
+.us-card-icone svg {
+    width: 40px;
     stroke: var(--musgo);
 }
 
@@ -390,8 +390,8 @@
     flex-shrink: 0;
 }
 
-.us-stat-icone img {
-    width: 55px;
+.us-stat-icone svg {
+    width: 30px;
     stroke: var(--dourado-palido);
 }
 

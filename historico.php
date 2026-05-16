@@ -27,10 +27,11 @@ include('./includes/topo.php');
         </div>
     </div>
 
-    <!-- ===== GRID DE COLUNAS ===== -->
     <div class="hi-grid">
 
-        <!-- ===== CONTRATADOS ===== -->
+        <!-- ══════════════════════════════════════════════════
+             COLUNA 1 — CONTRATADOS (aguardando avaliação)
+        ═══════════════════════════════════════════════════════ -->
         <section class="hi-coluna">
             <div class="hi-coluna-header">
                 <div class="hi-col-icone hi-col-icone--azul">
@@ -48,26 +49,72 @@ include('./includes/topo.php');
 
             <div class="hi-lista">
                 <?php
-                $servicos = request(
-                    "contratados?select=id,hora,dia,confirmado,servicos(id,nome,descricao,imagem)&id_cliente=eq.$id&avaliar=eq.false",
+                $contratados = request(
+                    "contratados"
+                        . "?select=id,hora,dia,confirmado,observacao"
+                        . ",nome_servico,nome_prestador,preco_contrato"
+                        . ",servicos(imagem,descricao)"
+                        . "&id_cliente=eq.$id"
+                        . "&avaliar=eq.false"
+                        . "&order=dia.desc",
                     "GET"
                 );
 
-                if (!empty($servicos) && !isset($servicos['error'])):
-                    foreach ($servicos as $s):
-                        $hora = date('H:i', strtotime($s['hora']));
-                        $dia  = date('d/m/Y', strtotime($s['dia']));
+                if (!empty($contratados) && !isset($contratados['error'])):
+                    foreach ($contratados as $c):
+                        $hora        = date('H:i',    strtotime($c['hora']));
+                        $dia         = date('d/m/Y',  strtotime($c['dia']));
+                        $nomeServico = $c['nome_servico']           ?? 'Serviço removido';
+                        $nomePrest   = $c['nome_prestador']         ?? 'Prestador removido';
+                        $preco       = $c['preco_contrato']         ?? 0;
+                        $imagem      = $c['servicos']['imagem']     ?? '';
+                        $descricao   = $c['servicos']['descricao']  ?? 'Descrição não disponível';
+                        // confirmado é enum tipo_status: 'pendente' | 'confirmado' | 'concluido'
+                        $statusOk    = in_array($c['confirmado'], ['confirmado', 'concluido']);
                 ?>
                         <div class="hi-card">
                             <div class="hi-card-img">
-                                <img src="<?php echo htmlspecialchars($s['servicos']['imagem']) ?>" alt="<?php echo htmlspecialchars($s['servicos']['nome']) ?>">
-                                <span class="hi-card-status <?php echo $s['confirmado'] ? 'hi-status--ok' : 'hi-status--pend' ?>">
-                                    <?php echo $s['confirmado'] ? '✓ Confirmado' : '⏳ Pendente' ?>
+                                <?php if (!empty($imagem)): ?>
+                                    <img src="<?php echo htmlspecialchars($imagem) ?>"
+                                        alt="<?php echo htmlspecialchars($nomeServico) ?>">
+                                <?php else: ?>
+                                    <div class="hi-card-img-placeholder">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                            <circle cx="8.5" cy="8.5" r="1.5" />
+                                            <polyline points="21,15 16,10 5,21" />
+                                        </svg>
+                                        <span>Imagem indisponível</span>
+                                    </div>
+                                <?php endif; ?>
+                                <span class="hi-card-status <?php echo $statusOk ? 'hi-status--ok' : 'hi-status--pend' ?>">
+                                    <?php echo $statusOk ? '✓ Confirmado' : '⏳ Pendente' ?>
                                 </span>
                             </div>
+
                             <div class="hi-card-info">
-                                <h3><?php echo htmlspecialchars($s['servicos']['nome']) ?></h3>
-                                <p><?php echo htmlspecialchars($s['servicos']['descricao']) ?></p>
+                                <h3><?php echo htmlspecialchars($nomeServico) ?></h3>
+                                <p><?php echo htmlspecialchars($descricao) ?></p>
+
+                                <div class="hi-card-chips">
+                                    <span class="hi-chip hi-chip--prest">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                            <circle cx="12" cy="7" r="4" />
+                                        </svg>
+                                        <?php echo htmlspecialchars($nomePrest) ?>
+                                    </span>
+                                    <?php if ($preco > 0): ?>
+                                        <span class="hi-chip hi-chip--preco">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <line x1="12" y1="1" x2="12" y2="23" />
+                                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                            </svg>
+                                            R$ <?php echo number_format($preco, 2, ',', '.') ?>
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+
                                 <div class="hi-card-meta">
                                     <span>
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -86,8 +133,9 @@ include('./includes/topo.php');
                                         <?php echo $hora ?>
                                     </span>
                                 </div>
+
                                 <button class="hi-btn-avaliar"
-                                    onclick="abrirAvaliar('<?php echo $s['servicos']['id'] ?>', '<?php echo htmlspecialchars($s['servicos']['nome']) ?>', '<?php echo $s['servicos']['imagem'] ?>', '<?php echo $s['dia'] ?>', '<?php echo $s['hora'] ?>', '<?php echo $s['confirmado'] ?>', '<?php echo $s['id'] ?>')">
+                                    onclick="abrirModal('avaliar','<?php echo $c['id'] ?>')">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2" />
                                     </svg>
@@ -112,7 +160,9 @@ include('./includes/topo.php');
             </div>
         </section>
 
-        <!-- ===== VENDAS ===== -->
+        <!-- ══════════════════════════════════════════════════
+             COLUNA 2 — VENDAS (serviços que prestou)
+        ═══════════════════════════════════════════════════════ -->
         <section class="hi-coluna">
             <div class="hi-coluna-header">
                 <div class="hi-col-icone hi-col-icone--dourado">
@@ -129,26 +179,76 @@ include('./includes/topo.php');
 
             <div class="hi-lista">
                 <?php
-                $servicos = request(
-                    "contratados?select=id,hora,dia,confirmado,servicos(nome,descricao,imagem)&id_prestador=eq.$id",
+                $vendas = request(
+                    "contratados"
+                        . "?select=id,hora,dia,confirmado,avaliar"
+                        . ",nome_servico,nome_cliente,preco_contrato"
+                        . ",servicos(imagem)"
+                        . ",avaliacoes(nota,comentario)"
+                        . "&id_prestador=eq.$id"
+                        . "&order=dia.desc",
                     "GET"
                 );
 
-                if (!empty($servicos) && !isset($servicos['error'])):
-                    foreach ($servicos as $s):
-                        $hora = date('H:i', strtotime($s['hora']));
-                        $dia  = date('d/m/Y', strtotime($s['dia']));
+                if (!empty($vendas) && !isset($vendas['error'])):
+                    foreach ($vendas as $v):
+                        $hora        = date('H:i',   strtotime($v['hora']));
+                        $dia         = date('d/m/Y', strtotime($v['dia']));
+                        $nomeServico = $v['nome_servico']        ?? 'Serviço removido';
+                        $nomeCliente = $v['nome_cliente']        ?? 'Cliente removido';
+                        $preco       = $v['preco_contrato']      ?? 0;
+                        $imagem      = $v['servicos']['imagem']  ?? '';
+                        $foiAvaliado = $v['avaliar'];
+                        $nota        = $v['avaliacoes'][0]['nota'] ?? null;
+                        $statusOk    = in_array($v['confirmado'], ['confirmado', 'concluido']);
                 ?>
                         <div class="hi-card">
                             <div class="hi-card-img">
-                                <img src="<?php echo htmlspecialchars($s['servicos']['imagem']) ?>" alt="<?php echo htmlspecialchars($s['servicos']['nome']) ?>">
-                                <span class="hi-card-status <?php echo $s['confirmado'] ? 'hi-status--ok' : 'hi-status--pend' ?>">
-                                    <?php echo $s['confirmado'] ? '✓ Confirmado' : '⏳ Pendente' ?>
+                                <?php if (!empty($imagem)): ?>
+                                    <img src="<?php echo htmlspecialchars($imagem) ?>"
+                                        alt="<?php echo htmlspecialchars($nomeServico) ?>">
+                                <?php else: ?>
+                                    <div class="hi-card-img-placeholder">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                            <circle cx="8.5" cy="8.5" r="1.5" />
+                                            <polyline points="21,15 16,10 5,21" />
+                                        </svg>
+                                        <span>Imagem indisponível</span>
+                                    </div>
+                                <?php endif; ?>
+
+                                <span class="hi-card-status <?php echo $statusOk ? 'hi-status--ok' : 'hi-status--pend' ?>">
+                                    <?php echo $statusOk ? '✓ Confirmado' : '⏳ Pendente' ?>
                                 </span>
+
+                                <?php if ($foiAvaliado && $nota !== null): ?>
+                                    <span class="hi-card-nota-badge">★ <?php echo $nota ?>/5</span>
+                                <?php endif; ?>
                             </div>
+
                             <div class="hi-card-info">
-                                <h3><?php echo htmlspecialchars($s['servicos']['nome']) ?></h3>
-                                <p><?php echo htmlspecialchars($s['servicos']['descricao']) ?></p>
+                                <h3><?php echo htmlspecialchars($nomeServico) ?></h3>
+
+                                <div class="hi-card-chips">
+                                    <span class="hi-chip hi-chip--cliente">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                            <circle cx="12" cy="7" r="4" />
+                                        </svg>
+                                        <?php echo htmlspecialchars($nomeCliente) ?>
+                                    </span>
+                                    <?php if ($preco > 0): ?>
+                                        <span class="hi-chip hi-chip--preco">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <line x1="12" y1="1" x2="12" y2="23" />
+                                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                            </svg>
+                                            R$ <?php echo number_format($preco, 2, ',', '.') ?>
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+
                                 <div class="hi-card-meta">
                                     <span>
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -167,13 +267,14 @@ include('./includes/topo.php');
                                         <?php echo $hora ?>
                                     </span>
                                 </div>
+
                                 <button class="hi-btn-avaliar hi-btn-avaliar--venda"
-                                    onclick="abrirAvaliar('<?php echo $s['id'] ?>', '<?php echo htmlspecialchars($s['servicos']['nome']) ?>', '<?php echo $s['servicos']['imagem'] ?>', '<?php echo $s['dia'] ?>', '<?php echo $s['hora'] ?>', '<?php echo $s['confirmado'] ?>', '<?php echo $s['id'] ?>')">
+                                    onclick="abrirModal('ver_avaliacao','<?php echo $v['id'] ?>')">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                                         <circle cx="12" cy="12" r="3" />
                                     </svg>
-                                    Ver detalhes
+                                    <?php echo $foiAvaliado ? 'Ver avaliação' : 'Ver detalhes' ?>
                                 </button>
                             </div>
                         </div>
@@ -181,12 +282,21 @@ include('./includes/topo.php');
                     endforeach;
                 else:
                     ?>
-                    <div class='aviso-vazio'>Nenhuma venda ainda</div>
+                    <div class="hi-vazio">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23" />
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                        <p>Nenhuma venda ainda</p>
+                        <a href="./anunciar.php">Anunciar serviço</a>
+                    </div>
                 <?php endif; ?>
             </div>
         </section>
 
-        <!-- ===== AVALIADOS ===== -->
+        <!-- ══════════════════════════════════════════════════
+             COLUNA 3 — AVALIADOS (já avaliados pelo cliente)
+        ═══════════════════════════════════════════════════════ -->
         <section class="hi-coluna">
             <div class="hi-coluna-header">
                 <div class="hi-col-icone hi-col-icone--estrela">
@@ -202,36 +312,98 @@ include('./includes/topo.php');
 
             <div class="hi-lista">
                 <?php
-                $servicos = request(
-                    "contratados?select=id,hora,dia,confirmado,servicos(nome,descricao,imagem),avaliacao(nota,comentario)&id_cliente=eq.$id&avaliar=eq.true",
+                $avaliados = request(
+                    "avaliacoes"
+                        . "?select=id,nota,comentario,nome_servico,nome_prestador"
+                        . ",servicos(imagem)"
+                        . ",contratados(dia,hora,preco_contrato,nome_servico,nome_prestador)"
+                        . "&id_cliente=eq.$id"
+                        . "&order=id.desc",
                     "GET"
                 );
 
-                if (!empty($servicos) && !isset($servicos['error'])):
-                    foreach ($servicos as $s):
-                        $hora  = date('H:i', strtotime($s['hora']));
-                        $dia   = date('d/m/Y', strtotime($s['dia']));
-                        $nota  = $s['avaliacao'][0]['nota'] ?? 0;
+                if (!empty($avaliados) && !isset($avaliados['error'])):
+                    foreach ($avaliados as $a):
+                        /*
+                         * Prioridade: campo direto em avaliacoes (mais seguro)
+                         * Fallback:   campo em contratados (join)
+                         * Fallback 2: texto genérico
+                         */
+                        $nomeServico = $a['nome_servico']
+                            ?? $a['contratados']['nome_servico']
+                            ?? 'Serviço removido';
+
+                        $nomePrest   = $a['nome_prestador']
+                            ?? $a['contratados']['nome_prestador']
+                            ?? 'Prestador removido';
+
+                        $nota        = $a['nota']                            ?? 1;
+                        $comentario  = $a['comentario']                      ?? '';
+                        $imagem      = $a['servicos']['imagem']              ?? '';
+                        $preco       = $a['contratados']['preco_contrato']   ?? 0;
+                        $dia         = !empty($a['contratados']['dia'])
+                            ? date('d/m/Y', strtotime($a['contratados']['dia']))
+                            : '—';
+                        $hora        = !empty($a['contratados']['hora'])
+                            ? date('H:i', strtotime($a['contratados']['hora']))
+                            : '—';
                 ?>
                         <div class="hi-card">
                             <div class="hi-card-img">
-                                <img src="<?php echo htmlspecialchars($s['servicos']['imagem']) ?>" alt="<?php echo htmlspecialchars($s['servicos']['nome']) ?>">
+                                <?php if (!empty($imagem)): ?>
+                                    <img src="<?php echo htmlspecialchars($imagem) ?>"
+                                        alt="<?php echo htmlspecialchars($nomeServico) ?>">
+                                <?php else: ?>
+                                    <div class="hi-card-img-placeholder">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                            <circle cx="8.5" cy="8.5" r="1.5" />
+                                            <polyline points="21,15 16,10 5,21" />
+                                        </svg>
+                                        <span>Imagem indisponível</span>
+                                    </div>
+                                <?php endif; ?>
+
                                 <span class="hi-card-nota">
                                     <?php for ($i = 1; $i <= 5; $i++): ?>
-                                        <svg viewBox="0 0 24 24" fill="<?php echo $i <= $nota ? 'currentColor' : 'none' ?>" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg viewBox="0 0 24 24"
+                                            fill="<?php echo $i <= $nota ? 'currentColor' : 'none' ?>"
+                                            stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
                                             <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2" />
                                         </svg>
                                     <?php endfor; ?>
                                 </span>
                             </div>
+
                             <div class="hi-card-info">
-                                <h3><?php echo htmlspecialchars($s['servicos']['nome']) ?></h3>
-                                <p><?php echo htmlspecialchars($s['servicos']['descricao']) ?></p>
-                                <?php if (!empty($s['avaliacao'][0]['comentario'])): ?>
+                                <h3><?php echo htmlspecialchars($nomeServico) ?></h3>
+
+                                <?php if (!empty($comentario) && $comentario !== 'Nenhum comentário'): ?>
                                     <blockquote class="hi-comentario">
-                                        "<?php echo htmlspecialchars($s['avaliacao'][0]['comentario']) ?>"
+                                        "<?php echo htmlspecialchars($comentario) ?>"
                                     </blockquote>
                                 <?php endif; ?>
+
+                                <div class="hi-card-chips">
+                                    <span class="hi-chip hi-chip--prest">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                            <circle cx="12" cy="7" r="4" />
+                                        </svg>
+                                        <?php echo htmlspecialchars($nomePrest) ?>
+                                    </span>
+                                    <?php if ($preco > 0): ?>
+                                        <span class="hi-chip hi-chip--preco">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <line x1="12" y1="1" x2="12" y2="23" />
+                                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                            </svg>
+                                            R$ <?php echo number_format($preco, 2, ',', '.') ?>
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+
                                 <div class="hi-card-meta">
                                     <span>
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -242,9 +414,17 @@ include('./includes/topo.php');
                                         </svg>
                                         <?php echo $dia ?>
                                     </span>
+                                    <span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <polyline points="12,6 12,12 16,14" />
+                                        </svg>
+                                        <?php echo $hora ?>
+                                    </span>
                                 </div>
+
                                 <button class="hi-btn-avaliar hi-btn-avaliar--ver"
-                                    onclick="verAvaliacao('<?php echo htmlspecialchars($s['servicos']['nome']) ?>', '<?php echo $s['servicos']['imagem'] ?>', '<?php echo addslashes($s['avaliacao'][0]['comentario'] ?? '') ?>', '<?php echo $nota ?>', '<?php echo $s['id'] ?>')">
+                                    onclick="abrirModal('ver_avaliacao','<?php echo $a['id'] ?>')">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                                         <circle cx="12" cy="12" r="3" />
@@ -257,7 +437,13 @@ include('./includes/topo.php');
                     endforeach;
                 else:
                     ?>
-                    <div class='aviso-vazio'>Nenhum serviço avaliado ainda</div>
+                    <div class="hi-vazio">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2" />
+                        </svg>
+                        <p>Nenhum serviço avaliado ainda</p>
+                        <a href="./servicos.php">Contratar um serviço</a>
+                    </div>
                 <?php endif; ?>
             </div>
         </section>

@@ -151,3 +151,29 @@ function inicializarModal() {
         };
     }
 }
+
+function previewAvatar(input) {
+    const preview = document.getElementById('avatarPreview');
+
+    if (input.files && input.files[0]) {
+        const arquivo = input.files[0];
+
+        if (!arquivo.type.match(/^image\/(jpeg|jpg|png)$/)) {
+            alert('Por favor, selecione um arquivo de imagem válido (JPG ou PNG).');
+            input.value = '';
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+
+        reader.readAsDataURL(arquivo);
+    } else {
+        preview.src = '';
+        preview.style.display = 'none';
+    }
+}

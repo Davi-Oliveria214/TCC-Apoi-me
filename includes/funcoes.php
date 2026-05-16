@@ -81,7 +81,13 @@ function cadastrar($nome, $email, $senhaHash, $codigo, $img, $tipo_usuario, $dad
 
     if ($tipo_usuario === 'sindico' && $dadosCondominio) {
         $cnpj = $dadosCondominio['cnpj'];
-        $chave = random_int(1000, 9999);
+
+        do {
+            $chave = random_int(1000, 9999);
+            $res = request("condominios?codigo=eq.{$chave}");
+
+            $codigoExiste = !empty($res) && !isset($res['error']);
+        } while ($codigoExiste);
 
         $endereco = $dadosCondominio['descricao_tipo_de_logradouro'] . ' ' .
             $dadosCondominio['logradouro'];

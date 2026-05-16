@@ -16,7 +16,7 @@ $h = $_POST['hora'];
 $obs = $_POST['observacao'];
 $idCliente = $_SESSION['id'];
 
-$dadosServico = request("servicos?select=id_prestador&id=eq.$idServico", "GET");
+$dadosServico = request("servicos?select=id_prestador,nome,preco_servico&id=eq.{$idServico}", "GET");
 $idPrestador = $dadosServico[0]['id_prestador'];
 
 if ($idPrestador == $idCliente) {
@@ -25,7 +25,7 @@ if ($idPrestador == $idCliente) {
     exit();
 }
 
-$existe = request("contratados?dia=eq.$d&hora=eq.$h&id_servico=eq.$idServico");
+$existe = request("contratados?dia=eq.$d&hora=eq.$h&id_servico=eq.{$idServico}");
 
 if (!empty($existe) && !isset($existe['error'])) {
     $_SESSION["mensagem"] = "Esse horário já foi reservado!";
@@ -33,13 +33,20 @@ if (!empty($existe) && !isset($existe['error'])) {
     exit();
 }
 
+$user = request("usuarios?id=eq.{$idCliente}&select=nome");
+$prestador = request("usuarios?id=eq.{$idPrestador}&select=nome");
+
 $dadosParaSalvar = [
     "hora" => $h,
     "dia" => $d,
     "id_servico" => $idServico,
     "id_prestador" => $idPrestador,
     "id_cliente" => $idCliente,
-    "observacao" => $obs
+    "observacao" => $obs,
+    "nome_servico" => $dadosServico[0]['nome'],
+    "nome_cliente" => $user[0]['nome'],
+    "nome_prestador" => $prestador[0]['nome'],
+    "preco_contrato" =>  $dadosServico[0]['preco_servico']
 ];
 
 $sql = request("contratados", "POST", $dadosParaSalvar);

@@ -16,27 +16,46 @@ if (empty($verificar) || isset($verificar['error'])) {
     exit;
 }
 
+$contratado = request("contratados?id_servico=eq.{$id_servico}&select=count");
+
+if ($contratado[0]['count'] > 0) {
+    $_SESSION["mensagem"] = "Este serviço possui contratações ativas. Cancele ou finalize os serviços para poder excluir.";
+    header("Location: ../anunciar.php");
+    exit;
+}
+
+if (!isset($contratado[0]['count'])) {
+    $_SESSION["mensagem"] = "Erro ao verificar contratações. Tente novamente.";
+    header("Location: ../anunciar.php");
+    exit;
+}
+
 $urlImagemSalva = $verificar[0]['imagem'];
 
 if (!empty($urlImagemSalva)) {
-    $nomeFinal = basename(parse_url($urlImagemSalva, PHP_URL_PATH));
+    $bucket = $_ENV['BALDE'];
+    $imagem = trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/$bucket/deufalt.png";
 
-    $urlStorage = trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/$bucket/$nomeFinal";
+    if ($urlImagemSalva != $imagem) {
+        $nomeFinal = basename(parse_url($urlImagemSalva, PHP_URL_PATH));
 
-    $ch = curl_init($urlStorage);
+        $urlStorage = trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/$bucket/$nomeFinal";
 
-    curl_setopt_array($ch, [
-        CURLOPT_CUSTOMREQUEST => "DELETE",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_SSL_VERIFYPEER => false,
-        CURLOPT_SSL_VERIFYHOST => false,
-        CURLOPT_HTTPHEADER => [
-            "Authorization: Bearer " . trim($_ENV['BALDE_KEY'])
-        ]
-    ]);
+        $ch = curl_init($urlStorage);
 
-    $responseStorage = curl_exec($ch);
-    $statusStorage = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_setopt_array($ch, [
+            CURLOPT_CUSTOMREQUEST => "DELETE",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer " . trim($_ENV['BALDE_KEY'])
+            ]
+        ]);
+
+        $responseStorage = curl_exec($ch);
+        $statusStorage = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    }
 }
 
 $del = request("servicos?id_prestador=eq.{$id}&id=eq.{$id_servico}", "DELETE");

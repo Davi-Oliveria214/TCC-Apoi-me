@@ -167,7 +167,7 @@
     border-bottom: 1px solid rgba(176, 130, 43, 0.2);
 }
 
-.sv-quadro-header img {
+.sv-quadro-header svg {
     width: 18px;
     height: 18px;
     stroke: var(--dourado-palido);
@@ -229,7 +229,7 @@
     flex-shrink: 0;
 }
 
-.sv-aviso-icone img {
+.sv-aviso-icone svg {
     width: 18px;
     height: 18px;
     stroke: var(--dourado-palido);
@@ -301,6 +301,10 @@
     padding: 2px 6px;
     border-radius: 4px;
     white-space: nowrap;
+}
+
+.sv-res-status::first-letter {
+    text-transform: uppercase;
 }
 
 .sv-res-status.confirmado {
@@ -406,6 +410,12 @@
     gap: 8px;
     padding: 24px 16px;
     text-align: center;
+}
+
+.sv-vazio svg {
+    width: 32px;
+    height: 32px;
+    stroke: rgba(176, 130, 43, 0.4);
 }
 
 .sv-vazio p {
@@ -622,8 +632,8 @@
 }
 
 .sv-vazio-grid svg {
-    width: 56px;
-    height: 56px;
+    width: 30px;
+    height: 30px;
     stroke: rgba(176, 130, 43, 0.3);
 }
 

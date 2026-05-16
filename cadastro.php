@@ -1,3 +1,7 @@
+<?php
+require_once './includes/funcoes.php';
+loginFeito();
+?>
 <?php include_once './includes/head.php'; ?>
 <?php include_once './includes/topo.php' ?>
 
@@ -11,7 +15,10 @@
         <div class="beneficios">
             <div class="beneficio">
                 <div class="beneficio-icone">
-                    <img src="./icon/check-circle.png" alt="Verificados" width="18" height="18">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
                 </div>
                 <div class="beneficio-txt">
                     <strong>Profissionais verificados</strong>
@@ -20,7 +27,9 @@
             </div>
             <div class="beneficio">
                 <div class="beneficio-icone">
-                    <img src="./icon/shield.png" alt="Segurança" width="18" height="18">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
                 </div>
                 <div class="beneficio-txt">
                     <strong>Contratação segura</strong>
@@ -29,7 +38,9 @@
             </div>
             <div class="beneficio">
                 <div class="beneficio-icone">
-                    <img src="./icon/zap.png" alt="Rápido" width="18" height="18">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20,6 9,17 4,12" />
+                    </svg>
                 </div>
                 <div class="beneficio-txt">
                     <strong>Simples e rápido</strong>
@@ -53,7 +64,10 @@
             <label class="tipo-opcao">
                 <input type="radio" name="tipo_visual" value="morador" checked onchange="tipoChange(this)">
                 <div class="tipo-card">
-                    <img src="./icon/user.png" alt="Morador" width="24" height="24">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9,22 9,12 15,12 15,22" />
+                    </svg>
                     <strong>Morador</strong>
                     <small>Quero contratar serviços</small>
                 </div>
@@ -61,7 +75,10 @@
             <label class="tipo-opcao">
                 <input type="radio" name="tipo_visual" value="sindico" onchange="tipoChange(this)">
                 <div class="tipo-card">
-                    <img src="./icon/build.png" alt="Síndico" width="24" height="24">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                    </svg>
                     <strong>Síndico</strong>
                     <small>Gerencio o condomínio</small>
                 </div>
