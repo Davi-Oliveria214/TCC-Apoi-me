@@ -328,3 +328,140 @@ function altBodyTexto($nome, $codigo, $link, $fluxo, $chave = '')
     $base .= "\nEste código é válido por 30 minutos.\n\n— Apoie-me Condomínios";
     return $base;
 }
+
+function enviarEmailServico($email, $nome, $nomeServico, $nomeOutro, $dia, $hora, $fluxo)
+{
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $_ENV['EMAIL_APP'];
+        $mail->Password   = $_ENV['SENHA_APP'];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
+        $mail->CharSet    = 'UTF-8';
+
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer'       => false,
+                'verify_peer_name'  => false,
+                'allow_self_signed' => true,
+            ]
+        ];
+
+        $mail->setFrom($_ENV['EMAIL_APP'], 'Apoie-me Condomínios');
+        $mail->addAddress($email, $nome);
+        $mail->isHTML(true);
+
+        $assuntos = [
+            'solicitacao_cliente'   => 'Solicitação enviada — Apoie-me',
+            'solicitacao_prestador' => 'Nova solicitação de serviço — Apoie-me',
+            'confirmacao_cliente'   => 'Serviço confirmado! — Apoie-me',
+            'cancelamento_cliente'  => 'Serviço cancelado — Apoie-me',
+        ];
+
+        $mail->Subject = $assuntos[$fluxo] ?? 'Atualização de serviço — Apoie-me';
+        $mail->Body    = _textoEmailServico($nome, $nomeServico, $nomeOutro, $dia, $hora, $fluxo);
+        $mail->AltBody = "Olá, $nome!\n\nServiço: $nomeServico\nData: $dia às $hora\n\n— Apoie-me Condomínios";
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+function _textoEmailServico($nome, $nomeServico, $nomeOutro, $dia, $hora, $fluxo)
+{
+    $nomeEsc    = htmlspecialchars($nome);
+    $servicoEsc = htmlspecialchars($nomeServico);
+    $outroEsc   = htmlspecialchars($nomeOutro);
+    $diaFmt     = date('d/m/Y', strtotime($dia));
+    $horaFmt    = substr($hora, 0, 5);
+
+    $infoBox = "
+    <table style='width:100%; border-collapse:collapse; font-size:14px; margin:20px 0;'>
+        <tr>
+            <td style='padding:10px 14px; background:#f4f0e8; border-radius:6px 6px 0 0; font-weight:bold; color:#2e4a3b; width:40%;'>Serviço</td>
+            <td style='padding:10px 14px; background:#fdfaf3; border-radius:6px 6px 0 0;'>$servicoEsc</td>
+        </tr>
+        <tr>
+            <td style='padding:10px 14px; background:#f4f0e8; font-weight:bold; color:#2e4a3b;'>Data</td>
+            <td style='padding:10px 14px; background:#fdfaf3;'>$diaFmt</td>
+        </tr>
+        <tr>
+            <td style='padding:10px 14px; background:#f4f0e8; border-radius:0 0 6px 6px; font-weight:bold; color:#2e4a3b;'>Horário</td>
+            <td style='padding:10px 14px; background:#fdfaf3; border-radius:0 0 6px 6px;'>$horaFmt</td>
+        </tr>
+    </table>";
+
+    switch ($fluxo) {
+
+        case 'solicitacao_cliente':
+            return _layout(
+                'Solicitação enviada',
+                "
+                <p style='color:#555; font-size:15px; line-height:1.7; margin:0 0 16px;'>
+                    Olá, <strong style='color:#2e4a3b;'>$nomeEsc</strong>!<br>
+                    Sua solicitação para o serviço <strong>$servicoEsc</strong> foi enviada ao prestador <strong>$outroEsc</strong>.
+                </p>
+                <p style='color:#555; font-size:15px; line-height:1.7; margin:0 0 16px;'>
+                    Aguarde a confirmação. Você receberá um e-mail assim que o prestador responder.
+                </p>
+                $infoBox
+                <p style='color:#999; font-size:13px; margin-top:24px;'>
+                    Caso precise de ajuda, entre em contato pelo site.
+                </p>
+                "
+            );
+
+        case 'solicitacao_prestador':
+            return _layout(
+                'Nova solicitação de serviço',
+                "
+                <p style='color:#555; font-size:15px; line-height:1.7; margin:0 0 16px;'>
+                    Olá, <strong style='color:#2e4a3b;'>$nomeEsc</strong>!<br>
+                    Você recebeu uma nova solicitação do cliente <strong>$outroEsc</strong> para o serviço abaixo.
+                </p>
+                $infoBox
+                <p style='color:#555; font-size:15px; line-height:1.7; margin:0;'>
+                    Acesse o painel <strong>Meus Serviços</strong> para aceitar ou cancelar esta solicitação.
+                </p>
+                "
+            );
+
+        case 'confirmacao_cliente':
+            return _layout(
+                'Serviço confirmado! ✓',
+                "
+                <p style='color:#555; font-size:15px; line-height:1.7; margin:0 0 16px;'>
+                    Olá, <strong style='color:#2e4a3b;'>$nomeEsc</strong>!<br>
+                    Boa notícia: o prestador <strong>$outroEsc</strong> confirmou sua solicitação.
+                </p>
+                $infoBox
+                <p style='color:#555; font-size:15px; line-height:1.7; margin:0;'>
+                    Lembre-se de estar disponível na data e horário combinados.
+                </p>
+                "
+            );
+
+        case 'cancelamento_cliente':
+            return _layout(
+                'Serviço cancelado',
+                "
+                <p style='color:#555; font-size:15px; line-height:1.7; margin:0 0 16px;'>
+                    Olá, <strong style='color:#2e4a3b;'>$nomeEsc</strong>!<br>
+                    Infelizmente o prestador <strong>$outroEsc</strong> não pôde atender sua solicitação.
+                </p>
+                $infoBox
+                <p style='color:#555; font-size:15px; line-height:1.7; margin:0;'>
+                    Você pode buscar outro prestador disponível no site.
+                </p>
+                "
+            );
+
+        default:
+            return _layout('Atualização de serviço', "<p>$nomeEsc, houve uma atualização no seu serviço $servicoEsc.</p>");
+    }
+}

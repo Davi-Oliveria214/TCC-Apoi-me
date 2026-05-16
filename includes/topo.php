@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../conexao.php');
 
 $pag = basename($_SERVER['PHP_SELF']);
 
-$local = ($pag == 'index.php') ? 'publico' : 'anunciar';
+$local = ($pag != 'anunciar.php') ? 'publico' : 'anunciar';
 
 if ($pag == 'cadastro.php') {
     $class = 'page-cadastro';

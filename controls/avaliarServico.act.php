@@ -23,12 +23,12 @@ if (empty($id_servico) || empty($id_cliente) || empty($id_contrato)) {
     exit;
 }
 
-$jaAvaliou = request(
+$avaliou = request(
     "avaliacoes?id_contrato=eq.$id_contrato&id_cliente=eq.$id_cliente&select=id",
     'GET'
 );
 
-if (!empty($jaAvaliou) && !isset($jaAvaliou['error'])) {
+if (!empty($avaliou) && !isset($avaliou['error'])) {
     $_SESSION['mensagem'] = 'Você já avaliou este serviço.';
     $_SESSION['tipo']     = 'aviso';
     header('Location: ../historico.php');
@@ -36,12 +36,15 @@ if (!empty($jaAvaliou) && !isset($jaAvaliou['error'])) {
 }
 
 $contrato = request(
-    "contratados?id=eq.$id_contrato&select=nome_servico,nome_prestador",
+    "contratados?id=eq.$id_contrato&select=nome_servico,nome_prestador,nome_cliente,hora,dia",
     'GET'
 );
 
 $nomeServico  = $contrato[0]['nome_servico']   ?? 'Serviço removido';
 $nomePrestador = $contrato[0]['nome_prestador'] ?? 'Prestador removido';
+$nomeCliente = $contrato[0]['nome_cliente'] ?? 'Cliente removido';
+$hora = $contrato[0]['hora'] ?? '';
+$dia = $contrato[0]['dia'] ?? '';
 
 $dadosSalvar = [
     'nota'           => $nota,
@@ -50,7 +53,10 @@ $dadosSalvar = [
     'id_cliente'     => $id_cliente,
     'id_contrato'    => $id_contrato,
     'nome_servico'   => $nomeServico,
-    'nome_prestador' => $nomePrestador
+    'nome_prestador' => $nomePrestador,
+    'nome_cliente' => $nomeCliente,
+    'horario' => $hora,
+    'data' => $dia
 ];
 
 $avaliar = request('avaliacoes', 'POST', $dadosSalvar);
@@ -81,7 +87,7 @@ if (!$status || isset($status['error'])) {
 
         request("servicos?id=eq.$id_servico", 'PATCH', [
             'nota_geral' => $media,
-            'pedidos'    => count($todasNotas),
+            'qtd_avaliados'    => count($todasNotas),
         ]);
     }
 

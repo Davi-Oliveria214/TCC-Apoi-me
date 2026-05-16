@@ -26,11 +26,9 @@ if (empty($verificar) || isset($verificar['error'])) {
     exit;
 }
 
-$data;
+$data = date("Y/m/d");
 if (!empty($_POST['data'])) {
     $data = $_POST['data'];
-} else {
-    $data = date("Y/m/d");
 }
 
 $imagem = $_POST['imagem'] ?? $verificar[0]['imagem'];
@@ -54,5 +52,5 @@ if (isset($edit['error'])) {
 }
 
 $_SESSION["mensagem"] = "Serviço editado com sucesso!!!";
-    header("Location: ../anunciar.php");
+header("Location: ../anunciar.php");
 exit;

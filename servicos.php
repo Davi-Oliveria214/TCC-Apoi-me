@@ -181,7 +181,7 @@ include('./includes/topo.php');
 
             <div class="sv-grid local-filtro" id="sv-grid">
                 <?php
-                $servicos = request("servicos?status=eq.true&select=*,categorias(nome),usuarios(nome)&order=criado.desc&limit=10", "GET");
+                $servicos = request("servicos?status=eq.true&select=*,categorias(nome),usuarios(nome)&order=criado.desc", "GET");
 
                 if (!empty($servicos) && !isset($servicos['error'])) :
                     shuffle($servicos);

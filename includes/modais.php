@@ -246,50 +246,84 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
    id = id da avaliação
    ===================================================================== */
     elseif ($tipo === 'ver_avaliacao'):
-        $avaliacao = request("avaliacoes?id=eq.$id&select=nota,comentario,servicos(nome,imagem)");
+        $avaliacao = request("avaliacoes?id=eq.$id");
+
         if (empty($avaliacao) || isset($avaliacao['error'])): ?>
             <div class="modal-content modal-alerta">
                 <div class="modal-header">
                     <h3>Erro</h3>
                 </div>
                 <div class="modal-body">
-                    <p>Avaliação não encontrada.</p>
+                    <p>Avaliação não encontrada para este serviço.</p>
                 </div>
-                <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
-            </div>
-        <?php else:
-            $av = $avaliacao[0];
-            $s  = $av['servicos'];
-        ?>
-            <div class="modal-content modal-padrao">
-                <div class="modal-header">
-                    <h3>Avaliação do Serviço</h3>
-                </div>
-
-                <div class="modal-body">
-                    <div class="mini-card-servico">
-                        <img src="<?= esc($s['imagem']) ?>" alt="<?= esc($s['nome']) ?>">
-                        <div><strong><?= esc($s['nome']) ?></strong></div>
-                    </div>
-
-                    <div style="margin:15px 0 10px; font-size:24px;">
-                        <?= notaStars((int)$av['nota']) ?>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Comentário</label>
-                        <p style="padding:10px 0; line-height:1.6;">
-                            <?= !empty($av['comentario']) ? esc($av['comentario']) : '<em style="color:var(--cinza)">Sem comentário.</em>' ?>
-                        </p>
-                    </div>
-                </div>
-
                 <div class="modal-footer">
                     <button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button>
                 </div>
             </div>
-        <?php endif; ?>
+        <?php else:
+            $av = $avaliacao[0];
+            $dataFmt = !empty($av['data']) ? date('d/m/Y', strtotime($av['data'])) : '—';
+            $horaFmt = !empty($av['horario']) ? date('H:i', strtotime($av['horario'])) : '—';
+        ?>
+            <div class="modal-content modal-padrao">
+                <div class="modal-header">
+                    <h3>Avaliação Realizada</h3>
+                </div>
 
+                <div class="modal-body">
+                    <div class="mini-card-servico" style="margin-bottom: 12px;">
+                        <div style="flex: 1;">
+                            <small style="text-transform: uppercase; letter-spacing: 1px; color: var(--dourado-palido); font-size: 10px; font-weight: 700; display: block; margin-bottom: 2px;">Serviço Contratado</small>
+                            <strong style="font-size: 16px;"><?= esc($av['nome_servico'] ?? 'Serviço') ?></strong>
+                        </div>
+                    </div>
+
+                    <div class="star-rating" style="padding: 10px 0 16px;">
+                        <div class="stars">
+                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                <span class="star <?= $i <= $av['nota'] ? 'active' : '' ?>" style="cursor: default; pointer-events: none;">★</span>
+                            <?php endfor; ?>
+                        </div>
+                        <span class="star-label">Nota dada: <?= $av['nota'] ?> de 5</span>
+                    </div>
+
+                    <div class="detalhes-lista">
+                        <div class="input-row" style="margin-bottom: 0;">
+                            <div class="detalhe-item">
+                                <label>Cliente</label>
+                                <p><?= esc($av['nome_cliente'] ?? 'Não informado') ?></p>
+                            </div>
+                            <div class="detalhe-item">
+                                <label>Prestador</label>
+                                <p><?= esc($av['nome_prestador'] ?? 'Não informado') ?></p>
+                            </div>
+                        </div>
+
+                        <div class="input-row" style="margin-bottom: 0; margin-top: 4px;">
+                            <div class="detalhe-item">
+                                <label>Data da Realização</label>
+                                <p><?= $dataFmt ?></p>
+                            </div>
+                            <div class="detalhe-item">
+                                <label>Horário</label>
+                                <p><?php echo $horaFmt ?></p>
+                            </div>
+                        </div>
+
+                        <div class="detalhe-item" style="margin-top: 8px;">
+                            <label>Comentário do Morador</label>
+                            <p style="background: rgba(255, 255, 255, 0.03); padding: 14px; border-radius: 12px; border: 1px solid rgba(176, 130, 43, 0.15); font-style: italic; color: rgba(245, 230, 192, 0.85); line-height: 1.6;">
+                                "<?= esc($av['comentario'] ?? 'Nenhum comentário preenchido.') ?>"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" onclick="fecharModais()" class="btn-modais">Voltar</button>
+                </div>
+            </div>
+        <?php endif; ?>
         <?php
 
     /* =====================================================================

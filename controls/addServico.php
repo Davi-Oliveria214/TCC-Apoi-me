@@ -4,10 +4,14 @@ exigirMetodo();
 
 require_once(__DIR__ . '/../conexao.php');
 
-if (count(array_filter($_POST)) !== count($_POST)) {
-    $_SESSION["mensagem"] = "Preencha todos os campos obrigatórios.";
-    header("Location: ../anunciar.php");
-    exit;
+$camposObrigatorios = ['nome', 'categoria', 'descricao', 'hora_inicio', 'hora_fim', 'duracao'];
+
+foreach ($camposObrigatorios as $campo) {
+    if (!isset($_POST[$campo]) || trim($_POST[$campo]) === '') {
+        $_SESSION["mensagem"] = "Preencha todos os campos obrigatórios.";
+        header("Location: ../anunciar.php");
+        exit;
+    }
 }
 
 $id = $_SESSION['id'];

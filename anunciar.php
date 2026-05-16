@@ -94,7 +94,7 @@ include('./includes/topo.php');
         ?>
                 <div class="an-card">
                     <span class="an-badge <?php echo $ativo ? 'an-badge--ativo' : 'an-badge--pausado' ?>">
-                        <?php echo $ativo ? '● Ativo' : '⏸ Pausado' ?>
+                        <?php echo $ativo ? 'Ativo' : 'Pausado' ?>
                     </span>
 
                     <div class="an-card-img">
@@ -175,6 +175,151 @@ include('./includes/topo.php');
         <?php endif; ?>
     </div>
 
+    <?php
+    $todosPedidos   = request("contratados?id_prestador=eq.{$id}&select=*&order=dia.desc,hora.desc");
+    $pendentes      = array_filter($todosPedidos ?? [], fn($c) => ($c['confirmado'] ?? '') === 'pendente');
+    $confirmados    = array_filter($todosPedidos ?? [], fn($c) => ($c['confirmado'] ?? '') === 'confirmado');
+    $concluidos     = array_filter($todosPedidos ?? [], fn($c) => ($c['confirmado'] ?? '') === 'concluido');
+    $nPendentes     = count($pendentes);
+    $nConfirmados   = count($confirmados);
+    $nConcluidos    = count($concluidos);
+    ?>
+
+    <section class="an-contratos">
+
+        <!-- Cabeçalho da seção -->
+        <div class="an-contratos-header">
+            <div class="an-contratos-titulo-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 11l3 3L22 4" />
+                    <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+                </svg>
+                <h2>Solicitações de Serviço</h2>
+            </div>
+
+            <!-- Filtros dos contratos -->
+            <ul class="an-contratos-filtros" id="contratosFiltros">
+                <li class="an-filtro js-filtro ativo" onclick="filtro(this, 'contratos', 'todos')">
+                    Todos
+                    <?php if (($nPendentes + $nConfirmados + $nConcluidos) > 0): ?>
+                        <span class="an-filtro js-filtro ativo"><?php echo $nPendentes + $nConfirmados + $nConcluidos ?></span>
+                    <?php endif; ?>
+                </li>
+                <li class="an-filtro js-filtro" onclick="filtro(this, 'contratos', 'pendente')">
+                    <span class="an-cfiltro-dot an-cfiltro-dot--pendente"></span>
+                    Pendentes
+                    <?php if ($nPendentes > 0): ?>
+                        <span class="an-cfiltro-count an-cfiltro-count--pendente"><?php echo $nPendentes ?></span>
+                    <?php endif; ?>
+                </li>
+                <li class="an-filtro js-filtro" onclick="filtro(this, 'contratos', 'confirmado')">
+                    <span class="an-cfiltro-dot an-cfiltro-dot--confirmado"></span>
+                    Confirmados
+                    <?php if ($nConfirmados > 0): ?>
+                        <span class="an-cfiltro-count an-cfiltro-count--confirmado"><?php echo $nConfirmados ?></span>
+                    <?php endif; ?>
+                </li>
+                <li class="an-filtro js-filtro" onclick="filtro(this, 'contratos', 'concluido')">
+                    <span class="an-cfiltro-dot an-cfiltro-dot--concluido"></span>
+                    Concluídos
+                    <?php if ($nConcluidos > 0): ?>
+                        <span class="an-cfiltro-count an-cfiltro-count--concluido"><?php echo $nConcluidos ?></span>
+                    <?php endif; ?>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Lista de contratos -->
+        <div class="an-contratos-lista local-filtro-contrato" id="contratosList">
+            <?php if (empty($todosPedidos) || isset($todosPedidos['error'])): ?>
+                <div class="an-contratos-vazio">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 8v4m0 4h.01" />
+                    </svg>
+                    <p>Nenhuma solicitação recebida ainda.</p>
+                </div>
+            <?php else: ?>
+                <?php foreach ($todosPedidos as $p):
+                    $diaFmt    = date('d/m/Y', strtotime($p['dia']));
+                    $horaFmt   = substr($p['hora'], 0, 5);
+                    $status    = $p['confirmado'] ?? 'pendente';
+                    $statusMap = [
+                        'pendente'   => ['label' => 'Pendente',   'cls' => 'pendente'],
+                        'confirmado' => ['label' => 'Confirmado', 'cls' => 'confirmado'],
+                        'concluido'  => ['label' => 'Concluído',  'cls' => 'concluido'],
+                        'cancelado'  => ['label' => 'Cancelado',  'cls' => 'cancelado'],
+                    ];
+                    $st = $statusMap[$status] ?? ['label' => ucfirst($status), 'cls' => 'pendente'];
+                ?>
+                    <div class="an-contrato-card" data-status="<?php echo $status ?>">
+                        <div class="an-contrato-status-bar an-contrato-status-bar--<?php echo $st['cls'] ?>"></div>
+
+                        <div class="an-contrato-body">
+                            <div class="an-contrato-info">
+                                <span class="an-contrato-nome"><?php echo htmlspecialchars($p['nome_servico']) ?></span>
+                                <span class="an-contrato-cliente">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
+                                    <?php echo htmlspecialchars($p['nome_cliente']) ?>
+                                </span>
+                                <span class="an-contrato-data">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg>
+                                    <?php echo $diaFmt ?> as <?php echo $horaFmt ?>
+                                </span>
+                                <?php if (!empty($p['observacao'])): ?>
+                                    <span class="an-contrato-obs">"<?php echo htmlspecialchars($p['observacao']) ?>"</span>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="an-contrato-direita">
+                                <span class="an-contrato-badge an-contrato-badge--<?php echo $st['cls'] ?>">
+                                    <?php echo $st['label'] ?>
+                                </span>
+
+                                <?php if ($status === 'pendente'): ?>
+                                    <div class="an-contrato-acoes">
+                                        <form method="POST" action="controls/responder_servico.act.php" style="display:inline;">
+                                            <input type="hidden" name="id_contrato" value="<?php echo $p['id'] ?>">
+                                            <input type="hidden" name="acao" value="aceitar">
+                                            <button type="submit" class="an-btn-aceitar">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="20,6 9,17 4,12" />
+                                                </svg>
+                                                Aceitar
+                                            </button>
+                                        </form>
+                                        <form method="POST" action="controls/responder_servico.act.php" style="display:inline;">
+                                            <input type="hidden" name="id_contrato" value="<?php echo $p['id'] ?>">
+                                            <input type="hidden" name="acao" value="cancelar">
+                                            <button type="submit" class="an-btn-recusar">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="18" y1="6" x2="6" y2="18" />
+                                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                                </svg>
+                                                Recusar
+                                            </button>
+                                        </form>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </section>
 </main>
+
+<script>
+
+</script>
 
 <?php include('./includes/rodape.php'); ?>

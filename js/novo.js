@@ -1,8 +1,3 @@
-function ativarFiltro(el) {
-    document.querySelectorAll('.filtro-item').forEach(f => f.classList.remove('ativo'));
-    el.classList.add('ativo');
-}
-
 const burguer = document.getElementById('burguer');
 const nav = document.querySelector('.fundo-topo');
 
@@ -106,7 +101,9 @@ function filtro(btn, local, item) {
         type: "POST",
         data: { type: local, item: item },
         success: function (resp) {
-            const filtro_local = document.querySelector('.local-filtro');
+            var filtro_local = document.querySelector('.local-filtro');
+            if (local == 'contratos') { filtro_local = document.querySelector('.local-filtro-contrato') }
+
             if (filtro_local) {
                 filtro_local.innerHTML = resp;
             }

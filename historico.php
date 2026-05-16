@@ -324,11 +324,6 @@ include('./includes/topo.php');
 
                 if (!empty($avaliados) && !isset($avaliados['error'])):
                     foreach ($avaliados as $a):
-                        /*
-                         * Prioridade: campo direto em avaliacoes (mais seguro)
-                         * Fallback:   campo em contratados (join)
-                         * Fallback 2: texto genérico
-                         */
                         $nomeServico = $a['nome_servico']
                             ?? $a['contratados']['nome_servico']
                             ?? 'Serviço removido';

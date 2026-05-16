@@ -150,7 +150,7 @@
     margin-top: 2px;
 }
 
-/* ===== FILTROS ===== */
+/* ===== FILTROS (serviços) ===== */
 .an-filtros {
     max-width: 1200px;
     margin: 20px auto 0;
@@ -188,7 +188,7 @@
 .an-grid {
     max-width: 1200px;
     margin: 24px auto;
-    padding: 0 32px 64px;
+    padding: 0 32px 32px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
@@ -381,7 +381,7 @@
     border-color: rgba(192, 57, 43, 0.6);
 }
 
-/* ===== VAZIO ===== */
+/* ===== VAZIO (grid de serviços) ===== */
 .an-vazio {
     grid-column: 1 / -1;
     display: flex;
@@ -410,6 +410,330 @@
     line-height: 1.6;
 }
 
+
+/* ══════════════════════════════════════════════════════════════════
+   SEÇÃO: CONTRATOS / SOLICITAÇÕES
+══════════════════════════════════════════════════════════════════ */
+
+.an-contratos {
+    max-width: 1200px;
+    margin: 0 auto 64px;
+    padding: 0 32px;
+}
+
+/* Cabeçalho da seção */
+.an-contratos-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1.5px solid rgba(176, 130, 43, 0.15);
+}
+
+.an-contratos-titulo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.an-contratos-titulo-wrap svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--musgo);
+    flex-shrink: 0;
+}
+
+.an-contratos-titulo-wrap h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--musgo);
+    margin: 0;
+}
+
+/* Filtros dos contratos */
+.an-contratos-filtros {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.an-cfiltro {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    background: var(--branco);
+    border: 1.5px solid rgba(176, 130, 43, 0.2);
+    border-radius: 50px;
+    color: var(--cinza);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.an-cfiltro:hover {
+    border-color: var(--musgo);
+    color: var(--musgo);
+}
+
+.an-cfiltro.ativo {
+    background: var(--musgo);
+    border-color: var(--musgo);
+    color: var(--dourado-palido);
+}
+
+.an-cfiltro.ativo .an-cfiltro-count {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--dourado-palido);
+}
+
+/* Dot colorido nos filtros */
+.an-cfiltro-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.an-cfiltro-dot--pendente   { background: #e67e22; }
+.an-cfiltro-dot--confirmado { background: #1a7a4a; }
+.an-cfiltro-dot--concluido  { background: #7f8c8d; }
+
+/* Badge de contagem nos filtros */
+.an-cfiltro-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 0 5px;
+    background: rgba(12, 58, 63, 0.08);
+    color: var(--musgo);
+}
+
+.an-cfiltro-count--pendente   { background: rgba(230, 126, 34, 0.15);  color: #c0621a; }
+.an-cfiltro-count--confirmado { background: rgba(26, 122, 74, 0.15);   color: #1a7a4a; }
+.an-cfiltro-count--concluido  { background: rgba(127, 140, 141, 0.15); color: #5d6d6e; }
+
+/* ── Lista de contratos ── */
+.an-contratos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Card de contrato */
+.an-contrato-card {
+    background: var(--branco);
+    border: 1px solid rgba(176, 130, 43, 0.15);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.an-contrato-card:hover {
+    border-color: rgba(176, 130, 43, 0.3);
+    box-shadow: 0 6px 24px rgba(12, 58, 63, 0.08);
+}
+
+/* Barra lateral colorida por status */
+.an-contrato-status-bar {
+    width: 4px;
+    flex-shrink: 0;
+    border-radius: 0;
+}
+
+.an-contrato-status-bar--pendente   { background: #e67e22; }
+.an-contrato-status-bar--confirmado { background: #1a7a4a; }
+.an-contrato-status-bar--concluido  { background: #95a5a6; }
+.an-contrato-status-bar--cancelado  { background: #c0392b; }
+
+/* Corpo do card */
+.an-contrato-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 20px;
+    flex-wrap: wrap;
+}
+
+/* Informações do contrato */
+.an-contrato-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    min-width: 0;
+}
+
+.an-contrato-nome {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--musgo);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.an-contrato-cliente,
+.an-contrato-data {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--cinza);
+}
+
+.an-contrato-cliente svg,
+.an-contrato-data svg {
+    stroke: var(--cinza);
+    flex-shrink: 0;
+}
+
+.an-contrato-obs {
+    font-size: 12px;
+    color: #aaa;
+    font-style: italic;
+    margin-top: 2px;
+}
+
+/* Direita: badge + ações */
+.an-contrato-direita {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* Badge de status no card */
+.an-contrato-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.an-contrato-badge--pendente {
+    background: rgba(230, 126, 34, 0.12);
+    color: #c0621a;
+    border: 1px solid rgba(230, 126, 34, 0.25);
+}
+
+.an-contrato-badge--confirmado {
+    background: rgba(26, 122, 74, 0.1);
+    color: #1a7a4a;
+    border: 1px solid rgba(26, 122, 74, 0.2);
+}
+
+.an-contrato-badge--concluido {
+    background: rgba(127, 140, 141, 0.1);
+    color: #5d6d6e;
+    border: 1px solid rgba(127, 140, 141, 0.2);
+}
+
+.an-contrato-badge--cancelado {
+    background: rgba(192, 57, 43, 0.1);
+    color: #c0392b;
+    border: 1px solid rgba(192, 57, 43, 0.2);
+}
+
+/* Botões Aceitar / Recusar */
+.an-contrato-acoes {
+    display: flex;
+    gap: 6px;
+}
+
+.an-btn-aceitar,
+.an-btn-recusar {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    border: 1.5px solid transparent;
+}
+
+.an-btn-aceitar svg,
+.an-btn-recusar svg {
+    width: 13px;
+    height: 13px;
+}
+
+.an-btn-aceitar {
+    background: var(--musgo);
+    color: var(--dourado-palido);
+    border-color: var(--musgo);
+}
+
+.an-btn-aceitar svg { stroke: var(--dourado-palido); }
+
+.an-btn-aceitar:hover {
+    background: var(--musgo-medio);
+    box-shadow: 0 4px 12px rgba(12, 58, 63, 0.25);
+}
+
+.an-btn-recusar {
+    background: transparent;
+    color: #c0392b;
+    border-color: rgba(192, 57, 43, 0.35);
+}
+
+.an-btn-recusar svg { stroke: #c0392b; }
+
+.an-btn-recusar:hover {
+    background: rgba(192, 57, 43, 0.06);
+    border-color: #c0392b;
+}
+
+/* Vazio da seção contratos */
+.an-contratos-vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 60px 20px;
+    text-align: center;
+    border: 1.5px dashed rgba(176, 130, 43, 0.2);
+    border-radius: 14px;
+}
+
+.an-contratos-vazio svg {
+    width: 48px;
+    height: 48px;
+    stroke: rgba(176, 130, 43, 0.3);
+}
+
+.an-contratos-vazio p {
+    font-size: 14px;
+    color: var(--cinza);
+}
+
+
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 768px) {
     .an-hero {
@@ -430,7 +754,29 @@
     }
 
     .an-grid {
-        padding: 0 16px 48px;
+        padding: 0 16px 32px;
         grid-template-columns: 1fr;
+    }
+
+    .an-contratos {
+        padding: 0 16px 48px;
+    }
+
+    .an-contratos-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .an-contrato-body {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .an-contrato-direita {
+        align-items: flex-start;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
     }
 }
