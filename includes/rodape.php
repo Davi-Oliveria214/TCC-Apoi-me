@@ -5,7 +5,7 @@
     <div class="footer-inner">
         <div class="footer-top">
             <div class="footer-brand">
-                <a class="logo" href="#">
+                <a class="logo" href="../index.php">
                     <div class="logo-marca">A</div>
                     <span class="logo-texto">Apoie.me</span>
                 </a>
@@ -17,8 +17,6 @@
                 <ul>
                     <li><a href="../sobre.php">Sobre nós</a></li>
                     <li><a href="#">Parceiros</a></li>
-                    <li><a href="#">Política de Privacidade</a></li>
-
                 </ul>
             </div>
 
@@ -26,8 +24,7 @@
                 <h4>Atendimento</h4>
                 <ul>
                     <li><a href="../contato.php">Fale conosco</a></li>
-                    <li><a href="#">apoie.me10@gmail.com</a></li>
-                    <li><a href="#">(11) 11111-1111</a></li>
+                    <li><a href="mailto:apoie.me10@gmail.com">apoie.me10@gmail.com</a></li>
                 </ul>
             </div>
 
@@ -36,7 +33,7 @@
                 <ul>
                     <li><a href="../usuario.php">Minha conta</a></li>
                     <li><a href="../chat.php">Chat Online</a></li>
-                    <li><a href="../cadastro.php">Cadastre-se</a></li>
+                    <?php if (empty($_SESSION['id'])) : ?><li><a href="../cadastro.php">Cadastre-se</a></li><?php endif; ?>
                     <li><a href="<?php echo empty($_SESSION['id']) ? './util/setAviso.php' : './anunciar.php' ?>" class="btn-secundario">Anunciar serviço</a></li>
                 </ul>
             </div>
