@@ -85,9 +85,10 @@ loginFeito();
             </label>
         </div>
 
-        <form action="./controls/cadastro.act.php" method="post">
+        <form action="./controls/auth.act.php" method="post">
 
             <input type="hidden" name="tipo_usuario" id="tipo_usuario_hidden" value="morador">
+            <input type="hidden" name="acao" value="cadastro">
 
             <div class="campos-grid">
 

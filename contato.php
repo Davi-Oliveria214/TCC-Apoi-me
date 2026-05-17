@@ -116,7 +116,8 @@ include('./includes/topo.php');
                 <button class="tipo-pill" onclick="selecionarTipo(this)">Outro</button>
             </div>
 
-            <form action="./controls/feedback.php" method="post" id="form-contato">
+            <form action="./controls/auth.act.php" method="post" id="form-contato">
+                <input type="hidden" name="acao" value="contato">
 
                 <div class="campos-2col">
                     <div class="campo">

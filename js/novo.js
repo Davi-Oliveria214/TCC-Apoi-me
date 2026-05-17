@@ -1,37 +1,109 @@
+/* ── Burger menu ─────────────────────────────────────────── */
 const burguer = document.getElementById('burguer');
 const nav = document.querySelector('.fundo-topo');
 
-burguer.addEventListener('click', () => {
-    nav.classList.toggle('ativo');
-    burguer.classList.toggle('abrir');
+if (burguer && nav) {
+    burguer.addEventListener('click', () => {
+        nav.classList.toggle('ativo');
+        burguer.classList.toggle('abrir');
+    });
+}
+
+/* ── Scroll do topo ──────────────────────────────────────── */
+const topo = document.getElementById('topo');
+if (topo) {
+    window.addEventListener('scroll', () => {
+        topo.toggleAttribute('topo-fixo', window.scrollY > 80);
+    });
+}
+
+/* ── Ajuste de banner ────────────────────────────────────── */
+function ajustarTamanho() {
+    const img = document.getElementById('banner');
+    const inicial = document.getElementById('inicial');
+    const userIcon = document.querySelector('.user-icon');
+
+    if (img && inicial) {
+        inicial.style.minHeight = `${img.offsetHeight - (topo?.offsetHeight ?? 0)}px`;
+    }
+
+    if (userIcon && topo) {
+        topo.classList.add('user-cabecalho');
+        if (topo.offsetWidth > 570) {
+            userIcon.style.marginTop = `${topo.offsetHeight / 2}px`;
+        } else {
+            userIcon.style.marginTop = '0';
+        }
+    }
+}
+
+window.addEventListener('resize', ajustarTamanho);
+window.addEventListener('load', ajustarTamanho);
+
+/* ── Loading em submits com .ativar-load ─────────────────── */
+document.addEventListener('submit', (e) => {
+    if (e.target.classList.contains('ativar-load')) load(true);
 });
 
+function load(abrir) {
+    const body = document.getElementById('body-load');
+    if (!body) return;
+
+    if (abrir) {
+        $.ajax({
+            url: './util/load.php',
+            success: (res) => { body.innerHTML = res; $(body).fadeIn(); }
+        });
+    } else {
+        $(body).fadeOut(400, () => { body.innerHTML = ''; });
+    }
+}
+
+/* ── Toggle de visibilidade de senha ─────────────────────── */
+/**
+ * Alterna type=password/text e troca o ícone do botão olho.
+ * @param {string} inputId  id do <input type="password">
+ * @param {HTMLElement} btn botão que foi clicado (contém ou é próximo ao <img>)
+ */
+function toggleSenha(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const olho = document.getElementById('olho-' + inputId);
+    if (!input) return;
+
+    const visivel = input.type === 'password';
+    input.type = visivel ? 'text' : 'password';
+
+    if (olho) {
+        olho.src = visivel
+            ? './icon/visibility_lock.png'
+            : './icon/visibility.png';
+    }
+}
+
+/* ── Cadastro: tipo de usuário ───────────────────────────── */
 function tipoChange(radio) {
     const cnpj = document.getElementById('campoCnpj');
     const cnpjInput = document.getElementById('cnpjId');
     const hidden = document.getElementById('tipo_usuario_hidden');
-    hidden.value = radio.value;
+
+    if (hidden) hidden.value = radio.value;
+
     if (radio.value === 'sindico') {
-        cnpj.classList.add('visivel');
-        cnpjInput.required = true;
+        cnpj?.classList.add('visivel');
+        if (cnpjInput) cnpjInput.required = true;
     } else {
-        cnpj.classList.remove('visivel');
-        cnpjInput.required = false;
+        cnpj?.classList.remove('visivel');
+        if (cnpjInput) cnpjInput.required = false;
     }
 }
 
-function toggleSenha(id, btn) {
-    const input = document.getElementById(id);
-    const olho = document.getElementById('olho-' + id);
-    const visible = input.type === 'password';
-    input.type = visible ? 'text' : 'password';
-    olho.src = !visible ? './icon/visibility.png' : './icon/visibility_lock.png';
-}
-
+/* ── Força da senha (cadastro / recuperação) ─────────────── */
 function checarForca(senha) {
-    const segs = [document.getElementById('f1'), document.getElementById('f2'), document.getElementById('f3'), document.getElementById('f4')];
+    const segs = ['f1', 'f2', 'f3', 'f4'].map(id => document.getElementById(id));
     const txt = document.getElementById('forca-txt');
-    segs.forEach(s => s.style.background = 'rgba(176,124,32,0.15)');
+    if (!segs[0]) return;
+
+    segs.forEach(s => s && (s.style.background = 'rgba(176,124,32,0.15)'));
 
     let forca = 0;
     if (senha.length >= 8) forca++;
@@ -41,19 +113,24 @@ function checarForca(senha) {
 
     const cores = ['#c0392b', '#e67e22', '#f1c40f', '#1a7a4a'];
     const labels = ['Muito fraca', 'Fraca', 'Boa', 'Forte'];
-    for (let i = 0; i < forca; i++) segs[i].style.background = cores[forca - 1];
-    txt.textContent = senha.length ? labels[forca - 1] || '' : '';
-    txt.style.color = forca > 0 ? cores[forca - 1] : '#9a9a9a';
+
+    for (let i = 0; i < forca; i++) {
+        if (segs[i]) segs[i].style.background = cores[forca - 1];
+    }
+    if (txt) {
+        txt.textContent = senha.length ? (labels[forca - 1] ?? '') : '';
+        txt.style.color = forca > 0 ? cores[forca - 1] : '#9a9a9a';
+    }
 }
 
+/* ── Verificar coincidência de senha (cadastro) ──────────── */
 function verificarSenha() {
-    const s1 = document.getElementById('idSenha').value;
-    const s2 = document.getElementById('idRptSenha').value;
+    const s1 = document.getElementById('idSenha')?.value ?? '';
+    const s2 = document.getElementById('idRptSenha')?.value ?? '';
     const span = document.getElementById('senha-match');
-    if (!s2) {
-        span.textContent = '';
-        return;
-    }
+    if (!span) return;
+
+    if (!s2) { span.textContent = ''; return; }
     if (s1 === s2) {
         span.textContent = '✓ Senhas coincidem';
         span.style.color = '#1a7a4a';
@@ -63,84 +140,121 @@ function verificarSenha() {
     }
 }
 
+/* ── Força da senha na tela verificar_acesso ─────────────── */
+function vaForca(senha) {
+    const segs = ['vaf1', 'vaf2', 'vaf3', 'vaf4'].map(id => document.getElementById(id));
+    const txt = document.getElementById('va-forca-txt');
+    if (!segs[0]) return;
+
+    segs.forEach(s => s && (s.style.background = 'rgba(176,124,32,0.15)'));
+
+    let f = 0;
+    if (senha.length >= 8) f++;
+    if (/[A-Z]/.test(senha)) f++;
+    if (/[0-9]/.test(senha)) f++;
+    if (/[^A-Za-z0-9]/.test(senha)) f++;
+
+    const cores = ['#c0392b', '#e67e22', '#f1c40f', '#1a7a4a'];
+    const labels = ['Muito fraca', 'Fraca', 'Boa', 'Forte'];
+
+    for (let i = 0; i < f; i++) {
+        if (segs[i]) segs[i].style.background = cores[f - 1];
+    }
+    if (txt) {
+        txt.textContent = senha.length ? (labels[f - 1] ?? '') : '';
+        txt.style.color = f > 0 ? cores[f - 1] : '#9a9a9a';
+    }
+}
+
+/* ── Verificar senha na tela verificar_acesso ────────────── */
+function vaVerificarSenha() {
+    const s1 = document.getElementById('va-senha')?.value ?? '';
+    const s2 = document.getElementById('va-rpt-senha')?.value ?? '';
+    const txt = document.getElementById('va-match-txt');
+    const btn = document.getElementById('va-btn-salvar');
+
+    const ok = s1.length >= 8 && s1 === s2;
+
+    if (txt) {
+        if (!s2) { txt.textContent = ''; }
+        else if (ok) {
+            txt.textContent = '✓ Senhas coincidem';
+            txt.style.color = '#1a7a4a';
+        } else {
+            txt.textContent = s1.length < 8 ? 'Mínimo 8 caracteres' : '✗ Senhas não coincidem';
+            txt.style.color = '#c0392b';
+        }
+    }
+    if (btn) btn.disabled = !ok;
+}
+
+/* ── Tipo de feedback / contato ──────────────────────────── */
 function selecionarTipo(btn) {
     document.querySelectorAll('.tipo-pill').forEach(p => p.classList.remove('ativo'));
     btn.classList.add('ativo');
-    document.getElementById('tipo_feedback').value = btn.textContent;
+    const inp = document.getElementById('tipo_feedback');
+    if (inp) inp.value = btn.textContent;
 }
 
 function atualizarContador() {
     const t = document.getElementById('comentarios');
-    document.getElementById('cont').textContent = t.value.length;
+    const c = document.getElementById('cont');
+    if (t && c) c.textContent = t.value.length;
 }
 
+/* ── FAQ ─────────────────────────────────────────────────── */
 function toggleFaq(item) {
     const aberto = item.classList.contains('aberto');
     document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('aberto'));
     if (!aberto) item.classList.add('aberto');
 }
 
-function enviarForm(e) {
-    e.preventDefault();
-    const btn = document.getElementById('btn-enviar');
-    btn.textContent = 'Enviando…';
-    btn.disabled = true;
-
-    setTimeout(() => {
-        document.getElementById('form-area').style.display = 'none';
-        document.getElementById('sucesso').style.display = 'block';
-    }, 1200);
-}
-
+/* ── Filtro de cards ─────────────────────────────────────── */
 function filtro(btn, local, item) {
     $('.js-filtro').removeClass('ativo');
     $(btn).addClass('ativo');
 
     $.ajax({
-        url: "./util/filtro.php",
-        type: "POST",
-        data: { type: local, item: item },
-        success: function (resp) {
-            var filtro_local = document.querySelector('.local-filtro');
-            if (local == 'contratos') { filtro_local = document.querySelector('.local-filtro-contrato') }
-
-            if (filtro_local) {
-                filtro_local.innerHTML = resp;
-            }
-            gridFiltro()
-        },
-        error: function () {
-            console.error("Erro ao carregar o filtro.");
+        url: './util/filtro.php',
+        type: 'POST',
+        data: { type: local, item },
+        success: (resp) => {
+            const sel = local === 'contratos'
+                ? '.local-filtro-contrato'
+                : '.local-filtro';
+            const el = document.querySelector(sel);
+            if (el) { el.innerHTML = resp; gridFiltro(); }
         }
     });
 }
 
-// Barra de pesquisa
 function pesquisa(pagina, valor) {
     $.ajax({
-        url: "./includes/pesquisa.php",
-        type: "GET",
-        data: { pagina: pagina, pesquisa: valor },
-        success: function (resp) {
-            const resultado = document.querySelector(".local-filtro");
-            if (resultado) {
-                resultado.innerHTML = resp;
-            }
-            gridFiltro()
+        url: './includes/pesquisa.php',
+        type: 'GET',
+        data: { pagina, pesquisa: valor },
+        success: (resp) => {
+            const el = document.querySelector('.local-filtro');
+            if (el) { el.innerHTML = resp; gridFiltro(); }
         }
     });
 }
 
 function gridFiltro() {
     const container = document.querySelector('.local-filtro');
-
-    if (container) {
-        const temAviso = container.querySelector('.aviso-vazio');
-
-        if (temAviso) {
-            container.style.display = 'flex';
-        } else {
-            container.style.display = 'grid';
-        }
-    }
+    if (!container) return;
+    container.style.display = container.querySelector('.aviso-vazio') ? 'flex' : 'grid';
 }
+
+/* ── Preview de imagem genérica (fora de modal) ──────────── */
+document.addEventListener('change', (e) => {
+    if (!e.target.classList.contains('input-imagem')) return;
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+        const preview = e.target.closest('.input-group')?.querySelector('.preview-imagem');
+        if (preview) preview.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+});

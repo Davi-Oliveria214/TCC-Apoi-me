@@ -12,8 +12,8 @@ if (empty($_POST['id_servico']) || empty($_POST['data']) || empty($_POST['hora']
 }
 
 $idServico = $_POST['id_servico'];
-$d  = $_POST['data'];
-$h  = $_POST['hora'];
+$d = $_POST['data'];
+$h = $_POST['hora'];
 $obs = $_POST['observacao'];
 $idCliente = $_SESSION['id'];
 
@@ -48,7 +48,7 @@ $dadosParaSalvar = [
     "nome_cliente"   => $user[0]['nome'],
     "nome_prestador" => $prestador[0]['nome'],
     "preco_contrato" => $dadosServico[0]['preco_servico'],
-    "status"         => "pendente"   // novo campo de status
+    "confirmado" => "pendente"  
 ];
 
 $sql = request("contratados", "POST", $dadosParaSalvar);

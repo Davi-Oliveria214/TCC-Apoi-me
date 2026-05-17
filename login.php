@@ -30,7 +30,8 @@ loginFeito();
             <p>Acesse para contratar ou gerenciar seus serviços no condomínio.</p>
         </div>
 
-        <form action="./controls/login.act.php" method="post">
+        <form action="./controls/auth.act.php" method="post">
+            <input type="hidden" name="acao" value="login">
 
             <div class="campo">
                 <label for="idChave">Chave de acesso</label>

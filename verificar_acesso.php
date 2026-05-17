@@ -246,10 +246,10 @@ include './includes/topo.php';
                             </svg>
                             <input type="password" name="senha" id="va-senha" minlength="8"
                                 onkeydown="if(event.key===' ')event.preventDefault()"
-                                oninput="verificarSenha(); checarForca(this.value)"
+                                oninput="vaVerificarSenha(); vaForca(this.value)"
                                 placeholder="Mínimo 8 caracteres" required autocomplete="new-password">
-                            <button type="button" class="va-olho" onclick="toggleSenha('olho-senha', this)" aria-label="Mostrar senha">
-                                <img id="olho-senha" src="./icon/visibility.png" alt="Mostrar">
+                            <button type="button" class="va-olho" onclick="toggleSenha('va-senha', this)" aria-label="Mostrar senha">
+                                <img id="olho-va-senha" src="./icon/visibility.png" alt="Mostrar">
                             </button>
                         </div>
 
@@ -271,16 +271,16 @@ include './includes/topo.php';
                             </svg>
                             <input type="password" name="rpt_senha" id="va-rpt-senha" minlength="8"
                                 onkeydown="if(event.key===' ')event.preventDefault()"
-                                oninput="checarForca(this.value)"
+                                oninput="vaVerificarSenha()"
                                 placeholder="Repita a senha" required autocomplete="new-password">
-                            <button type="button" class="va-olho" onclick="toggleSenha('olho-rpt-senha', this)" aria-label="Mostrar senha">
-                                <img id="olho-rpt-senha" src="./icon/visibility.png" alt="Mostrar">
+                            <button type="button" class="va-olho" onclick="toggleSenha('va-rpt-senha', this)" aria-label="Mostrar senha">
+                                <img id="olho-va-rpt-senha" src="./icon/visibility.png" alt="Mostrar">
                             </button>
                         </div>
                         <span class="va-match-txt" id="va-match-txt"></span>
                     </div>
 
-                    <button type="submit" class="va-btn-principal">
+                    <button type="submit" class="va-btn-principal" id="va-btn-salvar">
                         Salvar nova senha
                     </button>
 
@@ -373,31 +373,4 @@ include './includes/topo.php';
             }, 1000);
         }
     })();
-
-    function vaVerificarSenha() {
-        const s1El = document.getElementById('va-senha');
-        const s2El = document.getElementById('va-rpt-senha');
-        const matchTxt = document.getElementById('va-match-txt');
-        if (!s1El || !s2El) return;
-
-        const s1 = s1El.value;
-        const s2 = s2El.value;
-
-        if (!s2) {
-            if (matchTxt) matchTxt.textContent = '';
-            return;
-        }
-
-        if (s1 === s2) {
-            if (matchTxt) {
-                matchTxt.textContent = '✓ Senhas coincidem';
-                matchTxt.style.color = '#1a7a4a';
-            }
-        } else {
-            if (matchTxt) {
-                matchTxt.textContent = '✗ Senhas não coincidem';
-                matchTxt.style.color = '#c0392b';
-            }
-        }
-    }
 </script>

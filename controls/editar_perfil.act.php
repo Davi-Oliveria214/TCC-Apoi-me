@@ -35,26 +35,40 @@ switch ($tipo) {
             header("Location: ../usuario.php");
             exit;
         }
-        $email = request("usuarios?id=eq.{$id_usuario}&select=email");
 
-        $codigo = random_int(100000, 999999);
-        $enviado = enviarEmail($email[0]['email'], '', $codigo, 'alterar_email', '', $valor);
+        $userAtual = request("usuarios?id=eq.{$id_usuario}&select=nome,email");
 
-        if (!$enviado) {
-            $_SESSION["mensagem"] = "Erro ao enviar código de verificação para o novo email";
+        if (empty($userAtual) || isset($userAtual['error'])) {
+            $_SESSION["mensagem"] = "Erro ao buscar dados do usuário.";
             header("Location: ../usuario.php");
             exit;
-        } else {
-            $agora = date('Y-m-d H:i:sO');
-            $dados = [
-                "codigo_verificacao" => $codigo,
-                "codigo_criado_em" => $agora
-            ];
-            request("usuarios?id=eq.{$id_usuario}", "PATCH", $dados);
-            header("Location: ../verificar_acesso.php?etapa=aviso");
+        }
+
+        $emailAtual = $userAtual[0]['email'];
+        $nomeAtual  = $userAtual[0]['nome'];
+
+        $codigo  = random_int(100000, 999999);
+        $enviado = enviarEmail($emailAtual, $nomeAtual, $codigo, 'alterar_email', '', $valor);
+
+        if (!$enviado) {
+            $_SESSION["mensagem"] = "Erro ao enviar código de verificação. Tente novamente.";
+            header("Location: ../usuario.php");
             exit;
         }
-        break;
+
+        $agora = date('Y-m-d H:i:sO');
+        request("usuarios?id=eq.{$id_usuario}", "PATCH", [
+            "codigo_verificacao" => $codigo,
+            "codigo_criado_em"   => $agora,
+        ]);
+
+        /* Guarda contexto na sessão para verificar.act.php usar */
+        $_SESSION['email_verificar'] = $emailAtual;
+        $_SESSION['tipo_codigo']     = 'alterar_email';
+        $_SESSION['novo_email']      = $valor;
+
+        header("Location: ../verificar_acesso.php?etapa=aviso");
+        exit;
 
     case 'senha':
         $senha_atual = $_POST['senha_atual'] ?? '';
