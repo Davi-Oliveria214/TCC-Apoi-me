@@ -7,6 +7,7 @@ $resp = $_POST['item'] ?? 0;
 $tipo = $_POST['type'] ?? 'servicos';
 
 if ($tipo === "servicos") :
+    $id = $_SESSION['id'] ?? null;
     if ($resp == 0) {
         $sql = request("servicos?status=eq.true&select=*,categorias(nome),usuarios(nome)", "GET");
     } else {
@@ -182,13 +183,13 @@ elseif ($tipo === 'contratos'):
     $id = $_SESSION['id'];
 
     $sql = "";
-    if ($resp == 'todos') {
+    if ($resp === 'todos') {
         $sql = request("contratados?id_prestador=eq.{$id}&select=*&order=dia.desc,hora.desc");
     } else {
         $sql = request("contratados?id_prestador=eq.{$id}&confirmado=eq.{$resp}&select=*&order=dia.desc,hora.desc");
     }
 
-    if (empty($todosPedidos) || isset($todosPedidos['error'])): ?>
+    if (empty($sql) || isset($sql['error'])): ?>
         <div class="an-contratos-vazio">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10" />
@@ -197,7 +198,7 @@ elseif ($tipo === 'contratos'):
             <p>Nenhuma solicitação recebida ainda.</p>
         </div>
     <?php else: ?>
-        <?php foreach ($todosPedidos as $p):
+        <?php foreach ($sql as $p):
             $diaFmt    = date('d/m/Y', strtotime($p['dia']));
             $horaFmt   = substr($p['hora'], 0, 5);
             $status    = $p['confirmado'] ?? 'pendente';
@@ -255,13 +256,30 @@ elseif ($tipo === 'contratos'):
                                 </form>
                                 <form method="POST" action="controls/servico.act.php" style="display:inline;">
                                     <input type="hidden" name="id_contrato" value="<?php echo $p['id'] ?>">
-                                    <input type="hidden" name="acao" value="cancelar">
+                                    <input type="hidden" name="acao" value="recusar">
                                     <button type="submit" class="an-btn-recusar">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                             <line x1="18" y1="6" x2="6" y2="18" />
                                             <line x1="6" y1="6" x2="18" y2="18" />
                                         </svg>
                                         Recusar
+                                    </button>
+                                </form>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($status === 'confirmado'): ?>
+                            <div class="an-contrato-acoes">
+                                <form method="POST" action="controls/servico.act.php" style="display:inline;"
+                                    onsubmit="return confirm('Tem certeza que deseja cancelar este serviço confirmado? O cliente será notificado por e-mail.')">
+                                    <input type="hidden" name="resp" value="<?php echo $p['id'] ?>">
+                                    <input type="hidden" name="acao" value="cancelar">
+                                    <input type="hidden" name="origem" value="prestador">
+                                    <button type="submit" class="an-btn-recusar">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18" />
+                                            <line x1="6" y1="6" x2="18" y2="18" />
+                                        </svg>
+                                        Cancelar
                                     </button>
                                 </form>
                             </div>

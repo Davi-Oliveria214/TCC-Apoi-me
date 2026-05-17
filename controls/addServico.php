@@ -15,7 +15,7 @@ foreach ($camposObrigatorios as $campo) {
 }
 
 $id = $_SESSION['id'];
-$codigo = $_SESSION['codigo'];
+$codigo = $_SESSION['condominio_id'];
 $nome = $_POST['nome'];
 $categoria = $_POST['categoria'];
 $descricao = $_POST['descricao'];

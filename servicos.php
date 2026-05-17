@@ -53,7 +53,7 @@ include('./includes/topo.php');
                 </div>
                 <div class="sv-quadro-corpo">
                     <?php
-                    $avisos = request("avisos?codigo=eq.{$_SESSION['codigo']}");
+                    $avisos = request("avisos?codigo=eq.{$_SESSION['condominio_id']}");
                     if (!empty($avisos) && !isset($avisos['error'])):
                         foreach ($avisos as $aviso):
                             $cridado = date("d/m/Y", strtotime($aviso['criado_em']));
@@ -107,7 +107,7 @@ include('./includes/topo.php');
                 </div>
                 <div class="sv-quadro-corpo sv-reservados-lista">
                     <?php
-                    $endpoint = "contratados?id_cliente=eq.$id&select=*,servicos(nome,descricao,imagem,id_prestador,nota_geral)status=eq.true&order=dia.desc";
+                    $endpoint = "contratados?id_cliente=eq.$id&select=*,servicos(nome,descricao,imagem,id_prestador,nota_geral)&confirmado=neq.cancelado&order=dia.desc";
                     $sql = request($endpoint, "GET");
 
                     if (!empty($sql) && !isset($sql['error'])):

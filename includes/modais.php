@@ -136,9 +136,11 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
 
         $origem = ($contrato[0]['id_prestador'] == $id) ? "prestador" : "cliente";
     ?>
-        <form action="../controls/cancelar.php" method="post" class="modal-content modal-alerta ativar-load">
+        <form action="../controls/servico.act.php" method="post" class="modal-content modal-alerta ativar-load">
 
             <input type="hidden" name="resp" value="<?php echo $id ?>">
+            <input type="hidden" name="acao" value="cancelar">
+            <input type="hidden" name="origem" value="<?php echo $origem ?>">
 
             <div class="modal-header">
                 <h3>Cancelar agendamento?</h3>
@@ -161,8 +163,9 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
    id = id do serviço
    ===================================================================== */
     elseif ($tipo === 'excluir'): ?>
-        <form action="../controls/excluir.php" method="post" class="modal-content modal-alerta ativar-load">
+        <form action="../controls/servico.act.php" method="post" class="modal-content modal-alerta ativar-load">
             <input type="hidden" name="id_servico" value="<?php echo $id ?>">
+            <input type="hidden" name="acao" value="excluir">
 
             <div class="modal-header">
                 <h3>Excluir serviço?</h3>
@@ -938,8 +941,9 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
     </div>
 
     <!-- ETAPA 2: digitar código -->
-    <form action="../controls/deletarConta.act.php" method="post"
+    <form action="../controls/conta.php" method="post"
         class="modal-content modal-alerta" id="del-etapa-2" style="display:none;">
+        <input type="hidden" name="acao" value="confirmar_exclusao">
 
         <div class="modal-header">
             <h3>Confirmar exclusão</h3>
@@ -990,8 +994,45 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
         </div>
     </form>
 
-<?php
+<?php elseif ($tipo === 'confirmar_cancelamento'):
+        $dados_modal = explode('|', $id);
+        $id_contrato = $dados_modal[0] ?? '';
+        $origem = $dados_modal[1] ?? 'prestador';
+?>
+    <div class="modal-content modal-alerta" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3>Atenção</h3>
+        </div>
 
+        <div class="modal-body">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#f5a898" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 48px; height: 48px; margin: 0 auto;">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+            </div>
+
+            <p style="text-align: center; color: #f5a898; font-size: 15px;">
+                Tem certeza que deseja cancelar este serviço confirmado?
+            </p>
+            <p style="text-align: center; color: rgba(245, 230, 192, 0.6); font-size: 13px; margin-top: 8px;">
+                O cliente será notificado automaticamente por e-mail sobre este cancelamento. Essa ação não pode ser desfeita.
+            </p>
+        </div>
+
+        <div class="modal-footer">
+            <form method="POST" action="./controls/servico.act.php" class="ativar-load" style="width: 100%;">
+                <input type="hidden" name="resp" value="<?php echo htmlspecialchars($id_contrato) ?>">
+                <input type="hidden" name="acao" value="cancelar">
+                <input type="hidden" name="origem" value="<?php echo htmlspecialchars($origem) ?>">
+
+                <button type="submit" class="btn-modais" style="background: #e07b6a; color: #fff; margin-bottom: 8px;">Sim, Cancelar Serviço</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec" style="border-color: rgba(245,230,192,0.15);">Não, Voltar</button>
+            </form>
+        </div>
+    </div>
+<?php
     else: ?>
     <div class="modal-content modal-alerta">
         <div class="modal-header">

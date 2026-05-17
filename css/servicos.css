@@ -105,7 +105,7 @@
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s;
-    
+
 }
 
 .sv-filtro:hover {
@@ -369,7 +369,7 @@
     cursor: pointer;
     transition: all 0.2s;
     text-decoration: none;
-    
+
 }
 
 .sv-btn-detalhe {
@@ -551,7 +551,7 @@
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
-    
+
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -685,5 +685,289 @@
 @media (max-width: 480px) {
     .sv-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* ===================================================
+   FILTROS DA PÁGINA (filtros-section / filtro-item)
+   =================================================== */
+.filtros-section {
+    background: rgba(12, 58, 63, 0.96);
+    border-bottom: 1px solid rgba(176, 130, 43, 0.18);
+    position: sticky;
+    top: 72px;
+    z-index: 90;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.filtros-section::-webkit-scrollbar {
+    display: none;
+}
+
+.filtros-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    padding: 0 24px;
+    list-style: none;
+}
+
+.filtro-item {
+    padding: 16px 20px;
+    background: none;
+    border: none;
+    border-bottom: 2.5px solid transparent;
+    color: rgba(245, 230, 192, 0.55);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.filtro-item:hover {
+    color: var(--dourado-palido);
+    background: rgba(212, 168, 75, 0.06);
+}
+
+.filtro-item.ativo {
+    color: var(--dourado-palido);
+    border-bottom-color: var(--dourado);
+    font-weight: 600;
+}
+
+/* ===================================================
+   CARD DE SERVIÇO (card-servico)
+   =================================================== */
+.card-servico {
+    background: var(--branco);
+    border-radius: 18px;
+    border: 1px solid rgba(176, 130, 43, 0.14);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s;
+}
+
+.card-servico:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(12, 58, 63, 0.12);
+    border-color: rgba(176, 130, 43, 0.35);
+}
+
+/* Imagem */
+.card-img-wrap {
+    height: 170px;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+    filter: brightness(0.92);
+}
+
+.card-servico:hover .card-img-wrap img {
+    transform: scale(1.05);
+    filter: brightness(1);
+}
+
+.card-categoria {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(12, 58, 63, 0.82);
+    color: var(--dourado-palido);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
+}
+
+.card-avaliacao {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(176, 130, 43, 0.88);
+    color: var(--musgo);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    backdrop-filter: blur(4px);
+}
+
+.card-avaliacao::before {
+    content: "★";
+    font-size: 10px;
+}
+
+/* Corpo */
+.card-corpo {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-titulo {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--musgo);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-desc {
+    font-size: 13px;
+    color: var(--cinza);
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+}
+
+/* Info: horário + preço */
+.card-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid rgba(176, 130, 43, 0.1);
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.card-horario {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--musgo-medio);
+    font-weight: 600;
+}
+
+.card-horario svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--dourado);
+}
+
+.card-preco {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--musgo);
+}
+
+.card-preco span {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--cinza);
+}
+
+/* Rodapé: prestador + botão */
+.card-rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 16px;
+    border-top: 1px solid rgba(176, 130, 43, 0.1);
+    background: rgba(12, 58, 63, 0.02);
+}
+
+.prestador {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.prestador-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--musgo);
+    color: var(--dourado-palido);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    text-transform: uppercase;
+}
+
+.prestador-nome {
+    font-size: 12px;
+    color: var(--cinza);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-agendar {
+    background: var(--musgo);
+    color: var(--dourado-palido);
+    border: none;
+    padding: 9px 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.btn-agendar:hover {
+    background: var(--musgo-medio);
+    transform: translateY(-1px);
+}
+
+/* ===================================================
+   RESPONSIVIDADE EXTRA (filtros + cards)
+   =================================================== */
+@media (max-width: 768px) {
+    .filtros-inner {
+        padding: 0 12px;
+    }
+
+    .filtro-item {
+        padding: 14px 14px;
+        font-size: 12px;
+    }
+
+    .card-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-rodape {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .btn-agendar {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
     }
 }

@@ -176,13 +176,13 @@ include('./includes/topo.php');
     </div>
 
     <?php
-    $todosPedidos   = request("contratados?id_prestador=eq.{$id}&select=*&order=dia.desc,hora.desc");
-    $pendentes      = array_filter($todosPedidos ?? [], fn($c) => ($c['confirmado'] ?? '') === 'pendente');
-    $confirmados    = array_filter($todosPedidos ?? [], fn($c) => ($c['confirmado'] ?? '') === 'confirmado');
-    $concluidos     = array_filter($todosPedidos ?? [], fn($c) => ($c['confirmado'] ?? '') === 'concluido');
-    $nPendentes     = count($pendentes);
-    $nConfirmados   = count($confirmados);
-    $nConcluidos    = count($concluidos);
+    $todosPedidos = request("contratados?id_prestador=eq.{$id}&select=*&order=dia.desc,hora.desc");
+    $pendentes = array_filter($todosPedidos ?? [], fn($c) => ($c['confirmado'] ?? '') === 'pendente');
+    $confirmados = array_filter($todosPedidos ?? [], fn($c) => ($c['confirmado'] ?? '') === 'confirmado');
+    $concluidos = array_filter($todosPedidos ?? [], fn($c) => ($c['confirmado'] ?? '') === 'concluido');
+    $nPendentes = count($pendentes);
+    $nConfirmados = count($confirmados);
+    $nConcluidos = count($concluidos);
     ?>
 
     <section class="an-contratos">
@@ -199,27 +199,27 @@ include('./includes/topo.php');
 
             <!-- Filtros dos contratos -->
             <ul class="an-contratos-filtros" id="contratosFiltros">
-                <li class="an-filtro js-filtro ativo" onclick="filtro(this, 'contratos', 'todos')">
+                <li class="an-cfiltro js-filtro ativo" onclick="filtro(this, 'contratos', 'todos')">
                     Todos
                     <?php if (($nPendentes + $nConfirmados + $nConcluidos) > 0): ?>
-                        <span class="an-filtro js-filtro ativo"><?php echo $nPendentes + $nConfirmados + $nConcluidos ?></span>
+                        <span class="an-cfiltro-count"><?php echo $nPendentes + $nConfirmados + $nConcluidos ?></span>
                     <?php endif; ?>
                 </li>
-                <li class="an-filtro js-filtro" onclick="filtro(this, 'contratos', 'pendente')">
+                <li class="an-cfiltro js-filtro" onclick="filtro(this, 'contratos', 'pendente')">
                     <span class="an-cfiltro-dot an-cfiltro-dot--pendente"></span>
                     Pendentes
                     <?php if ($nPendentes > 0): ?>
                         <span class="an-cfiltro-count an-cfiltro-count--pendente"><?php echo $nPendentes ?></span>
                     <?php endif; ?>
                 </li>
-                <li class="an-filtro js-filtro" onclick="filtro(this, 'contratos', 'confirmado')">
+                <li class="an-cfiltro js-filtro" onclick="filtro(this, 'contratos', 'confirmado')">
                     <span class="an-cfiltro-dot an-cfiltro-dot--confirmado"></span>
                     Confirmados
                     <?php if ($nConfirmados > 0): ?>
                         <span class="an-cfiltro-count an-cfiltro-count--confirmado"><?php echo $nConfirmados ?></span>
                     <?php endif; ?>
                 </li>
-                <li class="an-filtro js-filtro" onclick="filtro(this, 'contratos', 'concluido')">
+                <li class="an-cfiltro js-filtro" onclick="filtro(this, 'contratos', 'concluido')">
                     <span class="an-cfiltro-dot an-cfiltro-dot--concluido"></span>
                     Concluídos
                     <?php if ($nConcluidos > 0): ?>
@@ -298,7 +298,7 @@ include('./includes/topo.php');
                                         </form>
                                         <form method="POST" action="./controls/servico.act.php" style="display:inline;">
                                             <input type="hidden" name="id_contrato" value="<?php echo $p['id'] ?>">
-                                            <input type="hidden" name="acao" value="cancelar">
+                                            <input type="hidden" name="acao" value="recusar">
                                             <button type="submit" class="an-btn-recusar">
                                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                                     <line x1="18" y1="6" x2="6" y2="18" />
@@ -309,6 +309,18 @@ include('./includes/topo.php');
                                         </form>
                                     </div>
                                 <?php endif; ?>
+                                <?php if ($status === 'confirmado'): ?>
+                                    <div class="an-contrato-acoes">
+                                        <button type="button" class="an-btn-recusar"
+                                            onclick="abrirModal('confirmar_cancelamento', '<?php echo $p['id'] ?>|prestador')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <line x1="18" y1="6" x2="6" y2="18" />
+                                                <line x1="6" y1="6" x2="18" y2="18" />
+                                            </svg>
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -317,9 +329,5 @@ include('./includes/topo.php');
         </div>
     </section>
 </main>
-
-<script>
-
-</script>
 
 <?php include('./includes/rodape.php'); ?>

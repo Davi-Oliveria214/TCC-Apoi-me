@@ -1,53 +1,164 @@
 <?php
 require_once(__DIR__ . '/../includes/funcoes.php');
 exigirMetodo();
+exigirLogin();
 
 require_once(__DIR__ . '/../conexao.php');
 require_once(__DIR__ . '/../util/enviar_email.php');
 
 $acao = $_POST['acao'] ?? '';
-$idContrato = $_POST['resp'];
-$origem = $_POST['origem'] ?? 'cliente';
 
-// AÇÃO 1 — Cancelar contrato (cliente ou prestador)
-if ($acao === 'cancelar') {
-    $contrato = request("contratos?id=eq.{$idContrato}");
+/* ══════════════════════════════════════════════════════════════════
+   AÇÃO 1 — Prestador aceita ou recusa um contrato pendente
+══════════════════════════════════════════════════════════════════ */
+if ($acao === 'aceitar' || $acao === 'recusar') {
 
-    if (!$contrato || isset($contrato['error'])) {
-        $_SESSION['mensagem'] = 'Não foi possivél achar o contrato do serviço!';
+    $idContrato  = $_POST['id_contrato'] ?? '';
+    $idPrestador = $_SESSION['id'];
+
+    if (empty($idContrato)) {
+        $_SESSION['mensagem'] = 'Dados inválidos.';
         $_SESSION['tipo']     = 'erro';
-        header('Location: ../servicos.php');
+        header('Location: ../anunciar.php');
         exit;
     }
 
-    $idCliente = $contrato['id_cliente'];
-    $nomeServico = $contrato['nome_servico'];
-    $nomePrestador = $contrato['nome_prestador'];
-    $dia = $contrato['dia'];
-    $hora = $contrato['hora'];
+    // Busca o contrato garantindo que pertence a este prestador
+    $contrato = request("contratados?id=eq.{$idContrato}&id_prestador=eq.{$idPrestador}&select=*");
 
-    $infoCliente = request("usuario?id=eq.{$idCliente}&select=nome,email");
-    $nomeCliente = $infoCliente[0]['nome'];
-    $emailCliente = $infoCliente[0]['email'];
+    if (empty($contrato) || isset($contrato['error'])) {
+        $_SESSION['mensagem'] = 'Contrato não encontrado.';
+        $_SESSION['tipo']     = 'erro';
+        header('Location: ../anunciar.php');
+        exit;
+    }
 
-    request("contratados?id=eq.$idContrato", 'DELETE');
+    $c = $contrato[0];
 
-    if ($origem === 'prestador' && !empty($emailCliente)) {
-        enviarEmailServico($emailCliente, $nomeCliente, $nomeServico, $nomePrestador, $dia, $hora, 'pedido_cancelado');
+    // Busca dados do cliente para enviar e-mail
+    $cliente = request("usuarios?id=eq.{$c['id_cliente']}&select=nome,email");
+
+    if (empty($cliente) || isset($cliente['error'])) {
+        $_SESSION['mensagem'] = 'Cliente não encontrado.';
+        $_SESSION['tipo']     = 'erro';
+        header('Location: ../anunciar.php');
+        exit;
+    }
+
+    $novoStatus = ($acao === 'aceitar') ? 'confirmado' : 'cancelado';
+
+    // Atualiza o campo "confirmado" no banco
+    $atualizar = request(
+        "contratados?id=eq.{$idContrato}",
+        'PATCH',
+        ['confirmado' => $novoStatus]
+    );
+
+    if (isset($atualizar['error'])) {
+        $_SESSION['mensagem'] = 'Erro ao atualizar o contrato. Tente novamente.';
+        $_SESSION['tipo']     = 'erro';
+        header('Location: ../anunciar.php');
+        exit;
+    }
+
+    // Notifica o cliente por e-mail
+    $fluxoEmail = ($acao === 'aceitar') ? 'confirmacao_cliente' : 'cancelamento_cliente';
+
+    enviarEmailServico(
+        $cliente[0]['email'],
+        $cliente[0]['nome'],
+        $c['nome_servico'],
+        $c['nome_prestador'],
+        $c['dia'],
+        $c['hora'],
+        $fluxoEmail
+    );
+
+    $_SESSION['mensagem'] = ($acao === 'aceitar')
+        ? 'Serviço confirmado! O cliente foi notificado por e-mail.'
+        : 'Solicitação recusada. O cliente foi notificado por e-mail.';
+    $_SESSION['tipo'] = ($acao === 'aceitar') ? 'sucesso' : 'aviso';
+
+    header('Location: ../anunciar.php');
+    exit;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   AÇÃO 2 — Cliente ou prestador cancela um contrato já existente
+══════════════════════════════════════════════════════════════════ */
+if ($acao === 'cancelar') {
+
+    $idContrato = $_POST['resp'] ?? '';
+    $origem     = $_POST['origem'] ?? 'cliente';
+
+    if (empty($idContrato)) {
+        $_SESSION['mensagem'] = 'Dados inválidos.';
+        $_SESSION['tipo']     = 'erro';
+        $destino = ($origem === 'prestador') ? '../anunciar.php' : '../servicos.php';
+        header("Location: $destino");
+        exit;
+    }
+
+    $contrato = request("contratados?id=eq.{$idContrato}&select=*");
+
+    if (empty($contrato) || isset($contrato['error'])) {
+        $_SESSION['mensagem'] = 'Contrato não encontrado.';
+        $_SESSION['tipo']     = 'erro';
+        $destino = ($origem === 'prestador') ? '../anunciar.php' : '../servicos.php';
+        header("Location: $destino");
+        exit;
+    }
+
+    $c = $contrato[0];
+
+    // Remove o contrato do banco
+    request("contratados?id=eq.{$idContrato}", 'DELETE');
+
+    // Notifica a outra parte por e-mail
+    if ($origem === 'prestador') {
+        // Prestador cancelou → avisa o cliente
+        $cliente = request("usuarios?id=eq.{$c['id_cliente']}&select=nome,email");
+        if (!empty($cliente) && !isset($cliente['error'])) {
+            enviarEmailServico(
+                $cliente[0]['email'],
+                $cliente[0]['nome'],
+                $c['nome_servico'],
+                $c['nome_prestador'],
+                $c['dia'],
+                $c['hora'],
+                'pedido_cancelado'
+            );
+        }
+    } else {
+        // Cliente cancelou -> avisa o prestador
+        $prestador = request("usuarios?id=eq.{$c['id_prestador']}&select=nome,email");
+        if (!empty($prestador) && !isset($prestador['error'])) {
+            enviarEmailServico(
+                $prestador[0]['email'],
+                $prestador[0]['nome'],
+                $c['nome_servico'],
+                $c['nome_cliente'],
+                $c['dia'],
+                $c['hora'],
+                'pedido_cancelado'
+            );
+        }
     }
 
     $_SESSION['mensagem'] = 'Serviço cancelado com sucesso.';
-    $_SESSION['tipo'] = 'aviso';
+    $_SESSION['tipo']     = 'aviso';
 
     $destino = ($origem === 'prestador') ? '../anunciar.php' : '../servicos.php';
     header("Location: $destino");
     exit;
 }
 
-// AÇÃO 2 — Excluir serviço anunciado + imagem do storage
+/* ══════════════════════════════════════════════════════════════════
+   AÇÃO 3 — Prestador exclui um serviço anunciado
+══════════════════════════════════════════════════════════════════ */
 if ($acao === 'excluir') {
 
-    $id = $_SESSION['id'];
+    $id        = $_SESSION['id'];
     $idServico = (int) ($_POST['id_servico'] ?? 0);
 
     if (empty($idServico)) {
@@ -60,7 +171,7 @@ if ($acao === 'excluir') {
     $verificar = request("servicos?id_prestador=eq.{$id}&id=eq.{$idServico}", 'GET');
 
     if (empty($verificar) || isset($verificar['error'])) {
-        $_SESSION['mensagem'] = 'Serviço não encontrado ou você não tem permissão para excluí-lo.';
+        $_SESSION['mensagem'] = 'Serviço não encontrado ou sem permissão para excluí-lo.';
         $_SESSION['tipo']     = 'erro';
         header('Location: ../anunciar.php');
         exit;
@@ -97,7 +208,6 @@ if ($acao === 'excluir') {
         curl_exec($ch);
     }
 
-    // Exclui do banco
     $del = request("servicos?id_prestador=eq.{$id}&id=eq.{$idServico}", 'DELETE');
 
     if (isset($del['error'])) {

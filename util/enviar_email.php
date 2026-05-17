@@ -170,7 +170,7 @@ function textosEmails($nome, $codigo, $link, $fluxo, $chave = '')
                 " . _blococodigo($codigo) . "
                 " . _botao($link, 'Confirmar minha conta') . "
                 <p style='color:#999; font-size:13px; margin-top:24px;'>
-                    O código é válido por <strong>30 minutos</strong>. Se você não criou uma conta no Apoie-me, ignore este e-mail.
+                    O código é válido por <strong>15 minutos</strong>. Se você não criou uma conta no Apoie-me, ignore este e-mail.
                 </p>
                 "
             );
@@ -189,7 +189,7 @@ function textosEmails($nome, $codigo, $link, $fluxo, $chave = '')
                 " . _blococodigo($codigo) . "
                 " . _botao($link, 'Redefinir minha senha') . "
                 <p style='color:#999; font-size:13px; margin-top:24px;'>
-                    O código expira em <strong>30 minutos</strong>. Se você não solicitou esta redefinição, sua senha permanece a mesma — nenhuma ação é necessária.
+                    O código expira em <strong>15 minutos</strong>. Se você não solicitou esta redefinição, sua senha permanece a mesma — nenhuma ação é necessária.
                 </p>
                 "
             );
@@ -215,7 +215,7 @@ function textosEmails($nome, $codigo, $link, $fluxo, $chave = '')
                 </div>
                 " . _botao($link, 'Confirmar minha conta') . "
                 <p style='color:#999; font-size:13px; margin-top:24px;'>
-                    O código de verificação expira em <strong>30 minutos</strong>.
+                    O código de verificação expira em <strong>15 minutos</strong>.
                 </p>
                 "
             );
@@ -370,7 +370,7 @@ function altBodyTexto($nome, $codigo, $link, $fluxo, $chave = '')
     if ($fluxo === 'chave') {
         $base .= "\nChave do condomínio: $chave\n";
     }
-    $base .= "\nEste código é válido por 30 minutos.\n\n— Apoie-me Condomínios";
+    $base .= "\nEste código é válido por 15 minutos.\n\n— Apoie-me Condomínios";
     return $base;
 }
 

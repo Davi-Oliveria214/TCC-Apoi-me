@@ -54,7 +54,7 @@
     border: none;
     cursor: pointer;
     transition: all 0.25s;
-    
+
     text-decoration: none;
     white-space: nowrap;
     flex-shrink: 0;
@@ -170,7 +170,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    
+
 }
 
 .an-filtro:hover {
@@ -327,7 +327,7 @@
     justify-content: center;
     gap: 4px;
     transition: all 0.2s;
-    
+
     text-decoration: none;
 }
 
@@ -476,7 +476,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    
+
     white-space: nowrap;
 }
 
@@ -504,9 +504,17 @@
     flex-shrink: 0;
 }
 
-.an-cfiltro-dot--pendente   { background: #e67e22; }
-.an-cfiltro-dot--confirmado { background: #1a7a4a; }
-.an-cfiltro-dot--concluido  { background: #7f8c8d; }
+.an-cfiltro-dot--pendente {
+    background: #e67e22;
+}
+
+.an-cfiltro-dot--confirmado {
+    background: #1a7a4a;
+}
+
+.an-cfiltro-dot--concluido {
+    background: #7f8c8d;
+}
 
 /* Badge de contagem nos filtros */
 .an-cfiltro-count {
@@ -523,9 +531,20 @@
     color: var(--musgo);
 }
 
-.an-cfiltro-count--pendente   { background: rgba(230, 126, 34, 0.15);  color: #c0621a; }
-.an-cfiltro-count--confirmado { background: rgba(26, 122, 74, 0.15);   color: #1a7a4a; }
-.an-cfiltro-count--concluido  { background: rgba(127, 140, 141, 0.15); color: #5d6d6e; }
+.an-cfiltro-count--pendente {
+    background: rgba(230, 126, 34, 0.15);
+    color: #c0621a;
+}
+
+.an-cfiltro-count--confirmado {
+    background: rgba(26, 122, 74, 0.15);
+    color: #1a7a4a;
+}
+
+.an-cfiltro-count--concluido {
+    background: rgba(127, 140, 141, 0.15);
+    color: #5d6d6e;
+}
 
 /* ── Lista de contratos ── */
 .an-contratos-lista {
@@ -556,10 +575,21 @@
     border-radius: 0;
 }
 
-.an-contrato-status-bar--pendente   { background: #e67e22; }
-.an-contrato-status-bar--confirmado { background: #1a7a4a; }
-.an-contrato-status-bar--concluido  { background: #95a5a6; }
-.an-contrato-status-bar--cancelado  { background: #c0392b; }
+.an-contrato-status-bar--pendente {
+    background: #e67e22;
+}
+
+.an-contrato-status-bar--confirmado {
+    background: #1a7a4a;
+}
+
+.an-contrato-status-bar--concluido {
+    background: #95a5a6;
+}
+
+.an-contrato-status-bar--cancelado {
+    background: #c0392b;
+}
 
 /* Corpo do card */
 .an-contrato-body {
@@ -674,7 +704,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
-    
+
     border: 1.5px solid transparent;
 }
 
@@ -690,7 +720,9 @@
     border-color: var(--musgo);
 }
 
-.an-btn-aceitar svg { stroke: var(--dourado-palido); }
+.an-btn-aceitar svg {
+    stroke: var(--dourado-palido);
+}
 
 .an-btn-aceitar:hover {
     background: var(--musgo-medio);
@@ -703,7 +735,9 @@
     border-color: rgba(192, 57, 43, 0.35);
 }
 
-.an-btn-recusar svg { stroke: #c0392b; }
+.an-btn-recusar svg {
+    stroke: #c0392b;
+}
 
 .an-btn-recusar:hover {
     background: rgba(192, 57, 43, 0.06);
@@ -778,5 +812,54 @@
         flex-direction: row;
         justify-content: space-between;
         flex-wrap: wrap;
+    }
+}
+
+/* ── Tamanho dos SVGs nas infos do contrato (faltava definição) ── */
+.an-contrato-cliente svg,
+.an-contrato-data svg {
+    width: 13px;
+    height: 13px;
+}
+
+/* ── Estado ativo do an-cfiltro (usado pelo JS de filtros) ── */
+.an-cfiltro.ativo {
+    background: var(--musgo);
+    border-color: var(--musgo);
+    color: var(--dourado-palido);
+}
+
+.an-cfiltro.ativo .an-cfiltro-dot--pendente {
+    background: rgba(255, 230, 167, 0.6);
+}
+
+.an-cfiltro.ativo .an-cfiltro-dot--confirmado {
+    background: rgba(255, 230, 167, 0.6);
+}
+
+.an-cfiltro.ativo .an-cfiltro-dot--concluido {
+    background: rgba(255, 230, 167, 0.6);
+}
+
+.an-cfiltro.ativo .an-cfiltro-count {
+    background: rgba(255, 255, 255, 0.18);
+    color: var(--dourado-palido);
+}
+
+/* ── Responsividade: filtros de contrato em mobile ── */
+@media (max-width: 768px) {
+    .an-contratos-filtros {
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        scrollbar-width: none;
+    }
+
+    .an-contratos-filtros::-webkit-scrollbar {
+        display: none;
+    }
+
+    .an-cfiltro {
+        white-space: nowrap;
     }
 }
