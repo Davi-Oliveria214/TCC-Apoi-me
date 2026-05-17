@@ -1,7 +1,3 @@
-/* ============================================================
-   novo_modais.js — Sistema de modais
-   ============================================================ */
-
 const loadModal = document.getElementById('loadModal');
 
 /* ── Abre qualquer modal via AJAX ────────────────────────── */

@@ -55,7 +55,7 @@ include('./includes/topo.php');
                         . ",nome_servico,nome_prestador,preco_contrato"
                         . ",servicos(imagem,descricao)"
                         . "&id_cliente=eq.$id"
-                        . "&avaliar=eq.false"
+                        . "&avaliar=eq.false&"
                         . "&order=dia.desc",
                     "GET"
                 );
@@ -69,7 +69,6 @@ include('./includes/topo.php');
                         $preco       = $c['preco_contrato']         ?? 0;
                         $imagem      = $c['servicos']['imagem']     ?? '';
                         $descricao   = $c['servicos']['descricao']  ?? 'Descrição não disponível';
-                        // confirmado é enum tipo_status: 'pendente' | 'confirmado' | 'concluido'
                         $statusOk    = in_array($c['confirmado'], ['confirmado', 'concluido']);
                 ?>
                         <div class="hi-card">
@@ -88,7 +87,7 @@ include('./includes/topo.php');
                                     </div>
                                 <?php endif; ?>
                                 <span class="hi-card-status <?php echo $statusOk ? 'hi-status--ok' : 'hi-status--pend' ?>">
-                                    <?php echo $statusOk ? '✓ Confirmado' : '⏳ Pendente' ?>
+                                    <?php echo $statusOk ? 'Confirmado' : 'Pendente' ?>
                                 </span>
                             </div>
 

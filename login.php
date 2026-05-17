@@ -97,3 +97,7 @@ loginFeito();
         </p>
     </div>
 </div>
+
+</div>
+
+<?php include_once './includes/rodape.php'; ?>

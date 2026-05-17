@@ -54,6 +54,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -242,7 +243,6 @@ body {
   border-bottom: 1px solid rgba(212, 168, 75, 0.2);
   position: sticky;
   top: 68px;
-  z-index: 900;
 }
 
 .filtros-inner {
@@ -825,20 +825,6 @@ footer {
 @media (max-width: 868px) {
   #burguer {
     display: flex;
-  }
-
-  .nav-links {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .nav-links a {
-    font-size: 22px;
-  }
-
-  .btn-entrar {
-    display: flex;
-    margin-top: 20px;
   }
 
   .hero {

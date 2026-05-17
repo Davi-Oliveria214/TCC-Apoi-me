@@ -3,7 +3,6 @@ require_once(__DIR__ . '/../conexao.php');
 @session_start();
 
 $pag = basename($_SERVER['PHP_SELF']);
-
 $local = ($pag != 'anunciar.php') ? 'publico' : 'anunciar';
 
 if ($pag == 'cadastro.php') {
@@ -14,6 +13,12 @@ if ($pag == 'cadastro.php') {
     $class = 'page-contato';
 }
 
+function navAtivo($paginas)
+{
+    global $pag;
+    return in_array($pag, (array) $paginas) ? ' class="ativo"' : '';
+}
+
 include_once './util/avisos.php';
 ?>
 
@@ -22,71 +27,93 @@ include_once './util/avisos.php';
     <?php
     if (!empty($_SESSION["id"])):
         $id = $_SESSION["id"];
-
         $res = request("usuarios?id=eq.$id&select=nome,email,imagem,codigo,tipo_usuario,user_date", "GET");
-
         if (!empty($res) && !isset($res['error'])) {
             $usuario = $res[0];
-
             $nome = $usuario['nome'];
             $email = $usuario['email'];
             $img = $usuario['imagem'];
             $tipo_usuario = $usuario['tipo_usuario'];
             $user_date = $usuario['user_date'];
-            $_SESSION['codigo'] =  $usuario['codigo'];
+            $_SESSION['codigo'] = $usuario['codigo'];
         }
     endif;
     ?>
+
+    <!-- Logo -->
     <a class="logo" href="../index.php">
         <div class="logo-marca">A</div>
         <span class="logo-texto">Apoie-me</span>
     </a>
 
+    <!-- Busca -->
     <div class="header-busca">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.35-4.35" />
         </svg>
-        <input type="text" name="pesquisa" id="pesquisa" placeholder="Buscar serviços…" oninput="pesquisa('<?php echo $local ?>',this.value)">
+        <input type="text" name="pesquisa" id="pesquisa"
+            placeholder="Buscar serviços…"
+            oninput="pesquisa('<?php echo $local ?>',this.value)">
     </div>
 
-    <nav class="fundo-topo">
+    <div class="header-sep"></div>
+
+    <div class="header-nav-desktop">
         <ul class="nav-links">
-            <li><a href="../index.php">Início</a></li>
-            <?php if (!empty($id)) : ?><li><a href="../servicos.php">Serviços</a></li> <?php endif; ?>
-            <?php if (!empty($id)) : ?><li><a href="../usuario.php">Perfil</a></li> <?php endif; ?>
-            <li><a href="../sobre.php">Sobre</a></li>
-            <li><a href="../contato.php">Contato</a></li>
-            <?php if (!empty($id)) : ?><li><a href="../includes/logout.php">Sair</a></li> <?php endif; ?>
+            <li><a href="../index.php" <?php echo navAtivo('index.php') ?>>Início</a></li>
+            <?php if (!empty($id)) : ?>
+                <li><a href="../servicos.php" <?php echo navAtivo('servicos.php') ?>>Serviços</a></li>
+                <li><a href="../usuario.php" <?php echo navAtivo('usuario.php') ?>>Perfil</a></li>
+            <?php endif; ?>
+            <li><a href="../sobre.php" <?php echo navAtivo('sobre.php') ?>>Sobre</a></li>
+            <li><a href="../contato.php" <?php echo navAtivo('contato.php') ?>>Contato</a></li>
+            <?php if (!empty($id)) : ?>
+                <li><a href="../includes/logout.php" class="link-sair">Sair</a></li>
+            <?php endif; ?>
         </ul>
 
-        <?php if (empty($id)) : ?> <a href="../login.php" class="btn-entrar">Entrar</a> <?php endif; ?>
-    </nav>
+        <?php if (empty($id)) : ?>
+            <a href="../login.php" class="btn-entrar">
+                Entrar
+            </a>
+        <?php endif; ?>
+    </div>
 
-    <nav id="burguer" class="<?php echo isset($_SESSION['login']) ? 'topoLogado' : '' ?>">
+    <button id="burguer" aria-label="Abrir menu" aria-expanded="false">
         <div></div>
         <div></div>
         <div></div>
-    </nav>
+    </button>
 
     <script>
-        var usuarioLogado;
-        <?php if (!empty($id)) {
-        ?>usuarioLogado = true;
-        <?php
-        } else {
-        ?>usuarioLogado = false;
-        <?php
-        }  ?>
+        var usuarioLogado = <?php echo !empty($id) ? 'true' : 'false' ?>;
     </script>
 </header>
 
+<nav class="fundo-topo" aria-label="Menu mobile">
+    <ul class="nav-links">
+        <li><a href="../index.php" <?php echo navAtivo('index.php') ?>>Início</a></li>
+        <?php if (!empty($id)) : ?>
+            <li><a href="../servicos.php" <?php echo navAtivo('servicos.php') ?>>Serviços</a></li>
+            <li><a href="../usuario.php" <?php echo navAtivo('usuario.php') ?>>Perfil</a></li>
+        <?php endif; ?>
+        <li><a href="../sobre.php" <?php echo navAtivo('sobre.php') ?>>Sobre</a></li>
+        <li><a href="../contato.php" <?php echo navAtivo('contato.php') ?>>Contato</a></li>
+        <?php if (!empty($id)) : ?>
+            <li><a href="../includes/logout.php" class="link-sair">Sair</a></li>
+        <?php endif; ?>
+    </ul>
+
+    <?php if (empty($id)) : ?>
+        <a href="../login.php" class="btn-entrar">
+            Entrar
+        </a>
+    <?php endif; ?>
+</nav>
+
 <div id="loadModal"></div>
 
-<?php
-if (!empty($class)) :
-?>
+<?php if (!empty($class)) : ?>
     <div class="<?php echo $class ?>">
-    <?php
-endif;
-    ?>
+    <?php endif; ?>

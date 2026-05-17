@@ -1,11 +1,41 @@
-/* ── Burger menu ─────────────────────────────────────────── */
+/* ── Burger menu (lateral direito) ───────────────────────── */
 const burguer = document.getElementById('burguer');
 const nav = document.querySelector('.fundo-topo');
 
+let overlay = document.querySelector('.menu-overlay');
+if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.classList.add('menu-overlay');
+    document.body.appendChild(overlay);
+}
+
+function abrirMenu() {
+    nav.classList.add('ativo');
+    burguer.classList.add('abrir');
+    overlay.classList.add('ativo');
+    document.body.style.overflow = 'hidden';
+}
+
+function fecharMenu() {
+    nav.classList.remove('ativo');
+    burguer.classList.remove('abrir');
+    overlay.classList.remove('ativo');
+    document.body.style.overflow = '';
+}
+
 if (burguer && nav) {
     burguer.addEventListener('click', () => {
-        nav.classList.toggle('ativo');
-        burguer.classList.toggle('abrir');
+        nav.classList.contains('ativo') ? fecharMenu() : abrirMenu();
+    });
+
+    overlay.addEventListener('click', fecharMenu);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') fecharMenu();
+    });
+
+    nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', fecharMenu);
     });
 }
 
@@ -32,7 +62,7 @@ function ajustarTamanho() {
         if (topo.offsetWidth > 570) {
             userIcon.style.marginTop = `${topo.offsetHeight / 2}px`;
         } else {
-            userIcon.style.marginTop = '0';
+            userIcon.style.marginTop = '0px';
         }
     }
 }
@@ -60,11 +90,6 @@ function load(abrir) {
 }
 
 /* ── Toggle de visibilidade de senha ─────────────────────── */
-/**
- * Alterna type=password/text e troca o ícone do botão olho.
- * @param {string} inputId  id do <input type="password">
- * @param {HTMLElement} btn botão que foi clicado (contém ou é próximo ao <img>)
- */
 function toggleSenha(inputId, btn) {
     const input = document.getElementById(inputId);
     const olho = document.getElementById('olho-' + inputId);

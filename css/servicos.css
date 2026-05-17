@@ -689,16 +689,16 @@
 }
 
 /* ===================================================
-   FILTROS DA PÁGINA (filtros-section / filtro-item)
+   FILTROS DA PÁGINA
    =================================================== */
 .filtros-section {
     background: rgba(12, 58, 63, 0.96);
     border-bottom: 1px solid rgba(176, 130, 43, 0.18);
     position: sticky;
     top: 72px;
-    z-index: 90;
     overflow-x: auto;
     scrollbar-width: none;
+    z-index: 1000;
 }
 
 .filtros-section::-webkit-scrollbar {
