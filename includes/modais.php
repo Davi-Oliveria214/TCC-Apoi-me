@@ -857,6 +857,138 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
 
     <?php
 
+    /* =====================================================================
+   DELETAR CONTA — Etapa 1: confirmação e envio de código
+   id = id do usuário
+   ===================================================================== */
+    elseif ($tipo === 'deletar_conta'): ?>
+
+        <!-- ETAPA 1: aviso + envio do código -->
+        <div class="modal-content modal-alerta ativar-load" id="del-etapa-1">
+
+            <div class="modal-header">
+                <h3>Excluir conta?</h3>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="deletar-aviso">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                        <line x1="12" y1="9" x2="12" y2="13" />
+                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                    <p>Esta ação é <strong>irreversível</strong>. Serão apagados permanentemente:</p>
+                </div>
+
+                <ul class="deletar-lista">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="15" y1="9" x2="9" y2="15" />
+                            <line x1="9" y1="9" x2="15" y2="15" />
+                        </svg>
+                        Perfil e dados pessoais
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="15" y1="9" x2="9" y2="15" />
+                            <line x1="9" y1="9" x2="15" y2="15" />
+                        </svg>
+                        Todos os serviços anunciados
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="15" y1="9" x2="9" y2="15" />
+                            <line x1="9" y1="9" x2="15" y2="15" />
+                        </svg>
+                        Histórico de agendamentos e avaliações
+                    </li>
+                </ul>
+
+                <div class="deletar-email-info">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                    <p>Um código de confirmação será enviado para <strong><?= esc($usuario['email'] ?? '') ?></strong></p>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="btn-enviar-codigo-del" class="btn-modais btn-modais--danger"
+                    onclick="deletarEnviarCodigo(this)">
+                    Entendo, enviar código de confirmação
+                </button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">
+                    Cancelar, quero continuar
+                </button>
+            </div>
+        </div>
+
+        <!-- ETAPA 2: digitar código -->
+        <form action="../controls/deletarConta.act.php" method="post"
+            class="modal-content modal-alerta" id="del-etapa-2" style="display:none;">
+
+            <div class="modal-header">
+                <h3>Confirmar exclusão</h3>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="deletar-aviso">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                    <p>Código enviado para <strong><?= esc($usuario['email'] ?? '') ?></strong>. Ele expira em <strong>15 minutos</strong>.</p>
+                </div>
+
+                <div class="del-codigo-label">Código de verificação</div>
+                <div class="del-codigo-grid" id="del-codigo-grid">
+                    <?php for ($i = 0; $i < 6; $i++): ?>
+                        <input class="del-codigo-box" type="text" maxlength="1"
+                            inputmode="numeric" pattern="[0-9]"
+                            autocomplete="<?= $i === 0 ? 'one-time-code' : 'off' ?>">
+                    <?php endfor; ?>
+                </div>
+                <input type="hidden" name="codigo" id="del-codigo-hidden">
+                <input type="hidden" name="confirmar" value="1">
+
+                <div class="del-timer" id="del-timer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12,6 12,12 16,14" />
+                    </svg>
+                    <span id="del-timer-txt">15:00</span> restantes
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" id="btn-confirmar-delecao"
+                    class="btn-modais btn-modais--danger"
+                    disabled style="opacity:.4;">
+                    Excluir minha conta permanentemente
+                </button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+
+    <?php
+
     else: ?>
         <div class="modal-content modal-alerta">
             <div class="modal-header">

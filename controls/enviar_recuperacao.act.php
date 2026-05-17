@@ -34,6 +34,10 @@ if (isset($res_update['error'])) {
 
 $_SESSION['email_verificar'] = $email;
 
+$categoria = $_POST['categoria'] ?? '';
+$tipo_codigo = ($categoria === 'redefinir') ? 'recuperar' : 'cadastro';
+$_SESSION['tipo_codigo'] = $tipo_codigo;
+
 $fluxo = $usuario[0]['email_verificado'] ? 'recuperar' : 'cadastro';
 enviarEmail($email, $nome, $codigo, $fluxo);
 

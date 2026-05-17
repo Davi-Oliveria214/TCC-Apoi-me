@@ -146,7 +146,7 @@
     padding: 13px 20px;
     border: none;
     border-radius: 50px;
-    font-family: inherit;
+    
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -224,7 +224,7 @@
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.05);
     color: var(--dourado-suave);
-    font-family: inherit;
+    
     font-size: 14px;
     transition: border-color 0.2s, background 0.2s;
     outline: none;
@@ -569,5 +569,176 @@
 
     .modal-header h3 {
         font-size: 13px;
+    }
+}
+/* ===== MODAL DELETAR CONTA ===== */
+.deletar-aviso {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(224, 123, 106, 0.08);
+    border: 1px solid rgba(224, 123, 106, 0.25);
+    margin-bottom: 16px;
+}
+
+.deletar-aviso svg {
+    width: 22px;
+    height: 22px;
+    stroke: #e07b6a;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.deletar-aviso p {
+    font-size: 13px;
+    color: rgba(245, 230, 192, 0.75);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.deletar-aviso strong {
+    color: #f5a898;
+}
+
+.deletar-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.deletar-lista li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(245, 230, 192, 0.65);
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.deletar-lista svg {
+    width: 16px;
+    height: 16px;
+    stroke: rgba(224, 123, 106, 0.6);
+    flex-shrink: 0;
+}
+
+#campo-confirmar {
+    letter-spacing: 3px;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+}
+
+#btn-confirmar-delecao {
+    transition: opacity 0.2s, background 0.22s, border-color 0.22s, box-shadow 0.22s;
+}
+
+/* ===== MODAL DELETAR CONTA — etapa e-mail + código ===== */
+.deletar-email-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(176, 130, 43, 0.15);
+}
+
+.deletar-email-info svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--dourado-palido);
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.deletar-email-info p {
+    font-size: 13px;
+    color: rgba(245, 230, 192, 0.65);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.deletar-email-info strong {
+    color: var(--dourado-palido);
+}
+
+/* Grid de inputs do código */
+.del-codigo-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dourado-palido);
+    margin: 18px 0 10px;
+}
+
+.del-codigo-grid {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.del-codigo-box {
+    width: 46px;
+    height: 56px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(176, 130, 43, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--dourado-palido);
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    
+}
+
+.del-codigo-box:focus {
+    border-color: rgba(224, 123, 106, 0.7);
+    background: rgba(224, 123, 106, 0.06);
+    color: #f5a898;
+}
+
+/* Timer */
+.del-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 13px;
+    color: rgba(245, 230, 192, 0.45);
+}
+
+.del-timer svg {
+    width: 14px;
+    height: 14px;
+    stroke: rgba(245, 230, 192, 0.4);
+}
+
+#del-timer-txt {
+    font-weight: 700;
+    color: rgba(245, 230, 192, 0.65);
+}
+
+@media (max-width: 420px) {
+    .del-codigo-box {
+        width: 38px;
+        height: 48px;
+        font-size: 18px;
+    }
+
+    .del-codigo-grid {
+        gap: 5px;
     }
 }

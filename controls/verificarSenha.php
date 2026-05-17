@@ -7,7 +7,7 @@ $rptSenha = $_POST['rptSenha'];
 $email = $_POST['email'] ?? $_SESSION['email_reset_aprovado'] ?? '';
 
 if (empty($_POST['nome'])) {
-    $res = request('usuarios?email=eq.{$email}&select=nome');
+    $res = request("usuarios?email=eq.{$email}&select=nome");
 }
 
 $nome = $_POST['nome'] ?? $res[0]['nome'];

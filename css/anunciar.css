@@ -54,7 +54,7 @@
     border: none;
     cursor: pointer;
     transition: all 0.25s;
-    font-family: inherit;
+    
     text-decoration: none;
     white-space: nowrap;
     flex-shrink: 0;
@@ -170,7 +170,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    font-family: inherit;
+    
 }
 
 .an-filtro:hover {
@@ -327,7 +327,7 @@
     justify-content: center;
     gap: 4px;
     transition: all 0.2s;
-    font-family: inherit;
+    
     text-decoration: none;
 }
 
@@ -476,7 +476,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    font-family: inherit;
+    
     white-space: nowrap;
 }
 
@@ -674,7 +674,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
-    font-family: inherit;
+    
     border: 1.5px solid transparent;
 }
 

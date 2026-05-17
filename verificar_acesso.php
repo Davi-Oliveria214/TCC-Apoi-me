@@ -14,8 +14,8 @@ if (!empty($email_url) && $etapa === 'enviar') {
 
 if ($etapa === 'codigo') {
     if (!empty($email_url))   $_SESSION['email_verificar'] = $email_url;
-    if (!empty($tipo_codigo)) $_SESSION['tipo_codigo']     = $tipo_codigo;
-    if (!empty($novo_email))  $_SESSION['novo_email']      = $novo_email;
+    if (!empty($tipo_codigo)) $_SESSION['tipo_codigo'] = $tipo_codigo;
+    if (!empty($novo_email))  $_SESSION['novo_email'] = $novo_email;
 }
 
 if ($etapa === 'senha' && !isset($_SESSION['email_reset_aprovado'])) {
@@ -210,7 +210,7 @@ include './includes/topo.php';
                         <span id="va-timer-txt">15:00</span> restantes
                     </div>
 
-                    <button type="submit" class="va-btn-principal" id="va-btn-verificar">
+                    <button type="submit" class="va-btn-principal" id="va-btn-verificar" disabled style="opacity:0.5;">
                         Verificar código
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14m-7-7 7 7-7 7" />
@@ -246,9 +246,9 @@ include './includes/topo.php';
                             </svg>
                             <input type="password" name="senha" id="va-senha" minlength="8"
                                 onkeydown="if(event.key===' ')event.preventDefault()"
-                                oninput="vaVerificarSenha(); vaForca(this.value)"
+                                oninput="verificarSenha(); checarForca(this.value)"
                                 placeholder="Mínimo 8 caracteres" required autocomplete="new-password">
-                            <button type="button" class="va-olho" onclick="vaToggleSenha('olho-senha', this)" aria-label="Mostrar senha">
+                            <button type="button" class="va-olho" onclick="toggleSenha('olho-senha', this)" aria-label="Mostrar senha">
                                 <img id="olho-senha" src="./icon/visibility.png" alt="Mostrar">
                             </button>
                         </div>
@@ -271,7 +271,7 @@ include './includes/topo.php';
                             </svg>
                             <input type="password" name="rpt_senha" id="va-rpt-senha" minlength="8"
                                 onkeydown="if(event.key===' ')event.preventDefault()"
-                                oninput="vaVerificarSenha()"
+                                oninput="checarForca(this.value)"
                                 placeholder="Repita a senha" required autocomplete="new-password">
                             <button type="button" class="va-olho" onclick="toggleSenha('olho-rpt-senha', this)" aria-label="Mostrar senha">
                                 <img id="olho-rpt-senha" src="./icon/visibility.png" alt="Mostrar">
@@ -293,3 +293,132 @@ include './includes/topo.php';
 </div>
 
 <?php include './includes/rodape.php'; ?>
+
+<script>
+    (function() {
+        const grid = document.getElementById('va-codigo-grid');
+        if (!grid) return;
+
+        const boxes = grid.querySelectorAll('.va-codigo-box');
+        const hidden = document.getElementById('va-codigo-hidden');
+        const btnVerificar = document.getElementById('va-btn-verificar');
+
+        function sync() {
+            const val = [...boxes].map(b => b.value).join('');
+            hidden.value = val;
+            const completo = val.length === 6 && /^\d{6}$/.test(val);
+            if (btnVerificar) {
+                btnVerificar.disabled = !completo;
+                btnVerificar.style.opacity = completo ? '1' : '0.5';
+            }
+        }
+
+        boxes.forEach((box, i) => {
+            box.addEventListener('input', e => {
+                const v = e.target.value.replace(/\D/g, '');
+                box.value = v ? v[0] : '';
+                if (v && i < 5) boxes[i + 1].focus();
+                sync();
+            });
+
+            box.addEventListener('keydown', e => {
+                if (e.key === 'Backspace' && !box.value && i > 0) {
+                    boxes[i - 1].focus();
+                    boxes[i - 1].value = '';
+                    sync();
+                }
+            });
+
+            box.addEventListener('paste', e => {
+                e.preventDefault();
+                const txt = (e.clipboardData || window.clipboardData)
+                    .getData('text').replace(/\D/g, '').slice(0, 6);
+                txt.split('').forEach((c, j) => {
+                    if (boxes[j]) boxes[j].value = c;
+                });
+                boxes[Math.min(txt.length, 5)].focus();
+                sync();
+            });
+        });
+
+        if (boxes[0]) boxes[0].focus();
+
+        /* Timer de 15 min */
+        const timerEl = document.getElementById('va-timer');
+        const timerTxt = document.getElementById('va-timer-txt');
+        if (timerTxt) {
+            let s = 15 * 60;
+            const tick = setInterval(() => {
+                s--;
+                if (s <= 0) {
+                    clearInterval(tick);
+                    timerTxt.textContent = '00:00';
+                    if (timerEl) timerEl.classList.add('va-timer--expirado');
+                    if (btnVerificar) {
+                        btnVerificar.disabled = true;
+                        btnVerificar.style.opacity = '0.4';
+                    }
+                    return;
+                }
+                if (s <= 60 && timerEl) timerEl.classList.add('va-timer--urgente');
+                const m = String(Math.floor(s / 60)).padStart(2, '0');
+                const sec = String(s % 60).padStart(2, '0');
+                timerTxt.textContent = `${m}:${sec}`;
+            }, 1000);
+        }
+    })();
+
+    function vaForca(senha) {
+        const segs = ['vaf1', 'vaf2', 'vaf3', 'vaf4'].map(id => document.getElementById(id));
+        const txt = document.getElementById('va-forca-txt');
+        if (!segs[0]) return;
+
+        segs.forEach(s => {
+            if (s) s.style.background = 'rgba(176,130,43,0.15)';
+        });
+
+        let forca = 0;
+        if (senha.length >= 8) forca++;
+        if (/[A-Z]/.test(senha)) forca++;
+        if (/[0-9]/.test(senha)) forca++;
+        if (/[^A-Za-z0-9]/.test(senha)) forca++;
+
+        const cores = ['#c0392b', '#e67e22', '#f1c40f', '#1a7a4a'];
+        const labels = ['Muito fraca', 'Fraca', 'Boa', 'Forte'];
+
+        for (let i = 0; i < forca; i++) {
+            if (segs[i]) segs[i].style.background = cores[forca - 1];
+        }
+        if (txt) {
+            txt.textContent = senha.length ? (labels[forca - 1] || '') : '';
+            txt.style.color = forca > 0 ? cores[forca - 1] : '#9a9a9a';
+        }
+    }
+
+    function vaVerificarSenha() {
+        const s1El = document.getElementById('va-senha');
+        const s2El = document.getElementById('va-rpt-senha');
+        const matchTxt = document.getElementById('va-match-txt');
+        if (!s1El || !s2El) return;
+
+        const s1 = s1El.value;
+        const s2 = s2El.value;
+
+        if (!s2) {
+            if (matchTxt) matchTxt.textContent = '';
+            return;
+        }
+
+        if (s1 === s2) {
+            if (matchTxt) {
+                matchTxt.textContent = '✓ Senhas coincidem';
+                matchTxt.style.color = '#1a7a4a';
+            }
+        } else {
+            if (matchTxt) {
+                matchTxt.textContent = '✗ Senhas não coincidem';
+                matchTxt.style.color = '#c0392b';
+            }
+        }
+    }
+</script>

@@ -28,9 +28,9 @@ if (!empty($user) && isset($user[0]['codigo_verificacao']) && $user[0]['codigo_v
         $_SESSION["mensagem"] = "Este código expirou (limite de 15 min). Solicite um novo.";
 
         if (isset($tipo_codigo) && $tipo_codigo == 'recuperar') {
-            header("Location: ../enviar_codigo.php");
+            header("Location: ../verificar_acesso.php?etapa=enviar&tipo_envio=redefinir");
         } else {
-            header("Location: ../cadastro.php");
+            header("Location: ../verificar_acesso.php?etapa=enviar");
         }
         exit;
     }
@@ -40,7 +40,7 @@ if (!empty($user) && isset($user[0]['codigo_verificacao']) && $user[0]['codigo_v
     if ($tipo_codigo == 'recuperar') {
         $_SESSION['email_reset_aprovado'] = $email;
         unset($_SESSION['email_verificar']);
-        header("Location: ../redefinir_senha.php");
+        header("Location: ../verificar_acesso.php?etapa=senha");
         exit;
     }
 
@@ -57,13 +57,15 @@ if (!empty($user) && isset($user[0]['codigo_verificacao']) && $user[0]['codigo_v
 
         $alterado = request("usuarios?email=eq.{$email}", "PATCH", $dados);
 
-        if ($alterado) {
+        if (isset($alterado['error']) || $alterado === false) {
             $_SESSION["mensagem"] = "Erro ao alterar email!";
         } else {
             $_SESSION["mensagem"] = "Novo email alterado com sucesso!";
         }
 
-        unset($_SESSION);
+        session_unset();
+        session_destroy();
+        session_start();
         header("Location: ../login.php");
         exit;
     }
@@ -76,6 +78,6 @@ if (!empty($user) && isset($user[0]['codigo_verificacao']) && $user[0]['codigo_v
     exit;
 } else {
     $_SESSION["mensagem"] = "Código incorreto ou inválido. Verifique seu e-mail.";
-    header("Location: ../codigo_verificar.php?email=" . urlencode($email));
+    header("Location: ../verificar_acesso.php?etapa=codigo&email=" . urlencode($email) . (!empty($tipo_codigo) ? "&tipo_codigo=" . urlencode($tipo_codigo) : '') . (!empty($novo_email) ? "&novo_email=" . urlencode($novo_email) : ''));
     exit;
 }

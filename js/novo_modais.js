@@ -177,3 +177,94 @@ function previewAvatar(input) {
         preview.style.display = 'none';
     }
 }
+
+function deletarEnviarCodigo(btn) {
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+
+    fetch('../controls/deletarEnviarCodigo.act.php', {
+        method: 'POST'
+    })
+        .then(r => r.json())
+        .then(data => {
+            if (data.ok) {
+                document.getElementById('del-etapa-1').style.display = 'none';
+                const etapa2 = document.getElementById('del-etapa-2');
+                etapa2.style.display = 'flex';
+                etapa2.classList.add('ativar-load');
+                delIniciarCodigo();
+                delIniciarTimer();
+            } else {
+                btn.disabled = false;
+                btn.textContent = 'Entendo, enviar código de confirmação';
+                alert(data.erro ?? 'Erro ao enviar o código. Tente novamente.');
+            }
+        })
+        .catch(() => {
+            btn.disabled = false;
+            btn.textContent = 'Entendo, enviar código de confirmação';
+            alert('Erro de conexão. Tente novamente.');
+        });
+}
+
+function delIniciarCodigo() {
+    const boxes = document.querySelectorAll('.del-codigo-box');
+    const hidden = document.getElementById('del-codigo-hidden');
+    const btn = document.getElementById('btn-confirmar-delecao');
+
+    function sync() {
+        const val = [...boxes].map(b => b.value).join('');
+        hidden.value = val;
+        const completo = val.length === 6 && /^\d{6}$/.test(val);
+        btn.disabled = !completo;
+        btn.style.opacity = completo ? '1' : '0.4';
+    }
+
+    boxes.forEach((box, i) => {
+        box.addEventListener('input', e => {
+            const v = e.target.value.replace(/\D/g, '');
+            box.value = v ? v[0] : '';
+            if (v && i < 5) boxes[i + 1].focus();
+            sync();
+        });
+
+        box.addEventListener('keydown', e => {
+            if (e.key === 'Backspace' && !box.value && i > 0) {
+                boxes[i - 1].focus();
+                boxes[i - 1].value = '';
+                sync();
+            }
+        });
+
+        box.addEventListener('paste', e => {
+            e.preventDefault();
+            const txt = (e.clipboardData || window.clipboardData)
+                .getData('text').replace(/\D/g, '').slice(0, 6);
+            txt.split('').forEach((c, j) => {
+                if (boxes[j]) boxes[j].value = c;
+            });
+            boxes[Math.min(txt.length, 5)].focus();
+            sync();
+        });
+    });
+
+    boxes[0].focus();
+}
+
+function delIniciarTimer() {
+    let s = 15 * 60;
+    const txt = document.getElementById('del-timer-txt');
+    const tick = setInterval(() => {
+        s--;
+        if (s <= 0) {
+            clearInterval(tick);
+            txt.textContent = '00:00';
+            document.getElementById('btn-confirmar-delecao').disabled = true;
+            document.getElementById('btn-confirmar-delecao').style.opacity = '0.4';
+            return;
+        }
+        const m = String(Math.floor(s / 60)).padStart(2, '0');
+        const sec = String(s % 60).padStart(2, '0');
+        txt.textContent = `${m}:${sec}`;
+    }, 1000);
+}

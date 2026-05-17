@@ -29,19 +29,35 @@ function enviarEmail($email, $nome, $codigo, $fluxo = 'cadastro', $chave = '', $
         $mail->isHTML(true);
 
         $assuntos = [
-            'cadastro'      => 'Bem-vindo ao Apoie-me — Confirme sua conta',
-            'recuperar'     => 'Redefinição de senha — Apoie-me',
-            'chave'         => 'Sua conta de síndico foi criada — Apoie-me',
+            'cadastro' => 'Bem-vindo ao Apoie-me — Confirme sua conta',
+            'recuperar' => 'Redefinição de senha — Apoie-me',
+            'chave' => 'Sua conta de síndico foi criada — Apoie-me',
             'alterar_email' => 'Confirmação de novo e-mail — Apoie-me',
+            'deletar_conta' => 'Confirmação de exclusão de conta — Apoie-me',
         ];
+
         $mail->Subject = $assuntos[trim($fluxo)] ?? 'Verificação — Apoie-me';
 
-        if (isset($codigo)) {
-            $link = $_ENV['EMAIL_URL']
-                . '?email='       . urlencode($email)
-                . '&codigo='      . $codigo
+        if (isset($codigo) && $fluxo !== 'deletar_conta') {
+            $etapas = [
+                'cadastro' => 'codigo',
+                'recuperar' => 'codigo',
+                'chave' => 'codigo',
+                'alterar_email' => 'codigo',
+            ];
+
+            $etapa = $etapas[trim($fluxo)] ?? 'codigo';
+
+            $baseUrl = rtrim($_ENV['EMAIL_URL'], '/');
+            $sep = str_contains($baseUrl, '?') ? '&' : '?';
+
+            $link = $baseUrl . $sep . 'etapa=' . $etapa
+                . '&email=' . urlencode($email)
+                . '&codigo=' . $codigo
                 . '&tipo_codigo=' . trim($fluxo)
                 . (!empty($novo) ? '&novo_email=' . urlencode($novo) : '');
+        } else {
+            $link = '';
         }
 
         $mail->Body    = textosEmails($nome, $codigo, $link, $fluxo, $chave);
@@ -218,7 +234,35 @@ function textosEmails($nome, $codigo, $link, $fluxo, $chave = '')
                 " . _blococodigo($codigo) . "
                 " . _botao($link, 'Confirmar novo e-mail') . "
                 <p style='color:#999; font-size:13px; margin-top:24px;'>
-                    O código é válido por <strong>30 minutos</strong>. Se você não solicitou essa alteração, ignore este e-mail — seu e-mail atual continuará ativo.
+                    O código é válido por <strong>15 minutos</strong>. Se você não solicitou essa alteração, ignore este e-mail — seu e-mail atual continuará ativo.
+                </p>
+                "
+            );
+
+        case 'deletar_conta':
+            return _layout(
+                'Confirmação de exclusão de conta',
+                "
+                <p style='color:#555; font-size:15px; line-height:1.7; margin:0 0 16px;'>
+                    Olá, <strong style='color:#2e4a3b;'>$nomeEsc</strong>!<br>
+                    Recebemos uma solicitação para <strong style='color:#c0392b;'>excluir permanentemente</strong> sua conta no <strong>Apoie-me</strong>.
+                </p>
+
+                <div style='background:#fff5f5; border-left:4px solid #e07b6a; border-radius:0 8px 8px 0; padding:14px 18px; margin:0 0 24px;'>
+                    <p style='margin:0; font-size:14px; color:#c0392b; line-height:1.6;'>
+                        ⚠️ Esta ação é <strong>irreversível</strong>. Todos os seus dados, serviços e histórico serão apagados e não poderão ser recuperados.
+                    </p>
+                </div>
+
+                <p style='color:#555; font-size:15px; line-height:1.7; margin:0 0 20px;'>
+                    Para confirmar, insira o código abaixo na plataforma:
+                </p>
+                " . _blococodigo($codigo) . "
+                <p style='color:#999; font-size:13px; margin-top:24px;'>
+                    O código expira em <strong>15 minutos</strong>. Se você <strong>não</strong> solicitou a exclusão da sua conta, ignore este e-mail — ela permanecerá ativa e nenhuma ação será tomada.
+                </p>
+                <p style='color:#bbb; font-size:12px; margin-top:12px;'>
+                    Se você continuar recebendo e-mails indesejados, entre em contato com o suporte.
                 </p>
                 "
             );
@@ -303,9 +347,10 @@ function _blococodigo($codigo)
 
 function _botao($link, $texto)
 {
+    $linkEsc = htmlspecialchars($link, ENT_QUOTES, 'UTF-8');
     return "
     <div style='text-align:center; margin:0 0 16px;'>
-        <a href='$link'
+        <a href='$linkEsc'
            style='display:inline-block; padding:14px 32px; background:#2e4a3b; color:#ffffff;
                   text-decoration:none; border-radius:8px; font-size:15px; font-weight:bold;
                   letter-spacing:.5px;'>
@@ -314,7 +359,7 @@ function _botao($link, $texto)
     </div>
     <p style='text-align:center; font-size:12px; color:#bbb; margin:0 0 8px;'>
         Ou copie e cole o link no seu navegador:<br>
-        <a href='$link' style='color:#b0822b; word-break:break-all;'>$link</a>
+        <a href='$linkEsc' style='color:#b0822b; word-break:break-all;'>$link</a>
     </p>
     ";
 }

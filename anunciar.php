@@ -286,7 +286,7 @@ include('./includes/topo.php');
 
                                 <?php if ($status === 'pendente'): ?>
                                     <div class="an-contrato-acoes">
-                                        <form method="POST" action="controls/responder_servico.act.php" style="display:inline;">
+                                        <form method="POST" action="controls/responderServico.act.php" style="display:inline;">
                                             <input type="hidden" name="id_contrato" value="<?php echo $p['id'] ?>">
                                             <input type="hidden" name="acao" value="aceitar">
                                             <button type="submit" class="an-btn-aceitar">
@@ -296,7 +296,7 @@ include('./includes/topo.php');
                                                 Aceitar
                                             </button>
                                         </form>
-                                        <form method="POST" action="controls/responder_servico.act.php" style="display:inline;">
+                                        <form method="POST" action="controls/respoonderServico.act.php" style="display:inline;">
                                             <input type="hidden" name="id_contrato" value="<?php echo $p['id'] ?>">
                                             <input type="hidden" name="acao" value="cancelar">
                                             <button type="submit" class="an-btn-recusar">

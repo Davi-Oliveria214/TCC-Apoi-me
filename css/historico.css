@@ -313,7 +313,7 @@
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
-    font-family: inherit;
+    
     background: var(--musgo);
     color: var(--dourado-palido);
     margin-top: 4px;

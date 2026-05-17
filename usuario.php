@@ -299,6 +299,38 @@ $condominio = request("condominios?codigo=eq.{$_SESSION['codigo']}");
         </div>
       </section>
     <?php endif; ?>
+    <!-- ===== ZONA DE PERIGO ===== -->
+    <section class="us-secao us-zona-perigo">
+      <h2 class="us-secao-titulo us-secao-titulo--perigo">Zona de perigo</h2>
+      <div class="us-perigo-card">
+        <div class="us-perigo-info">
+          <div class="us-perigo-icone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3,6 5,6 21,6" />
+              <path d="M19 6l-1 14H6L5 6" />
+              <path d="M10 11v6M14 11v6" />
+              <path d="M9 6V4h6v2" />
+            </svg>
+          </div>
+          <div class="us-perigo-txt">
+            <h3>Excluir minha conta</h3>
+            <p>Todos os seus dados, serviços e histórico serão removidos permanentemente. Esta ação não pode ser desfeita.</p>
+          </div>
+        </div>
+        <button class="us-btn-deletar" onclick="abrirModal('deletar_conta', '<?php echo $_SESSION['id'] ?>')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3,6 5,6 21,6" />
+            <path d="M19 6l-1 14H6L5 6" />
+            <path d="M10 11v6M14 11v6" />
+            <path d="M9 6V4h6v2" />
+          </svg>
+          Excluir conta
+        </button>
+      </div>
+    </section>
+
   </div>
 </main>
 
