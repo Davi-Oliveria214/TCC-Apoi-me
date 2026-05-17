@@ -195,7 +195,7 @@ include './includes/topo.php';
                                 inputmode="numeric"
                                 pattern="[0-9]"
                                 autocomplete="<?php echo $i === 0 ? 'one-time-code' : 'off' ?>"
-                                <?php echo ($i === 0 && !empty($codigo_url)) ? 'value="' . htmlspecialchars($codigo_url[$i] ?? '') . '"' : '' ?>>
+                                <?php echo (!empty($codigo_url) && isset($codigo_url[$i])) ? 'value="' . htmlspecialchars($codigo_url[$i]) . '"' : '' ?>>
                         <?php endfor; ?>
                     </div>
 
@@ -341,7 +341,13 @@ include './includes/topo.php';
             });
         });
 
-        if (boxes[0]) boxes[0].focus();
+        if (boxes.length > 0) {
+            sync();
+
+            if (!hidden.value) {
+                boxes[0].focus();
+            }
+        }
 
         /* Timer de 15 min */
         const timerEl = document.getElementById('va-timer');
@@ -367,33 +373,6 @@ include './includes/topo.php';
             }, 1000);
         }
     })();
-
-    function vaForca(senha) {
-        const segs = ['vaf1', 'vaf2', 'vaf3', 'vaf4'].map(id => document.getElementById(id));
-        const txt = document.getElementById('va-forca-txt');
-        if (!segs[0]) return;
-
-        segs.forEach(s => {
-            if (s) s.style.background = 'rgba(176,130,43,0.15)';
-        });
-
-        let forca = 0;
-        if (senha.length >= 8) forca++;
-        if (/[A-Z]/.test(senha)) forca++;
-        if (/[0-9]/.test(senha)) forca++;
-        if (/[^A-Za-z0-9]/.test(senha)) forca++;
-
-        const cores = ['#c0392b', '#e67e22', '#f1c40f', '#1a7a4a'];
-        const labels = ['Muito fraca', 'Fraca', 'Boa', 'Forte'];
-
-        for (let i = 0; i < forca; i++) {
-            if (segs[i]) segs[i].style.background = cores[forca - 1];
-        }
-        if (txt) {
-            txt.textContent = senha.length ? (labels[forca - 1] || '') : '';
-            txt.style.color = forca > 0 ? cores[forca - 1] : '#9a9a9a';
-        }
-    }
 
     function vaVerificarSenha() {
         const s1El = document.getElementById('va-senha');

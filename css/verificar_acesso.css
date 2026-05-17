@@ -326,6 +326,8 @@
 
 .va-codigo-box {
     flex: 1;
+    min-width: 0;
+    padding: 0;
     height: 58px;
     border: 1.5px solid rgba(176, 130, 43, 0.28);
     border-radius: 12px;
