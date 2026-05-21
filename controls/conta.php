@@ -18,6 +18,18 @@ if ($acao === 'enviar_codigo') {
         exit;
     }
 
+    $servicos = request("servicos?id_prestador=eq.{$id}&select=id", "GET");
+    if (!empty($servicos) && !isset($servicos['error'])) {
+        echo json_encode(['ok' => false, 'erro' => 'Você possui serviços anunciados. Remova-os antes de excluir sua conta.']);
+        exit;
+    }
+
+    $agendamentos = request("contratados?or=(id_cliente.eq.{$id},id_prestador.eq.{$id})&confirmado=in.(pendente,confirmado)&select=id", "GET");
+    if (!empty($agendamentos) && !isset($agendamentos['error'])) {
+        echo json_encode(['ok' => false, 'erro' => 'Você possui agendamentos ativos ou pendentes. Cancele-os antes de excluir sua conta.']);
+        exit;
+    }
+
     $usuario = request("usuarios?id=eq.$id&select=nome,email");
 
     if (empty($usuario) || isset($usuario['error'])) {

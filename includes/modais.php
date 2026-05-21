@@ -112,6 +112,17 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                     </div>
 
                     <div class="input-group">
+                        <label>Meio de Pagamento</label>
+                        <select name="meio_pagamento" required>
+                            <option value="">Selecione...</option>
+                            <option value="Pix">Pix</option>
+                            <option value="Cartão de Crédito">Cartão de Crédito</option>
+                            <option value="Cartão de Débito">Cartão de Débito</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
                         <label>Observações</label>
                         <textarea name="observacao" rows="3"
                             placeholder="Algo que o prestador precise saber?"></textarea>
@@ -457,18 +468,17 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
         $isEdit  = ($tipo === 'editar');
         $action  = $isEdit ? '../controls/editar_servico.act.php' : '../controls/addServico.php';
 
-        $s = [];
-        if ($isEdit && $id) {
-            $res = request("servicos?id=eq.$id");
-            $s   = (!empty($res) && !isset($res['error'])) ? $res[0] : [];
-        }
+        $s = request("servicos?id=eq.$id");
+        $s = $s[0];
 
-        $nomeServico = $s['nome']        ?? '';
-        $imgServico  = $s['imagem']      ?? '';
-        $horaIni     = isset($s['hora_inicio']) ? date('H:i', strtotime($s['hora_inicio'])) : '';
-        $horaFim     = isset($s['hora_fim'])    ? date('H:i', strtotime($s['hora_fim']))    : '';
-        $duracao     = isset($s['duracao'])     ? date('H:i', strtotime($s['duracao']))     : '';
-        $descricao   = $s['descricao']   ?? '';
+        $nomeServico = $s['nome'] ?? '';
+        $imgServico = $s['imagem'] ?? '';
+        $horaIni = isset($s['hora_inicio']) ? date('H:i', strtotime($s['hora_inicio'])) : '';
+        $horaFim = isset($s['hora_fim']) ? date('H:i', strtotime($s['hora_fim'])) : '';
+        $duracao = isset($s['duracao']) ? date('H:i', strtotime($s['duracao'])) : '';
+        $descricao = $s['descricao'] ?? '';
+        $tipo_cobrado = isset($s['tipo_cobrado']) ?? 'hora';
+        $preco = $s['preco_servico'];
 ?>
     <form action="<?= $action ?>" method="post" enctype="multipart/form-data"
         class="modal-content modal-padrao modal-large ativar-load">
@@ -483,6 +493,8 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                 <label>Nome do Anúncio</label>
                 <input type="text" name="nome" value="<?= esc($nomeServico) ?>" required>
             </div>
+
+
 
             <?php if (!$isEdit): ?>
                 <div class="input-group">
@@ -506,19 +518,35 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
             <div class="input-row">
                 <div class="input-group">
                     <label>Início</label>
-                    <input type="time" name="hora_inicio" value="<?= esc($horaIni) ?>"
-                        list="horarios-comuns" required>
+                    <input type="time" name="hora_inicio" id="hora_inicio" value="<?= esc($horaIni) ?>"
+                        list="horarios-comuns" onchange="validarHorarios()" required>
                 </div>
                 <div class="input-group">
                     <label>Término</label>
-                    <input type="time" name="hora_fim" value="<?= esc($horaFim) ?>"
-                        list="horarios-comuns" required>
+                    <input type="time" name="hora_fim" id="hora_fim" value="<?= esc($horaFim) ?>"
+                        list="horarios-comuns" onchange="validarHorarios()" required>
                 </div>
                 <datalist id="horarios-comuns">
                     <?php foreach (['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'] as $h): ?>
                         <option value="<?= $h ?>">
                         <?php endforeach; ?>
                 </datalist>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label>Preço (R$)</label>
+                    <input type="text" id="preco_visivel" oninput="mascaraMoeda(this)" value="<?php echo number_format($preco, 2, ',', '.'); ?>" placeholder="0,00" required>
+                    <input type="hidden" name="preco_servico" id="preco_oculto" value="<?php echo $preco ?>">
+                </div>
+                <div class="input-group">
+                    <label>Tipo Cobrado</label>
+                    <select name="tipo_cobrado" required>
+                        <option value="Hora" <?php echo $tipo_cobrado == 'Hora' ? 'selected' : '' ?>>Por Hora</option>
+                        <option value="Serviço" <?php echo $tipo_cobrado == 'Serviço' ? 'selected' : '' ?>>Por Serviço</option>
+                        <option value="Diária" <?php echo $tipo_cobrado == 'Diária' ? 'selected' : '' ?>>Por Diária</option>
+                    </select>
+                </div>
             </div>
 
             <div class="input-group">
@@ -551,12 +579,28 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
         </div>
 
         <div class="modal-footer">
-            <button type="submit" class="btn-modais">
+            <button type="submit" id="btnSubmitServico" class="btn-modais">
                 <?= $isEdit ? 'Salvar Alterações' : 'Publicar Anúncio' ?>
             </button>
             <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
         </div>
     </form>
+
+    <script>
+        function validarHorarios() {
+            const inicio = document.getElementById('hora_inicio').value;
+            const fim = document.getElementById('hora_fim').value;
+            const btn = document.getElementById('btnSubmitServico');
+
+            if (inicio && fim && fim <= inicio) {
+                alert('O horário de término não pode ser menor ou igual ao horário de início.');
+                document.getElementById('hora_fim').value = '';
+                btn.disabled = true;
+            } else {
+                btn.disabled = false;
+            }
+        }
+    </script>
 
 <?php
 

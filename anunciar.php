@@ -91,6 +91,9 @@ include('./includes/topo.php');
                 $ativo  = $s['status'];
                 $reservados = request("contratados?id_prestador=eq.{$id}&select=count");
                 $numRes = $reservados[0]['count'] ?? 0;
+
+                $precoFmt = number_format($s['preco_servico'] ?? 0, 2, ',', '.');
+                $tipo_cobrado = $s['tipo_cobrado'] ?? 'Hora';
         ?>
                 <div class="an-card">
                     <span class="an-badge <?php echo $ativo ? 'an-badge--ativo' : 'an-badge--pausado' ?>">
@@ -106,6 +109,14 @@ include('./includes/topo.php');
                         <p><?php echo htmlspecialchars($s['descricao']) ?></p>
 
                         <div class="an-card-meta">
+                            <div class="an-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                                <span>R$ <strong><?php echo $precoFmt ?></strong> / <?php echo strtolower($tipo_cobrado) ?></span>
+                            </div>
+
                             <div class="an-meta-item">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="12" cy="12" r="10" />

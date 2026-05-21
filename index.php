@@ -55,66 +55,78 @@
         </a>
     </div>
 
-    <div class="servicos-grid local-filtro">
-        <?php
-        if (empty($_SESSION['codigo'])) {
-            $servicos = request("servicos?status=eq.true&select=*,categorias(nome),usuarios(nome)&order=criado.desc&limit=10", "GET");
-        } else {
-            $servicos = request("servicos?status=eq.true&codigo=eq.{$_SESSION['codigo']}&select=*,categorias(nome),usuarios(nome)&order=criado.desc&limit=10", "GET");
-        }
-
-        if (!empty($servicos) && !isset($servicos['error'])) :
-            foreach ($servicos as $servico) :
-                $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
-                $horaFim = date('H:i', strtotime($servico['hora_fim']));
-                $duracao = date('H:i', strtotime($servico['duracao']));
-                $imagem = $servico['imagem'];
-        ?>
-                <div class="card-servico">
-                    <div class="card-img-wrap">
-                        <img src="<?php echo $imagem ?>" alt="<?php echo $servico['nome'] ?>">
-                        <span class="card-categoria"><?php echo $servico['categorias']['nome'] ?></span>
-                        <span class="card-avaliacao"><?php echo $servico['nota_geral'] ?></span>
-                    </div>
-                    <div class="card-corpo">
-                        <h3 class="card-titulo"><?php echo $servico['nome'] ?></h3>
-                        <p class="card-desc"><?php echo $servico['descricao'] ?></p>
-                        <div class="card-info">
-                            <div class="card-horario">
-                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12,6 12,12 16,14" />
-                                </svg>
-                                <?php echo $horaInicio ?> – <?php echo $horaFim ?>
-                            </div>
-                            <div class="card-preco">R$<?php echo $servico['preco_servico'] ?><span> /
-                                    <?php echo $servico['tipo_cobrado'] ?></span></div>
-                        </div>
-                    </div>
-                    <div class="card-rodape">
-                        <div class="prestador">
-                            <div class="prestador-avatar"><?php echo substr($servico['usuarios']['nome'], 0, 1) ?></div>
-                            <span class="prestador-nome"><?php echo $servico['usuarios']['nome'] ?></span>
-                        </div>
-                        <?php
-                        if (empty($id) || $_SESSION['id'] != $servico['id_prestador']):
-                        ?>
-                            <button class="btn-agendar"
-                                onclick="<?php echo !empty($_SESSION['id']) ? "abrirModal('agendar','{$servico['id']}')" : "window.location.href='./util/setAviso.php'" ?>">Agendar</button>
-                        <?php
-                        endif;
-                        ?>
-                    </div>
-                </div>
+    <div class="carrossel-container">
+        <button class="carrossel-btn prev" onclick="scrollCarrossel(-1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+        </button>
+        <div class="servicos-grid local-filtro carrossel-track">
             <?php
-            endforeach;
-        else :
+            if (empty($_SESSION['codigo'])) {
+                $servicos = request("servicos?status=eq.true&select=*,categorias(nome),usuarios(nome)&order=criado.desc&limit=10", "GET");
+            } else {
+                $servicos = request("servicos?status=eq.true&codigo=eq.{$_SESSION['codigo']}&select=*,categorias(nome),usuarios(nome)&order=criado.desc&limit=10", "GET");
+            }
+
+            if (!empty($servicos) && !isset($servicos['error'])) :
+                foreach ($servicos as $servico) :
+                    $horaInicio = date('H:i', strtotime($servico['hora_inicio']));
+                    $horaFim = date('H:i', strtotime($servico['hora_fim']));
+                    $duracao = date('H:i', strtotime($servico['duracao']));
+                    $imagem = $servico['imagem'];
             ?>
-            <div class='aviso-vazio'>Nenhum serviço encontrado</div>
-        <?php
-        endif;
-        ?>
+                    <div class="card-servico">
+                        <div class="card-img-wrap">
+                            <img src="<?php echo $imagem ?>" alt="<?php echo $servico['nome'] ?>">
+                            <span class="card-categoria"><?php echo $servico['categorias']['nome'] ?></span>
+                            <span class="card-avaliacao"><?php echo $servico['nota_geral'] ?></span>
+                        </div>
+                        <div class="card-corpo">
+                            <h3 class="card-titulo"><?php echo $servico['nome'] ?></h3>
+                            <p class="card-desc"><?php echo $servico['descricao'] ?></p>
+                            <div class="card-info">
+                                <div class="card-horario">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12,6 12,12 16,14" />
+                                    </svg>
+                                    <?php echo $horaInicio ?> – <?php echo $horaFim ?>
+                                </div>
+                                <div class="card-preco">R$<?php echo $servico['preco_servico'] ?><span> /
+                                        <?php echo $servico['tipo_cobrado'] ?></span></div>
+                            </div>
+                        </div>
+                        <div class="card-rodape">
+                            <div class="prestador">
+                                <div class="prestador-avatar"><?php echo substr($servico['usuarios']['nome'], 0, 1) ?></div>
+                                <span class="prestador-nome"><?php echo $servico['usuarios']['nome'] ?></span>
+                            </div>
+                            <?php
+                            if (empty($id) || $_SESSION['id'] != $servico['id_prestador']):
+                            ?>
+                                <button class="btn-agendar"
+                                    onclick="<?php echo !empty($_SESSION['id']) ? "abrirModal('agendar','{$servico['id']}')" : "window.location.href='./util/setAviso.php'" ?>">Agendar</button>
+                            <?php
+                            endif;
+                            ?>
+                        </div>
+                    </div>
+                <?php
+                endforeach;
+            else :
+                ?>
+                <div class='aviso-vazio'>Nenhum serviço encontrado</div>
+            <?php
+            endif;
+            ?>
+        </div>
+        <button class="carrossel-btn next" onclick="scrollCarrossel(1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-9-6" />
+            </svg>
+        </button>
     </div>
 </section>
 

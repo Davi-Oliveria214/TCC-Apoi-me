@@ -10,7 +10,7 @@ if (!empty($servico)) :
         ? date('H:i', strtotime($s['hora_inicio'])) 
         : "Não informado";
 
-    $imagem = !empty($s['imagem']) ? $s['imagem'] : './img/default.jpg';
+    $imagem = !empty($s['imagem']) ? $s['imagem'] : './img/condomino.png';
 ?>
 
 <div class='card card-servico'>

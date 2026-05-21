@@ -698,7 +698,6 @@
     top: 72px;
     overflow-x: auto;
     scrollbar-width: none;
-    z-index: 1000;
 }
 
 .filtros-section::-webkit-scrollbar {

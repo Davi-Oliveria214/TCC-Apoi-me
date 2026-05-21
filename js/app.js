@@ -283,3 +283,46 @@ document.addEventListener('change', (e) => {
     };
     reader.readAsDataURL(file);
 });
+
+function scrollCarrossel(direcao) {
+    const track = document.querySelector('.carrossel-track');
+    const scrollAmount = track.clientWidth * 0.8;
+    track.scrollBy({
+        left: direcao * scrollAmount,
+        behavior: 'smooth'
+    });
+}
+
+function validarHorarios() {
+    const inicio = document.getElementById('hora_inicio');
+    const fim = document.getElementById('hora_fim');
+    const btn = document.getElementById('btnSubmitServico');
+
+    if (inicio.value) {
+        fim.min = inicio.value;
+    }
+
+    if (inicio.value && fim.value && fim.value <= inicio.value) {
+        alert('O horário de término deve ser posterior ao horário de início.');
+        fim.value = '';
+        btn.disabled = true;
+    } else {
+        btn.disabled = false;
+    }
+}
+
+function mascaraMoeda(campo) {
+    let valor = campo.value.replace(/\D/g, '');
+
+    if (valor === '') {
+        valor = '0';
+    }
+
+    let valorFloat = (parseFloat(valor) / 100).toFixed(2);
+    document.getElementById('preco_oculto').value = valorFloat;
+
+    valor = (parseFloat(valor) / 100).toFixed(2) + '';
+    valor = valor.replace('.', ',');
+    valor = valor.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    campo.value = valor;
+}

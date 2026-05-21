@@ -917,3 +917,71 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+.carrossel-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.carrossel-track {
+  display: flex !important;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 24px;
+  padding: 20px 5px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.carrossel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carrossel-track .card-servico {
+  flex: 0 0 300px;
+  min-width: 300px;
+}
+
+.carrossel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--musgo);
+  border: 1px solid var(--dourado);
+  color: var(--dourado);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.carrossel-btn:hover {
+  background: var(--dourado);
+  color: var(--musgo);
+}
+
+.carrossel-btn.prev {
+  left: -22px;
+}
+
+.carrossel-btn.next {
+  right: -22px;
+}
+
+@media (max-width: 768px) {
+  .carrossel-btn {
+    display: none;
+  }
+
+  .carrossel-track {
+    padding: 10px 0;
+  }
+}

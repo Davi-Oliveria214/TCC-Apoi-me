@@ -82,26 +82,31 @@ function cadastrar($nome, $email, $senhaHash, $codigo, $img, $tipo_usuario, $dad
     if ($tipo_usuario === 'sindico' && $dadosCondominio) {
         $cnpj = $dadosCondominio['cnpj'];
 
-        do {
-            $chave = random_int(1000, 9999);
-            $res = request("condominios?codigo=eq.{$chave}");
+        $resCnpj = request("condominios?cnpj_condominio=eq.{$cnpj}");
 
-            $codigoExiste = !empty($res) && !isset($res['error']);
-        } while ($codigoExiste);
+        if (!empty($resCnpj) && !isset($resCnpj['error'])) {
+            $chave = $resCnpj[0]['codigo'];
+        } else {
+            do {
+                $chave = random_int(1000, 9999);
+                $res = request("condominios?codigo=eq.{$chave}");
+                $codigoExiste = !empty($res) && !isset($res['error']);
+            } while ($codigoExiste);
 
-        $endereco = $dadosCondominio['descricao_tipo_de_logradouro'] . ' ' .
-            $dadosCondominio['logradouro'];
+            $endereco = $dadosCondominio['descricao_tipo_de_logradouro'] . ' ' .
+                $dadosCondominio['logradouro'];
 
-        request("condominios", "POST", [
-            "nome" => $dadosCondominio['razao_social'],
-            "bairro" => $dadosCondominio['bairro'],
-            "endereco" => $endereco,
-            "municipio" => $dadosCondominio['municipio'],
-            "uf" => $dadosCondominio['uf'],
-            "cep" => $dadosCondominio['cep'],
-            "cnpj_condominio" => $cnpj,
-            "codigo" => $chave
-        ]);
+            request("condominios", "POST", [
+                "nome" => $dadosCondominio['razao_social'],
+                "bairro" => $dadosCondominio['bairro'],
+                "endereco" => $endereco,
+                "municipio" => $dadosCondominio['municipio'],
+                "uf" => $dadosCondominio['uf'],
+                "cep" => $dadosCondominio['cep'],
+                "cnpj_condominio" => $cnpj,
+                "codigo" => $chave
+            ]);
+        }
     }
 
     $_SESSION['email_verificar'] = $email;

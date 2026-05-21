@@ -82,6 +82,8 @@ $dadosSalvar = [
     "hora_inicio" => $hora_inicio,
     "hora_fim" => $hora_fim,
     "duracao" => $duracao,
+    "preco_servico" => $_POST['preco_servico'] ?? 0,
+    "tipo_cobrado" => $_POST['tipo_cobrado'] ?? 'Hora'
 ];
 
 $sql = request("servicos", "POST", $dadosSalvar);
