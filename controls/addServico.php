@@ -31,6 +31,25 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
 
     $tmp = $arquivo['tmp_name'];
     $nomeImg = $arquivo['name'];
+    $tamanho = $arquivo['size'];
+
+    // Validar extensao
+    $extensao = strtolower(pathinfo($nomeImg, PATHINFO_EXTENSION));
+    $extensoesPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    
+    if (!in_array($extensao, $extensoesPermitidas)) {
+        $_SESSION["mensagem"] = "Tipo de arquivo nao permitido. Use: JPG, PNG, GIF ou WEBP.";
+        header("Location: ../anunciar.php");
+        exit;
+    }
+
+    // Validar tamanho (maximo 5MB)
+    $tamanhoMaximo = 5 * 1024 * 1024;
+    if ($tamanho > $tamanhoMaximo) {
+        $_SESSION["mensagem"] = "Arquivo muito grande. Maximo 5MB.";
+        header("Location: ../anunciar.php");
+        exit;
+    }
 
     $nomeFinal = uniqid() . "_" . $nomeImg;
 
@@ -38,8 +57,7 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
 
     $ch = curl_init($url);
 
-    $extensao = pathinfo($nomeImg, PATHINFO_EXTENSION);
-    $tipoMime = ($extensao == 'png') ? 'image/png' : 'image/jpeg';
+    $tipoMime = ($extensao == 'png') ? 'image/png' : ($extensao == 'gif' ? 'image/gif' : ($extensao == 'webp' ? 'image/webp' : 'image/jpeg'));
 
     curl_setopt_array($ch, [
         CURLOPT_CUSTOMREQUEST => "POST",

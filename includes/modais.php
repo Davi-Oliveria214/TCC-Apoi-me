@@ -143,9 +143,9 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
    id = id do contrato (resp)
    ===================================================================== */
     elseif ($tipo === 'cancelar'):
-        $contrato = request("contratados?id=eq.{$id}&select=id_prestador");
+        $contrato = request("contratados?id=eq.{$id}&select=id_prestador,id_cliente");
 
-        $origem = ($contrato[0]['id_prestador'] == $id) ? "prestador" : "cliente";
+        $origem = ($contrato[0]['id_prestador'] == $_SESSION['id']) ? "prestador" : "cliente";
     ?>
         <form action="../controls/servico.act.php" method="post" class="modal-content modal-alerta ativar-load">
 
@@ -181,14 +181,14 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
             <div class="modal-header">
                 <h3>Excluir serviço?</h3>
             </div>
-            <p>Esta ação é <strong>permanente</strong>. Todas as reservas futuras vinculadas a este serviço serão removidas.</p>
-</div>
-
-<div class="modal-footer">
-    <button type="submit" class="btn-modais btn-modais--danger">Sim, excluir</button>
-    <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Voltar</button>
-</div>
-</form>
+            <div class="modal-body">
+                <p>Esta ação é <strong>permanente</strong>. Todas as reservas futuras vinculadas a este serviço serão removidas.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais btn-modais--danger">Sim, excluir</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Voltar</button>
+            </div>
+        </form>
 
 <?php
 
@@ -468,8 +468,11 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
         $isEdit  = ($tipo === 'editar');
         $action  = $isEdit ? '../controls/editar_servico.act.php' : '../controls/addServico.php';
 
-        $s = request("servicos?id=eq.$id");
-        $s = $s[0];
+        $s = [];
+        if (!empty($id)) {
+            $servico = request("servicos?id=eq.$id");
+            $s = (!empty($servico) && !isset($servico['error'])) ? $servico[0] : [];
+        }
 
         $nomeServico = $s['nome'] ?? '';
         $imgServico = $s['imagem'] ?? '';
@@ -518,12 +521,12 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
             <div class="input-row">
                 <div class="input-group">
                     <label>Início</label>
-                    <input type="time" name="hora_inicio" id="hora_inicio" value="<?= esc($horaIni) ?>"
+                    <input type="time" name="hora_inicio" id="hora_inicio" value="<?php echo $horaIni ?>"
                         list="horarios-comuns" onchange="validarHorarios()" required>
                 </div>
                 <div class="input-group">
                     <label>Término</label>
-                    <input type="time" name="hora_fim" id="hora_fim" value="<?= esc($horaFim) ?>"
+                    <input type="time" name="hora_fim" id="hora_fim" value="<?php echo $horaFim ?>"
                         list="horarios-comuns" onchange="validarHorarios()" required>
                 </div>
                 <datalist id="horarios-comuns">
@@ -542,9 +545,11 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                 <div class="input-group">
                     <label>Tipo Cobrado</label>
                     <select name="tipo_cobrado" required>
-                        <option value="Hora" <?php echo $tipo_cobrado == 'Hora' ? 'selected' : '' ?>>Por Hora</option>
-                        <option value="Serviço" <?php echo $tipo_cobrado == 'Serviço' ? 'selected' : '' ?>>Por Serviço</option>
-                        <option value="Diária" <?php echo $tipo_cobrado == 'Diária' ? 'selected' : '' ?>>Por Diária</option>
+                        <option value="Visita" <?php echo strtolower($tipo_cobrado) == 'visita' ? 'selected' : '' ?>>Por Visita</option>
+                        <option value="Hora" <?php echo strtolower($tipo_cobrado)  == 'hora' ? 'selected' : '' ?>>Por Hora</option>
+                        <option value="Projeto" <?php echo strtolower($tipo_cobrado)  == 'projeto' ? 'selected' : '' ?>>Por Projeto</option>
+                        <option value="Sessão" <?php echo strtolower($tipo_cobrado)  == 'sessão' ? 'selected' : '' ?>>Por Sessão</option>
+                        <option value="Diária" <?php echo strtolower($tipo_cobrado)  == 'diária' ? 'selected' : '' ?>>Por Diária</option>
                     </select>
                 </div>
             </div>

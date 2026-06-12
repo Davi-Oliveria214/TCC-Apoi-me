@@ -89,7 +89,7 @@ include('./includes/topo.php');
                 $horaF  = !empty($s['hora_fim'])    ? date("H:i", strtotime($s['hora_fim']))    : '--:--';
                 $dur    = !empty($s['duracao'])      ? date("H:i", strtotime($s['duracao']))      : '--:--';
                 $ativo  = $s['status'];
-                $reservados = request("contratados?id_prestador=eq.{$id}&select=count");
+                $reservados = request("contratados?id_servico=eq.{$s['id']}&select=count");
                 $numRes = $reservados[0]['count'] ?? 0;
 
                 $precoFmt = number_format($s['preco_servico'] ?? 0, 2, ',', '.');

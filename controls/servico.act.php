@@ -111,8 +111,20 @@ if ($acao === 'cancelar') {
 
     $c = $contrato[0];
 
-    // Remove o contrato do banco
-    request("contratados?id=eq.{$idContrato}", 'DELETE');
+    // Marca o contrato como cancelado (em vez de deletar)
+    $atualizar = request(
+        "contratados?id=eq.{$idContrato}",
+        'PATCH',
+        ['confirmado' => 'cancelado']
+    );
+
+    if (isset($atualizar['error'])) {
+        $_SESSION['mensagem'] = 'Erro ao cancelar o contrato. Tente novamente.';
+        $_SESSION['tipo']     = 'erro';
+        $destino = ($origem === 'prestador') ? '../anunciar.php' : '../servicos.php';
+        header("Location: $destino");
+        exit;
+    }
 
     // Notifica a outra parte por e-mail
     if ($origem === 'prestador') {

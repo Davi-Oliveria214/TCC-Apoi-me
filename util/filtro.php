@@ -64,7 +64,7 @@ if ($tipo === "servicos") :
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.35-4.35" />
             </svg>
-            <h3>Nenhum serviço encontradol</h3>
+            <h3>Nenhum serviço encontrado</h3>
             <a href="./anunciar.php" class="sv-btn-agendar">Anunciar serviço</a>
         </div>
         <?php endif;
@@ -94,7 +94,7 @@ elseif ($tipo === 'anuncio') :
             $horaF  = !empty($s['hora_fim'])    ? date("H:i", strtotime($s['hora_fim']))    : '--:--';
             $dur    = !empty($s['duracao'])      ? date("H:i", strtotime($s['duracao']))      : '--:--';
             $ativo  = $s['status'];
-            $reservados = request("contratados?id_prestador=eq.{$id}&select=count");
+            $reservados = request("contratados?id_servico=eq.{$s['id']}&select=count");
             $numRes = $reservados[0]['count'] ?? 0;
         ?>
             <div class="an-card">
