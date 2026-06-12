@@ -17,6 +17,7 @@ $descricao = $_POST['descricao'];
 $hora_inicio = $_POST['hora_inicio'];
 $hora_fim = $_POST['hora_fim'];
 $duracao = $_POST['duracao'];
+$preco = $_POST['preco_servico'];
 
 $verificar = request("servicos?id_prestador=eq.{$id_prestador}&id=eq.{$id_servico}", "GET");
 
@@ -40,7 +41,8 @@ $dadosSalvar = [
     "hora_inicio" => $hora_inicio,
     "hora_fim" => $hora_fim,
     "imagem" => $imagem,
-    "duracao" => $duracao
+    "duracao" => $duracao,
+    "preco_servico" => $preco
 ];
 
 $edit = request("servicos?id_prestador=eq.{$id_prestador}&id=eq.{$id_servico}", "PATCH", $dadosSalvar);
