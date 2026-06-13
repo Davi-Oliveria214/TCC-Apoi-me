@@ -87,8 +87,8 @@ switch ($tipo) {
             exit;
         }
 
-        if (strlen($nova_senha) < 6) {
-            $_SESSION["mensagem"] = "A nova senha deve ter no mínimo 6 caracteres.";
+        if (strlen($nova_senha) < 8) {
+            $_SESSION["mensagem"] = "A nova senha deve ter no mínimo 8 caracteres.";
             header("Location: ../usuario.php");
             exit;
         }
@@ -190,7 +190,8 @@ switch ($tipo) {
         $response = curl_exec($ch);
 
         if (curl_errno($ch)) {
-            $_SESSION["mensagem"] = "Erro CURL: " . curl_error($ch);
+            $_SESSION["mensagem"] = "Erro ao enviar a imagem. Tente novamente com um arquivo menor.";
+            $_SESSION["tipo"] = "erro";
             header("Location: ../usuario.php");
             exit;
         }
@@ -198,7 +199,8 @@ switch ($tipo) {
         $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         if ($status != 200 && $status != 201) {
-            $_SESSION["mensagem"] = "Erro no upload (HTTP $status): $response";
+            $_SESSION["mensagem"] = "Erro ao enviar a imagem. Verifique o formato e tente novamente.";
+            $_SESSION["tipo"] = "erro";
             header("Location: ../usuario.php");
             exit;
         }
@@ -217,8 +219,10 @@ $sql = request("usuarios?id=eq.{$id_usuario}", "PATCH", $dados);
 
 if (isset($sql['error'])) {
     $_SESSION["mensagem"] = "Erro ao atualizar " . ($tipo === 'imagem_perfil' ? 'foto de perfil' : $tipo);
+    $_SESSION["tipo"] = "erro";
 } else {
-    $_SESSION["mensagem"] = ($tipo === 'imagem_perfil' ? 'Foto de perfil' : ucfirst($tipo)) . " atualizada com sucesso!!";
+    $_SESSION["mensagem"] = ($tipo === 'imagem_perfil' ? 'Foto de perfil' : ucfirst($tipo)) . " atualizada com sucesso!";
+    $_SESSION["tipo"] = "sucesso";
 }
 
 header("Location: ../usuario.php");

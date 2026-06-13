@@ -7,7 +7,6 @@ require_once(__DIR__ . '/../util/enviar_email.php');
 
 $acao = $_POST['acao'] ?? '';
 
-// AÇÃO 1 — LOGIN
 if ($acao === 'login') {
 
     if (empty($_POST['email']) || empty($_POST['senha']) || empty($_POST['chave'])) {
@@ -46,7 +45,7 @@ if ($acao === 'login') {
 
         $_SESSION['mensagem'] = 'Seu e-mail ainda não foi verificado. Verifique sua caixa de entrada.';
         $_SESSION['tipo']     = 'aviso';
-        header('Location: ../verificar_acesso.php?etapa=aviso');
+        header('Location: ../verificar_acesso.php?etapa=aviso&tipo_envio=validar');
         exit;
     }
 
@@ -164,7 +163,6 @@ if ($acao === 'cadastro') {
         exit;
     }
 
-    // Novo cadastro
     $dadosCondominio = null;
     if ($tipo_usuario === 'sindico') {
         $dadosCondominio = validarCNPJ($cnpj_condominio);
@@ -174,7 +172,6 @@ if ($acao === 'cadastro') {
     exit;
 }
 
-// AÇÃO 3 — CONTATO (formulário público)
 if ($acao === 'contato') {
 
     if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['comentario'])) {

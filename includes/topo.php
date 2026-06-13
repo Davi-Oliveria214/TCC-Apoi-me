@@ -22,7 +22,6 @@ function navAtivo($paginas)
 include_once './util/avisos.php';
 ?>
 
-<!-- HEADER -->
 <header>
     <?php
     if (!empty($_SESSION["id"])):
@@ -40,13 +39,11 @@ include_once './util/avisos.php';
     endif;
     ?>
 
-    <!-- Logo -->
     <a class="logo" href="../index.php">
         <div class="logo-marca">A</div>
         <span class="logo-texto">Apoie-me</span>
     </a>
 
-    <!-- Busca -->
     <div class="header-busca">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8" />
@@ -65,6 +62,7 @@ include_once './util/avisos.php';
             <?php if (!empty($id)) : ?>
                 <li><a href="../servicos.php" <?php echo navAtivo('servicos.php') ?>>Serviços</a></li>
                 <li><a href="../usuario.php" <?php echo navAtivo('usuario.php') ?>>Perfil</a></li>
+                <li><a href="../historico.php" <?php echo navAtivo('historico.php') ?>>Histórico</a></li>
             <?php endif; ?>
             <li><a href="../sobre.php" <?php echo navAtivo('sobre.php') ?>>Sobre</a></li>
             <li><a href="../contato.php" <?php echo navAtivo('contato.php') ?>>Contato</a></li>
@@ -97,6 +95,7 @@ include_once './util/avisos.php';
         <?php if (!empty($id)) : ?>
             <li><a href="../servicos.php" <?php echo navAtivo('servicos.php') ?>>Serviços</a></li>
             <li><a href="../usuario.php" <?php echo navAtivo('usuario.php') ?>>Perfil</a></li>
+            <li><a href="../historico.php" <?php echo navAtivo('historico.php') ?>>Histórico</a></li>
         <?php endif; ?>
         <li><a href="../sobre.php" <?php echo navAtivo('sobre.php') ?>>Sobre</a></li>
         <li><a href="../contato.php" <?php echo navAtivo('contato.php') ?>>Contato</a></li>

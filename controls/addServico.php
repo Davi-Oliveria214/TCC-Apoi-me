@@ -31,25 +31,6 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
 
     $tmp = $arquivo['tmp_name'];
     $nomeImg = $arquivo['name'];
-    $tamanho = $arquivo['size'];
-
-    // Validar extensao
-    $extensao = strtolower(pathinfo($nomeImg, PATHINFO_EXTENSION));
-    $extensoesPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-    
-    if (!in_array($extensao, $extensoesPermitidas)) {
-        $_SESSION["mensagem"] = "Tipo de arquivo nao permitido. Use: JPG, PNG, GIF ou WEBP.";
-        header("Location: ../anunciar.php");
-        exit;
-    }
-
-    // Validar tamanho (maximo 5MB)
-    $tamanhoMaximo = 5 * 1024 * 1024;
-    if ($tamanho > $tamanhoMaximo) {
-        $_SESSION["mensagem"] = "Arquivo muito grande. Maximo 5MB.";
-        header("Location: ../anunciar.php");
-        exit;
-    }
 
     $nomeFinal = uniqid() . "_" . $nomeImg;
 
@@ -57,7 +38,8 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
 
     $ch = curl_init($url);
 
-    $tipoMime = ($extensao == 'png') ? 'image/png' : ($extensao == 'gif' ? 'image/gif' : ($extensao == 'webp' ? 'image/webp' : 'image/jpeg'));
+    $extensao = pathinfo($nomeImg, PATHINFO_EXTENSION);
+    $tipoMime = ($extensao == 'png') ? 'image/png' : 'image/jpeg';
 
     curl_setopt_array($ch, [
         CURLOPT_CUSTOMREQUEST => "POST",
@@ -74,7 +56,8 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
     $response = curl_exec($ch);
 
     if (curl_errno($ch)) {
-        $_SESSION["mensagem"] = "Erro CURL: " . curl_error($ch);
+        $_SESSION["mensagem"] = "Erro ao enviar a imagem. Tente novamente com um arquivo menor.";
+        $_SESSION["tipo"] = "erro";
         header("Location: ../anunciar.php");
         exit;
     }
@@ -82,7 +65,8 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
     $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
     if ($status != 200 && $status != 201) {
-        $_SESSION["mensagem"] = "Erro no upload (HTTP $status): $response";
+        $_SESSION["mensagem"] = "Erro ao enviar a imagem. Verifique o formato e tente novamente.";
+        $_SESSION["tipo"] = "erro";
         header("Location: ../anunciar.php");
         exit;
     }
@@ -100,18 +84,21 @@ $dadosSalvar = [
     "hora_inicio" => $hora_inicio,
     "hora_fim" => $hora_fim,
     "duracao" => $duracao,
-    "preco_servico" => $_POST['preco_servico'] ?? 0,
+    "preco_servico" => (float) str_replace(['R$', ' ', '.', ','], ['', '', '', '.'], $_POST['preco_servico'] ?? 0),
     "tipo_cobrado" => $_POST['tipo_cobrado'] ?? 'Hora'
 ];
 
 $sql = request("servicos", "POST", $dadosSalvar);
 
 if (isset($sql['error'])) {
-    $_SESSION["mensagem"] = "Erro ao enviar serviço";
+    $_SESSION["mensagem"] = "Erro ao anunciar serviço. Verifique os dados e tente novamente.";
+    $_SESSION["tipo"] = "erro";
     header("Location: ../anunciar.php");
     exit;
 }
 
-$_SESSION["mensagem"] = "Serviço anúnciado com sucesso!!!";
+$_SESSION["mensagem"] = "Serviço anunciado com sucesso!";
+$_SESSION["tipo"] = "sucesso";
+
 header("Location: ../anunciar.php");
 exit;

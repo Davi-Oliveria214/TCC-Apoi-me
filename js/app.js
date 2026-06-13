@@ -153,16 +153,22 @@ function verificarSenha() {
     const s1 = document.getElementById('idSenha')?.value ?? '';
     const s2 = document.getElementById('idRptSenha')?.value ?? '';
     const span = document.getElementById('senha-match');
+    const btn = document.getElementById('btnEnviar');
     if (!span) return;
 
-    if (!s2) { span.textContent = ''; return; }
-    if (s1 === s2) {
+    const ok = s1.length >= 8 && s1 === s2;
+
+    if (!s2) {
+        span.textContent = '';
+    } else if (ok) {
         span.textContent = '✓ Senhas coincidem';
         span.style.color = '#1a7a4a';
     } else {
-        span.textContent = '✗ Senhas não coincidem';
+        span.textContent = s1.length < 8 ? 'Mínimo 8 caracteres' : '✗ Senhas não coincidem';
         span.style.color = '#c0392b';
     }
+
+    if (btn) btn.disabled = !ok;
 }
 
 /* ── Força da senha na tela verificar_acesso ─────────────── */
@@ -236,7 +242,7 @@ function toggleFaq(item) {
 
 /* ── Filtro de cards ─────────────────────────────────────── */
 function filtro(btn, local, item) {
-    $('.js-filtro').removeClass('ativo');
+    $(btn).closest('ul').find('.js-filtro').removeClass('ativo');
     $(btn).addClass('ativo');
 
     $.ajax({

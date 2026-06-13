@@ -111,15 +111,11 @@ if ($acao === 'cancelar') {
 
     $c = $contrato[0];
 
-    // Marca o contrato como cancelado (em vez de deletar)
-    $atualizar = request(
-        "contratados?id=eq.{$idContrato}",
-        'PATCH',
-        ['confirmado' => 'cancelado']
-    );
+    // Atualiza o status do contrato para cancelado (cancelamento lógico)
+    $cancelamento = request("contratados?id=eq.{$idContrato}", 'PATCH', ['confirmado' => 'cancelado']);
 
-    if (isset($atualizar['error'])) {
-        $_SESSION['mensagem'] = 'Erro ao cancelar o contrato. Tente novamente.';
+    if (isset($cancelamento['error'])) {
+        $_SESSION['mensagem'] = 'Erro ao cancelar o serviço. Tente novamente.';
         $_SESSION['tipo']     = 'erro';
         $destino = ($origem === 'prestador') ? '../anunciar.php' : '../servicos.php';
         header("Location: $destino");
@@ -223,7 +219,7 @@ if ($acao === 'excluir') {
     $del = request("servicos?id_prestador=eq.{$id}&id=eq.{$idServico}", 'DELETE');
 
     if (isset($del['error'])) {
-        $_SESSION['mensagem'] = 'Não foi possível excluir o serviço. Tente novamente.';
+        $_SESSION['mensagem'] = 'Não foi possível excluir o serviço no momento. Tente novamente mais tarde.';
         $_SESSION['tipo']     = 'erro';
     } else {
         $_SESSION['mensagem'] = 'Serviço excluído com sucesso!';

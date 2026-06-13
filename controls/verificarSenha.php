@@ -2,22 +2,29 @@
 require_once(__DIR__ . '/../includes/funcoes.php');
 exigirMetodo();
 
-$pass = $_POST['pass'];
-$rptSenha = $_POST['rptSenha'];
+require_once(__DIR__ . '/../conexao.php');
+
+$pass = $_POST['pass'] ?? '';
+$rptSenha = $_POST['rptSenha'] ?? '';
 $email = $_POST['email'] ?? $_SESSION['email_reset_aprovado'] ?? '';
 
-if (empty($_POST['nome'])) {
+$nome = $_POST['nome'] ?? '';
+if (empty($nome) && !empty($email)) {
     $res = request("usuarios?email=eq.{$email}&select=nome");
+    if (!empty($res) && !isset($res['error'])) {
+        $nome = $res[0]['nome'] ?? '';
+    }
 }
-
-$nome = $_POST['nome'] ?? $res[0]['nome'];
 
 $msg_pass = "";
 $pronto = false;
 
 if (!empty($pass)) {
-    if (stripos($pass, $nome) || stripos($pass, $email)) {
+    if (!empty($nome) && (stripos($pass, $nome) !== false || stripos($pass, $email) !== false)) {
         $msg_pass = "A senha não pode conter seu nome ou email";
+        $pronto = false;
+    } else if (strlen($pass) < 8) {
+        $msg_pass = "A senha deve ter no mínimo 8 caracteres";
         $pronto = false;
     } else if (
         !preg_match('/[A-Z]/', $pass) ||
@@ -28,7 +35,7 @@ if (!empty($pass)) {
         $msg_pass = "A senha precisa ter: letras minúsculas, maiúsculas, número e símbolo";
         $pronto = false;
     } else if ($pass != $rptSenha) {
-        $msg_pass = "As senhas não são iguais $rptSenha";
+        $msg_pass = "As senhas não são iguais";
         $pronto = false;
     } else {
         $pronto = true;

@@ -6,7 +6,7 @@ if (session_status() ===  PHP_SESSION_NONE) {
 function exigirLogin()
 {
     if (empty($_SESSION['id'])) {
-        $_SESSION['mensagem'] = "Você precisar estar logado!!";
+        $_SESSION['mensagem'] = "Você precisa estar logado!";
         header("Location: /index.php");
         exit();
     }
@@ -15,7 +15,7 @@ function exigirLogin()
 function loginFeito()
 {
     if (!empty($_SESSION['id'])) {
-        $_SESSION['mensagem'] = "Você já está logado!!";
+        $_SESSION['mensagem'] = "Você já está logado!";
         header("Location: /servicos.php");
         exit();
     }
@@ -139,6 +139,6 @@ function cadastrar($nome, $email, $senhaHash, $codigo, $img, $tipo_usuario, $dad
         exit;
     }
 
-    header("Location: ../verificar_acesso.php?etapa=aviso");
+    header("Location: ../verificar_acesso.php?etapa=aviso&tipo_envio=validar");
     exit;
 }

@@ -74,9 +74,11 @@
     margin: 0 auto;
     padding: 32px 24px 64px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
     align-items: start;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* ===== COLUNA ===== */
@@ -87,6 +89,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 /* Header da coluna */
@@ -179,6 +182,9 @@
     border-radius: 14px;
     overflow: hidden;
     transition: all 0.25s;
+    width: 100%;
+    min-height: 320px;
+    box-sizing: border-box;
 }
 
 .hi-card:hover {

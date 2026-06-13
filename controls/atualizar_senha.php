@@ -32,5 +32,5 @@ $dados = [
 $res = request("usuarios?email=eq.$email", "PATCH", $dados);
 
 $msg = urlencode("Senha alterada! Por favor, faça login novamente.");
-header("Location: ./util/limpar_sessao.php?msg=$msg");
+header("Location: ../util/limpar_sessao.php?msg=$msg");
 exit();

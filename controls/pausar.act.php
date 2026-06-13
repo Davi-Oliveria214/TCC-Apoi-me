@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . '/../includes/funcoes.php');
 exigirMetodo();
+exigirLogin();
 
 require_once(__DIR__ . '/../conexao.php');
 
@@ -24,9 +25,11 @@ $dados = [
 $resp = request("servicos?id_prestador=eq.{$id}&id=eq.{$id_servico}", "PATCH", $dados);
 
 if (isset($resp['error'])) {
-    $_SESSION["mensagem"] = "Não foi possível alterar os status do serviço.";
+    $_SESSION["mensagem"] = "Não foi possível alterar o status do serviço.";
+    $_SESSION["tipo"] = "erro";
 } else {
     $_SESSION["mensagem"] = "Status de serviço alterado com sucesso!";
+    $_SESSION["tipo"] = "sucesso";
 }
 
 header("Location: ../anunciar.php");

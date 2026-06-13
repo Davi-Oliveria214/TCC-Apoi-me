@@ -124,9 +124,11 @@
     margin: 0 auto;
     padding: 28px 24px 60px;
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: minmax(280px, 320px) 1fr;
     gap: 24px;
     align-items: start;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .sv-aside {
@@ -137,8 +139,10 @@
     top: calc(72px + 49px + 20px);
     max-height: calc(100vh - 72px - 49px - 40px);
     overflow-y: auto;
+    overflow-x: hidden;
     scrollbar-width: thin;
     scrollbar-color: rgba(176, 130, 43, 0.3) transparent;
+    min-width: 0;
 }
 
 .sv-aside::-webkit-scrollbar {
@@ -450,7 +454,7 @@
 
 .sv-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
     gap: 20px;
 }
 

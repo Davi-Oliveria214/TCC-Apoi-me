@@ -17,6 +17,8 @@ $descricao = $_POST['descricao'];
 $hora_inicio = $_POST['hora_inicio'];
 $hora_fim = $_POST['hora_fim'];
 $duracao = $_POST['duracao'];
+$preco_servico = (float) str_replace(['R$', ' ', '.', ','], ['', '', '', '.'], $_POST['preco_servico'] ?? 0);
+$tipo_cobrado = $_POST['tipo_cobrado'] ?? 'Hora';
 
 $verificar = request("servicos?id_prestador=eq.{$id_prestador}&id=eq.{$id_servico}", "GET");
 
@@ -26,62 +28,12 @@ if (empty($verificar) || isset($verificar['error'])) {
     exit;
 }
 
-$bucket = $_ENV['BALDE'];
-$imagem = $verificar[0]['imagem'];
-
-// Verificar se ha upload de nova imagem
-if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
-    $arquivo = $_FILES['imagem'];
-    $tmp = $arquivo['tmp_name'];
-    $nomeImg = $arquivo['name'];
-    $tamanho = $arquivo['size'];
-
-    $extensao = strtolower(pathinfo($nomeImg, PATHINFO_EXTENSION));
-    $extensoesPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-    
-    if (!in_array($extensao, $extensoesPermitidas)) {
-        $_SESSION["mensagem"] = "Tipo de arquivo nao permitido. Use: JPG, PNG, GIF ou WEBP.";
-        header("Location: ../anunciar.php");
-        exit;
-    }
-
-    // Validar tamanho (maximo 5MB)
-    $tamanhoMaximo = 5 * 1024 * 1024;
-    if ($tamanho > $tamanhoMaximo) {
-        $_SESSION["mensagem"] = "Arquivo muito grande. Maximo 5MB.";
-        header("Location: ../anunciar.php");
-        exit;
-    }
-
-    $nomeFinal = uniqid() . "_" . $nomeImg;
-    $url = trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/$bucket/$nomeFinal";
-    $ch = curl_init($url);
-
-    $tipoMime = ($extensao == 'png') ? 'image/png' : ($extensao == 'gif' ? 'image/gif' : ($extensao == 'webp' ? 'image/webp' : 'image/jpeg'));
-
-    curl_setopt_array($ch, [
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_SSL_VERIFYPEER => false,
-        CURLOPT_SSL_VERIFYHOST => false,
-        CURLOPT_HTTPHEADER => [
-            "Authorization: Bearer " . trim($_ENV['BALDE_KEY']),
-            "Content-Type: " . $tipoMime
-        ],
-        CURLOPT_POSTFIELDS => file_get_contents($tmp)
-    ]);
-
-    $response = curl_exec($ch);
-    $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-    if ($status != 200 && $status != 201) {
-        $_SESSION["mensagem"] = "Erro no upload de imagem (HTTP $status).";
-        header("Location: ../anunciar.php");
-        exit;
-    }
-
-    $imagem = $_ENV['SUPABASE_URL'] . "/storage/v1/object/public/$bucket/$nomeFinal";
+$data = date("Y/m/d");
+if (!empty($_POST['data'])) {
+    $data = $_POST['data'];
 }
+
+$imagem = $_POST['imagem'] ?? $verificar[0]['imagem'];
 
 $dadosSalvar = [
     "nome" => $nome,
@@ -91,18 +43,20 @@ $dadosSalvar = [
     "hora_fim" => $hora_fim,
     "imagem" => $imagem,
     "duracao" => $duracao,
-    "preco_servico" => $_POST['preco_servico'] ?? $verificar[0]['preco_servico'],
-    "tipo_cobrado" => strtolower($_POST['tipo_cobrado'] ?? $verificar[0]['tipo_cobrado'])
+    "preco_servico" => $preco_servico,
+    "tipo_cobrado" => $tipo_cobrado
 ];
 
 $edit = request("servicos?id_prestador=eq.{$id_prestador}&id=eq.{$id_servico}", "PATCH", $dadosSalvar);
 
 if (isset($edit['error'])) {
-    $_SESSION["mensagem"] = "Erro ao editar serviço";
+    $_SESSION["mensagem"] = "Erro ao editar serviço. Tente novamente.";
+    $_SESSION["tipo"] = "erro";
     header("Location: ../anunciar.php");
     exit;
 }
 
-$_SESSION["mensagem"] = "Serviço editado com sucesso!!!";
+$_SESSION["mensagem"] = "Serviço editado com sucesso!";
+$_SESSION["tipo"] = "sucesso";
 header("Location: ../anunciar.php");
 exit;

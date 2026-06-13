@@ -82,94 +82,15 @@ include('./includes/topo.php');
 
     <div class="an-grid local-filtro">
         <?php
-        $sql = request("servicos?id_prestador=eq.{$id}");
+        require_once('./includes/card_servico.php');
+        $sql = request("servicos?id_prestador=eq.{$id}&select=*,categorias(nome),usuarios(nome)");
         if (!empty($sql) && !isset($sql['error'])):
             foreach ($sql as $s):
-                $horaI  = !empty($s['hora_inicio']) ? date("H:i", strtotime($s['hora_inicio'])) : '--:--';
-                $horaF  = !empty($s['hora_fim'])    ? date("H:i", strtotime($s['hora_fim']))    : '--:--';
-                $dur    = !empty($s['duracao'])      ? date("H:i", strtotime($s['duracao']))      : '--:--';
-                $ativo  = $s['status'];
+                // Busca reservas específicas deste serviço
                 $reservados = request("contratados?id_servico=eq.{$s['id']}&select=count");
-                $numRes = $reservados[0]['count'] ?? 0;
-
-                $precoFmt = number_format($s['preco_servico'] ?? 0, 2, ',', '.');
-                $tipo_cobrado = $s['tipo_cobrado'] ?? 'Hora';
-        ?>
-                <div class="an-card">
-                    <span class="an-badge <?php echo $ativo ? 'an-badge--ativo' : 'an-badge--pausado' ?>">
-                        <?php echo $ativo ? 'Ativo' : 'Pausado' ?>
-                    </span>
-
-                    <div class="an-card-img">
-                        <img src="<?php echo htmlspecialchars($s['imagem']) ?>" alt="<?php echo htmlspecialchars($s['nome']) ?>">
-                    </div>
-
-                    <div class="an-card-corpo">
-                        <h3><?php echo htmlspecialchars($s['nome']) ?></h3>
-                        <p><?php echo htmlspecialchars($s['descricao']) ?></p>
-
-                        <div class="an-card-meta">
-                            <div class="an-meta-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="12" y1="1" x2="12" y2="23"></line>
-                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                                </svg>
-                                <span>R$ <strong><?php echo $precoFmt ?></strong> / <?php echo strtolower($tipo_cobrado) ?></span>
-                            </div>
-
-                            <div class="an-meta-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M12 6v6l4 2" />
-                                </svg>
-                                <span><?php echo $horaI . ' – ' . $horaF ?></span>
-                            </div>
-                            <div class="an-meta-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                    <circle cx="9" cy="7" r="4" />
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                </svg>
-                                <span><strong><?php echo $numRes ?></strong> reservas</span>
-                            </div>
-                        </div>
-
-                        <div class="an-card-acoes">
-                            <button class="an-btn-acao an-btn-editar"
-                                onclick="abrirModal('editar','<?php echo $s['id'] ?>')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
-                                    <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
-                                </svg>
-                                Editar
-                            </button>
-                            <button class="an-btn-acao an-btn-pausar"
-                                onclick="abrirModal('pausar','<?php echo $s['id'] ?>')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <?php if ($ativo): ?>
-                                        <rect x="6" y="4" width="4" height="16" />
-                                        <rect x="14" y="4" width="4" height="16" />
-                                    <?php else: ?>
-                                        <polygon points="5,3 19,12 5,21 5,3" />
-                                    <?php endif; ?>
-                                </svg>
-                                <?php echo $ativo ? 'Pausar' : 'Ativar' ?>
-                            </button>
-                            <button class="an-btn-acao an-btn-excluir"
-                                onclick="abrirModal('excluir','<?php echo $s['id'] ?>')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="3,6 5,6 21,6" />
-                                    <path d="M19 6l-1 14H6L5 6" />
-                                    <path d="M10 11v6M14 11v6" />
-                                    <path d="M9 6V4h6v2" />
-                                </svg>
-                                Excluir
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            <?php
+                $s['num_reservas'] = $reservados[0]['count'] ?? 0;
+                
+                renderCardServico($s, 'anunciar', $_SESSION['id']);
             endforeach;
         else:
             ?>

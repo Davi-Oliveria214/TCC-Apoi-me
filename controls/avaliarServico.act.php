@@ -11,7 +11,7 @@ $comentario = trim($_POST['comentario']   ?? '');
 
 if ($nota < 1 || $nota > 5) {
     $_SESSION['mensagem'] = 'Escolha ao menos uma estrela para a nota!';
-    $_SESSION['tipo']     = 'aviso';
+    $_SESSION['tipo'] = 'aviso';
     header('Location: ../historico.php');
     exit;
 }
@@ -47,12 +47,12 @@ $hora = $contrato[0]['hora'] ?? '';
 $dia = $contrato[0]['dia'] ?? '';
 
 $dadosSalvar = [
-    'nota'           => $nota,
-    'comentario'     => !empty($comentario) ? $comentario : 'Nenhum comentário',
-    'id_servico'     => $id_servico,
-    'id_cliente'     => $id_cliente,
-    'id_contrato'    => $id_contrato,
-    'nome_servico'   => $nomeServico,
+    'nota' => $nota,
+    'comentario' => !empty($comentario) ? $comentario : 'Nenhum comentário',
+    'id_servico' => $id_servico,
+    'id_cliente' => $id_cliente,
+    'id_contrato' => $id_contrato,
+    'nome_servico' => $nomeServico,
     'nome_prestador' => $nomePrestador,
     'nome_cliente' => $nomeCliente,
     'horario' => $hora,
@@ -63,7 +63,7 @@ $avaliar = request('avaliacoes', 'POST', $dadosSalvar);
 
 if (!$avaliar || isset($avaliar['error'])) {
     $_SESSION['mensagem'] = 'Erro ao enviar avaliação. Tente novamente.';
-    $_SESSION['tipo']     = 'erro';
+    $_SESSION['tipo'] = 'erro';
     header('Location: ../historico.php');
     exit;
 }
@@ -74,7 +74,7 @@ $status = request("contratados?id=eq.$id_contrato", 'PATCH', [
 
 if (!$status || isset($status['error'])) {
     $_SESSION['mensagem'] = 'Avaliação enviada, mas houve um problema ao atualizar o status.';
-    $_SESSION['tipo']     = 'aviso';
+    $_SESSION['tipo'] = 'aviso';
 } else {
     $todasNotas = request(
         "avaliacoes?id_servico=eq.$id_servico&select=nota",
@@ -82,17 +82,18 @@ if (!$status || isset($status['error'])) {
     );
 
     if (!empty($todasNotas) && !isset($todasNotas['error'])) {
+        $count = count($todasNotas);
         $soma  = array_sum(array_column($todasNotas, 'nota'));
-        $media = round($soma / count($todasNotas), 1);
+        $media = ($count > 0) ? round($soma / $count, 1) : 0;
 
         request("servicos?id=eq.$id_servico", 'PATCH', [
             'nota_geral' => $media,
-            'qtd_avaliados'    => count($todasNotas),
+            'qtd_avaliados' => $count,
         ]);
     }
 
     $_SESSION['mensagem'] = 'Avaliação enviada com sucesso!';
-    $_SESSION['tipo']     = 'sucesso';
+    $_SESSION['tipo'] = 'sucesso';
 }
 
 header('Location: ../historico.php');

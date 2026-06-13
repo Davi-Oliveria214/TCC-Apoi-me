@@ -41,5 +41,5 @@ $_SESSION['tipo_codigo'] = $tipo_codigo;
 $fluxo = $usuario[0]['email_verificado'] ? 'recuperar' : 'cadastro';
 enviarEmail($email, $nome, $codigo, $fluxo);
 
-header("Location: ../verificar_acesso.php?etapa=aviso");
+    header("Location: ../verificar_acesso.php?etapa=aviso&tipo_envio=" . ($categoria === 'redefinir' ? 'redefinir' : 'validar'));
 exit;

@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . '/../includes/funcoes.php');
 exigirMetodo();
+exigirLogin();
 
 require_once(__DIR__ . '/../conexao.php');
 
@@ -43,12 +44,28 @@ switch ($campo) {
         $msgErro = "Erro ao criar aviso!";
         break;
     case 'editar':
-        $resp = request("avisos?id=eq.{$_POST['id_aviso']}", "PATCH", $dados);
+        // Verifica se o aviso pertence ao síndico atual
+        $avisoExistente = request("avisos?id=eq.{$_POST['id_aviso']}&id_usuario=eq.{$_SESSION['id']}&select=id");
+        if (empty($avisoExistente) || isset($avisoExistente['error'])) {
+            $_SESSION["mensagem"] = "Você não tem permissão para editar este aviso.";
+            $_SESSION["tipo"] = "erro";
+            header("Location: ../usuario.php");
+            exit;
+        }
+        $resp = request("avisos?id=eq.{$_POST['id_aviso']}&id_usuario=eq.{$_SESSION['id']}", "PATCH", $dados);
         $msgSucesso = "Aviso atualizado com sucesso!";
         $msgErro = "Erro ao atualizar aviso!";
         break;
     case 'apagar':
-        $resp = request("avisos?id=eq.{$_POST['id_aviso']}", "DELETE");
+        // Verifica se o aviso pertence ao síndico atual
+        $avisoExistente = request("avisos?id=eq.{$_POST['id_aviso']}&id_usuario=eq.{$_SESSION['id']}&select=id");
+        if (empty($avisoExistente) || isset($avisoExistente['error'])) {
+            $_SESSION["mensagem"] = "Você não tem permissão para apagar este aviso.";
+            $_SESSION["tipo"] = "erro";
+            header("Location: ../usuario.php");
+            exit;
+        }
+        $resp = request("avisos?id=eq.{$_POST['id_aviso']}&id_usuario=eq.{$_SESSION['id']}", "DELETE");
         $msgSucesso = "Aviso apagado com sucesso!";
         $msgErro = "Erro ao apagar aviso!";
         break;
@@ -60,8 +77,10 @@ switch ($campo) {
 
 if (isset($resp['error'])) {
     $_SESSION["mensagem"] = $msgErro;
+    $_SESSION["tipo"] = "erro";
 } else {
     $_SESSION["mensagem"] = $msgSucesso;
+    $_SESSION["tipo"] = "sucesso";
 }
 
 header("Location: ../usuario.php");

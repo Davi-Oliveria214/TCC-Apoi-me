@@ -30,7 +30,7 @@ include('./includes/topo.php');
     <div class="hi-grid">
 
         <!-- ══════════════════════════════════════════════════
-             COLUNA 1 — CONTRATADOS (aguardando avaliação)
+             COLUNA 1 — CONTRATADOS
         ═══════════════════════════════════════════════════════ -->
         <section class="hi-coluna">
             <div class="hi-coluna-header">
@@ -313,9 +313,9 @@ include('./includes/topo.php');
                 <?php
                 $avaliados = request(
                     "avaliacoes"
-                        . "?select=id,nota,comentario,nome_servico,nome_prestador"
+                        . "?select=id,nota,comentario,nome_servico,nome_prestador,data,horario"
                         . ",servicos(imagem)"
-                        . ",contratados(dia,hora,preco_contrato,nome_servico,nome_prestador)"
+                        . ",contratados(preco_contrato,dia,hora)"
                         . "&id_cliente=eq.$id"
                         . "&order=id.desc",
                     "GET"
@@ -335,12 +335,12 @@ include('./includes/topo.php');
                         $comentario  = $a['comentario']                      ?? '';
                         $imagem      = $a['servicos']['imagem']              ?? '';
                         $preco       = $a['contratados']['preco_contrato']   ?? 0;
-                        $dia         = !empty($a['contratados']['dia'])
-                            ? date('d/m/Y', strtotime($a['contratados']['dia']))
-                            : '—';
-                        $hora        = !empty($a['contratados']['hora'])
-                            ? date('H:i', strtotime($a['contratados']['hora']))
-                            : '—';
+
+                        $dataBruta   = !empty($a['data']) ? $a['data'] : ($a['contratados']['dia'] ?? '');
+                        $horaBruta   = !empty($a['horario']) ? $a['horario'] : ($a['contratados']['hora'] ?? '');
+
+                        $dia         = !empty($dataBruta) ? date('d/m/Y', strtotime($dataBruta)) : '—';
+                        $hora        = !empty($horaBruta) ? date('H:i', strtotime($horaBruta)) : '—';
                 ?>
                         <div class="hi-card">
                             <div class="hi-card-img">
