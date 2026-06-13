@@ -191,9 +191,9 @@ $contratados = request(
 $vendas = request(
 	                    "contratados"
 	                        . "?select=id,id_cliente,hora,dia,confirmado,avaliar"
-                        . ",nome_servico,nome_cliente,preco_contrato"
-                        . ",servicos(imagem)"
-                        . ",avaliacoes(nota,comentario)"
+                        . ",nome_servico,nome_cliente,preco_contrato,observacao"
+                        . ",servicos(imagem,nome,descricao,tipo_cobrado)"
+                        . ",avaliacoes(id,nota,comentario,editado_em)"
                         . "&id_prestador=eq.$id"
                         . "&order=dia.desc",
                     "GET"
@@ -287,7 +287,7 @@ $vendas = request(
                                         </button>
                                     </form>
                                     <button class="hi-btn-avaliar hi-btn-avaliar--venda"
-                                        onclick="abrirModal('ver_avaliacao','<?php echo $v['id'] ?>')">
+                                        onclick="abrirModal('<?php echo $foiAvaliado ? 'ver_avaliacao_venda' : 'detalhes_venda' ?>','<?php echo $v['id'] ?>')">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                                             <circle cx="12" cy="12" r="3" />

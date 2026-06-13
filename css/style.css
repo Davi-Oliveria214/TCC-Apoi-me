@@ -8,6 +8,8 @@
 @import "./modais.css";
 @import "./verificar_acesso.css";
 @import "./usuario.css";
+@import "./mensagens.css";
+@import "./meus_comentarios.css";
 
 :root {
   --musgo: #0c3a3f;

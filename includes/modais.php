@@ -352,11 +352,149 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                     <button type="button" onclick="fecharModais()" class="btn-modais">Voltar</button>
                 </div>
             </div>
-        <?php endif; ?>
-        <?php
+    <?php endif; ?>
+
+    <?php
 
     /* =====================================================================
-   DETALHES DO AGENDAMENTO
+   DETALHES DA VENDA (PARA PRESTADOR)
+   ===================================================================== */
+    elseif ($tipo === 'detalhes_venda'):
+        $venda = request("contratados?id=eq.$id&select=id,dia,hora,confirmado,observacao,preco_contrato,nome_cliente,servicos(nome,descricao,imagem,tipo_cobrado)");
+        if (empty($venda) || isset($venda['error'])): ?>
+            <div class="modal-content modal-alerta">
+                <div class="modal-header"><h3>Erro</h3></div>
+                <div class="modal-body"><p>Venda não encontrada.</p></div>
+                <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
+            </div>
+        <?php else:
+            $v = $venda[0];
+            $s = $v['servicos'];
+            $dataFmt = date('d/m/Y', strtotime($v['dia']));
+            $horaFmt = date('H:i', strtotime($v['hora']));
+            $statusMap = ['pendente' => 'Pendente', 'confirmado' => 'Confirmado', 'concluido' => 'Concluído', 'cancelado' => 'Cancelado'];
+            $status = $statusMap[$v['confirmado']] ?? ucfirst($v['confirmado'] ?? 'Pendente');
+        ?>
+            <div class="modal-content modal-padrao">
+                <div class="modal-header"><h3>Detalhes da Venda</h3></div>
+                <div class="modal-body">
+                    <img src="<?= esc($s['imagem']) ?>" class="modal-img-destaque" alt="<?= esc($s['nome']) ?>">
+                    <div class="detalhes-lista">
+                        <div class="detalhe-item">
+                            <label>Serviço</label>
+                            <p><?= esc($s['nome']) ?></p>
+                        </div>
+                        <div class="detalhe-item">
+                            <label>Descrição</label>
+                            <p><?= esc($s['descricao']) ?></p>
+                        </div>
+                        <div class="input-row">
+                            <div class="detalhe-item">
+                                <label>Cliente</label>
+                                <p><?= esc($v['nome_cliente']) ?></p>
+                            </div>
+                            <div class="detalhe-item">
+                                <label>Data</label>
+                                <p><?= $dataFmt ?></p>
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="detalhe-item">
+                                <label>Hora</label>
+                                <p><?= $horaFmt ?></p>
+                            </div>
+                            <div class="detalhe-item">
+                                <label>Status</label>
+                                <p class="status-badge"><?= esc($status) ?></p>
+                            </div>
+                        </div>
+                        <div class="detalhe-item">
+                            <label>Observação</label>
+                            <p><?= !empty($v['observacao']) ? esc($v['observacao']) : '—' ?></p>
+                        </div>
+                        <div class="detalhe-item">
+                            <label>Valor</label>
+                            <p>R$ <?= number_format($v['preco_contrato'] ?? 0, 2, ',', '.') ?> / <?= esc($s['tipo_cobrado'] ?? 'serviço') ?></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="fecharModais()" class="btn-modais">Entendi</button>
+                </div>
+            </div>
+        <?php endif; ?>
+
+    <?php
+
+    /* =====================================================================
+   VER AVALIAÇÃO DA VENDA (PARA PRESTADOR)
+   ===================================================================== */
+    elseif ($tipo === 'ver_avaliacao_venda'):
+        $venda = request("contratados?id=eq.$id&select=id,dia,hora,confirmado,observacao,preco_contrato,nome_cliente,servicos(nome,imagem,tipo_cobrado),avaliacoes(id,nota,comentario,editado_em,nome_cliente)");
+        if (empty($venda) || isset($venda['error']) || empty($venda[0]['avaliacoes'])): ?>
+            <div class="modal-content modal-alerta">
+                <div class="modal-header"><h3>Erro</h3></div>
+                <div class="modal-body"><p>Avaliação não encontrada para esta venda.</p></div>
+                <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
+            </div>
+        <?php else:
+            $v = $venda[0];
+            $av = $v['avaliacoes'][0];
+            $s = $v['servicos'];
+            $dataFmt = date('d/m/Y', strtotime($v['dia']));
+            $horaFmt = date('H:i', strtotime($v['hora']));
+        ?>
+            <div class="modal-content modal-padrao">
+                <div class="modal-header"><h3>Avaliação Recebida</h3></div>
+                <div class="modal-body">
+                    <div class="mini-card-servico" style="margin-bottom: 12px;">
+                        <div style="flex: 1;">
+                            <small style="text-transform: uppercase; letter-spacing: 1px; color: var(--dourado-palido); font-size: 10px; font-weight: 700; display: block; margin-bottom: 2px;">Serviço Avaliado</small>
+                            <strong style="font-size: 16px;"><?= esc($s['nome']) ?></strong>
+                        </div>
+                    </div>
+                    <div class="star-rating" style="padding: 10px 0 16px;">
+                        <div class="stars">
+                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                <span class="star <?= $i <= $av['nota'] ? 'active' : '' ?>" style="cursor: default; pointer-events: none;">★</span>
+                            <?php endfor; ?>
+                        </div>
+                        <span class="star-label">Nota: <?= $av['nota'] ?> de 5</span>
+                    </div>
+                    <div class="detalhes-lista">
+                        <div class="input-row" style="margin-bottom: 0;">
+                            <div class="detalhe-item">
+                                <label>Cliente</label>
+                                <p><?= esc($av['nome_cliente'] ?? $v['nome_cliente']) ?></p>
+                            </div>
+                            <div class="detalhe-item">
+                                <label>Data da Realização</label>
+                                <p><?= $dataFmt ?> às <?= $horaFmt ?></p>
+                            </div>
+                        </div>
+                        <div class="input-group" style="margin-top: 16px;">
+                            <label>Comentário</label>
+                            <div class="comentario-exibicao">
+                                <?= nl2br(esc($av['comentario'] ?? 'Nenhum comentário.')) ?>
+                            </div>
+                        </div>
+                        <?php if (!empty($av['editado_em'])): ?>
+                            <small style="color: var(--cinza); margin-top: 8px; display: block;">
+                                Editado em: <?= date('d/m/Y H:i', strtotime($av['editado_em'])) ?>
+                            </small>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="fecharModais()" class="btn-modais">Voltar</button>
+                </div>
+            </div>
+        <?php endif; ?>
+
+    <?php
+
+    /* =====================================================================
+   PAUSAR / ATIVAR SERVIÇO
    ===================================================================== */
     elseif ($tipo === 'detalhes'):
         $contrato = request("contratados?id=eq.$id&select=dia,hora,confirmado,observacao,preco_contrato,servicos(nome,descricao,imagem,tipo_cobrado)");
@@ -1204,6 +1342,27 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                 </form>
             </div>
         </div>
+    <?php
+    /* =====================================================================
+   DESFAZER MODERAÇÃO
+   ===================================================================== */
+    elseif ($tipo === 'desfazer_moderacao'): ?>
+        <form action="../controls/comentario.act.php" method="post" class="modal-content modal-alerta ativar-load">
+            <input type="hidden" name="id_comentario" value="<?= $id ?>">
+            <input type="hidden" name="acao" value="desfazer_moderar">
+
+            <div class="modal-header">
+                <h3>Desfazer moderação?</h3>
+            </div>
+            <div class="modal-body">
+                <p>O comentário original voltará a ser exibido para todos os usuários.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais">Sim, restaurar</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
+            </div>
+        </form>
+
     <?php
     else: ?>
         <div class="modal-content modal-alerta">
