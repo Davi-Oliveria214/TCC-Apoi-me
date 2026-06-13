@@ -328,15 +328,22 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                             </div>
                             <div class="detalhe-item">
                                 <label>Horário</label>
-                                <p><?php echo $horaFmt ?></p>
+                                <p><?= $horaFmt ?></p>
                             </div>
                         </div>
 
-                        <div class="detalhe-item" style="margin-top: 8px;">
-                            <label>Comentário do Morador</label>
-                            <p style="background: rgba(255, 255, 255, 0.03); padding: 14px; border-radius: 12px; border: 1px solid rgba(176, 130, 43, 0.15); font-style: italic; color: rgba(245, 230, 192, 0.85); line-height: 1.6;">
-                                "<?= esc($av['comentario'] ?? 'Nenhum comentário preenchido.') ?>"
-                            </p>
+                        <?php if (!empty($av['editado_em'])): ?>
+                            <div class="detalhe-item" style="margin-top: 8px;">
+                                <label>Última edição</label>
+                                <p style="font-size: 12px; color: var(--cinza);">Editado em <?= date('d/m/Y \à\s H:i', strtotime($av['editado_em'])) ?></p>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="input-group" style="margin-top: 16px;">
+                            <label>Comentário</label>
+                            <div class="comentario-exibicao">
+                                <?= nl2br(esc($av['comentario'] ?? 'Nenhum comentário.')) ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -774,6 +781,115 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
 
     <?php
 
+    /* =====================================================================
+   EDITAR AVALIAÇÃO (COMENTÁRIO)
+   ===================================================================== */
+    elseif ($tipo === 'editar_comentario'):
+        $avaliacao = request("avaliacoes?id=eq.$id");
+        if (empty($avaliacao) || isset($avaliacao['error'])): ?>
+            <div class="modal-content modal-alerta">
+                <div class="modal-header"><h3>Erro</h3></div>
+                <div class="modal-body"><p>Comentário não encontrado.</p></div>
+                <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
+            </div>
+        <?php else:
+            $av = $avaliacao[0];
+            if ($av['id_cliente'] != $_SESSION['id']): ?>
+                <div class="modal-content modal-alerta">
+                    <div class="modal-header"><h3>Acesso Negado</h3></div>
+                    <div class="modal-body"><p>Você só pode editar seus próprios comentários.</p></div>
+                    <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
+                </div>
+            <?php else: ?>
+                <form action="../controls/comentario.act.php" method="post" class="modal-content modal-padrao ativar-load">
+                    <input type="hidden" name="acao" value="editar">
+                    <input type="hidden" name="id_comentario" value="<?= esc($id) ?>">
+
+                    <div class="modal-header">
+                        <h3>Editar Comentário</h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="star-rating">
+                            <input type="hidden" name="nota" class="nota-input" value="<?= $av['nota'] ?>" required>
+                            <div class="stars">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <span class="star <?= $i <= $av['nota'] ? 'active' : '' ?>" data-value="<?= $i ?>">★</span>
+                                <?php endfor; ?>
+                            </div>
+                            <span class="star-label">Altere sua nota se desejar</span>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Seu comentário</label>
+                            <textarea class="comment-area" name="comentario" maxlength="500" required
+                                placeholder="Como foi sua experiência?"><?= esc($av['comentario']) ?></textarea>
+                            <div class="char-count"><?= strlen($av['comentario']) ?> / 500</div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn-modais">Salvar Alterações</button>
+                        <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
+                    </div>
+                </form>
+            <?php endif;
+        endif;
+
+    /* =====================================================================
+   EXCLUIR AVALIAÇÃO (COMENTÁRIO)
+   ===================================================================== */
+    elseif ($tipo === 'excluir_comentario'): ?>
+        <form action="../controls/comentario.act.php" method="post" class="modal-content modal-alerta ativar-load">
+            <input type="hidden" name="acao" value="excluir">
+            <input type="hidden" name="id_comentario" value="<?= esc($id) ?>">
+
+            <div class="modal-header">
+                <h3>Excluir Comentário?</h3>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja remover permanentemente seu comentário e avaliação?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais btn-modais--danger">Sim, excluir</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
+            </div>
+        </form>
+
+    <?php
+    /* =====================================================================
+   MODERAR AVALIAÇÃO (PRESTADOR)
+   ===================================================================== */
+    elseif ($tipo === 'moderar_comentario'): ?>
+        <form action="../controls/comentario.act.php" method="post" class="modal-content modal-alerta ativar-load">
+            <input type="hidden" name="acao" value="moderar">
+            <input type="hidden" name="id_comentario" value="<?= esc($id) ?>">
+
+            <div class="modal-header">
+                <h3>Moderar Comentário</h3>
+            </div>
+            <div class="modal-body">
+                <p>Você está prestes a remover um comentário feito em seu serviço. Por favor, selecione o motivo:</p>
+                
+                <div class="input-group">
+                    <select name="motivo" required>
+                        <option value="">Selecione um motivo...</option>
+                        <option value="Linguagem ofensiva">Linguagem ofensiva</option>
+                        <option value="Spam">Spam</option>
+                        <option value="Conteúdo impróprio">Conteúdo impróprio</option>
+                        <option value="Informação falsa">Informação falsa</option>
+                        <option value="Outro motivo">Outro motivo</option>
+                    </select>
+                </div>
+                <p><small>Esta ação removerá o comentário da plataforma.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn-modais btn-modais--danger">Remover Comentário</button>
+                <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
+            </div>
+        </form>
+
+    <?php
     /* =====================================================================
    EDITAR Foto de perfil
    ===================================================================== */

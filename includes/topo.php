@@ -63,6 +63,7 @@ include_once './util/avisos.php';
                 <li><a href="../servicos.php" <?php echo navAtivo('servicos.php') ?>>Serviços</a></li>
                 <li><a href="../usuario.php" <?php echo navAtivo('usuario.php') ?>>Perfil</a></li>
                 <li><a href="../historico.php" <?php echo navAtivo('historico.php') ?>>Histórico</a></li>
+                <li><a href="../mensagens.php" <?php echo navAtivo('mensagens.php') ?>>Mensagens</a></li>
             <?php endif; ?>
             <li><a href="../sobre.php" <?php echo navAtivo('sobre.php') ?>>Sobre</a></li>
             <li><a href="../contato.php" <?php echo navAtivo('contato.php') ?>>Contato</a></li>
@@ -96,6 +97,7 @@ include_once './util/avisos.php';
             <li><a href="../servicos.php" <?php echo navAtivo('servicos.php') ?>>Serviços</a></li>
             <li><a href="../usuario.php" <?php echo navAtivo('usuario.php') ?>>Perfil</a></li>
             <li><a href="../historico.php" <?php echo navAtivo('historico.php') ?>>Histórico</a></li>
+                <li><a href="../mensagens.php" <?php echo navAtivo('mensagens.php') ?>>Mensagens</a></li>
         <?php endif; ?>
         <li><a href="../sobre.php" <?php echo navAtivo('sobre.php') ?>>Sobre</a></li>
         <li><a href="../contato.php" <?php echo navAtivo('contato.php') ?>>Contato</a></li>

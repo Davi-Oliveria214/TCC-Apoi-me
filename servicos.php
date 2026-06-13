@@ -145,7 +145,11 @@ include('./includes/topo.php');
                                             onclick="abrirModal('detalhes','<?php echo  $res['id'] ?>')">
                                             Detalhes
                                         </button>
-                                        <a href="./mensagens.php" class="sv-btn-sm sv-btn-chat">Chat</a>
+                                        <form action="controls/mensagens.act.php" method="POST" style="display:inline;">
+                                            <input type="hidden" name="acao" value="iniciar">
+                                            <input type="hidden" name="id_destinatario" value="<?= $res['servicos']['id_prestador'] ?>">
+                                            <button type="submit" class="sv-btn-sm sv-btn-chat" style="border:none; cursor:pointer;">Chat</button>
+                                        </form>
                                         <button class="sv-btn-sm sv-btn-cancelar"
                                             onclick="abrirModal('cancelar','<?php echo  $res['id'] ?>')">
                                             Cancelar
@@ -190,7 +194,7 @@ include('./includes/topo.php');
                         renderCardServico($servico, 'publico', $_SESSION['id'] ?? null);
                     endforeach;
                 else:
-                    ?>
+                ?>
                     <div class="sv-vazio-grid">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="11" cy="11" r="8" />

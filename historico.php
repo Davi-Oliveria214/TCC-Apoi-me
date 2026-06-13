@@ -49,9 +49,9 @@ include('./includes/topo.php');
 
             <div class="hi-lista">
                 <?php
-                $contratados = request(
-                    "contratados"
-                        . "?select=id,hora,dia,confirmado,observacao"
+$contratados = request(
+	                    "contratados"
+	                        . "?select=id,id_prestador,hora,dia,confirmado,observacao"
                         . ",nome_servico,nome_prestador,preco_contrato"
                         . ",servicos(imagem,descricao)"
                         . "&id_cliente=eq.$id"
@@ -133,13 +133,23 @@ include('./includes/topo.php');
                                     </span>
                                 </div>
 
-                                <button class="hi-btn-avaliar"
-                                    onclick="abrirModal('avaliar','<?php echo $c['id'] ?>')">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2" />
-                                    </svg>
-                                    Avaliar serviço
-                                </button>
+                                <div class="hi-card-acoes">
+                                    <form action="controls/mensagens.act.php" method="POST" style="display:inline;">
+                                        <input type="hidden" name="acao" value="iniciar">
+                                        <input type="hidden" name="id_destinatario" value="<?= $c['id_prestador'] ?>">
+                                        <button type="submit" class="hi-btn-chat-hist" title="Conversar com Prestador">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                            Chat
+                                        </button>
+                                    </form>
+                                    <button class="hi-btn-avaliar"
+                                        onclick="abrirModal('avaliar','<?php echo $c['id'] ?>')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2" />
+                                        </svg>
+                                        Avaliar
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     <?php
@@ -178,9 +188,9 @@ include('./includes/topo.php');
 
             <div class="hi-lista">
                 <?php
-                $vendas = request(
-                    "contratados"
-                        . "?select=id,hora,dia,confirmado,avaliar"
+$vendas = request(
+	                    "contratados"
+	                        . "?select=id,id_cliente,hora,dia,confirmado,avaliar"
                         . ",nome_servico,nome_cliente,preco_contrato"
                         . ",servicos(imagem)"
                         . ",avaliacoes(nota,comentario)"
@@ -267,14 +277,35 @@ include('./includes/topo.php');
                                     </span>
                                 </div>
 
-                                <button class="hi-btn-avaliar hi-btn-avaliar--venda"
-                                    onclick="abrirModal('ver_avaliacao','<?php echo $v['id'] ?>')">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                        <circle cx="12" cy="12" r="3" />
-                                    </svg>
-                                    <?php echo $foiAvaliado ? 'Ver avaliação' : 'Ver detalhes' ?>
-                                </button>
+                                <div class="hi-card-acoes">
+                                    <form action="controls/mensagens.act.php" method="POST" style="display:inline;">
+                                        <input type="hidden" name="acao" value="iniciar">
+                                        <input type="hidden" name="id_destinatario" value="<?= $v['id_cliente'] ?>">
+                                        <button type="submit" class="hi-btn-chat-hist" title="Conversar com Cliente">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                            Chat
+                                        </button>
+                                    </form>
+                                    <button class="hi-btn-avaliar hi-btn-avaliar--venda"
+                                        onclick="abrirModal('ver_avaliacao','<?php echo $v['id'] ?>')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                            <circle cx="12" cy="12" r="3" />
+                                        </svg>
+                                        <?php echo $foiAvaliado ? 'Ver avaliação' : 'Ver detalhes' ?>
+                                    </button>
+                                    <?php if ($foiAvaliado && $nota !== null): ?>
+                                        <button class="hi-btn-avaliar hi-btn-avaliar--mod"
+                                            onclick="abrirModal('moderar_comentario','<?php echo $v['avaliacoes'][0]['id'] ?? '' ?>')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                                <line x1="12" y1="8" x2="12" y2="12" />
+                                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                                            </svg>
+                                            Moderar
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     <?php
@@ -417,14 +448,34 @@ include('./includes/topo.php');
                                     </span>
                                 </div>
 
-                                <button class="hi-btn-avaliar hi-btn-avaliar--ver"
-                                    onclick="abrirModal('ver_avaliacao','<?php echo $a['id'] ?>')">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                        <circle cx="12" cy="12" r="3" />
-                                    </svg>
-                                    Ver avaliação
-                                </button>
+                                <div class="hi-card-acoes">
+                                    <button class="hi-btn-avaliar hi-btn-avaliar--ver"
+                                        onclick="abrirModal('ver_avaliacao','<?php echo $a['id'] ?>')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                            <circle cx="12" cy="12" r="3" />
+                                        </svg>
+                                        Ver
+                                    </button>
+                                    <button class="hi-btn-avaliar hi-btn-avaliar--edit"
+                                        onclick="abrirModal('editar_comentario','<?php echo $a['id'] ?>')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                        </svg>
+                                        Editar
+                                    </button>
+                                    <button class="hi-btn-avaliar hi-btn-avaliar--del"
+                                        onclick="abrirModal('excluir_comentario','<?php echo $a['id'] ?>')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6" />
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                            <line x1="10" y1="11" x2="10" y2="17" />
+                                            <line x1="14" y1="11" x2="14" y2="17" />
+                                        </svg>
+                                        Excluir
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     <?php

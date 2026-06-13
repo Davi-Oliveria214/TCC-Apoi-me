@@ -974,3 +974,30 @@
         text-align: center;
     }
 }
+
+/* Estilos para o botão de conversar no card */
+.card-rodape-acoes {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-conversar {
+    background: rgba(176, 130, 43, 0.1);
+    color: var(--dourado);
+    border: 1px solid rgba(176, 130, 43, 0.2);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0;
+}
+
+.btn-conversar:hover {
+    background: rgba(176, 130, 43, 0.2);
+    transform: translateY(-2px);
+}

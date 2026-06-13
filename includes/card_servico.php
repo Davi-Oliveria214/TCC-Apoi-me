@@ -52,8 +52,17 @@ function renderCardServico($servico, $tipo = 'publico', $id_usuario_logado = nul
                 <?php
                 if (!empty($id_usuario_logado) && $id_usuario_logado != $servico['id_prestador']):
                 ?>
-                    <button class="btn-agendar"
-                        onclick="abrirModal('agendar','<?php echo htmlspecialchars($servico['id']) ?>')">Agendar</button>
+                    <div class="card-rodape-acoes">
+                        <form action="./controls/mensagens.act.php" method="POST" style="display:inline;">
+                            <input type="hidden" name="acao" value="iniciar">
+                            <input type="hidden" name="id_destinatario" value="<?= $servico['id_prestador'] ?>">
+                            <button type="submit" class="btn-conversar" title="Conversar com Prestador">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            </button>
+                        </form>
+                        <button class="btn-agendar"
+                            onclick="abrirModal('agendar','<?php echo htmlspecialchars($servico['id']) ?>')">Agendar</button>
+                    </div>
                 <?php
                 endif;
                 ?>

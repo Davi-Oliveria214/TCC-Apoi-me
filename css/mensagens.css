@@ -1,0 +1,383 @@
+.pag-mensagens {
+    height: calc(100vh - 80px);
+    background: var(--dourado-suave);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.ms-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    background: var(--branco);
+    border-radius: 20px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Sidebar */
+.ms-sidebar {
+    width: 350px;
+    border-right: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.ms-sidebar-header {
+    padding: 24px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.ms-sidebar-header h2 {
+    font-size: 20px;
+    color: var(--musgo);
+}
+
+.ms-conversas-lista {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.ms-conversa-item {
+    display: flex;
+    padding: 16px 24px;
+    gap: 16px;
+    text-decoration: none;
+    transition: all 0.2s;
+    border-bottom: 1px solid rgba(0,0,0,0.02);
+}
+
+.ms-conversa-item:hover {
+    background: rgba(176, 130, 43, 0.05);
+}
+
+.ms-conversa-item.ativa {
+    background: rgba(176, 130, 43, 0.1);
+    border-left: 4px solid var(--dourado);
+}
+
+.ms-user-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.ms-user-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ms-user-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--musgo-medio);
+    color: var(--branco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.ms-conversa-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.ms-conversa-topo {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.ms-conversa-topo strong {
+    color: var(--musgo);
+    font-size: 15px;
+}
+
+.ms-conversa-topo span {
+    font-size: 12px;
+    color: var(--cinza);
+}
+
+.ms-conversa-info p {
+    font-size: 13px;
+    color: var(--cinza);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Chat */
+.ms-chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fdfdfd;
+}
+
+.ms-chat-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ms-chat-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ms-chat-user h3 {
+    font-size: 16px;
+    color: var(--musgo);
+}
+
+.ms-status {
+    font-size: 12px;
+    color: #27ae60;
+}
+
+.ms-chat-acoes {
+    display: flex;
+    gap: 8px;
+}
+
+.ms-btn-icon {
+    background: none;
+    border: none;
+    color: var(--cinza);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.ms-btn-icon:hover {
+    background: rgba(0,0,0,0.05);
+    color: var(--musgo);
+}
+
+.ms-btn-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Mensagens */
+.ms-mensagens-container {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: #f9f9f9;
+}
+
+.ms-mensagem {
+    max-width: 70%;
+    display: flex;
+}
+
+.ms-msg-enviada {
+    align-self: flex-end;
+}
+
+.ms-msg-recebida {
+    align-self: flex-start;
+}
+
+.ms-msg-bolha {
+    padding: 12px 16px;
+    border-radius: 18px;
+    position: relative;
+}
+
+.ms-msg-enviada .ms-msg-bolha {
+    background: var(--musgo);
+    color: var(--branco);
+    border-bottom-right-radius: 4px;
+}
+
+.ms-msg-recebida .ms-msg-bolha {
+    background: var(--branco);
+    color: var(--musgo);
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.ms-msg-bolha p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.ms-msg-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.ms-msg-meta span {
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+.ms-form-apagar button {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.5;
+    padding: 0;
+}
+
+.ms-form-apagar button:hover {
+    opacity: 1;
+}
+
+/* Footer */
+.ms-chat-footer {
+    padding: 20px 24px;
+    background: var(--branco);
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.ms-envio-form {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.ms-envio-form textarea {
+    flex: 1;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 14px;
+    resize: none;
+    max-height: 120px;
+    min-height: 45px;
+    transition: all 0.2s;
+}
+
+.ms-envio-form textarea:focus {
+    outline: none;
+    border-color: var(--dourado);
+}
+
+.ms-envio-form button {
+    background: var(--musgo);
+    color: var(--branco);
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ms-envio-form button:hover {
+    background: var(--musgo-medio);
+    transform: scale(1.05);
+}
+
+.ms-envio-form button svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Bloqueio */
+.ms-bloqueio-aviso {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+}
+
+/* Dropdown */
+.ms-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.ms-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ms-dropdown-content.show {
+    display: block;
+}
+
+.ms-dropdown-content form button {
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--musgo);
+}
+
+.ms-dropdown-content form button:hover {
+    background-color: #f1f1f1;
+}
+
+.ms-dropdown-content form button.danger {
+    color: #e74c3c;
+}
+
+/* Vazio */
+.ms-vazio-selecao {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--cinza);
+    text-align: center;
+    padding: 40px;
+}
+
+.ms-vazio-selecao svg {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    opacity: 0.2;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .ms-sidebar {
+        width: 80px;
+    }
+    .ms-sidebar-header h2, .ms-conversa-info {
+        display: none;
+    }
+    .ms-conversa-item {
+        padding: 16px;
+        justify-content: center;
+    }
+}

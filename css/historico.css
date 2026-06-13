@@ -608,3 +608,75 @@
         font-size: 11px;
     }
 }
+
+/* Novos estilos para ações de comentários */
+.hi-card-acoes {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.hi-card-acoes .hi-btn-avaliar {
+    flex: 1;
+    min-width: 80px;
+    margin-top: 0;
+}
+
+.hi-btn-avaliar--edit {
+    background: rgba(70, 130, 180, 0.1);
+    color: #35719b;
+    border: 1px solid rgba(70, 130, 180, 0.25);
+}
+
+.hi-btn-avaliar--edit svg {
+    stroke: #35719b;
+}
+
+.hi-btn-avaliar--edit:hover {
+    background: rgba(70, 130, 180, 0.2);
+}
+
+.hi-btn-avaliar--del, .hi-btn-avaliar--mod {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.25);
+}
+
+.hi-btn-avaliar--del svg, .hi-btn-avaliar--mod svg {
+    stroke: #dc3545;
+}
+
+.hi-btn-avaliar--del:hover, .hi-btn-avaliar--mod:hover {
+    background: rgba(220, 53, 69, 0.2);
+}
+
+/* Botão de Chat no Histórico */
+.hi-btn-chat-hist {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: rgba(12, 58, 63, 0.05);
+    color: var(--musgo);
+    border: 1.5px solid rgba(12, 58, 63, 0.15);
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.hi-btn-chat-hist:hover {
+    background: var(--musgo);
+    color: var(--dourado-palido);
+    border-color: var(--musgo);
+    transform: translateY(-1px);
+}
+
+.hi-btn-chat-hist svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+}
