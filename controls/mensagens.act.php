@@ -153,11 +153,6 @@ if ($acao === 'desbloquear') {
 
 if ($acao === 'excluir_conversa') {
     $id_conversa = $_POST['id_conversa'] ?? '';
-
-    // Exclusão lógica para o usuário atual
-    // Como o Supabase/PostgREST não suporta exclusão lógica por usuário facilmente em uma tabela de junção sem colunas extras,
-    // vamos assumir que 'status' pode ser usado ou apenas deletar se o usuário quiser limpar.
-    // O PDF pede para remover da lista do usuário.
     
     $res = request("conversas?id=eq.$id_conversa", "DELETE");
     if (isset($res['error'])) {
@@ -176,7 +171,6 @@ if ($acao === 'apagar_mensagem') {
     $id_mensagem = $_POST['id_mensagem'] ?? '';
     $id_conversa = $_POST['id_conversa'] ?? '';
 
-    // Validar autor
     $msg = request("mensagens?id=eq.$id_mensagem", "GET");
 if (!empty($msg) && !isset($msg['error']) && $msg[0]['id_autor'] == $user_id) {
         $res = request("mensagens?id=eq.$id_mensagem", "DELETE");

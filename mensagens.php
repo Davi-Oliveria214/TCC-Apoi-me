@@ -57,10 +57,9 @@ if ($id_conversa_ativa) {
                         $res_last = request("mensagens?id_conversa=eq.{$conv['id']}&order=id.desc&limit=1", "GET");
                         $last_msg = $res_last[0] ?? null;
                         
-                        // Contar não lidas
                         $res_unread = request("mensagens?id_conversa=eq.{$conv['id']}&id_autor=neq.$user_id&lida=eq.false&select=count", "GET");
-                        // O PostgREST retorna count de forma diferente dependendo da configuração, mas vamos tentar simplificar ou assumir 0 se não vier
-                        $unread_count = 0; // Implementação simplificada
+
+                        $unread_count = 0;
                         
                         $ativa = ($id_conversa_ativa == $conv['id']) ? 'ativa' : '';
                 ?>
@@ -103,7 +102,6 @@ if ($id_conversa_ativa) {
                         </div>
                         <div>
                             <h3><?= htmlspecialchars($outro_participante['nome']) ?></h3>
-                            <span class="ms-status">Online</span>
                         </div>
                     </div>
                     <div class="ms-chat-acoes">
