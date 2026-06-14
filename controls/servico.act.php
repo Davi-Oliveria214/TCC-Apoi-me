@@ -23,7 +23,6 @@ if ($acao === 'aceitar' || $acao === 'recusar') {
         exit;
     }
 
-    // Busca o contrato garantindo que pertence a este prestador
     $contrato = request("contratados?id=eq.{$idContrato}&id_prestador=eq.{$idPrestador}&select=*");
 
     if (empty($contrato) || isset($contrato['error'])) {
@@ -35,7 +34,6 @@ if ($acao === 'aceitar' || $acao === 'recusar') {
 
     $c = $contrato[0];
 
-    // Busca dados do cliente para enviar e-mail
     $cliente = request("usuarios?id=eq.{$c['id_cliente']}&select=nome,email");
 
     if (empty($cliente) || isset($cliente['error'])) {
@@ -47,7 +45,6 @@ if ($acao === 'aceitar' || $acao === 'recusar') {
 
     $novoStatus = ($acao === 'aceitar') ? 'confirmado' : 'cancelado';
 
-    // Atualiza o campo "confirmado" no banco
     $atualizar = request(
         "contratados?id=eq.{$idContrato}",
         'PATCH',
@@ -61,7 +58,6 @@ if ($acao === 'aceitar' || $acao === 'recusar') {
         exit;
     }
 
-    // Notifica o cliente por e-mail
     $fluxoEmail = ($acao === 'aceitar') ? 'confirmacao_cliente' : 'cancelamento_cliente';
 
     enviarEmailServico(
@@ -111,7 +107,7 @@ if ($acao === 'cancelar') {
 
     $c = $contrato[0];
 
-    // Atualiza o status do contrato para cancelado (cancelamento lógico)
+    // Atualiza o status do contrato para cancelado
     $cancelamento = request("contratados?id=eq.{$idContrato}", 'PATCH', ['confirmado' => 'cancelado']);
 
     if (isset($cancelamento['error'])) {
@@ -122,9 +118,7 @@ if ($acao === 'cancelar') {
         exit;
     }
 
-    // Notifica a outra parte por e-mail
     if ($origem === 'prestador') {
-        // Prestador cancelou → avisa o cliente
         $cliente = request("usuarios?id=eq.{$c['id_cliente']}&select=nome,email");
         if (!empty($cliente) && !isset($cliente['error'])) {
             enviarEmailServico(
@@ -138,7 +132,6 @@ if ($acao === 'cancelar') {
             );
         }
     } else {
-        // Cliente cancelou -> avisa o prestador
         $prestador = request("usuarios?id=eq.{$c['id_prestador']}&select=nome,email");
         if (!empty($prestador) && !isset($prestador['error'])) {
             enviarEmailServico(
@@ -199,7 +192,10 @@ if ($acao === 'excluir') {
     $bucket    = $_ENV['BALDE'];
     $imgPadrao = trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/$bucket/deufalt.png";
 
-    if (!empty($urlImagem) && $urlImagem !== $imgPadrao) {
+    // Só exclui se a imagem for um upload do usuário (estiver no bucket do Supabase e não for a padrão)
+    $isUpload = strpos($urlImagem, trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/public/$bucket/") !== false;
+
+    if ($isUpload && $urlImagem !== $imgPadrao) {
         $nomeFinal  = basename(parse_url($urlImagem, PHP_URL_PATH));
         $urlStorage = trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/$bucket/$nomeFinal";
 

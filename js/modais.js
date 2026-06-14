@@ -278,3 +278,35 @@ function delIniciarTimer() {
         if (txt) txt.textContent = `${m}:${sec}`;
     }, 1000);
 }
+
+/* ── Lógica do Seletor de Imagens ────────────────────────── */
+function toggleUploadMode() {
+    const gallery = document.getElementById('gallery-section');
+    const upload = document.getElementById('upload-section');
+    const text = document.getElementById('toggle-text');
+    
+    if (gallery.style.display === 'none') {
+        gallery.style.display = 'block';
+        upload.style.display = 'none';
+        text.textContent = 'Ou enviar do meu computador';
+    } else {
+        gallery.style.display = 'none';
+        upload.style.display = 'block';
+        text.textContent = 'Voltar para galeria';
+    }
+}
+
+function selecionarImagemGaleria(url, elemento) {
+    document.querySelectorAll('.gallery-item').forEach(item => item.classList.remove('selected'));
+    
+    elemento.classList.add('selected');
+    
+    const inputOculto = document.getElementById('imagem_selecionada');
+    if (inputOculto) inputOculto.value = url;
+    
+    const preview = document.getElementById('preview');
+    if (preview) {
+        preview.src = url;
+        preview.style.display = 'block';
+    }
+}

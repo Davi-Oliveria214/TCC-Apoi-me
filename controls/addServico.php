@@ -24,7 +24,7 @@ $hora_fim = $_POST['hora_fim'];
 $duracao = $_POST['duracao'];
 
 $bucket = $_ENV['BALDE'];
-$imagem = trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/$bucket/deufalt.png";
+$imagem = $_POST['imagem_selecionada'] ?? (trim($_ENV['SUPABASE_URL']) . "/storage/v1/object/$bucket/deufalt.png");
 
 if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
     $arquivo = $_FILES['imagem'];
@@ -84,8 +84,8 @@ $dadosSalvar = [
     "hora_inicio" => $hora_inicio,
     "hora_fim" => $hora_fim,
     "duracao" => $duracao,
-    "preco_servico" => (float) str_replace(['R$', ' ', '.', ','], ['', '', '', '.'], $_POST['preco_servico'] ?? 0),
-    "tipo_cobrado" => $_POST['tipo_cobrado'] ?? 'Hora'
+    "preco_servico" => (float) $_POST['preco_servico'],
+    "tipo_cobrado" => strtolower($_POST['tipo_cobrado'] ?? 'hora')
 ];
 
 $sql = request("servicos", "POST", $dadosSalvar);

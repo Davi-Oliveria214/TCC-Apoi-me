@@ -352,9 +352,9 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                     <button type="button" onclick="fecharModais()" class="btn-modais">Voltar</button>
                 </div>
             </div>
-    <?php endif; ?>
+        <?php endif; ?>
 
-    <?php
+        <?php
 
     /* =====================================================================
    DETALHES DA VENDA (PARA PRESTADOR)
@@ -363,8 +363,12 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
         $venda = request("contratados?id=eq.$id&select=id,dia,hora,confirmado,observacao,preco_contrato,nome_cliente,servicos(nome,descricao,imagem,tipo_cobrado)");
         if (empty($venda) || isset($venda['error'])): ?>
             <div class="modal-content modal-alerta">
-                <div class="modal-header"><h3>Erro</h3></div>
-                <div class="modal-body"><p>Venda não encontrada.</p></div>
+                <div class="modal-header">
+                    <h3>Erro</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Venda não encontrada.</p>
+                </div>
                 <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
             </div>
         <?php else:
@@ -376,7 +380,9 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
             $status = $statusMap[$v['confirmado']] ?? ucfirst($v['confirmado'] ?? 'Pendente');
         ?>
             <div class="modal-content modal-padrao">
-                <div class="modal-header"><h3>Detalhes da Venda</h3></div>
+                <div class="modal-header">
+                    <h3>Detalhes da Venda</h3>
+                </div>
                 <div class="modal-body">
                     <img src="<?= esc($s['imagem']) ?>" class="modal-img-destaque" alt="<?= esc($s['nome']) ?>">
                     <div class="detalhes-lista">
@@ -424,7 +430,7 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
             </div>
         <?php endif; ?>
 
-    <?php
+        <?php
 
     /* =====================================================================
    VER AVALIAÇÃO DA VENDA (PARA PRESTADOR)
@@ -433,8 +439,12 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
         $venda = request("contratados?id=eq.$id&select=id,dia,hora,confirmado,observacao,preco_contrato,nome_cliente,servicos(nome,imagem,tipo_cobrado),avaliacoes(id,nota,comentario,editado_em,nome_cliente)");
         if (empty($venda) || isset($venda['error']) || empty($venda[0]['avaliacoes'])): ?>
             <div class="modal-content modal-alerta">
-                <div class="modal-header"><h3>Erro</h3></div>
-                <div class="modal-body"><p>Avaliação não encontrada para esta venda.</p></div>
+                <div class="modal-header">
+                    <h3>Erro</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Avaliação não encontrada para esta venda.</p>
+                </div>
                 <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
             </div>
         <?php else:
@@ -445,7 +455,9 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
             $horaFmt = date('H:i', strtotime($v['hora']));
         ?>
             <div class="modal-content modal-padrao">
-                <div class="modal-header"><h3>Avaliação Recebida</h3></div>
+                <div class="modal-header">
+                    <h3>Avaliação Recebida</h3>
+                </div>
                 <div class="modal-body">
                     <div class="mini-card-servico" style="margin-bottom: 12px;">
                         <div style="flex: 1;">
@@ -491,7 +503,7 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
             </div>
         <?php endif; ?>
 
-    <?php
+        <?php
 
     /* =====================================================================
    PAUSAR / ATIVAR SERVIÇO
@@ -627,8 +639,11 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
         $isEdit  = ($tipo === 'editar');
         $action  = $isEdit ? '../controls/editar_servico.act.php' : '../controls/addServico.php';
 
-        $s = request("servicos?id=eq.$id");
-        $s = $s[0];
+        $s = [];
+        if ($isEdit && $id) {
+            $s = request("servicos?id=eq.$id");
+            $s = $s[0];
+        }
 
         $nomeServico = $s['nome'] ?? '';
         $imgServico = $s['imagem'] ?? '';
@@ -637,7 +652,7 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
         $duracao = isset($s['duracao']) ? date('H:i', strtotime($s['duracao'])) : '';
         $descricao = $s['descricao'] ?? '';
         $tipo_cobrado = isset($s['tipo_cobrado']) ?? 'hora';
-        $preco = $s['preco_servico'];
+        $preco = $s['preco_servico'] ?? 20;
     ?>
         <form action="<?= $action ?>" method="post" enctype="multipart/form-data"
             class="modal-content modal-padrao modal-large ativar-load">
@@ -702,6 +717,8 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                             <option value="hora" <?php echo strtolower($tipo_cobrado) == 'hora' ? 'selected' : '' ?>>Por Hora</option>
                             <option value="sessão" <?php echo strtolower($tipo_cobrado) == 'sessão' ? 'selected' : '' ?>>Por Sessão</option>
                             <option value="serviço" <?php echo strtolower($tipo_cobrado) == 'serviço' ? 'selected' : '' ?>>Por Serviço</option>
+                            <option value="projeto" <?php echo strtolower($tipo_cobrado) == 'projeto' ? 'selected' : '' ?>>Por Projeto</option>
+                            <option value="visita" <?php echo strtolower($tipo_cobrado) == 'visita' ? 'selected' : '' ?>>Por visita</option>
                             <option value="diária" <?php echo strtolower($tipo_cobrado) == 'diária' ? 'selected' : '' ?>>Por Diária</option>
                         </select>
                     </div>
@@ -725,14 +742,44 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
 
                 <div class="input-group">
                     <label>Imagem do Serviço</label>
-                    <label for="idImagem" class="upload-area">
-                        <img id="preview" class="preview-imagem"
-                            src="<?= esc($imgServico) ?>"
-                            style="<?= empty($imgServico) ? 'display:none;' : '' ?>">
-                        <div class="upload-overlay"><span>Alterar Foto</span></div>
-                    </label>
-                    <input type="file" name="imagem" id="idImagem" class="input-imagem"
-                        accept="image/*" style="display:none;">
+
+                    <div class="image-selector-container">
+                        <button type="button" class="btn-toggle-upload" onclick="toggleUploadMode()">
+                            <span id="toggle-text">Ou enviar do meu computador</span>
+                        </button>
+
+                        <div id="gallery-section">
+                            <div class="image-gallery">
+                                <?php
+                                $banco_imagens = request("banco_imagens?select=*", "GET");
+                                if (!empty($banco_imagens) && !isset($banco_imagens['error'])):
+                                    foreach ($banco_imagens as $img): 
+                                        $selected = ($imgServico === $img['link_imagem']) ? 'selected' : '';
+                                ?>
+                                    <div class="gallery-item <?= $selected ?>" 
+                                         onclick="selecionarImagemGaleria('<?= $img['link_imagem'] ?>', this)">
+                                        <img src="<?= $img['link_imagem'] ?>" alt="<?= esc($img['nome']) ?>">
+                                    </div>
+                                <?php 
+                                    endforeach;
+                                endif; 
+                                ?>
+                            </div>
+                        </div>
+
+                        <div id="upload-section" class="upload-section">
+                            <label for="idImagem" class="upload-area">
+                                <img id="preview" class="preview-imagem"
+                                    src="<?= esc($imgServico) ?>"
+                                    style="<?= empty($imgServico) ? 'display:none;' : '' ?>">
+                                <div class="upload-overlay"><span>Selecionar do PC</span></div>
+                            </label>
+                            <input type="file" name="imagem" id="idImagem" class="input-imagem"
+                                accept="image/*" style="display:none;">
+                        </div>
+
+                        <input type="hidden" name="imagem_selecionada" id="imagem_selecionada" value="<?= esc($imgServico) ?>">
+                    </div>
                 </div>
             </div>
 
@@ -917,7 +964,7 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
             </div>
         </form>
 
-    <?php
+        <?php
 
     /* =====================================================================
    EDITAR AVALIAÇÃO (COMENTÁRIO)
@@ -926,16 +973,24 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
         $avaliacao = request("avaliacoes?id=eq.$id");
         if (empty($avaliacao) || isset($avaliacao['error'])): ?>
             <div class="modal-content modal-alerta">
-                <div class="modal-header"><h3>Erro</h3></div>
-                <div class="modal-body"><p>Comentário não encontrado.</p></div>
+                <div class="modal-header">
+                    <h3>Erro</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Comentário não encontrado.</p>
+                </div>
                 <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
             </div>
-        <?php else:
+            <?php else:
             $av = $avaliacao[0];
             if ($av['id_cliente'] != $_SESSION['id']): ?>
                 <div class="modal-content modal-alerta">
-                    <div class="modal-header"><h3>Acesso Negado</h3></div>
-                    <div class="modal-body"><p>Você só pode editar seus próprios comentários.</p></div>
+                    <div class="modal-header">
+                        <h3>Acesso Negado</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>Você só pode editar seus próprios comentários.</p>
+                    </div>
                     <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
                 </div>
             <?php else: ?>
@@ -971,7 +1026,7 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                         <button type="button" onclick="fecharModais()" class="btn-modais btn-modais--sec">Cancelar</button>
                     </div>
                 </form>
-            <?php endif;
+        <?php endif;
         endif;
 
     /* =====================================================================
@@ -1008,7 +1063,7 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
             </div>
             <div class="modal-body">
                 <p>Você está prestes a remover um comentário feito em seu serviço. Por favor, selecione o motivo:</p>
-                
+
                 <div class="input-group">
                     <select name="motivo" required>
                         <option value="">Selecione um motivo...</option>
