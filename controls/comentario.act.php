@@ -71,8 +71,7 @@ if ($acao === 'editar') {
         $_SESSION['mensagem'] = "Comentário atualizado com sucesso!";
         $_SESSION['tipo'] = "sucesso";
     }
-} 
-elseif ($acao === 'excluir') {
+} elseif ($acao === 'excluir') {
     // Validar se é o autor
     if ($comentario['id_cliente'] != $user_id) {
         $_SESSION['mensagem'] = "Você não tem permissão para excluir este comentário.";
@@ -87,15 +86,11 @@ elseif ($acao === 'excluir') {
         $_SESSION['mensagem'] = "Erro ao excluir comentário.";
         $_SESSION['tipo'] = "erro";
     } else {
-        // Voltar o status do contrato para permitir avaliar novamente se desejar? 
-        // No PDF diz apenas para excluir. Vamos manter a integridade da nota.
         $id_servico = $comentario['id_servico'];
         $id_contrato = $comentario['id_contrato'];
-        
-        // Resetar o campo avaliar no contrato
+
         request("contratados?id=eq.$id_contrato", "PATCH", ['avaliar' => false]);
 
-        // Recalcular média
         $avaliacoes = request("avaliacoes?id_servico=eq.$id_servico", "GET");
         $qtd = 0;
         $media = 0;
@@ -113,11 +108,9 @@ elseif ($acao === 'excluir') {
         $_SESSION['mensagem'] = "Comentário removido com sucesso!";
         $_SESSION['tipo'] = "sucesso";
     }
-}
-elseif ($acao === 'moderar') {
-    // Validar se é o prestador do serviço
-    // Buscar o prestador do serviço para validar
+} elseif ($acao === 'moderar') {
     $servico = request("servicos?id=eq." . $comentario['id_servico'], "GET");
+
     if (empty($servico) || isset($servico['error']) || $servico[0]['id_prestador'] != $user_id) {
         $_SESSION['mensagem'] = "Você não tem permissão para moderar este comentário.";
         $_SESSION['tipo'] = "erro";
@@ -126,13 +119,12 @@ elseif ($acao === 'moderar') {
     }
 
     $motivo = $_POST['motivo'] ?? 'Não especificado';
-    
-    // Marcar o comentário como inválido em vez de deletar
+
     $dados = [
         'comentario' => "[Comentário marcado como inválido pelo prestador - Motivo: $motivo]",
         'editado_em' => date('Y-m-d H:i:s')
     ];
-    
+
     $res = request("avaliacoes?id=eq.$id_comentario", "PATCH", $dados);
 
     if (isset($res['error'])) {
@@ -142,8 +134,7 @@ elseif ($acao === 'moderar') {
         $_SESSION['mensagem'] = "Comentário marcado como inválido com sucesso!";
         $_SESSION['tipo'] = "sucesso";
     }
-}
-elseif ($acao === 'desfazer_moderar') {
+} elseif ($acao === 'desfazer_moderar') {
     // Validar se é o prestador do serviço
     $servico = request("servicos?id=eq." . $comentario['id_servico'], "GET");
     if (empty($servico) || isset($servico['error']) || $servico[0]['id_prestador'] != $user_id) {
@@ -153,20 +144,13 @@ elseif ($acao === 'desfazer_moderar') {
         exit;
     }
 
-    // Restaurar o comentário (como não temos o backup do texto original no banco, 
-    // o prestador só pode "desmarcar", mas o texto continuará como inválido se já foi alterado.
-    // Idealmente teríamos uma coluna 'status_moderacao'. 
-    // Como solução paliativa para o pedido do usuário, vamos apenas resetar para uma string genérica ou vazia se ele quiser restaurar.
-    // Mas o usuário pediu para "apagar" e ficar como "comentário inválido".
-    
-    // Se o prestador quer desfazer, vamos apenas remover a flag de inválido do texto se possível.
     $novo_texto = str_replace(["[Comentário marcado como inválido pelo prestador - Motivo: ", "]"], "", $comentario['comentario']);
-    
+
     $dados = [
         'comentario' => "Comentário restaurado pelo prestador. (O conteúdo original foi removido durante a moderação)",
         'editado_em' => date('Y-m-d H:i:s')
     ];
-    
+
     $res = request("avaliacoes?id=eq.$id_comentario", "PATCH", $dados);
 
     if (isset($res['error'])) {
@@ -178,7 +162,6 @@ elseif ($acao === 'desfazer_moderar') {
     }
 }
 
-// Redirecionar para a página de origem
 $origem = $_SERVER['HTTP_REFERER'] ?? '../historico.php';
 header("Location: $origem");
 exit;
