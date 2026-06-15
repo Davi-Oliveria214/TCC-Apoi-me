@@ -61,9 +61,9 @@ include_once './util/avisos.php';
             <li><a href="../index.php" <?php echo navAtivo('index.php') ?>>Início</a></li>
             <?php if (!empty($id)) : ?>
                 <li><a href="../servicos.php" <?php echo navAtivo('servicos.php') ?>>Serviços</a></li>
-                <li><a href="../usuario.php" <?php echo navAtivo('usuario.php') ?>>Perfil</a></li>
                 <li><a href="../historico.php" <?php echo navAtivo('historico.php') ?>>Histórico</a></li>
                 <li><a href="../mensagens.php" <?php echo navAtivo('mensagens.php') ?>>Mensagens</a></li>
+                <li><a href="../usuario.php" <?php echo navAtivo('usuario.php') ?>>Perfil</a></li>
                 <li><a href="../meus_comentarios.php" <?php echo navAtivo('meus_comentarios.php') ?>>Avaliações</a></li>
             <?php endif; ?>
             <li><a href="../sobre.php" <?php echo navAtivo('sobre.php') ?>>Sobre</a></li>
@@ -96,9 +96,9 @@ include_once './util/avisos.php';
         <li><a href="../index.php" <?php echo navAtivo('index.php') ?>>Início</a></li>
         <?php if (!empty($id)) : ?>
             <li><a href="../servicos.php" <?php echo navAtivo('servicos.php') ?>>Serviços</a></li>
-            <li><a href="../usuario.php" <?php echo navAtivo('usuario.php') ?>>Perfil</a></li>
             <li><a href="../historico.php" <?php echo navAtivo('historico.php') ?>>Histórico</a></li>
                 <li><a href="../mensagens.php" <?php echo navAtivo('mensagens.php') ?>>Mensagens</a></li>
+                <li><a href="../usuario.php" <?php echo navAtivo('usuario.php') ?>>Perfil</a></li>
                 <li><a href="../meus_comentarios.php" <?php echo navAtivo('meus_comentarios.php') ?>>Avaliações</a></li>
         <?php endif; ?>
         <li><a href="../sobre.php" <?php echo navAtivo('sobre.php') ?>>Sobre</a></li>
