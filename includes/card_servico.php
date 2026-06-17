@@ -11,11 +11,19 @@ function renderCardServico($servico, $tipo = 'publico', $id_usuario_logado = nul
     $imagem = $servico['imagem'] ?? '';
     $nomeServico = htmlspecialchars($servico['nome'] ?? '');
     $descricao = htmlspecialchars($servico['descricao'] ?? '');
-    $preco = $servico['preco_servico'] ?? 0;
+    $precoRaw = isset($servico['preco_servico']) ? (float)$servico['preco_servico'] : null;
+    $preco = $precoRaw;
     $tipoCobrado = $servico['tipo_cobrado'] ?? 'Hora';
     $categoria = $servico['categorias']['nome'] ?? 'Sem categoria';
     $avaliacao = $servico['nota_geral'] ?? '0';
     $statusServico = $servico['status'] ?? true;
+
+    // Formata o preço com tratamento de nulo/zero
+    if ($precoRaw === null || $precoRaw <= 0) {
+        $precoDisplay = '<span class="card-preco-indefinido">A combinar</span>';
+    } else {
+        $precoDisplay = 'R$ ' . number_format($precoRaw, 2, ',', '.') . '<span> / ' . htmlspecialchars($tipoCobrado) . '</span>';
+    }
     
     $nomePrestador = htmlspecialchars($servico['usuarios']['nome'] ?? '');
     $avatarInicial = substr($nomePrestador, 0, 1);
@@ -40,8 +48,7 @@ function renderCardServico($servico, $tipo = 'publico', $id_usuario_logado = nul
                         </svg>
                         <?php echo $horaInicio ?> – <?php echo $horaFim ?>
                     </div>
-                    <div class="card-preco">R$ <?php echo number_format((float)$preco, 2, ',', '.') ?><span> /
-                            <?php echo htmlspecialchars($tipoCobrado) ?></span></div>
+                    <div class="card-preco"><?php echo $precoDisplay ?></div>
                 </div>
             </div>
             <div class="card-rodape">
@@ -107,7 +114,11 @@ function renderCardServico($servico, $tipo = 'publico', $id_usuario_logado = nul
                 </div>
                 
                 <div class="an-card-preco">
-                    <span>R$ <strong><?php echo number_format($preco, 2, ',', '.') ?></strong> / <?php echo htmlspecialchars($tipoCobrado) ?></span>
+                    <?php if ($precoRaw !== null && $precoRaw > 0): ?>
+                        <span>R$ <strong><?php echo number_format($precoRaw, 2, ',', '.') ?></strong> / <?php echo htmlspecialchars($tipoCobrado) ?></span>
+                    <?php else: ?>
+                        <span class="card-preco-indefinido">A combinar</span>
+                    <?php endif; ?>
                 </div>
 
                 <div class="an-card-acoes">

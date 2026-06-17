@@ -458,6 +458,13 @@ body {
   color: var(--dourado-palido);
 }
 
+.card-preco-indefinido {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--dourado-palido);
+  font-style: italic;
+}
+
 .card-rodape {
   padding: 14px 20px;
   background: linear-gradient(to right, rgba(12, 58, 63, 0.03), rgba(176, 124, 32, 0.06));

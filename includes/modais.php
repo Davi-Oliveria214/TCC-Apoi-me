@@ -80,9 +80,14 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
                 <div class="modal-footer"><button type="button" onclick="fecharModais()" class="btn-modais">Fechar</button></div>
             </div>
         <?php else:
-            $s          = $servico[0];
+            $s = $servico[0];
             $horaInicio = date('H:i', strtotime($s['hora_inicio']));
-            $horaFim    = date('H:i', strtotime($s['hora_fim']));
+            $horaFim = date('H:i', strtotime($s['hora_fim']));
+            $precoServico  = isset($s['preco_servico']) ? (float)$s['preco_servico'] : null;
+            $tipoCobrado   = htmlspecialchars($s['tipo_cobrado'] ?? 'serviço');
+            $precoFormatado = ($precoServico !== null && $precoServico > 0)
+                ? 'R$ ' . number_format($precoServico, 2, ',', '.')
+                : null;
         ?>
             <form action="../controls/agendar.act.php" method="post" class="modal-content modal-padrao ativar-load">
                 <input type="hidden" name="id_servico" value="<?= esc($id) ?>">
@@ -93,6 +98,18 @@ $usuario = (!empty($usuario) && !isset($usuario['error'])) ? $usuario[0] : [];
 
                 <div class="modal-body">
                     <img src="<?= esc($s['imagem']) ?>" class="modal-img-destaque" alt="<?= esc($s['nome']) ?>">
+
+                    <?php if ($precoFormatado): ?>
+                    <div class="modal-preco-destaque">
+                        <span class="modal-preco-label">Valor do serviço</span>
+                        <span class="modal-preco-valor"><?= $precoFormatado ?><span class="modal-preco-tipo"> / <?= $tipoCobrado ?></span></span>
+                    </div>
+                    <?php else: ?>
+                    <div class="modal-preco-destaque modal-preco-indefinido">
+                        <span class="modal-preco-label">Valor do serviço</span>
+                        <span class="modal-preco-valor">A combinar</span>
+                    </div>
+                    <?php endif; ?>
 
                     <div class="input-row">
                         <div class="input-group">
